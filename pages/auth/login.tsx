@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { LoginSchema, LOGIN_SCHEMA } from '../../constants/schema';
-import AuthLayout from '../../layouts/AuthLayout';
-import AuthInput from '../../components/shared/AuthInput';
+import { LoginSchema, LOGIN_SCHEMA } from '@/constants/schema';
+import AuthLayout from '@/layouts/AuthLayout';
+import AuthInput from '@/components/shared/AuthInput';
 
 const LoginPage: NextPage = () => {
   const {
