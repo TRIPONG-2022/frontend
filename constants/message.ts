@@ -8,9 +8,6 @@ export const SCHEMA_MESSAGES = {
 
 type DUPLICATE_MESSAGE_TYPE = {
   [key: string]: string;
-  DUPLICATE_NICKNAME: string;
-  DUPLICATE_LOGINID: string;
-  DUPLICATE_EMAIL: string;
 };
 
 export const DUPLICATE_MESSAGES: DUPLICATE_MESSAGE_TYPE = {

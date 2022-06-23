@@ -26,7 +26,7 @@ const JoinPage: NextPage = () => {
       const { nickName, loginId, email } = data;
 
       // written : 유저가 작성한 정보
-      // check : 서버로 부터 응답받은 정보
+      // check : 서버로부터 응답받은 정보
       // divide : Error Message 구분자
       function checkDuplicate(written: string, check: string, divide: string) {
         if (written === check) {
