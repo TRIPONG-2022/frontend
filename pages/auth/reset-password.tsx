@@ -4,19 +4,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import AuthInput from '@/components/shared/AuthInput';
 import AuthLayout from '@/layouts/AuthLayout';
-import { RepasswordSchema, REPASSWORD_SCHEMA } from '@/constants/schema';
+import { ResetPasswordSchema, RESET_PASSWORD_SCHEMA } from '@/constants/schema';
 
-function Repassword() {
+function ResetPasswordPage() {
   const {
     register,
     handleSubmit,
     formState: { isValid, isDirty, errors },
-  } = useForm<RepasswordSchema>({
+  } = useForm<ResetPasswordSchema>({
     mode: 'onChange',
-    resolver: yupResolver(REPASSWORD_SCHEMA),
+    resolver: yupResolver(RESET_PASSWORD_SCHEMA),
   });
 
-  const onSubmit = (data: RepasswordSchema) => {
+  const onSubmit = (data: ResetPasswordSchema) => {
     console.log(data);
     alert(JSON.stringify(data));
   };
@@ -50,4 +50,4 @@ function Repassword() {
   );
 }
 
-export default Repassword;
+export default ResetPasswordPage;

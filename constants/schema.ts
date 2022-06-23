@@ -25,7 +25,7 @@ export const LOGIN_SCHEMA = yup.object({
   password: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
 });
 
-export const REPASSWORD_SCHEMA = yup.object({
+export const RESET_PASSWORD_SCHEMA = yup.object({
   password: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   passwordCheck: yup
     .string()
@@ -34,4 +34,4 @@ export const REPASSWORD_SCHEMA = yup.object({
 });
 
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
-export type RepasswordSchema = yup.InferType<typeof REPASSWORD_SCHEMA>;
+export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
