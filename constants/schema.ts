@@ -26,3 +26,9 @@ export const LOGIN_SCHEMA = yup.object({
 });
 
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
+
+export const SEND_EMAIL_SCHEMA = yup.object({
+  email: EMAIL_SCHEMA,
+});
+
+export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
