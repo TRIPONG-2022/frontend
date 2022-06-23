@@ -37,7 +37,7 @@ export const JOIN_SCHEMA = yup.object({
     .string()
     .matches(
       /^[a-z0-9][^ㄱ-ㅎ가-힣A-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/,
-      SCHEMA_MESSAGES.WRONG_LOGIND_FORMAT,
+      SCHEMA_MESSAGES.WRONG_LOGINID_FORMAT,
     )
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   email: yup

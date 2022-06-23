@@ -3,7 +3,7 @@ export const SCHEMA_MESSAGES = {
   NOT_MATCH_PASSWORD: '비밀번호가 일치하지 않습니다.',
   WRONG_EMAIL_FORMAT: '잘못된 이메일 형식입니다.',
   WRONG_NICKNAME_FORMAT: '닉네임에 특수문자가 포함되면 안됩니다!',
-  WRONG_LOGIND_FORMAT: '아이디에 특수문자 또는 한글이 포함되면 안됩니다!',
+  WRONG_LOGINID_FORMAT: '아이디에 특수문자 또는 한글이 포함되면 안됩니다!',
 } as const;
 
 type DUPLICATE_MESSAGE_TYPE = {
