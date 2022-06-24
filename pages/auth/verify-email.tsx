@@ -5,7 +5,7 @@ import { SendEmailSchema, SEND_EMAIL_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
 
-const VerifyEmail: NextPage = () => {
+const VerifyEmailPage: NextPage = () => {
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ const VerifyEmail: NextPage = () => {
   return (
     <AuthLayout
       title="이메일 인증"
-      description={'이메일 주소로 이메일 인증 링크가 전송됩니다.'}
+      description="이메일 주소로 이메일 인증 링크가 전송됩니다."
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
@@ -45,4 +45,4 @@ const VerifyEmail: NextPage = () => {
   );
 };
 
-export default VerifyEmail;
+export default VerifyEmailPage;

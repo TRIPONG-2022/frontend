@@ -5,7 +5,7 @@ import { SendEmailSchema, SEND_EMAIL_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
 
-const FindPasswordPage: NextPage = () => {
+const FindIDPage: NextPage = () => {
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ const FindPasswordPage: NextPage = () => {
   return (
     <AuthLayout
       title="아이디 찾기"
-      description="이메일 주소로 비밀번호 재설정 링크가 전송됩니다."
+      description="이메일 주소로 가입하신 아이디가 전송됩니다."
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
@@ -45,4 +45,4 @@ const FindPasswordPage: NextPage = () => {
   );
 };
 
-export default FindPasswordPage;
+export default FindIDPage;
