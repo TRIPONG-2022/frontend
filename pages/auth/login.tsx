@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema, LOGIN_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
+import Button from '@/components/shared/Button';
 
 const LoginPage: NextPage = () => {
   const {
@@ -27,6 +28,7 @@ const LoginPage: NextPage = () => {
           id="loginId"
           type="text"
           label="아이디"
+          placeholder="아이디를 입력하세요."
           errorMessage={errors.loginId?.message}
           {...register('loginId')}
         />
@@ -34,16 +36,22 @@ const LoginPage: NextPage = () => {
           id="password"
           type="password"
           label="비밀번호"
+          placeholder="비밀번호를 입력하세요."
           errorMessage={errors.password?.message}
           {...register('password')}
         />
-        <button
+        <Button
+          size="lg"
           type="submit"
+          css={`
+            width: 100%;
+            margin-top: 1rem;
+          `}
           disabled={!isValid || !isDirty}
           aria-disabled={!isValid || !isDirty}
         >
           로그인
-        </button>
+        </Button>
       </form>
     </AuthLayout>
   );

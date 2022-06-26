@@ -21,8 +21,7 @@ export const Input = styled.input<{ $invalid?: boolean }>`
 
   font-size: 1rem;
   color: #000000;
-  background-color: transparent;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
 
   &:focus {
     outline: none;
