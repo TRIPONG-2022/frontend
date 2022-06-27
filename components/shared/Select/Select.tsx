@@ -8,8 +8,7 @@ interface AuthInputProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 const Select = React.forwardRef<HTMLSelectElement, AuthInputProps>(
   ({ label, id, children, change, ...selectProps }, ref) => {
-    // react hook form에서 자체적으로 register가 ref 에 담겨서 들어오는걸 써보니깐 이해함
-    console.log(selectProps);
+    // react hook form에서 자체적으로 register가 ref 에 담겨서 들어오는걸 써보니깐 이해함;
     return (
       <div>
         {label && <label htmlFor={id}>{label}</label>}
