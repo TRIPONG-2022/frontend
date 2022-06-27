@@ -10,9 +10,10 @@ import {
 } from '@/constants/schema';
 import styled from 'styled-components';
 import { days, months, years } from '@/constants/date';
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, Children } from 'react';
 import useCity from '@/hooks/useCity';
 import useDistrict from '@/hooks/useDistrict';
+import Select from '@/components/shared/Select/Select';
 
 interface RegionInterface {
   code: string;
@@ -34,12 +35,11 @@ const InformationPage: NextPage = () => {
     console.log(data);
   };
 
-  const [yearSelect, setYearSelect] = useState<number>(2022);
-  const [monthSelect, setMonthSelect] = useState<number>(1);
-  // 맨처음에 Ref로 관리하려했다가 re-render가 없어서 day가 바뀌지 않는 이슈
-  // watch로 쓰셨다.
+  const watchYear = watch('year', 2022);
+  const watchMonth = watch('month', 1);
+  // 맨처음에 Ref로 관리하려했다가 re-render가 없어서 day가 바뀌지 않는 이슈로 state로 year, month 관리
+  // state로 관리하던 year, month를 watch로 인해 더 쉽게 관리. (state처럼 작동)
   // useForm hook 안에서 defaultvalue
-  // 가상돔이라 일수 바뀌지 않았다.
 
   const { city } = useCity();
   const [region, setRegion] = useState<string | undefined>('');
@@ -50,12 +50,39 @@ const InformationPage: NextPage = () => {
   // register props 성진님 방식??  공식문서 한번 더 참고
 
   // 리뷰 요청 드립니다! (value에 code가 들어가면 react-hook-form )
-  const getAttr = (e: any) => {
+  const getAddressKeyCode = (e: any) => {
+    console.log('asdasd');
     const idx = e.target.selectedIndex;
     const option = e.target.querySelectorAll('option')[idx];
     const code = option.getAttribute('data-code');
     setRegion(code);
   };
+
+  // const Select = React.forwardRef({label,id, children}}ref) => {
+
+  //     <div>
+  //       <label htmlFor={id}>{label}</label>
+  //       <select>
+  //         {children}
+  //       </select>
+  //     </div>
+
+  // }
+
+  // const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
+  //   ({ label, errorMessage, id, ...inputProps }, ref) => {
+  //     console.log(inputProps);
+  //     return (
+  //       <Styled.Container>
+  //         <Styled.Label htmlFor={id}>{label}</Styled.Label>
+  //         <Styled.Input {...inputProps} id={id} ref={ref} />
+  //         {errorMessage && (
+  //           <Styled.ErrorMessage>{errorMessage}</Styled.ErrorMessage>
+  //         )}
+  //       </Styled.Container>
+  //     );
+  //   },
+  // );
 
   return (
     <AuthLayout title="로그인">
@@ -75,10 +102,7 @@ const InformationPage: NextPage = () => {
 
         <p>생년월일</p>
         <Flex>
-          <select
-            {...register('year')}
-            onChange={(e) => setYearSelect(Number(e.target.value))}
-          >
+          <Select id="year" {...register('year')}>
             {years.map((year) => {
               return (
                 <option key={`key=${year}`} value={year}>
@@ -86,12 +110,38 @@ const InformationPage: NextPage = () => {
                 </option>
               );
             })}
-          </select>
+          </Select>
+
+          <Select id="month" {...register('month')}>
+            {months.map((month) => {
+              return (
+                <option key={`key=${month}`} value={month}>
+                  {month}
+                </option>
+              );
+            })}
+          </Select>
+          <Select id="day" {...register('day')}>
+            {days(watchYear, watchMonth)?.map((day) => {
+              return (
+                <option key={`key=${day}`} value={day}>
+                  {day}
+                </option>
+              );
+            })}
+          </Select>
+
+          {/* <select {...register('year')}>
+            {years.map((year) => {
+              return (
+                <option key={`key=${year}`} value={year}>
+                  {year}
+                </option>
+              );
+            })}
+          </select> */}
           {/* select react hook form 이게 맞나? */}
-          <select
-            {...register('month')}
-            onChange={(e) => setMonthSelect(Number(e.target.value))}
-          >
+          {/* <select {...register('month')}>
             {months.map((month) => {
               return (
                 <option key={`key=${month}`} value={month}>
@@ -102,14 +152,14 @@ const InformationPage: NextPage = () => {
           </select>
 
           <select {...register('day')}>
-            {days(yearSelect, monthSelect)?.map((day) => {
+            {days(watchYear, watchMonth)?.map((day) => {
               return (
                 <option key={`key=${day}`} value={day}>
                   {day}
                 </option>
               );
             })}
-          </select>
+          </select> */}
         </Flex>
 
         <p>지역</p>
@@ -124,7 +174,11 @@ const InformationPage: NextPage = () => {
         */}
 
         <Flex>
-          <select {...register('fistAddress')} onChange={getAttr}>
+          <Select
+            id="firstAddress"
+            change={getAddressKeyCode}
+            {...register('firstAddress')}
+          >
             {city.map((item: RegionInterface) => {
               return (
                 <option
@@ -136,8 +190,23 @@ const InformationPage: NextPage = () => {
                 </option>
               );
             })}
-          </select>
-          <select {...register('secondAddress')}>
+          </Select>
+
+          {/* <select {...register('fistAddress')} onChange={getAddressKeyCode}>
+            {city.map((item: RegionInterface) => {
+              return (
+                <option
+                  key={`key=${item.name}`}
+                  value={item.name}
+                  data-code={item.code}
+                >
+                  {item.name}
+                </option>
+              );
+            })}
+          </select> */}
+
+          <Select id="secondAddress" {...register('secondAddress')}>
             {district?.map((item: RegionInterface) => {
               return (
                 <option key={`key=${item.name}`} value={item.name}>
@@ -145,7 +214,17 @@ const InformationPage: NextPage = () => {
                 </option>
               );
             })}
-          </select>
+          </Select>
+
+          {/* <select {...register('secondAddress')}>
+            {district?.map((item: RegionInterface) => {
+              return (
+                <option key={`key=${item.name}`} value={item.name}>
+                  {item.name.split(' ')[1]}
+                </option>
+              );
+            })}
+          </select> */}
         </Flex>
         <button
           type="submit"
