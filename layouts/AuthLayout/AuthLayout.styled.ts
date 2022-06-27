@@ -47,3 +47,7 @@ export const Title = styled.h1`
   text-align: left;
   margin-bottom: 2.5rem;
 `;
+
+export const Description = styled.p`
+  font-size: 1rem;
+`;
