@@ -30,6 +30,11 @@ const GlobalStyle = styled.createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
 `;
 
 export default GlobalStyle;
