@@ -14,6 +14,7 @@ import React, { useRef, useState, useEffect, Children } from 'react';
 import useCity from '@/hooks/useCity';
 import useDistrict from '@/hooks/useDistrict';
 import Select from '@/components/shared/Select/Select';
+import useRegionFetch from '@/hooks/useRegionFetch';
 
 interface RegionInterface {
   code: string;
@@ -41,21 +42,29 @@ const InformationPage: NextPage = () => {
   // state로 관리하던 year, month를 watch로 인해 더 쉽게 관리. (state처럼 작동)
   // useForm hook 안에서 defaultvalue
 
-  const { city } = useCity();
-  const [region, setRegion] = useState<string | undefined>('');
-  const { district } = useDistrict(region);
-  console.log(district);
+  const [regionCode, setRegionCode] = useState<string | undefined>('');
+
+  const { response: city } = useRegionFetch(
+    'https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00000000',
+  );
+
+  const { response: district } = useRegionFetch(
+    `https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=${regionCode?.substring(
+      0,
+      2,
+    )}*000000&is_ignore_zero=true`,
+    regionCode,
+  );
 
   // 날짜 select 도 authinput 처럼 분리
   // register props 성진님 방식??  공식문서 한번 더 참고
 
   // 리뷰 요청 드립니다! (value에 code가 들어가면 react-hook-form )
   const getAddressKeyCode = (e: any) => {
-    console.log('asdasd');
     const idx = e.target.selectedIndex;
     const option = e.target.querySelectorAll('option')[idx];
     const code = option.getAttribute('data-code');
-    setRegion(code);
+    setRegionCode(code);
   };
 
   // const Select = React.forwardRef({label,id, children}}ref) => {
