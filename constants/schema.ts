@@ -42,7 +42,7 @@ export const ADD_INFORMATION_SCHEMA = yup.object({
   year: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   month: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   day: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  fistAddress: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  firstAddress: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   secondAddress: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
 });
 
