@@ -13,3 +13,7 @@ export const Title = styled.h1`
   font-weight: bold;
   text-align: center;
 `;
+
+export const Description = styled.p`
+  font-size: 1rem;
+`;
