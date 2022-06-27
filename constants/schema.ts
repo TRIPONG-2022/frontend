@@ -52,5 +52,12 @@ export const JOIN_SCHEMA = yup.object({
   notiBar: yup.string(),
 });
 
-export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
+
+export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
+
+export const SEND_EMAIL_SCHEMA = yup.object({
+  email: EMAIL_SCHEMA,
+});
+
+export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;

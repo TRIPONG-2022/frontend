@@ -6,11 +6,11 @@ export const SCHEMA_MESSAGES = {
   WRONG_LOGINID_FORMAT: '아이디에 특수문자 또는 한글이 포함되면 안됩니다!',
 } as const;
 
-type DUPLICATE_MESSAGE_TYPE = {
+type DuplicateMessageType = {
   [key: string]: string;
 };
 
-export const DUPLICATE_MESSAGES: DUPLICATE_MESSAGE_TYPE = {
+export const DUPLICATE_MESSAGES: DuplicateMessageType = {
   DUPLICATE_NICKNAME: '이미 사용중인 닉네임입니다.',
   DUPLICATE_LOGINID: '이미 사용중인 아이디입니다.',
   DUPLICATE_EMAIL: '이미 사용중인 이메일입니다.',
