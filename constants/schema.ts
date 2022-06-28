@@ -35,3 +35,9 @@ export const RESET_PASSWORD_SCHEMA = yup.object({
 
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
+
+export const SEND_EMAIL_SCHEMA = yup.object({
+  email: EMAIL_SCHEMA,
+});
+
+export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
