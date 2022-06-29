@@ -36,6 +36,11 @@ export const JOIN_SCHEMA = yup.object({
   nickName: NICKNAME_SCHEMA,
   loginId: LOGIN_ID_SCHEMA,
   email: EMAIL_SCHEMA,
+  password: PASSWORD_CHEMA,
+  passwordCheck: yup
+    .string()
+    .oneOf([yup.ref('password'), null], SCHEMA_MESSAGES.NOT_MATCH_PASSWORD)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   notiBar: yup.string(),
 });
 
