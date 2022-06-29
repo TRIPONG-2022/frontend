@@ -37,13 +37,22 @@ export const ADD_INFORMATION_SCHEMA = yup.object({
     )
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   // 정규표현식을 어제 처음 공부해서 사용해봤는데 이 방법이 맞을까요?? 특히 특수문자 제외
-  gender: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  gender: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   // gender는 없어도 될 것 같기도하고..
   year: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   month: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   day: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  firstAddress: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  secondAddress: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  firstAddress: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  secondAddress: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
 });
 
 export type InformationScheme = yup.InferType<typeof ADD_INFORMATION_SCHEMA>;
