@@ -13,7 +13,6 @@ interface FormatData {
 interface Props {
   url: string;
   deps?: string | undefined;
-  // 디펜던시 타입 찾아서 정리해보기
 }
 
 type UseRegionFetchReturns = [FormatData[], Map<string, string>];
@@ -21,7 +20,7 @@ type UseRegionFetchReturns = [FormatData[], Map<string, string>];
 function useRegionFetch({ url, deps }: Props): UseRegionFetchReturns {
   const [regionData, setRegionData] = useState<FormatData[]>([]);
 
-  const data = React.useMemo(() => {
+  const regionMapData = React.useMemo(() => {
     const ret = new Map<string, string>();
     regionData?.forEach(({ value, label }) => {
       ret.set(value, label);
@@ -45,9 +44,7 @@ function useRegionFetch({ url, deps }: Props): UseRegionFetchReturns {
     })();
   }, [url, deps]);
 
-  return [regionData, data];
+  return [regionData, regionMapData];
 }
 
 export default useRegionFetch;
-
-// response 를 아예 변환해줘라

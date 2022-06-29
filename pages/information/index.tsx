@@ -3,14 +3,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
-import {
-  LOGIN_SCHEMA,
-  ADD_INFORMATION_SCHEMA,
-  InformationScheme,
-} from '@/constants/schema';
+import { ADD_INFORMATION_SCHEMA, InformationScheme } from '@/constants/schema';
 import styled from 'styled-components';
 import { days, getCurrentYear, months, years } from '@/constants/date';
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import Select from '@/components/shared/Select/Select';
 import useRegionFetch from '@/hooks/useRegionFetch';
 
@@ -24,7 +20,6 @@ const InformationPage: NextPage = () => {
     mode: 'onChange',
     resolver: yupResolver(ADD_INFORMATION_SCHEMA),
     defaultValues: {
-      // firstAddress: '11',
       year: 2022,
       month: 1,
     },
@@ -32,7 +27,7 @@ const InformationPage: NextPage = () => {
 
   const watchYear: number = watch('year', 2022);
   const watchMonth: number = watch('month', 1);
-  const watchRegionCode = watch('firstAddress');
+  const watchRegionCode = watch('city');
   // 맨처음에 Ref로 관리하려했다가 re-render가 없어서 day가 바뀌지 않는 이슈로 state로 year, month 관리
   // state로 관리하던 year, month를 watch로 인해 더 쉽게 관리. (state처럼 작동)
   // useForm hook 안에서 defaultvalue
@@ -51,8 +46,8 @@ const InformationPage: NextPage = () => {
 
   const onSubmit = React.useCallback(
     (data: InformationScheme) => {
-      const cityName = cityMap.get(data.firstAddress);
-      const districtName = districtMap.get(data.secondAddress);
+      const cityName = cityMap.get(data.city);
+      const districtName = districtMap.get(data.district);
       console.log({ ...data, cityName, districtName });
     },
     [cityMap, districtMap],
@@ -106,18 +101,17 @@ const InformationPage: NextPage = () => {
         <p>지역</p>
         <Flex>
           <Select
-            id="firstAddress"
+            id="city"
             defaultLabel="도시를 선택해주세요"
             options={city}
-            {...register('firstAddress')}
+            {...register('city')}
           />
           <Select
-            id="secondAddress"
+            id="district"
             defaultLabel="구를 선택해주세요"
             options={district}
-            {...register('secondAddress')}
+            {...register('district')}
           />
-          {/* <Select id="secondAddress" {...register('secondAddress')}></Select> */}
         </Flex>
         <button
           type="submit"
