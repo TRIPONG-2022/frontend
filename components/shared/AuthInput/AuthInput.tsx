@@ -11,7 +11,12 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
     return (
       <Styled.Container>
         <Styled.Label htmlFor={id}>{label}</Styled.Label>
-        <Styled.Input {...inputProps} id={id} ref={ref} />
+        <Styled.Input
+          {...inputProps}
+          id={id}
+          ref={ref}
+          $invalid={!!errorMessage}
+        />
         {errorMessage && (
           <Styled.ErrorMessage>{errorMessage}</Styled.ErrorMessage>
         )}
