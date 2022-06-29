@@ -9,15 +9,10 @@ import {
   InformationScheme,
 } from '@/constants/schema';
 import styled from 'styled-components';
-import { days, months, years } from '@/constants/date';
-import React, { useRef, useState, useEffect, Children } from 'react';
+import { days, getCurrentYear, months, years } from '@/constants/date';
+import React, { useRef, useState, useEffect } from 'react';
 import Select from '@/components/shared/Select/Select';
 import useRegionFetch from '@/hooks/useRegionFetch';
-
-interface RegionInterface {
-  code: string;
-  name: string;
-}
 
 const InformationPage: NextPage = () => {
   const {
@@ -28,38 +23,40 @@ const InformationPage: NextPage = () => {
   } = useForm<InformationScheme>({
     mode: 'onChange',
     resolver: yupResolver(ADD_INFORMATION_SCHEMA),
+    defaultValues: {
+      // firstAddress: '11',
+      year: 2022,
+      month: 1,
+    },
   });
 
-  const onSubmit = (data: InformationScheme) => {
-    console.log(data);
-  };
-
-  const watchYear = watch('year', 2022);
-  const watchMonth = watch('month', 1);
+  const watchYear: number = watch('year', 2022);
+  const watchMonth: number = watch('month', 1);
+  const watchRegionCode = watch('firstAddress');
   // 맨처음에 Ref로 관리하려했다가 re-render가 없어서 day가 바뀌지 않는 이슈로 state로 year, month 관리
   // state로 관리하던 year, month를 watch로 인해 더 쉽게 관리. (state처럼 작동)
   // useForm hook 안에서 defaultvalue
 
-  const [regionCode, setRegionCode] = useState<string | undefined>('');
+  const [city, cityMap] = useRegionFetch({
+    url: 'https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00000000',
+  });
 
-  const { response: city } = useRegionFetch(
-    'https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00000000',
-  );
-
-  const { response: district } = useRegionFetch(
-    `https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=${regionCode?.substring(
+  const [district, districtMap] = useRegionFetch({
+    url: `https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=${watchRegionCode?.substring(
       0,
       2,
     )}*000000&is_ignore_zero=true`,
-    regionCode,
-  );
+    deps: watchRegionCode,
+  });
 
-  const getAddressKeyCode = (e: any) => {
-    const idx = e.target.selectedIndex;
-    const option = e.target.querySelectorAll('option')[idx];
-    const code = option.getAttribute('data-code');
-    setRegionCode(code);
-  };
+  const onSubmit = React.useCallback(
+    (data: InformationScheme) => {
+      const cityName = cityMap.get(data.firstAddress);
+      const districtName = districtMap.get(data.secondAddress);
+      console.log({ ...data, cityName, districtName });
+    },
+    [cityMap, districtMap],
+  );
 
   return (
     <AuthLayout title="로그인">
@@ -72,73 +69,55 @@ const InformationPage: NextPage = () => {
           {...register('name')}
         />
         <p>성별</p>
-        <select {...register('gender')}>
-          <option value="male">남</option>
-          <option value="female">여</option>
-        </select>
+        <Select
+          id="gender"
+          defaultLabel="성별을 선택하세요."
+          options={[
+            { value: 'male', label: '남' },
+            { value: 'female', label: '여' },
+          ]}
+          {...register('gender')}
+        />
 
         <p>생년월일</p>
         <Flex>
-          <Select id="year" {...register('year')}>
-            {years.map((year) => {
-              return (
-                <option key={`key=${year}`} value={year}>
-                  {year}
-                </option>
-              );
-            })}
-          </Select>
+          <Select
+            id="year"
+            defaultLabel="날짜를 입력해주세요."
+            options={years(getCurrentYear())}
+            {...register('year')}
+          ></Select>
 
-          <Select id="month" {...register('month')}>
-            {months.map((month) => {
-              return (
-                <option key={`key=${month}`} value={month}>
-                  {month}
-                </option>
-              );
-            })}
-          </Select>
+          <Select
+            id="month"
+            defaultLabel="월 입력"
+            options={months}
+            {...register('month')}
+          />
 
-          <Select id="day" {...register('day')}>
-            {days(watchYear, watchMonth)?.map((day) => {
-              return (
-                <option key={`key=${day}`} value={day}>
-                  {day}
-                </option>
-              );
-            })}
-          </Select>
+          <Select
+            id="day"
+            defaultLabel="날짜 입력"
+            options={days(watchYear, watchMonth)}
+            {...register('day')}
+          />
         </Flex>
 
         <p>지역</p>
         <Flex>
           <Select
             id="firstAddress"
-            change={getAddressKeyCode}
+            defaultLabel="도시를 선택해주세요"
+            options={city}
             {...register('firstAddress')}
-          >
-            {city.map((item: RegionInterface) => {
-              return (
-                <option
-                  key={`key=${item.name}`}
-                  value={item.name}
-                  data-code={item.code}
-                >
-                  {item.name}
-                </option>
-              );
-            })}
-          </Select>
-
-          <Select id="secondAddress" {...register('secondAddress')}>
-            {district?.map((item: RegionInterface) => {
-              return (
-                <option key={`key=${item.name}`} value={item.name}>
-                  {item.name.split(' ')[1]}
-                </option>
-              );
-            })}
-          </Select>
+          />
+          <Select
+            id="secondAddress"
+            defaultLabel="구를 선택해주세요"
+            options={district}
+            {...register('secondAddress')}
+          />
+          {/* <Select id="secondAddress" {...register('secondAddress')}></Select> */}
         </Flex>
         <button
           type="submit"
