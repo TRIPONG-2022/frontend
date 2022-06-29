@@ -22,8 +22,8 @@ export default function SVGIcon({
   return (
     <IconComponent
       title={title}
-      width={size ?? width}
-      height={size ?? height}
+      width={size || width || '1em'}
+      height={size || height || '1em'}
       {...svgProps}
     />
   );

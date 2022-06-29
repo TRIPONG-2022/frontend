@@ -31,7 +31,7 @@ export default function IconButton({
       $isRound={isRound}
       {...buttonProps}
     >
-      <SVGIcon icon={icon} size={iconSize} />
+      <SVGIcon title={buttonProps['aria-label']} icon={icon} size={iconSize} />
     </Styled.BaseIconButton>
   );
 }
