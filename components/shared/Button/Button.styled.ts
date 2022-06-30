@@ -16,12 +16,12 @@ const ButtonSizeStyles = {
 const ButtonVariantStyles = {
   primary: css`
     color: #ffffff;
-    background-color: #0dc5d6;
+    background-color: ${({ theme }) => theme.colors.primary.hex};
   `,
   outline: css`
-    color: #0dc5d6;
+    color: ${({ theme }) => theme.colors.primary.hex};
     background-color: transparent;
-    box-shadow: inset 0 0 0 2px #0dc5d6;
+    box-shadow: inset 0 0 0 2px ${({ theme }) => theme.colors.primary.hex};
   `,
 };
 
