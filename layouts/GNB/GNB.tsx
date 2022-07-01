@@ -1,3 +1,4 @@
+import XButton from '@/components/shared/XButton/XButton';
 import useWindowSize from 'hook/useWindowSize';
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -98,7 +99,11 @@ function GNB({ isLogin }: GNBProps) {
               );
           })}
         </Styled.LoginDiv>
-        <Styled.NavBtn onClick={onToggle}>네비바</Styled.NavBtn>
+        {/* <Styled.NavBtn onClick={onToggle}>네비바</Styled.NavBtn> */}
+
+        <div onClick={onToggle}>
+          <XButton width={50} />
+        </div>
       </Styled.RightDiv>
     </Styled.ContainerNav>
   );
