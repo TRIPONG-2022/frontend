@@ -107,9 +107,9 @@ function GNB({ isLogin }: GNBProps) {
           {loginMenus.map(({ name, link, show }) => {
             if (isLogin === show)
               return (
-                <Link href={link} key={name}>
-                  <Styled.NavLoginLi>{name}</Styled.NavLoginLi>
-                </Link>
+                <Styled.NavLoginLi key={name}>
+                  <Link href={link}>{name}</Link>
+                </Styled.NavLoginLi>
               );
           })}
         </Styled.NavLoginUl>

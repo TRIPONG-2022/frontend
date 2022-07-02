@@ -22,12 +22,13 @@ export const Body = styled.div<BodyProps>`
   ${({ fullWidth }) =>
     !fullWidth &&
     css`
-      max-width: 768px;
-      padding: 0 32px;
+      padding: 0 20px;
 
-      // 태블릿일 경우 추가
+      @media (min-width: 768px) and (max-width: 1024px) {
+        padding: 0 32px;
+      }
 
-      @media (min-width: 768px) {
+      @media (min-width: 1025px) {
         max-width: 1280px;
         padding: 0 40px;
       }

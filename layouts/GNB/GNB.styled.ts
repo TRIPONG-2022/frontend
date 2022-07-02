@@ -107,23 +107,23 @@ interface NavDivProps {
 }
 
 export const NavDiv = styled.div<NavDivProps>`
-  width: 100%;
+  width: 100vw;
   height: calc(100vh - ${headerHeight});
   background: white;
   position: fixed;
-  left: 0;
+  right: 0;
   top: ${headerHeight};
-  transition: ease-in-out 0.5s;
+  transition: transform 0.5s;
   padding: 3.75rem;
 
   ${({ toggle }) =>
     toggle &&
     css`
-      transform: translateX(110vw);
+      transform: translateX(150vw);
     `}
 
   @media (min-width: 768px) {
-    display: block;
+    display: none;
     transition: none;
   }
 `;
