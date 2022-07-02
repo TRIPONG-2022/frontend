@@ -7,11 +7,7 @@ const arr = new Array(100).fill(1);
 const HomePage: NextPage = () => {
   return (
     <MainLayout>
-      {arr.map((ar) => (
-        <React.Fragment key={ar}>
-          TRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONGTRIPONG
-        </React.Fragment>
-      ))}
+      <h1 className="">TRIPONG</h1>
     </MainLayout>
   );
 };

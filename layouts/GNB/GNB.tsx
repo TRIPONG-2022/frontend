@@ -5,7 +5,9 @@ import * as Styled from './GNB.styled';
 import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
 
 import useWindowSize from '@/hooks/useWindowSize';
-import { GNBMenus, loginMenus } from '@/constants/menus';
+import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
+import SVGIcon from '@/components/shared/SVGIcon';
+import NavigationDiv from '@/layouts/NavigationDiv';
 
 interface GNBProps {
   isLogin: boolean;
@@ -25,28 +27,33 @@ function GNB({ isLogin }: GNBProps) {
 
   return (
     <Styled.ContainerNav>
+      {/* 로고 구간 */}
       <Styled.LogoDiv>
-        <div>로고</div>
+        <Link href="/">
+          <SVGIcon icon={'Logo'} width={120} height={50} />
+        </Link>
       </Styled.LogoDiv>
 
+      {/* 가운데 메뉴 구간 */}
       <Styled.MenuUl>
-        {GNBMenus.map(({ name, link }) => (
+        {GNB_MENUS.map(({ name, link }) => (
           <Styled.MenuLi key={name}>
             <Link href={link}>{name}</Link>
           </Styled.MenuLi>
         ))}
       </Styled.MenuUl>
 
+      {/* 검색, 로그인, 회원가입 구간 */}
       <Styled.RightDiv>
-        <Styled.SearchBtn>검색</Styled.SearchBtn>
+        <Styled.SearchBtn>
+          <SVGIcon icon={'Search'} width={25} height={25} />
+        </Styled.SearchBtn>
         <Styled.LoginDiv>
-          {loginMenus.map(({ name, link, show }) => {
+          {LOGIN_MENUS.map(({ name, link, show }) => {
             if (isLogin === show)
               return (
-                <Styled.LoginBtn>
-                  <Link href={link} key={name}>
-                    {name}
-                  </Link>
+                <Styled.LoginBtn key={name}>
+                  <Link href={link}>{name}</Link>
                 </Styled.LoginBtn>
               );
           })}
@@ -56,25 +63,8 @@ function GNB({ isLogin }: GNBProps) {
         </Styled.NavBtn>
       </Styled.RightDiv>
 
-      <Styled.NavDiv toggle={toggle}>
-        <Styled.NavMenuUl>
-          {GNBMenus.map(({ name, link }) => (
-            <Styled.NavMenuLi key={name}>
-              <Link href={link}>{name}</Link>
-            </Styled.NavMenuLi>
-          ))}
-        </Styled.NavMenuUl>
-        <Styled.NavLoginUl>
-          {loginMenus.map(({ name, link, show }) => {
-            if (isLogin === show)
-              return (
-                <Styled.NavLoginLi key={name}>
-                  <Link href={link}>{name}</Link>
-                </Styled.NavLoginLi>
-              );
-          })}
-        </Styled.NavLoginUl>
-      </Styled.NavDiv>
+      {/* 네비게이션 창 */}
+      <NavigationDiv isLogin={isLogin} toggle={toggle} />
     </Styled.ContainerNav>
   );
 }

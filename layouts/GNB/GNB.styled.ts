@@ -1,10 +1,9 @@
-import styled, { css } from 'styled-components';
-
-const headerHeight = '5rem';
+import { HEADER_HEIGHT } from '@/constants/menus';
+import styled from 'styled-components';
 
 export const ContainerNav = styled.nav`
   width: 100%;
-  height: ${headerHeight};
+  height: ${HEADER_HEIGHT};
   display: flex;
   position: fixed;
   top: 0;
@@ -15,17 +14,18 @@ export const ContainerNav = styled.nav`
 `;
 
 export const LogoDiv = styled.div`
-  width: 25%;
+  width: 50%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-left: 5vw;
 
-  div {
-    width: 7.5rem;
-    height: 2.5rem;
-    border: 1px solid black;
-    margin-left: 2rem;
+  svg {
+    cursor: pointer;
+  }
+  @media (min-width: 768px) {
+    width: 25%;
   }
 `;
 
@@ -41,10 +41,11 @@ export const MenuUl = styled.ul`
 
 export const MenuLi = styled.li`
   display: none;
+
   @media (min-width: 768px) {
     display: flex;
     align-items: center;
-    margin: 0 1.25rem;
+    margin: 0 1.25vw;
   }
 `;
 
@@ -53,10 +54,11 @@ export const RightDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-right: 2rem;
+  margin-right: 2.5vw;
 
   @media (min-width: 768px) {
     width: 25%;
+    margin-right: 5vw;
   }
 `;
 
@@ -70,93 +72,19 @@ export const LoginDiv = styled.div`
 
 export const LoginBtn = styled.button`
   display: none;
-  margin-left: 1rem;
+  margin-left: 1.5vw;
+  font-size: 0.825rem;
 
   @media (min-width: 768px) {
     display: flex;
   }
 `;
 
-export const SearchBtn = styled.button`
-  margin-left: 1rem;
-`;
+export const SearchBtn = styled.button``;
 
 export const NavBtn = styled.button`
   display: block;
   margin-left: 1rem;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
-`;
-
-// 네이게이션 메뉴
-
-interface NavDivProps {
-  toggle: boolean;
-}
-
-export const NavDiv = styled.div<NavDivProps>`
-  width: 100vw;
-  height: calc(100vh - ${headerHeight});
-  background: white;
-  position: fixed;
-  right: 0;
-  top: ${headerHeight};
-  transition: transform 0.5s;
-  padding: 3.75rem;
-
-  ${({ toggle }) =>
-    toggle &&
-    css`
-      transform: translateX(150vw);
-    `}
-
-  @media (min-width: 768px) {
-    display: none;
-    transition: none;
-  }
-`;
-
-export const NavMenuUl = styled.ul`
-  width: 100%;
-  list-style: none;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
-`;
-
-export const NavMenuLi = styled.li`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-top: 2rem;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
-`;
-
-export const NavLoginUl = styled.ul`
-  width: 100%;
-  list-style: none;
-  margin-top: 15rem;
-  margin-left: 2rem;
-
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-  padding-right: 2rem;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
-`;
-
-export const NavLoginLi = styled.li`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-top: 2rem;
 
   @media (min-width: 768px) {
     display: none;

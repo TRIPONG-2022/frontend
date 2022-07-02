@@ -1,4 +1,4 @@
-export const loginMenus = [
+export const LOGIN_MENUS = [
   {
     name: '로그인',
     link: '/auth/login',
@@ -21,7 +21,7 @@ export const loginMenus = [
   },
 ];
 
-export const GNBMenus = [
+export const GNB_MENUS = [
   {
     name: '커뮤니티',
     link: '/',
@@ -35,3 +35,5 @@ export const GNBMenus = [
     link: '/',
   },
 ];
+
+export const HEADER_HEIGHT = '5rem';
