@@ -34,25 +34,12 @@ interface MenuUlProps {
 }
 
 export const MenuUl = styled.ul<MenuUlProps>`
-  width: 110vw;
-  height: calc(100vh - ${headerHeight});
-
-  list-style: none;
-  background: lightblue;
-  position: fixed;
-  top: 5rem;
-  left: 110vw;
-  font-size: 2rem;
-  transition: ease-in-out 0.5s;
+  display: none;
 
   @media (min-width: 768px) {
     width: 50%;
-    height: auto;
     display: flex;
     justify-content: center;
-    position: initial;
-    font-size: 1.125rem;
-    transition: none;
   }
 
   ${({ toggle }) =>
@@ -63,20 +50,11 @@ export const MenuUl = styled.ul<MenuUlProps>`
 `;
 
 export const MenuLi = styled.li`
-  margin: 3rem;
-  font-weight: bold;
-
-  :first-child {
-    margin-top: 5rem;
-  }
+  display: none;
   @media (min-width: 768px) {
     display: flex;
     align-items: center;
     margin: 0 1.25rem;
-
-    :first-child {
-      margin-top: 0;
-    }
   }
 `;
 
@@ -93,12 +71,17 @@ export const RightDiv = styled.div`
 `;
 
 export const LoginDiv = styled.div`
-  display: flex;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
 `;
 
 export const LoginBtn = styled.button`
-  margin-left: 0.5rem;
   display: none;
+  margin-left: 1rem;
+
   @media (min-width: 768px) {
     display: flex;
   }
@@ -111,6 +94,79 @@ export const SearchBtn = styled.button`
 export const NavBtn = styled.button`
   display: block;
   margin-left: 1rem;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+// 네이게이션 메뉴
+
+interface NavDivProps {
+  toggle: boolean;
+}
+
+export const NavDiv = styled.div<NavDivProps>`
+  width: 100%;
+  height: calc(100vh - ${headerHeight});
+  background: white;
+  position: fixed;
+  left: 0;
+  top: ${headerHeight};
+  transition: ease-in-out 0.5s;
+  padding: 3.75rem;
+
+  ${({ toggle }) =>
+    toggle &&
+    css`
+      transform: translateX(110vw);
+    `}
+
+  @media (min-width: 768px) {
+    display: block;
+    transition: none;
+  }
+`;
+
+export const NavMenuUl = styled.ul`
+  width: 100%;
+  list-style: none;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export const NavMenuLi = styled.li`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 2rem;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export const NavLoginUl = styled.ul`
+  width: 100%;
+  list-style: none;
+  margin-top: 15rem;
+  margin-left: 2rem;
+
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  padding-right: 2rem;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export const NavLoginLi = styled.li`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 2rem;
 
   @media (min-width: 768px) {
     display: none;

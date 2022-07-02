@@ -1,23 +1,18 @@
-import { useState } from 'react';
-import styles from './XButton.module.css';
+import styles from './HamburgerButton.module.css';
 
 interface XButtonProps {
   width: number;
+  toggle: boolean;
 }
 
-function XButton({ width }: XButtonProps) {
-  const [active, setActive] = useState(false);
-
+function XButton({ width, toggle }: XButtonProps) {
   return (
     <svg
       className={`${styles.ham} ${styles.hamRotate} ${styles.ham1} ${
-        active && styles.active
+        !toggle && styles.active
       }`}
       viewBox="0 0 100 100"
       width={width}
-      onClick={() => {
-        setActive(!active);
-      }}
     >
       <path
         className={`${styles.line} ${styles.top}`}

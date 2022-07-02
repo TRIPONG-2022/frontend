@@ -18,11 +18,14 @@ export const Body = styled.div<BodyProps>`
   width: 100%;
   word-break: break-all;
   min-height: 80vh;
+
   ${({ fullWidth }) =>
     !fullWidth &&
     css`
       max-width: 768px;
       padding: 0 32px;
+
+      // 태블릿일 경우 추가
 
       @media (min-width: 768px) {
         max-width: 1280px;

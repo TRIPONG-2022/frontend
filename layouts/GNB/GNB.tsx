@@ -1,7 +1,8 @@
-import XButton from '@/components/shared/XButton/XButton';
-import useWindowSize from 'hook/useWindowSize';
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
+
+import useWindowSize from '@/hooks/useWindowSize';
+import XButton from '@/components/shared/HamburgerButton/HamburgerButton';
 import * as Styled from './GNB.styled';
 
 interface GNBProps {
@@ -11,23 +12,23 @@ interface GNBProps {
 const loginMenus = [
   {
     name: '로그인',
-    link: '/',
-    show: true,
+    link: '/auth/login',
+    show: false,
   },
   {
     name: '회원가입',
     link: '/',
-    show: true,
+    show: false,
   },
   {
     name: '로그아웃',
     link: '/',
-    show: false,
+    show: true,
   },
   {
     name: '마이페이지',
     link: '/',
-    show: false,
+    show: true,
   },
 ];
 
@@ -35,24 +36,20 @@ const GNBMenus = [
   {
     name: '커뮤니티',
     link: '/',
-    show: true,
   },
   {
     name: '여행메이트 찾기',
     link: '/',
-    show: true,
   },
   {
     name: '소개',
     link: '/',
-    show: true,
   },
-  ...loginMenus,
 ];
 
 function GNB({ isLogin }: GNBProps) {
   const [toggle, setToggle] = useState<boolean>(true);
-  const { windowWidth, windowHeight } = useWindowSize(0);
+  const { windowWidth, windowHeight } = useWindowSize(100);
 
   const onToggle = useCallback(() => {
     console.log(toggle);
@@ -60,6 +57,7 @@ function GNB({ isLogin }: GNBProps) {
   }, [toggle]);
 
   useEffect(() => {
+    console.log(windowWidth);
     if (window.innerWidth > 768) setToggle(true);
   }, [windowWidth]);
 
@@ -68,20 +66,12 @@ function GNB({ isLogin }: GNBProps) {
       <Styled.LogoDiv>
         <div>로고</div>
       </Styled.LogoDiv>
-
       <Styled.MenuUl toggle={toggle}>
-        {GNBMenus.map(({ name, link, show }, idx) => {
+        {GNBMenus.map(({ name, link }) => {
           return (
-            (toggle && idx < 3 && (
-              <Styled.MenuLi key={name}>
-                <Link href={link}>{name}</Link>
-              </Styled.MenuLi>
-            )) ||
-            (!toggle && isLogin !== show && (
-              <Styled.MenuLi key={name}>
-                <Link href={link}>{name}</Link>
-              </Styled.MenuLi>
-            ))
+            <Styled.MenuLi key={name}>
+              <Link href={link}>{name}</Link>
+            </Styled.MenuLi>
           );
         })}
       </Styled.MenuUl>
@@ -91,7 +81,7 @@ function GNB({ isLogin }: GNBProps) {
 
         <Styled.LoginDiv>
           {loginMenus.map(({ name, link, show }) => {
-            if (isLogin !== show)
+            if (isLogin === show)
               return (
                 <Link href={link} key={name}>
                   <Styled.LoginBtn>{name}</Styled.LoginBtn>
@@ -99,12 +89,30 @@ function GNB({ isLogin }: GNBProps) {
               );
           })}
         </Styled.LoginDiv>
-        {/* <Styled.NavBtn onClick={onToggle}>네비바</Styled.NavBtn> */}
-
-        <div onClick={onToggle}>
-          <XButton width={50} />
-        </div>
+        <Styled.NavBtn onClick={onToggle}>
+          <XButton width={50} toggle={toggle} />
+        </Styled.NavBtn>
       </Styled.RightDiv>
+
+      <Styled.NavDiv toggle={toggle}>
+        <Styled.NavMenuUl>
+          {GNBMenus.map(({ name, link }) => (
+            <Styled.NavMenuLi key={name}>
+              <Link href={link}>{name}</Link>
+            </Styled.NavMenuLi>
+          ))}
+        </Styled.NavMenuUl>
+        <Styled.NavLoginUl>
+          {loginMenus.map(({ name, link, show }) => {
+            if (isLogin === show)
+              return (
+                <Link href={link} key={name}>
+                  <Styled.NavLoginLi>{name}</Styled.NavLoginLi>
+                </Link>
+              );
+          })}
+        </Styled.NavLoginUl>
+      </Styled.NavDiv>
     </Styled.ContainerNav>
   );
 }
