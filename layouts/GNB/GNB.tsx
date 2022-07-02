@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import useWindowSize from '@/hooks/useWindowSize';
-import XButton from '@/components/shared/HamburgerButton/HamburgerButton';
 import * as Styled from './GNB.styled';
+import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
+
+import useWindowSize from '@/hooks/useWindowSize';
 
 interface GNBProps {
   isLogin: boolean;
@@ -90,7 +91,7 @@ function GNB({ isLogin }: GNBProps) {
           })}
         </Styled.LoginDiv>
         <Styled.NavBtn onClick={onToggle}>
-          <XButton width={50} toggle={toggle} />
+          <HamburgerButton width={50} toggle={toggle} />
         </Styled.NavBtn>
       </Styled.RightDiv>
 
