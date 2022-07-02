@@ -29,11 +29,7 @@ export const LogoDiv = styled.div`
   }
 `;
 
-interface MenuUlProps {
-  toggle: boolean;
-}
-
-export const MenuUl = styled.ul<MenuUlProps>`
+export const MenuUl = styled.ul`
   display: none;
 
   @media (min-width: 768px) {
@@ -41,12 +37,6 @@ export const MenuUl = styled.ul<MenuUlProps>`
     display: flex;
     justify-content: center;
   }
-
-  ${({ toggle }) =>
-    !toggle &&
-    css`
-      transform: translateX(-110vw);
-    `}
 `;
 
 export const MenuLi = styled.li`
