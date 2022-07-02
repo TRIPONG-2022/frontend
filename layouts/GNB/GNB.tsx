@@ -22,7 +22,7 @@ function GNB({ isLogin }: GNBProps) {
   }, [toggle]);
 
   useEffect(() => {
-    if (window.innerWidth > 768) setToggle(true);
+    if (window.innerWidth > 1024) setToggle(true);
   }, [windowWidth]);
 
   return (

@@ -1,4 +1,5 @@
 import { HEADER_HEIGHT } from '@/constants/menus';
+import { SCREEN_TABLET } from '@/constants/screen';
 import styled from 'styled-components';
 
 export const ContainerNav = styled.nav`
@@ -14,79 +15,80 @@ export const ContainerNav = styled.nav`
 `;
 
 export const LogoDiv = styled.div`
-  width: 50%;
+  width: 25%;
   height: 100%;
+  margin-left: 5vw;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-left: 5vw;
 
   svg {
     cursor: pointer;
   }
-  @media (min-width: 768px) {
-    width: 25%;
+
+  ${SCREEN_TABLET} {
+    width: 50%;
   }
 `;
 
 export const MenuUl = styled.ul`
-  display: none;
+  display: flex;
+  width: 50%;
+  justify-content: center;
 
-  @media (min-width: 768px) {
-    width: 50%;
-    display: flex;
-    justify-content: center;
+  ${SCREEN_TABLET} {
+    display: none;
   }
 `;
 
 export const MenuLi = styled.li`
-  display: none;
+  align-items: center;
+  margin: 0 1.25vw;
+  display: flex;
 
-  @media (min-width: 768px) {
-    display: flex;
-    align-items: center;
-    margin: 0 1.25vw;
+  ${SCREEN_TABLET} {
+    display: none;
   }
 `;
 
 export const RightDiv = styled.div`
-  width: 80%;
+  width: 25%;
+  margin-right: 5vw;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-right: 2.5vw;
 
-  @media (min-width: 768px) {
-    width: 25%;
-    margin-right: 5vw;
+  ${SCREEN_TABLET} {
+    width: 80%;
+    margin-right: 2.5vw;
   }
 `;
 
 export const LoginDiv = styled.div`
-  display: none;
+  display: flex;
 
-  @media (min-width: 768px) {
-    display: flex;
+  ${SCREEN_TABLET} {
+    display: none;
   }
 `;
 
 export const LoginBtn = styled.button`
-  display: none;
+  display: flex;
   margin-left: 1.5vw;
   font-size: 0.825rem;
 
-  @media (min-width: 768px) {
-    display: flex;
+  ${SCREEN_TABLET} {
+    display: none;
   }
 `;
 
 export const SearchBtn = styled.button``;
 
 export const NavBtn = styled.button`
-  display: block;
+  display: none;
   margin-left: 1rem;
 
-  @media (min-width: 768px) {
-    display: none;
+  ${SCREEN_TABLET} {
+    display: block;
   }
 `;

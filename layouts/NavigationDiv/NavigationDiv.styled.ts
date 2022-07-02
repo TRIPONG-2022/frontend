@@ -1,4 +1,5 @@
 import { HEADER_HEIGHT } from '@/constants/menus';
+import { SCREEN_TABLET } from '@/constants/screen';
 import styled, { css } from 'styled-components';
 
 interface NavDivProps {
@@ -12,38 +13,31 @@ export const NavDiv = styled.div<NavDivProps>`
   position: fixed;
   right: 0;
   top: ${HEADER_HEIGHT};
-  transition: transform 0.5s;
+  display: none;
+  transition: none;
   padding: 3.75rem;
 
   ${({ toggle }) =>
     toggle &&
     css`
-      transform: translateX(150vw);
+      transform: translateX(125vw);
     `}
 
-  @media (min-width: 768px) {
-    display: none;
-    transition: none;
+  ${SCREEN_TABLET} {
+    display: block;
+    transition: transform 0.5s;
   }
 `;
 
 export const NavMenuUl = styled.ul`
   width: 100%;
   list-style: none;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
 `;
 
 export const NavMenuLi = styled.li`
   font-size: 2rem;
   font-weight: bold;
   margin-top: 2rem;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
 `;
 
 export const NavLoginUl = styled.ul`
@@ -56,18 +50,10 @@ export const NavLoginUl = styled.ul`
   flex-direction: column-reverse;
   align-items: flex-end;
   padding-right: 2rem;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
 `;
 
 export const NavLoginLi = styled.li`
+  margin-top: 2rem;
   font-size: 2rem;
   font-weight: bold;
-  margin-top: 2rem;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
 `;

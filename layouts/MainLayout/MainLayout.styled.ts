@@ -1,3 +1,4 @@
+import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/constants/screen';
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
@@ -16,19 +17,18 @@ interface BodyProps {
 
 export const Body = styled.div<BodyProps>`
   width: 100%;
-  word-break: break-all;
   min-height: 80vh;
-
+  word-break: break-all;
   ${({ fullWidth }) =>
     !fullWidth &&
     css`
       padding: 0 20px;
 
-      @media (min-width: 768px) and (max-width: 1024px) {
-        padding: 0 32px;
+      ${SCREEN_TABLET} {
+        padding: 0 30px;
       }
 
-      @media (min-width: 1025px) {
+      ${SCREEN_DESKTOP} {
         max-width: 1280px;
         padding: 0 40px;
       }
