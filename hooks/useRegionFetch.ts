@@ -36,7 +36,7 @@ function useRegionFetch({ url, deps }: Props): UseRegionFetchReturns {
       const data = regcodes?.map((obj: RegionData) => {
         return {
           value: obj.code,
-          label: obj.name,
+          label: obj.name.split(' ')[1] || obj.name,
         };
       });
 

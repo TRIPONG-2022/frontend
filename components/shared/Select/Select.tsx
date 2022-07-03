@@ -24,9 +24,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 
           {options?.map(({ value, label }) => (
             <Styled.Option key={`${id}-${value}`} value={value}>
-              {typeof label == 'string' && label.split(' ')[1]
-                ? label.split(' ')[1]
-                : label}
+              {label}
             </Styled.Option>
           ))}
         </Styled.Select>
