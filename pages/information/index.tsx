@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
-import { ADD_INFORMATION_SCHEMA, InformationScheme } from '@/constants/schema';
+import { ADD_INFORMATION_SCHEMA, InformationSchema } from '@/constants/schema';
 import styled from 'styled-components';
 import { days, getCurrentYear, months, years } from '@/constants/date';
 import React from 'react';
@@ -16,7 +16,7 @@ const InformationPage: NextPage = () => {
     register,
     watch,
     formState: { isValid, isDirty, errors },
-  } = useForm<InformationScheme>({
+  } = useForm<InformationSchema>({
     mode: 'onChange',
     resolver: yupResolver(ADD_INFORMATION_SCHEMA),
     defaultValues: {
@@ -45,7 +45,7 @@ const InformationPage: NextPage = () => {
   });
 
   const onSubmit = React.useCallback(
-    (data: InformationScheme) => {
+    (data: InformationSchema) => {
       const cityName = cityMap.get(data.city);
       const districtName = districtMap.get(data.district);
       console.log({ ...data, cityName, districtName });

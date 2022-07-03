@@ -32,7 +32,6 @@ export const LOGIN_SCHEMA = yup.object({
   password: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
 });
 
-
 export const ADD_INFORMATION_SCHEMA = yup.object({
   name: yup
     .string()
@@ -58,8 +57,7 @@ export const ADD_INFORMATION_SCHEMA = yup.object({
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
 });
 
-export type InformationScheme = yup.InferType<typeof ADD_INFORMATION_SCHEMA>;
-
+export type InformationSchema = yup.InferType<typeof ADD_INFORMATION_SCHEMA>;
 
 export const JOIN_SCHEMA = yup.object({
   nickName: NICKNAME_SCHEMA,
