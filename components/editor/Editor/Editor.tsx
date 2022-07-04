@@ -5,6 +5,8 @@ import TagInput from '../TagInput';
 import TitleInput from '../TitleInput';
 import * as Styled from './Editor.styled';
 import EditorFooter from '../EditorFooter';
+import EditorHeader from '../EditorHeader';
+import HeadCountInput from '../HeadCountInput';
 
 interface PostSchema {
   title: string;
@@ -27,6 +29,8 @@ export default function Editor({ initialValues }: EditorProps) {
 
   return (
     <Styled.Container>
+      <EditorHeader />
+      <HeadCountInput />
       <TitleInput
         id="title"
         type="text"

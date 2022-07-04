@@ -16,3 +16,5 @@ export { default as EditorBlockQuoteIcon } from './editor-block-quote.svg';
 export { default as EditorHorizontalRuleIcon } from './editor-horizontal-rule.svg';
 export { default as EditorImageIcon } from './editor-image.svg';
 export { default as EditorLinkIcon } from './editor-link.svg';
+export { default as PlusIcon } from './plus.svg';
+export { default as MinusIcon } from './minus.svg';
