@@ -1,4 +1,4 @@
-import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/constants/screen';
+import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`

@@ -1,5 +1,5 @@
 import { HEADER_HEIGHT } from '@/constants/menus';
-import { SCREEN_TABLET } from '@/constants/screen';
+import { SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
 interface NavDivProps {
@@ -7,25 +7,25 @@ interface NavDivProps {
 }
 
 export const NavDiv = styled.div<NavDivProps>`
+  display: block;
   width: 100vw;
   height: calc(100vh - ${HEADER_HEIGHT});
+  padding: 3.75rem;
   background: white;
   position: fixed;
-  right: 0;
   top: ${HEADER_HEIGHT};
-  display: none;
-  transition: none;
-  padding: 3.75rem;
+  transform: none;
+  transition: transform ease-in-out 0.45s;
 
   ${({ toggle }) =>
-    toggle &&
+    !toggle &&
     css`
+      transition: transform ease-in-out 0.45s;
       transform: translateX(125vw);
     `}
 
   ${SCREEN_TABLET} {
-    display: block;
-    transition: transform 0.5s;
+    display: none;
   }
 `;
 

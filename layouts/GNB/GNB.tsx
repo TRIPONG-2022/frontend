@@ -14,7 +14,7 @@ interface GNBProps {
 }
 
 function GNB({ isLogin }: GNBProps) {
-  const [toggle, setToggle] = useState<boolean>(true);
+  const [toggle, setToggle] = useState<boolean>(false);
   const { windowWidth, windowHeight } = useWindowSize(0);
 
   const onToggle = useCallback(() => {
@@ -22,7 +22,7 @@ function GNB({ isLogin }: GNBProps) {
   }, [toggle]);
 
   useEffect(() => {
-    if (window.innerWidth > 1024) setToggle(true);
+    if (window.innerWidth > 1280) setToggle(false);
   }, [windowWidth]);
 
   return (
@@ -30,7 +30,9 @@ function GNB({ isLogin }: GNBProps) {
       {/* 로고 구간 */}
       <Styled.LogoDiv>
         <Link href="/">
-          <SVGIcon icon={'Logo'} width={120} height={50} />
+          <a>
+            <SVGIcon icon={'LogoIcon'} width={120} height={50} />
+          </a>
         </Link>
       </Styled.LogoDiv>
 
@@ -46,7 +48,7 @@ function GNB({ isLogin }: GNBProps) {
       {/* 검색, 로그인, 회원가입 구간 */}
       <Styled.RightDiv>
         <Styled.SearchBtn>
-          <SVGIcon icon={'Search'} width={25} height={25} />
+          <SVGIcon icon={'SearchIcon'} width={25} height={25} />
         </Styled.SearchBtn>
         <Styled.LoginDiv>
           {LOGIN_MENUS.map(({ name, link, show }) => {

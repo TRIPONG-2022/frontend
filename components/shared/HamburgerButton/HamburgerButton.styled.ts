@@ -14,7 +14,7 @@ export const HamburgerButtonSVG = styled.svg<HamburgerActiveType>`
   transition: transform 400ms;
 
   ${({ active }) =>
-    !active &&
+    active &&
     css`
       transform: rotate(45deg);
     `}
@@ -31,7 +31,7 @@ export const LinePath = styled.path<HamburgerActiveType>`
 export const LineTopPath = styled(LinePath)`
   stroke-dasharray: 40 139;
   ${({ active }) =>
-    !active &&
+    active &&
     css`
       stroke-dashoffset: -98px;
     `}
@@ -40,7 +40,7 @@ export const LineTopPath = styled(LinePath)`
 export const LineBottomPath = styled(LinePath)`
   stroke-dasharray: 40 180;
   ${({ active }) =>
-    !active &&
+    active &&
     css`
       stroke-dashoffset: -138px;
     `}
