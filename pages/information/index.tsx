@@ -28,9 +28,6 @@ const InformationPage: NextPage = () => {
   const watchYear: number = watch('year', 2022);
   const watchMonth: number = watch('month', 1);
   const watchRegionCode = watch('city');
-  // 맨처음에 Ref로 관리하려했다가 re-render가 없어서 day가 바뀌지 않는 이슈로 state로 year, month 관리
-  // state로 관리하던 year, month를 watch로 인해 더 쉽게 관리. (state처럼 작동)
-  // useForm hook 안에서 defaultvalue
 
   const [city, cityMap] = useRegionFetch({
     url: 'https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00000000',

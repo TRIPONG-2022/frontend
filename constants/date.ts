@@ -29,6 +29,3 @@ export const days = (year: number, month: number) => {
   });
   // }
 };
-
-// 다른 방법 Array.from({length:12}, (_, i) => i +1)
-// 아직 Array from에 저 두번째 인자 역할 안찾아봄
