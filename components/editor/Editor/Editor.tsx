@@ -26,7 +26,7 @@ export default function Editor({ initialValues }: EditorProps) {
   };
 
   return (
-    <Styled.FormContainer onSubmit={handleSubmit(onSubmit)}>
+    <Styled.Container>
       <TitleInput
         id="title"
         type="text"
@@ -42,6 +42,6 @@ export default function Editor({ initialValues }: EditorProps) {
         onChange={(content) => setValue('content', content)}
       />
       <EditorFooter />
-    </Styled.FormContainer>
+    </Styled.Container>
   );
 }

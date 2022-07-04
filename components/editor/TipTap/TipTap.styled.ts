@@ -1,9 +1,16 @@
 import styled, { css } from 'styled-components';
 import { markdownStyles } from '@/styles/markdown';
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+`;
+
 export const EditorContentContainer = styled.div`
   ${({ theme }) => css`
     height: 32rem;
+    border: 2px solid transparent;
     border-radius: 0.75rem;
     padding: 1.25rem;
     background-color: ${theme.colors.gray[50]};
@@ -22,7 +29,7 @@ export const EditorContentContainer = styled.div`
       background-clip: content-box;
     }
     &:focus-within {
-      box-shadow: inset 0 0 0 2px ${theme.colors.primary.hex};
+      border-color: ${theme.colors.primary.hex};
     }
 
     @media (min-width: 768px) {
