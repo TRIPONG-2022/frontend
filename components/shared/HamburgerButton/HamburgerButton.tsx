@@ -1,12 +1,12 @@
 // import styles from './HamburgerButton.module.css';
 import * as Styled from './HamburgerButton.styled';
 
-interface XButtonProps {
+interface HamburgerButtonProps {
   width: number;
   toggle: boolean;
 }
 
-function HamburgerButton({ width, toggle }: XButtonProps) {
+function HamburgerButton({ width, toggle }: HamburgerButtonProps) {
   return (
     <Styled.HamburgerButtonSVG
       active={toggle}
