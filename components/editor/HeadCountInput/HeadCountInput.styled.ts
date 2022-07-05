@@ -6,7 +6,7 @@ export const Container = styled.div`
 
   border-radius: 0.75rem;
   padding: 1.25rem;
-
+  column-gap: 1rem;
   ${({ theme }) => css`
     background-color: ${theme.colors.gray[50]};
     &:focus-within {
@@ -23,7 +23,6 @@ export const Container = styled.div`
 export const Label = styled.label`
   font-size: 1.125rem;
   font-weight: 500;
-  margin-right: 1rem;
   ${({ theme }) => css`
     color: ${theme.colors.blackAlpha[400]};
   `}
@@ -73,7 +72,7 @@ export const CountInput = styled.p`
 
   ${({ theme }) => css`
     color: ${theme.colors.primary.hex};
-    background-color: #ffffff;
+    background-color: ${theme.colors.gray[50]};
     border: 1px solid ${theme.colors.secondary.hex};
   `}
 
@@ -83,3 +82,9 @@ export const CountInput = styled.p`
     margin: 0;
   }
 `;
+
+// export const DatePickerContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   column-gap: 0.5rem;
+// `;

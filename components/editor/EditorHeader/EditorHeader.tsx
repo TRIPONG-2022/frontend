@@ -1,16 +1,27 @@
 import React from 'react';
 import * as Styled from './EditorHeader.styled';
 
-interface EditorHeaderProps {}
+interface EditorHeaderProps {
+  category: string;
+  onChangeCategory: (category: string) => void;
+}
 
-export default function EditorHeader({}: EditorHeaderProps) {
+export default function EditorHeader({
+  category,
+  onChangeCategory,
+}: EditorHeaderProps) {
   return (
     <Styled.Container>
       <div>
-        <select defaultValue="">
+        <select
+          defaultValue=""
+          value={category}
+          onChange={(event) => onChangeCategory(event.target.value)}
+        >
           <option value="">카테고리</option>
-          <option value="review">맛집/리뷰/후기</option>
-          <option value="male">커뮤니티</option>
+          <option value="review">후기, 리뷰</option>
+          <option value="community">자유게시판</option>
+          <option value="qna">Q&A</option>
           <option value="gathering">여행메이트모집</option>
         </select>
       </div>

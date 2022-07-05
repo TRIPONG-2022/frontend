@@ -1,19 +1,24 @@
+import React from 'react';
 import SVGIcon from '@/components/shared/SVGIcon';
-import React, { useState } from 'react';
 import * as Styled from './HeadCountInput.styled';
-interface HeadCountInputProps {}
 
-export default function HeadCountInput({}: HeadCountInputProps) {
-  const [count, setCount] = useState<number>(4);
+interface HeadCountInputProps {
+  headCount: number;
+  onChange: (value: number) => void;
+}
 
+export default function HeadCountInput({
+  headCount,
+  onChange,
+}: HeadCountInputProps) {
   const subCount = () => {
-    if (0 < count) {
-      setCount((prevCount) => prevCount - 1);
+    if (0 < headCount) {
+      onChange(headCount - 1);
     }
   };
 
   const addCount = () => {
-    setCount((prevCount) => prevCount + 1);
+    onChange(headCount + 1);
   };
 
   return (
@@ -23,7 +28,7 @@ export default function HeadCountInput({}: HeadCountInputProps) {
         <Styled.CountButton onClick={subCount}>
           <SVGIcon icon="MinusIcon" />
         </Styled.CountButton>
-        <Styled.CountInput>{count}</Styled.CountInput>
+        <Styled.CountInput>{headCount}</Styled.CountInput>
         <Styled.CountButton onClick={addCount}>
           <SVGIcon icon="PlusIcon" />
         </Styled.CountButton>
