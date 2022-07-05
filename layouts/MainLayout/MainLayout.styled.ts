@@ -1,7 +1,7 @@
 import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.body`
   width: 100%;
   min-height: 100%;
   padding: 5rem 0;
@@ -15,7 +15,7 @@ interface BodyProps {
   fullWidth?: boolean;
 }
 
-export const Body = styled.div<BodyProps>`
+export const Body = styled.main<BodyProps>`
   width: 100%;
   min-height: 80vh;
   word-break: break-all;
@@ -35,7 +35,7 @@ export const Body = styled.div<BodyProps>`
     `}
 `;
 
-export const Footer = styled.div`
+export const Footer = styled.footer`
   width: 100%;
   height: 5rem;
   border-top: 1px solid black;

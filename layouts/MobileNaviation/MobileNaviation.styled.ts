@@ -1,5 +1,5 @@
 import { HEADER_HEIGHT } from '@/constants/menus';
-import { SCREEN_TABLET } from '@/styles/screen';
+import { SCREEN_DESKTOP } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
 interface NavDivProps {
@@ -24,7 +24,7 @@ export const NavDiv = styled.div<NavDivProps>`
       transform: translateX(125vw);
     `}
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     display: none;
   }
 `;

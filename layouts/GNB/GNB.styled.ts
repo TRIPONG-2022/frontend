@@ -1,14 +1,19 @@
 import { HEADER_HEIGHT } from '@/constants/menus';
-import { SCREEN_TABLET } from '@/styles/screen';
+import { SCREEN_DESKTOP } from '@/styles/screen';
 import styled from 'styled-components';
 
-export const ContainerNav = styled.nav`
+export const GNBHeader = styled.header`
   width: 100%;
   height: ${HEADER_HEIGHT};
-  display: flex;
   position: fixed;
   top: 0;
   z-index: 100;
+`;
+
+export const GNBNav = styled.nav`
+  width: 100%;
+  height: 100%;
+  display: flex;
   background: white;
   border-bottom: solid 1px black;
   font-size: 1rem;
@@ -26,7 +31,7 @@ export const LogoDiv = styled.div`
     cursor: pointer;
   }
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     width: 25%;
   }
 `;
@@ -36,7 +41,7 @@ export const MenuUl = styled.ul`
   width: 50%;
   justify-content: center;
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     display: flex;
   }
 `;
@@ -46,7 +51,7 @@ export const MenuLi = styled.li`
   margin: 0 1.25vw;
   display: none;
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     display: flex;
   }
 `;
@@ -58,7 +63,7 @@ export const RightDiv = styled.div`
   align-items: center;
   justify-content: flex-end;
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     width: 25%;
     margin-right: 5vw;
   }
@@ -67,7 +72,7 @@ export const RightDiv = styled.div`
 export const LoginDiv = styled.div`
   display: none;
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     display: flex;
   }
 `;
@@ -77,7 +82,7 @@ export const LoginBtn = styled.button`
   margin-left: 1.5vw;
   font-size: 0.825rem;
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     display: flex;
   }
 `;
@@ -88,7 +93,7 @@ export const NavBtn = styled.button`
   display: block;
   margin-left: 1rem;
 
-  ${SCREEN_TABLET} {
+  ${SCREEN_DESKTOP} {
     display: none;
   }
 `;

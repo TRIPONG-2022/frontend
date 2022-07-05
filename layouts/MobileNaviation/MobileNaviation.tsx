@@ -1,14 +1,14 @@
 import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
 import Link from 'next/link';
 import React from 'react';
-import * as Styled from './NavigationDiv.styled';
+import * as Styled from './MobileNaviation.styled';
 
-interface NavigationDivProps {
+interface MobileNavigationProps {
   toggle: boolean;
   isLogin: boolean;
 }
 
-function NavigationDiv({ toggle, isLogin }: NavigationDivProps) {
+function MobileNavigation({ toggle, isLogin }: MobileNavigationProps) {
   return (
     <Styled.NavDiv toggle={toggle}>
       <Styled.NavMenuUl>
@@ -32,4 +32,4 @@ function NavigationDiv({ toggle, isLogin }: NavigationDivProps) {
   );
 }
 
-export default NavigationDiv;
+export default MobileNavigation;
