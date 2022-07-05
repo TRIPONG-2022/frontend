@@ -18,3 +18,7 @@ export { default as EditorImageIcon } from './editor-image.svg';
 export { default as EditorLinkIcon } from './editor-link.svg';
 export { default as PlusIcon } from './plus.svg';
 export { default as MinusIcon } from './minus.svg';
+export { default as CalendarIcon } from './calendar.svg';
+export { default as ChevronLeftIcon } from './chevron-left.svg';
+export { default as ChevronRightIcon } from './chevron-right.svg';
+export { default as ArrowRightIcon } from './arrow-right.svg';
