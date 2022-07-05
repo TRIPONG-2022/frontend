@@ -25,7 +25,7 @@ const ModalPage: NextPage = () => {
             variant="outline"
             css={`
               width: 100%;
-              margin-top: 1rem;
+              margin-top: 2rem;
             `}
             onClick={() => close()}
           >
@@ -39,7 +39,7 @@ const ModalPage: NextPage = () => {
             variant="outline"
             css={`
               width: 100%;
-              margin-top: 1rem;
+              margin-top: 2rem;
             `}
             onClick={() => close()}
           >
@@ -50,7 +50,7 @@ const ModalPage: NextPage = () => {
             type="submit"
             css={`
               width: 100%;
-              margin-top: 1rem;
+              margin-top: 2rem;
             `}
             onClick={() => btnClick()}
           >
