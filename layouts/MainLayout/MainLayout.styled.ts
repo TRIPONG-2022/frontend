@@ -1,7 +1,7 @@
 import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
-export const Container = styled.body`
+export const Container = styled.div`
   width: 100%;
   min-height: 100%;
   padding: 5rem 0;
