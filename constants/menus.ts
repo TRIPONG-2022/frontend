@@ -1,3 +1,4 @@
+// layout/GNB/GNB.styled.ts에서 사용
 export const LOGIN_MENUS = [
   {
     name: '로그인',
@@ -37,3 +38,33 @@ export const GNB_MENUS = [
 ];
 
 export const HEADER_HEIGHT = '5rem';
+
+// components/shared/SideMenu/SideMenu.tsx에서 사용
+export const MY_PAGE_MENUS = [
+  {
+    name: '내 정보',
+    link: '/',
+  },
+  {
+    name: '내가 쓴 글',
+    link: '/',
+  },
+  {
+    name: '내가 단 댓글',
+    link: '/',
+  },
+  {
+    name: '좋아요한 글',
+    link: '/',
+  },
+  {
+    name: '비밀번호 재설정',
+    link: '/',
+  },
+  {
+    name: '회원탈퇴',
+    link: '/',
+  },
+];
+
+export type MY_PAGE_MENUS_TYPE = typeof MY_PAGE_MENUS;
