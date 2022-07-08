@@ -10,7 +10,7 @@ function useModal() {
     setIsModal(false);
   };
 
-  return { isModal, open, close };
+  return [isModal, open, close];
 }
 
 export default useModal;
