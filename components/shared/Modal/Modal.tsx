@@ -37,7 +37,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const ModalComponent = ({ isModal, close, children }: ModalProps) => {
+const Modal = ({ isModal, close, children }: ModalProps) => {
   return (
     <>
       {isModal && (
@@ -67,9 +67,9 @@ const Container = styled.div`
   padding: 2rem;
 `;
 
-ModalComponent.Title = Title;
-ModalComponent.Description = Description;
-ModalComponent.BtnContainer = BtnContainer;
-ModalComponent.BtnContainers = TwoBtnContainer;
+Modal.Title = Title;
+Modal.Description = Description;
+Modal.BtnContainer = BtnContainer;
+Modal.BtnContainers = TwoBtnContainer;
 
-export default ModalComponent;
+export default Modal;
