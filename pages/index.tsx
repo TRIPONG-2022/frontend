@@ -1,10 +1,12 @@
+import MainLayout from '@/layouts/MainLayout';
 import type { NextPage } from 'next';
+import React from 'react';
 
 const HomePage: NextPage = () => {
   return (
-    <div>
+    <MainLayout>
       <h1 className="">TRIPONG</h1>
-    </div>
+    </MainLayout>
   );
 };
 
