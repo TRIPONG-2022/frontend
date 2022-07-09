@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import InputContainer from '../InputContainer';
 import * as Styled from './TagInput.styled';
 
 interface TagInputProps {
@@ -61,7 +62,7 @@ export default function TagInput({ tags, onChange }: TagInputProps) {
   );
 
   return (
-    <Styled.Container>
+    <InputContainer>
       <Styled.TagList>
         {0 < tags.length &&
           tags?.map((tag) => (
@@ -80,6 +81,6 @@ export default function TagInput({ tags, onChange }: TagInputProps) {
           ref={inputRef}
         />
       </Styled.TagList>
-    </Styled.Container>
+    </InputContainer>
   );
 }

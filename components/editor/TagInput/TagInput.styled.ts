@@ -1,23 +1,6 @@
 import { FADE_IN } from '@/styles/keyframes';
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
-  border-radius: 0.75rem;
-  padding: 1rem 1.25rem;
-
-  ${({ theme }) => css`
-    background-color: ${theme.colors.gray[50]};
-    &:focus-within {
-      box-shadow: inset 0 0 0 2px ${theme.colors.primary.hex};
-    }
-  `}
-
-  @media (min-width: 768px) {
-    border-radius: 1rem;
-    padding: 1.25rem 1.5rem;
-  }
-`;
-
 export const TagList = styled.ul`
   display: flex;
   gap: 0.5rem;
