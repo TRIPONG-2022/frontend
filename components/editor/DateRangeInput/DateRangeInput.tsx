@@ -1,6 +1,6 @@
-import DatePicker from '@/components/shared/DatePicker';
+import React, { useCallback } from 'react';
 import SVGIcon from '@/components/shared/SVGIcon';
-import React from 'react';
+import DatePicker from '@/components/shared/DatePicker';
 import * as Styled from './DateRangeInput.styled';
 
 interface DateRangeInputProps {
@@ -16,12 +16,22 @@ export default function DateRangeInput({
   onChangeStartDate,
   onChangeEndDate,
 }: DateRangeInputProps) {
+  const handleChangeStartDate = useCallback(
+    (date: Date) => {
+      onChangeStartDate(date);
+      if (endDate < date) {
+        onChangeEndDate(date);
+      }
+    },
+    [endDate, onChangeEndDate, onChangeStartDate],
+  );
+
   return (
     <Styled.Container>
       <label>모집기간</label>
       <DatePicker
         date={startDate}
-        onChange={onChangeStartDate}
+        onChange={handleChangeStartDate}
         selectsStart
         startDate={startDate}
         endDate={endDate}
