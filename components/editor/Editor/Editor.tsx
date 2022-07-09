@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import TipTap from '../TipTap';
@@ -10,6 +10,7 @@ import EditorHeader from '../EditorHeader';
 import HeadCountInput from '../HeadCountInput';
 import DatePicker from '@/components/shared/DatePicker';
 import SVGIcon from '@/components/shared/SVGIcon';
+import DateRangeInput from '../DateRangeInput';
 
 interface PostSchema {
   category: string;
@@ -31,6 +32,20 @@ export default function Editor({ initialValues }: EditorProps) {
     defaultValues: { tags: [], ...initialValues },
   });
 
+  const onChangeStartDate = useCallback(
+    (date: Date) => {
+      setValue('startDate', date);
+    },
+    [setValue],
+  );
+
+  const onChangeEndDate = useCallback(
+    (date: Date) => {
+      setValue('endDate', date);
+    },
+    [setValue],
+  );
+
   const onCancel = () => {
     router.back();
   };
@@ -51,26 +66,12 @@ export default function Editor({ initialValues }: EditorProps) {
             headCount={watch('totalHeadCount') || 0}
             onChange={(value) => setValue('totalHeadCount', value)}
           />
-          <Styled.DateRangeContainer>
-            <label>모집기간</label>
-            <DatePicker
-              date={watch('startDate') || new Date()}
-              onChange={(date) => setValue('startDate', date)}
-              selectsStart
-              startDate={watch('startDate')}
-              endDate={watch('endDate')}
-              minDate={new Date()}
-            />
-            <SVGIcon icon="ArrowRightIcon" />
-            <DatePicker
-              date={watch('endDate') || new Date()}
-              onChange={(date) => setValue('endDate', date)}
-              selectsEnd
-              startDate={watch('startDate')}
-              endDate={watch('endDate')}
-              minDate={watch('startDate')}
-            />
-          </Styled.DateRangeContainer>
+          <DateRangeInput
+            startDate={watch('startDate') || new Date()}
+            endDate={watch('endDate') || new Date()}
+            onChangeStartDate={onChangeStartDate}
+            onChangeEndDate={onChangeEndDate}
+          />
         </React.Fragment>
       )}
       <TitleInput
