@@ -7,11 +7,16 @@ interface EditorFooterProps {
   onPublish?: () => void;
 }
 
-export default function EditorFooter({}: EditorFooterProps) {
+export default function EditorFooter({
+  onCancel,
+  onPublish,
+}: EditorFooterProps) {
   return (
     <Styled.Container>
-      <Button variant="outline">취소</Button>
-      <Button>등록</Button>
+      <Button variant="outline" onClick={onCancel}>
+        취소
+      </Button>
+      <Button onClick={onPublish}>등록</Button>
     </Styled.Container>
   );
 }

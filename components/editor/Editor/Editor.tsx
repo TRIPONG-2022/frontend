@@ -81,7 +81,7 @@ export default function Editor({ initialValues }: EditorProps) {
         content={initialValues?.content}
         onChange={(content) => setValue('content', content)}
       />
-      <EditorFooter />
+      <EditorFooter onPublish={handleSubmit(onSubmit)} />
     </Styled.Container>
   );
 }
