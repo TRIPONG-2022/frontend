@@ -4,14 +4,11 @@ import { useForm } from 'react-hook-form';
 import TipTap from '../TipTap';
 import TagInput from '../TagInput';
 import TitleInput from '../TitleInput';
-import * as Styled from './Editor.styled';
 import EditorFooter from '../EditorFooter';
 import EditorHeader from '../EditorHeader';
 import HeadCountInput from '../HeadCountInput';
-import DatePicker from '@/components/shared/DatePicker';
-import SVGIcon from '@/components/shared/SVGIcon';
 import DateRangeInput from '../DateRangeInput';
-import InputContainer from '../InputContainer';
+import * as Styled from './Editor.styled';
 
 interface PostSchema {
   category: string;
@@ -33,6 +30,20 @@ export default function Editor({ initialValues }: EditorProps) {
     defaultValues: { tags: [], ...initialValues },
   });
 
+  const onChangeCategory = useCallback(
+    (category: string) => {
+      setValue('category', category);
+    },
+    [setValue],
+  );
+
+  const onChangeHeadCount = useCallback(
+    (headCount: number) => {
+      setValue('totalHeadCount', headCount);
+    },
+    [setValue],
+  );
+
   const onChangeStartDate = useCallback(
     (date: Date) => {
       setValue('startDate', date);
@@ -43,6 +54,20 @@ export default function Editor({ initialValues }: EditorProps) {
   const onChangeEndDate = useCallback(
     (date: Date) => {
       setValue('endDate', date);
+    },
+    [setValue],
+  );
+
+  const onChangeTags = useCallback(
+    (tags: string[]) => {
+      setValue('tags', tags);
+    },
+    [setValue],
+  );
+
+  const onChangeContent = useCallback(
+    (content: string) => {
+      setValue('content', content);
     },
     [setValue],
   );
@@ -59,13 +84,13 @@ export default function Editor({ initialValues }: EditorProps) {
     <Styled.Container>
       <EditorHeader
         category={watch('category')}
-        onChangeCategory={(category) => setValue('category', category)}
+        onChangeCategory={onChangeCategory}
       />
       {watch('category') === 'gathering' && (
         <React.Fragment>
           <HeadCountInput
             headCount={watch('totalHeadCount') || 0}
-            onChange={(value) => setValue('totalHeadCount', value)}
+            onChange={onChangeHeadCount}
           />
           <DateRangeInput
             startDate={watch('startDate') || new Date()}
@@ -81,14 +106,8 @@ export default function Editor({ initialValues }: EditorProps) {
         placeholder="제목을 입력하세요."
         {...register('title')}
       />
-      <TagInput
-        tags={watch('tags')}
-        onChange={(tags) => setValue('tags', tags)}
-      />
-      <TipTap
-        content={initialValues?.content}
-        onChange={(content) => setValue('content', content)}
-      />
+      <TagInput tags={watch('tags')} onChange={onChangeTags} />
+      <TipTap content={initialValues?.content} onChange={onChangeContent} />
       <EditorFooter onCancel={onCancel} onPublish={handleSubmit(onSubmit)} />
     </Styled.Container>
   );
