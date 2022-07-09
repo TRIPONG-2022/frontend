@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import SVGIcon from '@/components/shared/SVGIcon';
+import InputContainer from '../InputContainer';
 import DatePicker from '@/components/shared/DatePicker';
-import * as Styled from './DateRangeInput.styled';
 
 interface DateRangeInputProps {
   startDate: Date;
@@ -27,7 +27,7 @@ export default function DateRangeInput({
   );
 
   return (
-    <Styled.Container>
+    <InputContainer>
       <label>모집기간</label>
       <DatePicker
         date={startDate}
@@ -46,6 +46,6 @@ export default function DateRangeInput({
         endDate={endDate}
         minDate={startDate}
       />
-    </Styled.Container>
+    </InputContainer>
   );
 }

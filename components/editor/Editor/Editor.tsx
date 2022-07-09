@@ -11,6 +11,7 @@ import HeadCountInput from '../HeadCountInput';
 import DatePicker from '@/components/shared/DatePicker';
 import SVGIcon from '@/components/shared/SVGIcon';
 import DateRangeInput from '../DateRangeInput';
+import InputContainer from '../InputContainer';
 
 interface PostSchema {
   category: string;
