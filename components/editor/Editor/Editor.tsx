@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import TipTap from '../TipTap';
 import TagInput from '../TagInput';
@@ -25,9 +26,14 @@ interface EditorProps {
 }
 
 export default function Editor({ initialValues }: EditorProps) {
+  const router = useRouter();
   const { register, handleSubmit, watch, setValue } = useForm<PostSchema>({
     defaultValues: { tags: [], ...initialValues },
   });
+
+  const onCancel = () => {
+    router.back();
+  };
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -81,7 +87,7 @@ export default function Editor({ initialValues }: EditorProps) {
         content={initialValues?.content}
         onChange={(content) => setValue('content', content)}
       />
-      <EditorFooter onPublish={handleSubmit(onSubmit)} />
+      <EditorFooter onCancel={onCancel} onPublish={handleSubmit(onSubmit)} />
     </Styled.Container>
   );
 }
