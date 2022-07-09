@@ -24,7 +24,7 @@ export default function HeadCountInput({
 
   return (
     <InputContainer>
-      <Styled.Label htmlFor="headCountInput">모집인원</Styled.Label>
+      <label htmlFor="headCountInput">모집인원</label>
       <Styled.CountContainer>
         <Styled.CountButton onClick={subCount}>
           <SVGIcon icon="MinusIcon" />

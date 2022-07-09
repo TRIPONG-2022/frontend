@@ -1,13 +1,5 @@
 import styled, { css } from 'styled-components';
 
-export const Label = styled.label`
-  font-size: 1.125rem;
-  font-weight: 500;
-  ${({ theme }) => css`
-    color: ${theme.colors.blackAlpha[400]};
-  `}
-`;
-
 export const CountContainer = styled.div`
   display: flex;
   align-items: center;
