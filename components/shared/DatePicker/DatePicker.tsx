@@ -1,54 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import ko from 'date-fns/locale/ko';
+import SVGIcon from '../SVGIcon';
 import ReactDatePicker, {
   registerLocale,
   ReactDatePickerCustomHeaderProps,
 } from 'react-datepicker';
-import SVGIcon from '../SVGIcon';
 import * as Styled from './DatePicker.styled';
 
 registerLocale('ko', ko);
-
-interface DatePickerProps {
-  date: Date;
-  onChange: (date: Date) => void;
-  dateFormat?: string;
-  selectsStart?: boolean;
-  selectsEnd?: boolean;
-  startDate?: Date;
-  endDate?: Date;
-  minDate?: Date;
-}
-
-export default function DatePicker({
-  date,
-  onChange,
-  dateFormat = 'yyyy/MM/dd',
-  ...datePickerProps
-}: DatePickerProps) {
-  const handleChangeDate = useCallback(
-    (date: Date | null) => {
-      if (date) {
-        onChange(date);
-      }
-    },
-    [onChange],
-  );
-
-  return (
-    <Styled.Container>
-      <ReactDatePicker
-        selected={date}
-        onChange={handleChangeDate}
-        dateFormat={dateFormat}
-        renderCustomHeader={DatePickerHeader}
-        customInput={<DatePickerInput />}
-        locale="ko"
-        {...datePickerProps}
-      />
-    </Styled.Container>
-  );
-}
 
 const DatePickerHeader = ({
   date,
@@ -92,3 +51,44 @@ const DatePickerInput = React.forwardRef<
 });
 
 DatePickerInput.displayName = 'DatePickerInput';
+
+interface DatePickerProps {
+  date: Date;
+  onChange: (date: Date) => void;
+  dateFormat?: string;
+  selectsStart?: boolean;
+  selectsEnd?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+  minDate?: Date;
+}
+
+export default function DatePicker({
+  date,
+  onChange,
+  dateFormat = 'yyyy/MM/dd',
+  ...datePickerProps
+}: DatePickerProps) {
+  const handleChangeDate = useCallback(
+    (date: Date | null) => {
+      if (date) {
+        onChange(date);
+      }
+    },
+    [onChange],
+  );
+
+  return (
+    <Styled.Container>
+      <ReactDatePicker
+        selected={date}
+        onChange={handleChangeDate}
+        dateFormat={dateFormat}
+        renderCustomHeader={DatePickerHeader}
+        customInput={<DatePickerInput />}
+        locale="ko"
+        {...datePickerProps}
+      />
+    </Styled.Container>
+  );
+}

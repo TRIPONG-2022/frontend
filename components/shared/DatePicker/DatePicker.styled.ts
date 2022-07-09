@@ -65,6 +65,7 @@ export const Container = styled.div`
     padding: 1rem;
     border-radius: 0.5rem;
     font-size: 0.875rem;
+    color: #000000;
     background-color: #ffffff;
     filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07))
       drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
@@ -77,6 +78,7 @@ export const Container = styled.div`
   .react-datepicker__day-names,
   .react-datepicker__week {
     display: flex;
+    column-gap: 0.125rem;
     margin-bottom: 0.25rem;
   }
 
@@ -100,7 +102,15 @@ export const Container = styled.div`
     color: ${({ theme }) => theme.colors.blackAlpha[200]};
   }
 
-  .react-datepicker__day--selected {
+  .react-datepicker__day--in-range {
+    color: #ffffff;
+    background-color: ${({ theme }) =>
+      `rgba(${theme.colors.primary.rgb}, 0.25)`};
+  }
+
+  .react-datepicker__day--selected,
+  .react-datepicker__day--selecting-range-start,
+  .react-datepicker__day--selecting-range-end {
     color: #ffffff;
     font-weight: 500;
     background-color: ${({ theme }) => theme.colors.primary.hex};
