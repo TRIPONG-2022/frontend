@@ -1,5 +1,6 @@
 import React from 'react';
 import SVGIcon from '@/components/shared/SVGIcon';
+import InputContainer from '../InputContainer';
 import * as Styled from './HeadCountInput.styled';
 
 interface HeadCountInputProps {
@@ -22,7 +23,7 @@ export default function HeadCountInput({
   };
 
   return (
-    <Styled.Container>
+    <InputContainer>
       <Styled.Label htmlFor="headCountInput">모집인원</Styled.Label>
       <Styled.CountContainer>
         <Styled.CountButton onClick={subCount}>
@@ -33,6 +34,6 @@ export default function HeadCountInput({
           <SVGIcon icon="PlusIcon" />
         </Styled.CountButton>
       </Styled.CountContainer>
-    </Styled.Container>
+    </InputContainer>
   );
 }
