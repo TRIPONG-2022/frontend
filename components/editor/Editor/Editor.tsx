@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import TipTap from '../TipTap';
@@ -9,12 +9,14 @@ import EditorHeader from '../EditorHeader';
 import HeadCountInput from '../HeadCountInput';
 import DateRangeInput from '../DateRangeInput';
 import * as Styled from './Editor.styled';
+import PublishModal from '../PublishModal';
 
 interface PostSchema {
   category: string;
   title: string;
   tags: string[];
   content: string;
+  thumbnail: string;
   totalHeadCount?: number;
   startDate?: Date;
   endDate?: Date;
@@ -26,6 +28,7 @@ interface EditorProps {
 
 export default function Editor({ initialValues }: EditorProps) {
   const router = useRouter();
+  const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue } = useForm<PostSchema>({
     defaultValues: { tags: [], ...initialValues },
   });
@@ -72,12 +75,27 @@ export default function Editor({ initialValues }: EditorProps) {
     [setValue],
   );
 
+  const onChangeThumbnail = useCallback(
+    (thumbnail: string) => {
+      setValue('thumbnail', thumbnail);
+    },
+    [setValue],
+  );
+
   const onCancel = () => {
     router.back();
   };
 
   const onSubmit = (data: any) => {
     console.log(data);
+  };
+
+  const openPublishModal = () => {
+    setIsOpenPublishModal(true);
+  };
+
+  const closePublishModal = () => {
+    setIsOpenPublishModal(false);
   };
 
   return (
@@ -108,7 +126,14 @@ export default function Editor({ initialValues }: EditorProps) {
       />
       <TagInput tags={watch('tags')} onChange={onChangeTags} />
       <TipTap content={initialValues?.content} onChange={onChangeContent} />
-      <EditorFooter onCancel={onCancel} onPublish={handleSubmit(onSubmit)} />
+      <EditorFooter onCancel={onCancel} onPublish={openPublishModal} />
+      <PublishModal
+        thumbnail={watch('thumbnail')}
+        onChangeThumbnail={onChangeThumbnail}
+        isOpen={isOpenPublishModal}
+        onClose={closePublishModal}
+        onPublish={handleSubmit(onSubmit)}
+      />
     </Styled.Container>
   );
 }

@@ -22,3 +22,4 @@ export { default as CalendarIcon } from './calendar.svg';
 export { default as ChevronLeftIcon } from './chevron-left.svg';
 export { default as ChevronRightIcon } from './chevron-right.svg';
 export { default as ArrowRightIcon } from './arrow-right.svg';
+export { default as ThumbnailIcon } from './thumbnail.svg';
