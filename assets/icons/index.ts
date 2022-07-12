@@ -4,3 +4,6 @@ export { default as GoogleIcon } from './google.svg';
 export { default as FacebookIcon } from './facebook.svg';
 export { default as LogoIcon } from './logo.svg';
 export { default as SearchIcon } from './search.svg';
+export { default as LocationIcon } from './location.svg';
+export { default as LikeIcon } from './like.svg';
+export { default as CalendarIcon } from './calendar.svg';
