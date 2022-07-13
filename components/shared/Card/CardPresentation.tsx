@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import SVGIcon from '../SVGIcon';
-import { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import Link from 'next/link';
 import LikeButton from '../LikeButton/LikeButton';
 
@@ -25,23 +25,12 @@ interface CardProps {
     totalHeadCount: number;
     endDate: string;
   };
+  endMeetPost: boolean;
+  // likeToggle: (e: React.MouseEvent<HTMLDivElement>) => void;
+  likeToggle: any;
 }
 
-const CardTextGrid = ({ item }: CardProps) => {
-  const [endMeetPost, setEndMeetPost] = useState(false);
-
-  useLayoutEffect(() => {
-    const endDate = new Date(item.endDate);
-    const currentDate = new Date();
-    if (endDate < currentDate) {
-      setEndMeetPost(true);
-    }
-  }, []);
-
-  const submit = (e: any) => {
-    e.stopPropagation();
-  };
-
+const CardTextGrid = ({ item, endMeetPost, likeToggle }: CardProps) => {
   return (
     <>
       <Link href={'/'}>
@@ -90,7 +79,7 @@ const CardTextGrid = ({ item }: CardProps) => {
               <UserImg img={item.userImg} />
               <UserName>{item.userName}</UserName>
             </UserContainer>
-            <LikeContainer onClick={submit}>
+            <LikeContainer onClick={likeToggle}>
               <LikeButton />
               <LikeCount>{item.like}</LikeCount>
             </LikeContainer>

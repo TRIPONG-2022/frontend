@@ -1,8 +1,9 @@
 import { cardList } from '@/constants/cardData';
+import React, { useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
-import CardTextGrid from './CardPresentation';
+import CardPresentation from './CardPresentation';
 
-interface CardProps {
+interface CardListProps {
   thumbnail: string;
   title: string;
   description: string;
@@ -15,15 +16,56 @@ interface CardProps {
   endDate: string;
 }
 
+interface CardProps {
+  item: {
+    thumbnail: string;
+    title: string;
+    description: string;
+    tag: string[];
+    userName: string;
+    userImg: string;
+    like: number;
+    location: string;
+    totalHeadCount: number;
+    endDate: string;
+  };
+}
+
 const CardContainer = () => {
   return (
     <Grid>
-      {cardList.map((item: CardProps, index) => {
-        return <CardTextGrid key={`card-id${index}`} item={item} />;
+      {cardList.map((item: CardListProps, index) => {
+        return <Card key={`card-id${index}`} item={item} />;
       })}
     </Grid>
   );
 };
+
+const Card = ({ item }: CardProps) => {
+  const [endMeetPost, setEndMeetPost] = useState(false);
+
+  useLayoutEffect(() => {
+    const endDate = new Date(item.endDate);
+    const currentDate = new Date();
+    if (endDate < currentDate) {
+      setEndMeetPost(true);
+    }
+  }, []);
+
+  const submit = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <CardPresentation
+      item={item}
+      endMeetPost={endMeetPost}
+      likeToggle={submit}
+    />
+  );
+};
+
+export default CardContainer;
 
 const Grid = styled.div`
   width: 100%;
@@ -39,4 +81,3 @@ const Grid = styled.div`
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 `;
-export default CardContainer;
