@@ -8,15 +8,16 @@ export interface WrapperState {
 }
 
 const reducer = (state: WrapperState, action: AnyAction) => {
-  if (action.type == HYDRATE) {
-    return {
-      ...state,
-      ...action,
-    };
+  switch (action.type) {
+    case HYDRATE:
+      return action.payload;
+    default: {
+      const combinedReducer = combineReducers({
+        counter: counterSlice.reducer,
+      });
+      return combinedReducer(state, action);
+    }
   }
-  return combineReducers({
-    counter: counterSlice.reducer,
-  })(state, action);
 };
 
 export default reducer;
