@@ -1,6 +1,8 @@
+import { MY_PAGE_MENUS } from '@/constants/menus';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
+import SVGIcon from '../SVGIcon';
 import * as Styled from './SideMenu.styled';
 
 interface SideMenuProps {
@@ -8,19 +10,29 @@ interface SideMenuProps {
     name: string;
     link: string;
   }[];
+  title: string;
 }
 
-const SideMenu = ({ menus }: SideMenuProps) => {
+const SideMenu = ({ menus, title = '마이페이지' }: SideMenuProps) => {
   const router = useRouter();
+  const [active, setActive] = useState(false);
 
   return (
-    <Styled.Container>
-      <Styled.Title>마이페이지</Styled.Title>
-      <Styled.SideMenuUl>
+    <Styled.Container active={active}>
+      <Styled.Title active={active} onClick={() => setActive(!active)}>
+        {title}
+        <SVGIcon icon="ArrowDown" />
+      </Styled.Title>
+      <Styled.SideMenuUl active={active}>
         {menus.map(({ name, link }) => (
-          <Styled.SideMenuLi key={name} active={router.asPath.includes(link)}>
-            <Link href={link}>{name}</Link>
-          </Styled.SideMenuLi>
+          <Link href={link} key={name}>
+            <Styled.SideMenuLi
+              active={router.asPath.includes(link)}
+              menus={MY_PAGE_MENUS}
+            >
+              {name}
+            </Styled.SideMenuLi>
+          </Link>
         ))}
       </Styled.SideMenuUl>
     </Styled.Container>

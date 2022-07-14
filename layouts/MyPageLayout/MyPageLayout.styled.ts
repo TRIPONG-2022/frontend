@@ -1,13 +1,26 @@
+import { SCREEN_TABLET } from '@/styles/screen';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: lightyellow;
+  display: block;
   width: 100%;
-  height: 100%;
-  display: flex;
+  margin-top: 2rem;
+
+  ${SCREEN_TABLET} {
+    margin-top: 5rem;
+    display: flex;
+  }
 `;
 
-export const SideMenu = styled.div``;
+export const SideMenu = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 3.75rem;
+
+  ${SCREEN_TABLET} {
+    justify-content: center;
+  }
+`;
 
 export const Body = styled.div`
   width: 100%;
