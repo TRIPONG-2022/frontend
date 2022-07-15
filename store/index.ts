@@ -1,14 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterSlice from './counterSlice';
+import { configureStore, Reducer, AnyAction } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
+import exampleCounterReducer from './slice/exampleCounterSlice';
 
-const store = configureStore({
-  reducer: {
-    counter: counterSlice.reducer,
-  },
-});
+const makeStore = () =>
+  configureStore({ reducer: { exampleCounter: exampleCounterReducer } });
 
-export type RootState = ReturnType<typeof store.getState>;
+const wrapper = createWrapper(makeStore);
 
-export type AppDispatch = typeof store.dispatch;
+export default wrapper;
 
-export default store;
+export type Appstore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<Appstore['getState']>;
