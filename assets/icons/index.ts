@@ -6,3 +6,4 @@ export { default as LogoIcon } from './logo.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as Authenticated } from './authenticated.svg';
 export { default as ArrowDown } from './arrow-down.svg';
+export { default as Plus } from './plus.svg';

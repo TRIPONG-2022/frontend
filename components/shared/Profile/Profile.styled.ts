@@ -145,7 +145,12 @@ export const CharacteristicDiv = styled.div`
 
 export const ButtonWrapper = styled.div`
   width: 100%;
-  height: 10rem;
-  margin: 2rem 0;
-  background: lightblue;
+  height: 3rem;
+  margin: 3rem 0 10rem 0;
+  /* background: lightblue; */
+  text-align: center;
+
+  button {
+    margin: 1rem;
+  }
 `;
