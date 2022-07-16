@@ -11,7 +11,6 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: 1rem;
 
   ${({ flexDirection }) =>
     flexDirection === 'row' &&
@@ -34,9 +33,6 @@ interface ProfileImageDivProps {
 export const ProfileImageDiv = styled.div<ProfileImageDivProps>`
   width: ${({ width }) => width}rem;
   aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 1rem;
 
   ${SCREEN_TABLET} {
@@ -46,10 +42,7 @@ export const ProfileImageDiv = styled.div<ProfileImageDivProps>`
 
 export const ProfileImage = styled.img`
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: white;
   box-shadow: inset 0px 2.5px 10px 5px ${({ theme }) => theme.colors.gray[300]};
@@ -62,7 +55,6 @@ export const NicknameDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
 `;
 
 interface NicknameProps {

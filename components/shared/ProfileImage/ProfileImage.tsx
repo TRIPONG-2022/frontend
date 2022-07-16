@@ -7,31 +7,31 @@ import SVGIcon from '../SVGIcon';
 
 interface ProfileImageProps {
   isModified?: boolean;
-  isAuthenticated?: boolean;
+  authentication?: boolean;
   nickName: string;
   flexDirection: 'column' | 'row';
   width: number;
   fontSize?: number;
-  profileImage: string;
+  picture: string;
   register?: UseFormRegister<ProfileForm>;
 }
 
 const ProfileImage = ({
   isModified,
   nickName,
-  isAuthenticated,
+  authentication,
   flexDirection,
   width,
   fontSize = 1.75,
-  profileImage,
+  picture,
   register,
 }: ProfileImageProps) => {
   const [nick, setNick] = useState(nickName);
-  const [profileImageSrc, setProfileImageSrc] = useState(profileImage);
+  const [profileImageSrc, setProfileImageSrc] = useState(picture);
   const imgRef = useRef<HTMLInputElement | null>(null);
 
   if (register) {
-    var { ref, onChange, ...rest } = register('profileImage');
+    var { ref, onChange, ...rest } = register('picture');
   }
 
   const onChangeNickName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ const ProfileImage = ({
     }
   }, [isModified]);
 
-  const onImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onImageChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target && e.target.files) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -55,7 +55,7 @@ const ProfileImage = ({
       };
       reader.readAsDataURL(e.target.files[0]);
     }
-  };
+  }, []);
 
   return (
     <Styled.Container flexDirection={flexDirection}>
@@ -92,7 +92,7 @@ const ProfileImage = ({
         {!isModified && (
           <Styled.Nickname fontSize={fontSize}>{nick}</Styled.Nickname>
         )}
-        {!isModified && isAuthenticated && <SVGIcon icon="Authenticated" />}
+        {!isModified && authentication && <SVGIcon icon="Authenticated" />}
       </Styled.NicknameDiv>
     </Styled.Container>
   );

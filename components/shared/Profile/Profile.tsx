@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { userDataType } from 'pages/my/profile';
@@ -15,7 +15,7 @@ type ProfileProps = {
 
 export interface ProfileForm {
   nickName: string;
-  profileImage: File;
+  picture: File;
   introduction: string;
   characteristic: {
     character: string;
@@ -26,8 +26,8 @@ const Profile = ({ userData }: ProfileProps) => {
   const [isModified, setIsModified] = useState<boolean>(false);
   const {
     nickName,
-    authenticated,
-    profileImage,
+    authentication,
+    picture,
     introduction,
     characteristic,
     ...rest
@@ -42,10 +42,26 @@ const Profile = ({ userData }: ProfileProps) => {
     defaultValues: { nickName, introduction, characteristic },
   });
 
-  const onSubmit: SubmitHandler<ProfileForm> = (data) => {
-    console.log(data);
-    setIsModified(!isModified);
-  };
+  const changeModified = useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault();
+      setIsModified(!isModified);
+    },
+    [setIsModified, isModified],
+  );
+
+  const onSubmit: SubmitHandler<ProfileForm> = useCallback(
+    (data) => {
+      console.log(data);
+      const sendData = {
+        ...data,
+        characteristic: data.characteristic.map((char) => char.character),
+      };
+      console.log(sendData);
+      setIsModified(!isModified);
+    },
+    [isModified],
+  );
 
   return (
     <Styled.Container>
@@ -53,14 +69,14 @@ const Profile = ({ userData }: ProfileProps) => {
         <Styled.ProfileWrapper>
           <Styled.ProfileImageWrapper>
             <ProfileImage
+              register={register}
               isModified={isModified}
               nickName={nickName}
-              isAuthenticated={authenticated}
-              profileImage={profileImage}
+              authentication={authentication}
+              picture={picture}
               flexDirection="column"
               width={15}
               fontSize={1.75}
-              register={register}
             />
           </Styled.ProfileImageWrapper>
           <ProfileInfo
@@ -72,6 +88,7 @@ const Profile = ({ userData }: ProfileProps) => {
             {...rest}
           />
         </Styled.ProfileWrapper>
+
         <Styled.ButtonWrapper>
           {isModified && (
             <Button size="lg" type="submit">
@@ -80,16 +97,16 @@ const Profile = ({ userData }: ProfileProps) => {
           )}
           {!isModified && (
             <>
-              <Button onClick={() => setIsModified(!isModified)} size={'lg'}>
+              <Button onClick={changeModified} size={'lg'}>
                 수정하기
               </Button>
               <Button
                 css={{ background: `${theme.colors.gray[500]}` }}
-                onClick={() => setIsModified(!isModified)}
+                onClick={changeModified}
                 size="lg"
-                disabled={authenticated}
+                disabled={authentication}
               >
-                {authenticated ? '인증완료' : '인증하기'}
+                {authentication ? '인증완료' : '인증하기'}
               </Button>
             </>
           )}
