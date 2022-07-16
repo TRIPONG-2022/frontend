@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { SendEmailSchema, SEND_EMAIL_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
+import Button from '@/components/shared/Button';
 
 const VerifyEmailPage: NextPage = () => {
   const {
@@ -33,13 +34,18 @@ const VerifyEmailPage: NextPage = () => {
           errorMessage={errors.email?.message}
           {...register('email')}
         />
-        <button
+        <Button
+          size="lg"
           type="submit"
+          css={`
+            width: 100%;
+            margin-top: 0.5rem;
+          `}
           disabled={!isValid || !isDirty}
           aria-disabled={!isValid || !isDirty}
         >
           이메일 전송
-        </button>
+        </Button>
       </form>
     </AuthLayout>
   );
