@@ -21,3 +21,21 @@ const login = async ({ loginId, loginPwd }: LoginType) => {
     }
   }
 };
+
+export const requestVerifyEmail = async (userId: string, email: string) => {
+  try {
+    const { data } = await instance.post('/users/auth/email/send', {
+      userId,
+      email,
+    });
+    return {
+      isError: false,
+      data,
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      error: '이메일 전송에 실패하였습니다.',
+    };
+  }
+};
