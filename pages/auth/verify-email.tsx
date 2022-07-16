@@ -1,12 +1,15 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SendEmailSchema, SEND_EMAIL_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
+import { requestVerifyEmail } from 'api/auth';
 
 const VerifyEmailPage: NextPage = () => {
+  const [error, setError] = useState<string>('');
   const {
     register,
     handleSubmit,
@@ -16,15 +19,20 @@ const VerifyEmailPage: NextPage = () => {
     resolver: yupResolver(SEND_EMAIL_SCHEMA),
   });
 
-  const onSubmit = (data: SendEmailSchema) => {
-    console.log(data);
-    alert(JSON.stringify(data));
+  const onSubmit = async ({ email }: SendEmailSchema) => {
+    const { isError, error, data } = await requestVerifyEmail('user1', email);
+    if (error) {
+      setError(error);
+    } else {
+      setError('');
+    }
   };
 
   return (
     <AuthLayout
       title="이메일 인증"
       description="이메일 주소로 이메일 인증 링크가 전송됩니다."
+      errorMessage={error}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
