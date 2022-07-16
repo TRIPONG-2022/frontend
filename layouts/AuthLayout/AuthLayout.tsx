@@ -16,8 +16,12 @@ export default function AuthLayout({
     <Styled.OuterContainer>
       <Styled.BackgroundImage></Styled.BackgroundImage>
       <Styled.Container>
-        <Styled.Title>{title}</Styled.Title>
-        {description && <Styled.Description>{description}</Styled.Description>}
+        <Styled.HeadingContainer>
+          <Styled.Title>{title}</Styled.Title>
+          {description && (
+            <Styled.Description>{description}</Styled.Description>
+          )}
+        </Styled.HeadingContainer>
         {children}
       </Styled.Container>
     </Styled.OuterContainer>

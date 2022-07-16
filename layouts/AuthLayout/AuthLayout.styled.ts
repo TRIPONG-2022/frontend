@@ -41,13 +41,18 @@ export const BackgroundImage = styled.div`
   }
 `;
 
+export const HeadingContainer = styled.div`
+  margin-bottom: 2rem;
+`;
+
 export const Title = styled.h1`
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: bold;
   text-align: left;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
 `;
 
 export const Description = styled.p`
   font-size: 1rem;
+  color: ${({ theme }) => theme.colors.gray[400]};
 `;
