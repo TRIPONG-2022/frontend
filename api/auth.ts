@@ -39,3 +39,20 @@ export const requestVerifyEmail = async (userId: string, email: string) => {
     };
   }
 };
+
+export const requestFindID = async (email: string) => {
+  try {
+    const { data } = await instance.post('/users/auth/find/id', {
+      email,
+    });
+    return {
+      isError: false,
+      data,
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      error: '해당 유저가 존재하지 않습니다. 이메일을 확인해주세요.',
+    };
+  }
+};
