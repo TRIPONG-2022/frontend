@@ -1,9 +1,11 @@
-import { configureStore, Reducer, AnyAction } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
-import exampleCounterReducer from './slice/exampleCounterSlice';
 
 const makeStore = () =>
-  configureStore({ reducer: { exampleCounter: exampleCounterReducer } });
+  configureStore({
+    reducer: {},
+    devTools: process.env.NODE_ENV !== 'production',
+  });
 
 const wrapper = createWrapper(makeStore);
 
