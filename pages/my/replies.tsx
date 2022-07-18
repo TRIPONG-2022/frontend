@@ -3,12 +3,12 @@ import MyPageLayout from '@/layouts/MyPageLayout';
 import { NextPage } from 'next';
 import React from 'react';
 
-const B: NextPage = () => {
+const MyPageRepliesPage: NextPage = () => {
   return (
     <MainLayout>
-      <MyPageLayout>bbb</MyPageLayout>
+      <MyPageLayout>내가 단 댓글 페이지 입니다.</MyPageLayout>
     </MainLayout>
   );
 };
 
-export default B;
+export default MyPageRepliesPage;

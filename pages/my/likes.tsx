@@ -2,12 +2,12 @@ import MainLayout from '@/layouts/MainLayout';
 import MyPageLayout from '@/layouts/MyPageLayout';
 import React from 'react';
 
-function C() {
+const MyPageLikesPage = () => {
   return (
     <MainLayout>
-      <MyPageLayout>ccc</MyPageLayout>
+      <MyPageLayout>좋아요한 글 페이지 입니다.</MyPageLayout>
     </MainLayout>
   );
-}
+};
 
-export default C;
+export default MyPageLikesPage;
