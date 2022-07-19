@@ -13,11 +13,12 @@ export const login = async ({ loginId, password }: LoginType) => {
       password,
     });
     console.log(data);
+    console.log(data.headers['set-cookie']);
   } catch (err) {
     const errors = err as Error | AxiosError;
-
     if (axios.isAxiosError(errors)) {
-      console.log('axios error');
+      console.log('axios err');
+      console.log(err);
     } else {
       console.log(err);
     }
