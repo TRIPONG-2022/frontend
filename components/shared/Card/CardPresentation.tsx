@@ -51,16 +51,10 @@ const CardTextGrid = ({ item, endMeetPost, likeToggle }: CardProps) => {
               ) : (
                 <Styled.MeetStatus>모집중</Styled.MeetStatus>
               )}
-              {item.title}더욱 사람을 모집해봐요더욱 사람을더욱 사람을
-              모집해봐요더욱 사람을asd
+              {item.title}
             </Styled.Title>
 
-            <Styled.Description>
-              {item.description}더욱 사람을 모집해봐요더욱 사람을 모집해봐요더욱
-              사람을
-              모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요
-              모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요모집해봐요
-            </Styled.Description>
+            <Styled.Description>{item.description}</Styled.Description>
 
             <Styled.TagContainer>
               {item.tag.map((tagname) => (
