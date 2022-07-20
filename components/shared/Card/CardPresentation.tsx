@@ -69,7 +69,9 @@ const CardTextGrid = ({ item, endMeetPost, likeToggle }: CardProps) => {
             </Styled.UserContainer>
             <Styled.LikeContainer onClick={likeToggle}>
               <LikeButton />
-              <Styled.LikeCount>{item.like}</Styled.LikeCount>
+              <Styled.LikeCount>
+                {Number(item.like) > 99 ? 99 + '+' : item.like}
+              </Styled.LikeCount>
             </Styled.LikeContainer>
           </Styled.BottomBox>
         </Styled.Article>

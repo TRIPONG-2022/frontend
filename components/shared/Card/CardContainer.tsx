@@ -1,5 +1,10 @@
 import { cardList } from '@/constants/cardData';
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useLayoutEffect,
+  useState,
+  useEffect,
+} from 'react';
 import styled from 'styled-components';
 import CardPresentation from './CardPresentation';
 
@@ -46,7 +51,7 @@ const CardContainer = () => {
 const Card = ({ item }: CardProps) => {
   const [endMeetPost, setEndMeetPost] = useState(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const endDate = new Date(item.endDate);
     const currentDate = new Date();
     if (endDate < currentDate) {
