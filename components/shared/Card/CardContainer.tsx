@@ -1,5 +1,5 @@
 import { cardList } from '@/constants/cardData';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import CardPresentation from './CardPresentation';
 
@@ -54,9 +54,9 @@ const Card = ({ item }: CardProps) => {
     }
   }, []);
 
-  const submit = (e: React.MouseEvent<HTMLDivElement>) => {
+  const submit = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-  };
+  }, []);
 
   return (
     <CardPresentation
