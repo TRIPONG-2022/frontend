@@ -1,4 +1,5 @@
 export const cardData = {
+  category: 'gathering',
   thumbnail:
     'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
   title: '여행',
@@ -20,6 +21,7 @@ export const cardData = {
 
 export const cardList = [
   {
+    category: 'board',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '여행',
@@ -39,6 +41,7 @@ export const cardList = [
     endDate: '2022-08-30',
   },
   {
+    category: 'board',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '모집',
@@ -58,6 +61,7 @@ export const cardList = [
     endDate: '2022-05-30',
   },
   {
+    category: 'gathering',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '여행',
@@ -77,6 +81,7 @@ export const cardList = [
     endDate: '2022-08-30',
   },
   {
+    category: 'board',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '여행',
@@ -96,6 +101,7 @@ export const cardList = [
     endDate: '2022-08-30',
   },
   {
+    category: 'gathering',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '여행',

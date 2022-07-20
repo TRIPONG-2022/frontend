@@ -14,6 +14,7 @@ interface MeetStatusProps {
 
 interface CardProps {
   item: {
+    category: string;
     thumbnail: string;
     title: string;
     description: string;
@@ -35,7 +36,7 @@ const CardTextGrid = ({ item, endMeetPost, likeToggle }: CardProps) => {
     <>
       <Link href={'/'}>
         <Article>
-          {item.totalHeadCount == 0 && (
+          {item.category == 'gathering' && item.totalHeadCount == 0 && (
             <FullPost>
               <FullPostText>모집이 완료되었습니다.</FullPostText>
             </FullPost>
@@ -52,7 +53,7 @@ const CardTextGrid = ({ item, endMeetPost, likeToggle }: CardProps) => {
 
           <TextBox>
             <Title>
-              {endMeetPost ? (
+              {item.category !== 'gathering' ? null : endMeetPost ? (
                 <MeetStatus end>모집종료</MeetStatus>
               ) : (
                 <MeetStatus>모집중</MeetStatus>

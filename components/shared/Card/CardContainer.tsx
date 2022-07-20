@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CardPresentation from './CardPresentation';
 
 interface CardListProps {
+  category: string;
   thumbnail: string;
   title: string;
   description: string;
@@ -18,6 +19,7 @@ interface CardListProps {
 
 interface CardProps {
   item: {
+    category: string;
     thumbnail: string;
     title: string;
     description: string;
