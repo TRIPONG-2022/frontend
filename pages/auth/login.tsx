@@ -7,10 +7,13 @@ import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
 import IconButton from '@/components/shared/IconButton';
 import Link from 'next/link';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { login } from 'api/auth';
+import { useRouter } from 'next/router';
 
 const LoginPage: NextPage = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -22,11 +25,10 @@ const LoginPage: NextPage = () => {
 
   const onSubmit = (data: LoginSchema) => {
     console.log(data);
-    alert(JSON.stringify(data));
-    const { loginId, password } = data;
     login(data);
-    console.log('로그인 넘김');
   };
+
+  // 로그인 시 token을 받고,  token있을 경우에
 
   return (
     <>
@@ -48,6 +50,15 @@ const LoginPage: NextPage = () => {
             errorMessage={errors.password?.message}
             {...register('password')}
           />
+          <ForgotContainer>
+            <ForgotPwdText>아이디 찾기</ForgotPwdText>
+            <ForgotPwdText
+              pwd
+              onClick={() => router.push('/auth/find-password')}
+            >
+              비밀번호 찾기
+            </ForgotPwdText>
+          </ForgotContainer>
           <Button
             size="lg"
             type="submit"
@@ -61,54 +72,173 @@ const LoginPage: NextPage = () => {
             로그인
           </Button>
         </form>
+        <Divider>
+          <DividerText>또는</DividerText>
+        </Divider>
+        <Container>
+          <IconButton
+            icon="KakaoIcon"
+            aria-label="카카오 로그인"
+            colorScheme="kakao"
+            isRound
+            size="xlg"
+            onClick={() =>
+              router.push(
+                'http://13.209.251.206:8080/oauth2/authorization/kakao',
+              )
+            }
+          />
+          <IconButton
+            icon="NaverIcon"
+            aria-label="네이버 로그인"
+            colorScheme="naver"
+            isRound
+            size="xlg"
+            onClick={() =>
+              router.push(
+                'http://13.209.251.206:8080/oauth2/authorization/naver',
+              )
+            }
+          />
+
+          <IconButton
+            icon="GoogleIcon"
+            aria-label="구글 로그인"
+            colorScheme="google"
+            isRound
+            size="xlg"
+            onClick={() =>
+              router.push(
+                'http://13.209.251.206:8080/oauth2/authorization/google',
+              )
+            }
+          />
+
+          <IconButton
+            icon="FacebookIcon"
+            aria-label="페이스북 로그인"
+            colorScheme="facebook"
+            isRound
+            size="xlg"
+            onClick={() =>
+              router.push(
+                'http://13.209.251.206:8080/oauth2/authorization/facebook',
+              )
+            }
+          />
+        </Container>
+        <SignUp>
+          계정이 없으신가요?
+          <SingUpBtn onClick={() => router.push('/auth/join')}>
+            회원가입
+          </SingUpBtn>
+        </SignUp>
       </AuthLayout>
-      <IconButton
-        icon="KakaoIcon"
-        aria-label="카카오 로그인"
-        colorScheme="kakao"
-        isRound
-        size="lg"
-      />
-      <IconButton
-        icon="FacebookIcon"
-        aria-label="페이스북 로그인"
-        colorScheme="facebook"
-        isRound
-        size="lg"
-      />
-      <IconButton
-        icon="KakaoIcon"
-        aria-label="카카오 로그인"
-        colorScheme="kakao"
-        isRound
-        size="lg"
-      />
-      <Div>
-        <Link href={'http://13.209.251.206:8080/oauth2/authorization/google'}>
-          <a>구글 버튼</a>
-        </Link>
-        <br />
-        <Link href={'http://13.209.251.206:8080/oauth2/authorization/kakao'}>
-          <a>카카오 버튼</a>
-        </Link>
-        <br />
-        <Link href={'http://13.209.251.206:8080/oauth2/authorization/naver'}>
-          <a>네이버 버튼</a>
-        </Link>
-        <br />
-        <Link href={'http://13.209.251.206:8080/oauth2/authorization/facebook'}>
-          <a>페이스북 버튼</a>
-        </Link>
-      </Div>
+
+      <OuterContainer></OuterContainer>
     </>
   );
 };
+
+interface ForgotProps {
+  pwd?: boolean;
+}
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const OuterContainer = styled.div`
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  @media (min-width: 768px) {
+    padding: 2.5rem;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
+const ForgotContainer = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+const ForgotPwdText = styled.em<ForgotProps>`
+  display: inline-block;
+  position: relative;
+  padding-left: 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.gray[500]};
+  text-align: right;
+  cursor: pointer;
+  ${({ pwd }) =>
+    pwd &&
+    css`
+      &::after {
+        display: block;
+        position: absolute;
+        top: 3px;
+        left: 5px;
+        width: 1px;
+        height: 8px;
+        background-color: ${({ theme }) => theme.colors.gray[300]};
+        content: '';
+      }
+    `}
+`;
+
+const Divider = styled.div`
+  position: relative;
+  margin: 2.5rem 0;
+  display: flex;
+  justify-content: center;
+  color: ${({ theme }) => theme.colors.gray[400]};
+`;
+
+const DividerText = styled.div`
+  font-size: red;
+  &::before {
+    background: ${({ theme }) => theme.colors.gray[400]};
+    height: 1px;
+    position: absolute;
+    right: 0;
+    width: 40%;
+    top: 50%;
+    content: '';
+  }
+  &::after {
+    background: ${({ theme }) => theme.colors.gray[400]};
+    height: 1px;
+    position: absolute;
+    left: 0;
+    width: 40%;
+    top: 50%;
+    content: '';
+  }
+`;
+
+const SignUp = styled.p`
+  text-align: center;
+  margin: 3rem 0;
+`;
+
+const SingUpBtn = styled.em`
+  margin-left: 0.5rem;
+  color: ${({ theme }) => theme.colors.primary.hex};
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default LoginPage;
