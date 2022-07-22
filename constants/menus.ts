@@ -67,3 +67,37 @@ export const MY_PAGE_MENUS = [
     link: '/hhh',
   },
 ];
+
+export const CATEGORY_MENUS = [
+  {
+    name: '모두보기',
+    value: 'all',
+  },
+  {
+    name: 'Q&A',
+    value: 'qna',
+  },
+  {
+    name: '자유게시판',
+    value: 'board',
+  },
+  {
+    name: '모임 모집',
+    value: 'gathering',
+  },
+  {
+    name: '후기 / 리뷰',
+    value: 'review',
+  },
+];
+
+export const OLD_NEW_MENUS = [
+  {
+    name: '최신순',
+    value: 'desc',
+  },
+  {
+    name: '오래된순',
+    value: 'asc',
+  },
+];

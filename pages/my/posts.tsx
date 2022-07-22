@@ -1,12 +1,25 @@
+import React, { useEffect } from 'react';
+import { NextPage } from 'next';
+
 import MainLayout from '@/layouts/MainLayout';
 import MyPageLayout from '@/layouts/MyPageLayout';
-import { NextPage } from 'next';
-import React from 'react';
+import PostLayout from '@/layouts/PostLayout';
+import { useMyPageInfo } from '@/hooks/useMyPageInfo';
 
 const MyPagePostsPage: NextPage = () => {
+  const aaa = useMyPageInfo();
+
+  useEffect(() => {
+    console.log(aaa);
+  }, [aaa]);
+
   return (
     <MainLayout>
-      <MyPageLayout>내가 쓴글 페이지 입니다.</MyPageLayout>
+      <MyPageLayout>
+        <PostLayout existCalendar existCategory>
+          글이다
+        </PostLayout>
+      </MyPageLayout>
     </MainLayout>
   );
 };

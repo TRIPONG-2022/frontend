@@ -1,6 +1,6 @@
 import { MY_PAGE_MENUS } from '@/constants/menus';
 import { scaleZ } from '@/styles/keyframes';
-import { SCREEN_TABLET } from '@/styles/screen';
+import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
 interface ActiveProps {
@@ -25,6 +25,10 @@ export const Container = styled.div<ActiveProps>`
 
   ${SCREEN_TABLET} {
     width: 15rem;
+    margin-right: 5rem;
+  }
+
+  ${SCREEN_DESKTOP} {
     margin-right: 7.5rem;
   }
 `;

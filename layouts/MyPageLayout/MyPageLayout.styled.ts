@@ -24,4 +24,5 @@ export const SideMenu = styled.div`
 
 export const Body = styled.div`
   width: 100%;
+  min-height: 75vh;
 `;

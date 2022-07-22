@@ -163,7 +163,7 @@ const ProfileInfo = ({
               onChange={onChangeTag}
             />
             <Styled.CharacteristicButton onClick={addCharacter}>
-              <SVGIcon icon="Plus" />
+              <SVGIcon icon="PlusIcon" />
             </Styled.CharacteristicButton>
           </Styled.CharacteristicInputDiv>
         )}

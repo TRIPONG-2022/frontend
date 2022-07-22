@@ -21,7 +21,7 @@ const SideMenu = ({ menus, title = '마이페이지' }: SideMenuProps) => {
     <Styled.Container active={active}>
       <Styled.Title active={active} onClick={() => setActive(!active)}>
         {title}
-        <SVGIcon icon="ArrowDown" />
+        <SVGIcon icon="ArrowDownIcon" />
       </Styled.Title>
       <Styled.SideMenuUl active={active}>
         {menus.map(({ name, link }) => (

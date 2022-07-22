@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
+import profileReducer from './postSlice';
 
 const makeStore = () =>
   configureStore({
-    reducer: {},
+    reducer: { profile: profileReducer },
     devTools: process.env.NODE_ENV !== 'production',
   });
 
