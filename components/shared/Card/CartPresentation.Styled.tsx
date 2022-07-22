@@ -136,9 +136,14 @@ export const Description = styled.p`
   word-wrap: break-word;
   line-height: 1.25rem;
   height: 2.5rem;
+
   @media (max-width: 630px) {
     -webkit-line-clamp: 3;
     height: 3.75rem;
+  }
+  @media (max-width: 480px) {
+    -webkit-line-clamp: 1;
+    height: 1.25rem;
   }
 `;
 
