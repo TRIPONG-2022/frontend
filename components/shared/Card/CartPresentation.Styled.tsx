@@ -1,3 +1,4 @@
+import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled from 'styled-components';
 
 interface ImgStyledProps {
@@ -30,11 +31,14 @@ export const FullPostText = styled.h2`
 
 export const ThumbnailContainer = styled.div`
   width: 100%;
-  height: 50%;
+  height: 60%;
   position: relative;
   overflow: hidden;
   border-radius: 0.75rem;
-  @media (max-width: 630px) {
+  /* @media (max-width: 630px) {
+    height: 60%;
+  } */
+  ${SCREEN_TABLET} {
     height: 60%;
   }
 `;
@@ -66,10 +70,10 @@ export const Article = styled.article`
 
 export const TextBox = styled.section`
   padding: 1rem 0.75rem 0.75rem;
-  height: 40%;
+  height: 30%;
   display: grid;
-  @media (max-width: 630px) {
-    height: 30%;
+  ${SCREEN_TABLET} {
+    height: 40%;
   }
 `;
 
@@ -82,7 +86,7 @@ export const Title = styled.h2`
 `;
 
 export const MeetStatus = styled.strong<MeetStatusProps>`
-  color: #39c877;
+  color: ${({ theme }) => theme.colors.primary.hex};
   ${({ end }) => end && 'color: #aaa'};
   margin-right: 0.25rem;
 `;
@@ -135,15 +139,18 @@ export const Description = styled.p`
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   line-height: 1.25rem;
-  height: 2.5rem;
+  max-height: 1.25rem;
 
-  @media (max-width: 630px) {
-    -webkit-line-clamp: 3;
-    height: 3.75rem;
+  ${SCREEN_TABLET} {
+    -webkit-line-clamp: 2;
+    max-height: 2.5rem;
+    color: red;
   }
-  @media (max-width: 480px) {
-    -webkit-line-clamp: 1;
-    height: 1.25rem;
+
+  ${SCREEN_DESKTOP} {
+    -webkit-line-clamp: 3;
+    max-height: 3.75rem;
+    color: blue;
   }
 `;
 
@@ -168,7 +175,7 @@ export const BottomBox = styled.section`
   justify-content: space-between;
   border-top: 1px solid rgba(0, 0, 0, 0.3);
 
-  padding: 0.6rem 0.75rem;
+  padding: 0.625rem 0.75rem;
   height: 10%;
 `;
 
@@ -178,12 +185,12 @@ export const UserContainer = styled.div`
 `;
 
 export const UserImg = styled.div<ImgStyledProps>`
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.75rem;
+  height: 1.75rem;
   background-image: url(${(props) => props.img});
-  background-size: 1.7rem;
+  background-size: 1.75rem;
   background-repeat: no-repeat;
-  border-radius: 50%;
+  border-radius: 99999px;
 `;
 
 export const UserName = styled.p`
