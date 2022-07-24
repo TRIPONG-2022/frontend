@@ -14,6 +14,8 @@ export const baseInput = css<InputProps>`
 `;
 
 export const Container = styled.div`
+  margin-bottom: 1.5rem;
+
   select {
     display: none;
   }
@@ -127,8 +129,27 @@ export const Container = styled.div`
 
 export const Label = styled.label``;
 
-export const Select = styled.select``;
+export const Select = styled.select`
+  /* -webkit-appearance: none; */
+  padding: 1rem 1.25rem;
+  width: 100%;
+  border: 1px solid #e8eaed;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0 1px 3px -2px #9098a9;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.gray[500]};
+  font-size: 0.75rem;
+  font-weight: bold;
+`;
 
-export const Option = styled.option``;
+export const Option = styled.option`
+  border: 1px solid #e8eaed;
+  border-radius: 1rem;
+  &:hover {
+    background-color: red;
+    color: red;
+  }
+`;
 
 export const ErrorMessage = styled.p``;
