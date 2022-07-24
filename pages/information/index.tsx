@@ -15,6 +15,7 @@ const InformationPage: NextPage = () => {
     handleSubmit,
     register,
     watch,
+    setValue,
     formState: { isValid, isDirty, errors },
   } = useForm<InformationSchema>({
     mode: 'onChange',
@@ -68,6 +69,7 @@ const InformationPage: NextPage = () => {
             { value: 'male', label: '남' },
             { value: 'female', label: '여' },
           ]}
+          setValue={setValue}
           {...register('gender')}
         />
 
@@ -77,6 +79,7 @@ const InformationPage: NextPage = () => {
             id="year"
             defaultLabel="날짜를 입력해주세요."
             options={years(getCurrentYear())}
+            setValue={setValue}
             {...register('year')}
           ></Select>
 
@@ -84,6 +87,7 @@ const InformationPage: NextPage = () => {
             id="month"
             defaultLabel="월 입력"
             options={months}
+            setValue={setValue}
             {...register('month')}
           />
 
@@ -91,6 +95,7 @@ const InformationPage: NextPage = () => {
             id="day"
             defaultLabel="날짜 입력"
             options={days(watchYear, watchMonth)}
+            setValue={setValue}
             {...register('day')}
           />
         </Flex>
@@ -101,12 +106,14 @@ const InformationPage: NextPage = () => {
             id="city"
             defaultLabel="도시를 선택해주세요"
             options={city}
+            setValue={setValue}
             {...register('city')}
           />
           <Select
             id="district"
             defaultLabel="구를 선택해주세요"
             options={district}
+            setValue={setValue}
             {...register('district')}
           />
         </Flex>
