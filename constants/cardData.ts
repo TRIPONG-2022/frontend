@@ -1,15 +1,11 @@
-export const cardData = {
+export const CARD_DATA = {
+  id: 1,
   category: 'gathering',
   thumbnail:
     'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
   title: '여행',
   description: '여행을 가고싶은 분들 모집합니다.',
-  tag: [
-    '태그1',
-    '태그2',
-    '태그3 31412412421321321',
-    '내가 이렇게 태그를 많이 달았다.',
-  ],
+  tag: ['태그1', '태그2', '태그3', '내가 이렇게 태그를 많이 달았다.'],
   userName: 'username',
   userImg:
     'https://i.pinimg.com/236x/e2/b7/da/e2b7da6bc749ba2d7ebdfda28fac6009.jpg',
@@ -19,19 +15,15 @@ export const cardData = {
   endDate: '2022-08-30',
 };
 
-export const cardList = [
+export const CARD_LIST = [
   {
+    id: 2,
     category: 'board',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '여행',
     description: '여행을 가고싶은 분들 모집합니다.',
-    tag: [
-      '태그1',
-      '태그2',
-      '태그3 31412412421321321',
-      '내가 이렇게 태그를 많이 달았다.',
-    ],
+    tag: ['태그1', '태그2', '태그3', '내가 이렇게 태그를 많이 달았다.'],
     userName: 'username',
     userImg:
       'https://i.pinimg.com/236x/e2/b7/da/e2b7da6bc749ba2d7ebdfda28fac6009.jpg',
@@ -41,17 +33,13 @@ export const cardList = [
     endDate: '2022-08-30',
   },
   {
+    id: 3,
     category: 'board',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '모집',
     description: '여행을 가고싶은 분들 모집합니다.',
-    tag: [
-      '태그1',
-      '태그2',
-      '태그3 31412412421321321',
-      '내가 이렇게 태그를 많이 달았다.',
-    ],
+    tag: ['태그1', '태그2', '태그3', '내가 이렇게 태그를 많이 달았다.'],
     userName: 'username',
     userImg:
       'https://i.pinimg.com/236x/e2/b7/da/e2b7da6bc749ba2d7ebdfda28fac6009.jpg',
@@ -61,6 +49,7 @@ export const cardList = [
     endDate: '2022-05-30',
   },
   {
+    id: 4,
     category: 'gathering',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
@@ -68,33 +57,24 @@ export const cardList = [
       '여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행여행',
     description:
       '여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.여행을 가고싶은 분들 모집합니다.',
-    tag: [
-      '태그1',
-      '태그2',
-      '태그3 31412412421321321',
-      '내가 이렇게 태그를 많이 달았다.',
-    ],
+    tag: ['태그1', '태그2', '태그3', '내가 이렇게 태그를 많이 달았다.'],
     userName: 'username',
     userImg:
       'https://i.pinimg.com/236x/e2/b7/da/e2b7da6bc749ba2d7ebdfda28fac6009.jpg',
-    like: 23,
+    like: 111,
     location: '경기도',
     totalHeadCount: 0,
-    endDate: '2022-08-30',
+    endDate: '2022-06-30',
   },
   {
+    id: 5,
     category: 'board',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '여행',
     description:
       '여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다여행을 가고싶은 분들 모집합니다.',
-    tag: [
-      '태그1',
-      '태그2',
-      '태그3 31412412421321321',
-      '내가 이렇게 태그를 많이 달았다.',
-    ],
+    tag: ['태그1', '태그2', '태그3', '내가 이렇게 태그를 많이 달았다.'],
     userName: 'username',
     userImg:
       'https://i.pinimg.com/236x/e2/b7/da/e2b7da6bc749ba2d7ebdfda28fac6009.jpg',
@@ -104,21 +84,17 @@ export const cardList = [
     endDate: '2022-08-30',
   },
   {
+    id: 6,
     category: 'gathering',
     thumbnail:
       'https://www.yeongnam.com/mnt/file/201809/20180914.010370820500001i1.jpg',
     title: '여행',
     description: '여행을 가고싶은 분들 모집합니다.',
-    tag: [
-      '태그1',
-      '태그2',
-      '태그3 31412412421321321',
-      '내가 이렇게 태그를 많이 달았다.',
-    ],
+    tag: ['태그1', '태그2', '태그3', '내가 이렇게 태그를 많이 달았다.'],
     userName: 'username',
     userImg:
       'https://i.pinimg.com/236x/e2/b7/da/e2b7da6bc749ba2d7ebdfda28fac6009.jpg',
-    like: 23,
+    like: 111,
     location: '남양주',
     totalHeadCount: 1,
     endDate: '2022-08-30',
