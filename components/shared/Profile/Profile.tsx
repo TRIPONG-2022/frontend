@@ -8,6 +8,7 @@ import ProfileImage from '../ProfileImage';
 import ProfileInfo from '../ProfileInfo';
 import Button from '../Button';
 import theme from '@/styles/theme';
+import { getProfileInfomation } from 'api/myPage';
 
 type ProfileProps = {
   userData: userDataType;
@@ -17,6 +18,9 @@ export interface ProfileForm {
   nickName: string;
   picture: File;
   introduction: string;
+  loginId: string;
+  name: string;
+  email: string;
   characteristic: {
     character: string;
   }[];
@@ -62,6 +66,10 @@ const Profile = ({ userData }: ProfileProps) => {
     },
     [isModified],
   );
+
+  const test = () => {
+    const res = getProfileInfomation(5);
+  };
 
   return (
     <Styled.Container>
@@ -112,6 +120,7 @@ const Profile = ({ userData }: ProfileProps) => {
           )}
         </Styled.ButtonWrapper>
       </form>
+      <button onClick={test}>test</button>
     </Styled.Container>
   );
 };
