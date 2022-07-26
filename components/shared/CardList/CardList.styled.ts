@@ -9,10 +9,11 @@ export const CardListContainer = styled.div<CardContainerProps>`
   width: 100%;
   display: grid;
   gap: 1rem;
-  ${({ $columnNumber }) => css`
-    grid-template-columns: repeat(
-      ${$columnNumber},
-      minmax(0, ${$columnNumber}fr)
-    );
-  `}
+  ${({ $columnNumber }) =>
+    css`
+      grid-template-columns: repeat(
+        ${$columnNumber},
+        minmax(0, ${$columnNumber}fr)
+      );
+    `}
 `;

@@ -7,11 +7,12 @@ import useScreenType from '@/hooks/useScreenType';
 import { CARD_LIST } from '@/constants/cardData';
 
 const HomePage: NextPage = () => {
-  const { isTablet, isDesktop } = useScreenType();
-
+  const ScreenObj = useScreenType();
+  console.log(ScreenObj);
   const columnNumber = useMemo(
-    () => (isDesktop ? 3 : isTablet ? 2 : 1),
-    [isTablet, isDesktop],
+    () =>
+      ScreenObj.isDesktop ? 3 : ScreenObj.isTablet ? 2 : ScreenObj.isMobile,
+    [ScreenObj.isTablet, ScreenObj.isDesktop, ScreenObj.isMobile],
   );
 
   return (

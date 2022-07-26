@@ -4,15 +4,20 @@ import * as Styled from './CardList.styled';
 
 interface CardListProps {
   cardList: ICard[];
-  columnNumber: number;
+  columnNumber: number | boolean;
 }
 
 export default function CardList({ cardList, columnNumber }: CardListProps) {
+  console.log(columnNumber);
   return (
-    <Styled.CardListContainer $columnNumber={columnNumber}>
-      {cardList.map((card) => (
-        <Card key={`card-list-${card.id}`} card={card} />
-      ))}
-    </Styled.CardListContainer>
+    <>
+      {columnNumber ? (
+        <Styled.CardListContainer $columnNumber={columnNumber as number}>
+          {cardList.map((card) => (
+            <Card key={`card-list-${card.id}`} card={card} />
+          ))}
+        </Styled.CardListContainer>
+      ) : null}
+    </>
   );
 }

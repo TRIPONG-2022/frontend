@@ -15,6 +15,7 @@ export default function useScreenType(): ScreenType {
   });
 
   useEffect(() => {
+    console.log(window.innerWidth);
     setWidth(window.innerWidth);
     const handleResize = () => {
       setWidth(window.innerWidth);
@@ -27,11 +28,13 @@ export default function useScreenType(): ScreenType {
   }, []);
 
   useEffect(() => {
-    setScreenType({
-      isMobile: width < 768,
-      isTablet: 768 <= width && width < 1280,
-      isDesktop: 1280 <= width,
-    });
+    if (width > 0) {
+      setScreenType({
+        isMobile: width < 768,
+        isTablet: 768 <= width && width < 1280,
+        isDesktop: 1280 <= width,
+      });
+    }
   }, [width]);
 
   return screenType;
