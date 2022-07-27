@@ -12,7 +12,8 @@ import { requestFindID } from '@/api/auth';
 const FindIDPage: NextPage = () => {
   const router = useRouter();
   const [error, setError] = useState<string>('');
-  const [isSuccessFindID, setIsSuccessFindID] = useState<boolean>(false);
+  const [userLoginID, setUserLoginID] = useState<string>('');
+
   const {
     register,
     handleSubmit,
@@ -26,13 +27,46 @@ const FindIDPage: NextPage = () => {
     const { isError, error, data } = await requestFindID(email);
     if (error) {
       setError(error);
+      setUserLoginID('');
+    } else {
+      setError('');
+      setUserLoginID(data);
     }
   };
+
+  if (userLoginID) {
+    return (
+      <AuthLayout
+        title="아이디 찾기"
+        description="찾으신 아이디는 다음과 같습니다."
+        errorMessage={error}
+      >
+        <AuthInput
+          id="loginId"
+          label="아이디"
+          value={userLoginID}
+          readOnly
+          disabled
+        />
+        <Button
+          size="lg"
+          type="button"
+          css={`
+            width: 100%;
+            margin-top: 1rem;
+          `}
+          onClick={() => router.push('/auth/login')}
+        >
+          로그인으로 이동
+        </Button>
+      </AuthLayout>
+    );
+  }
 
   return (
     <AuthLayout
       title="아이디 찾기"
-      description="이메일 주소로 가입하신 아이디가 전송됩니다."
+      description="가입하신 이메일 주소를 입력해주세요."
       errorMessage={error}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
