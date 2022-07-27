@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_EXTRA_CA_CERTS=\"C:\\Users\\mini\\AppData\\Local\\mkcert\\rootCA.pem\" node server",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
