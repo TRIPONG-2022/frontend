@@ -51,7 +51,9 @@ const LoginPage: NextPage = () => {
             {...register('password')}
           />
           <ForgotContainer>
-            <ForgotPwdText>아이디 찾기</ForgotPwdText>
+            <ForgotPwdText onClick={() => router.push('/auth/find-id')}>
+              아이디 찾기
+            </ForgotPwdText>
             <ForgotPwdText
               pwd
               onClick={() => router.push('/auth/find-password')}
