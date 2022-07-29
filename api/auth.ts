@@ -12,7 +12,6 @@ export const login = async ({ loginId, password }: LoginType) => {
       loginId,
       password,
     });
-    console.log(data);
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
