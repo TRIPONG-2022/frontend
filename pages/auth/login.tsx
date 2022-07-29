@@ -1,15 +1,16 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
+import styled, { css } from 'styled-components';
+import { login } from 'api/auth';
+import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema, LOGIN_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
 import IconButton from '@/components/shared/IconButton';
-import Link from 'next/link';
-import styled, { css } from 'styled-components';
-import { login } from 'api/auth';
-import { useRouter } from 'next/router';
+import { Divider, Forgot, SignUp } from '@/components/Login';
+import { LoginDiv } from '@/layouts/GNB/GNB.styled';
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
@@ -24,11 +25,8 @@ const LoginPage: NextPage = () => {
   });
 
   const onSubmit = (data: LoginSchema) => {
-    console.log(data);
     login(data);
   };
-
-  // 로그인 시 token을 받고,  token있을 경우에
 
   return (
     <>
@@ -50,17 +48,7 @@ const LoginPage: NextPage = () => {
             errorMessage={errors.password?.message}
             {...register('password')}
           />
-          <ForgotContainer>
-            <ForgotPwdText onClick={() => router.push('/auth/find-id')}>
-              아이디 찾기
-            </ForgotPwdText>
-            <ForgotPwdText
-              pwd
-              onClick={() => router.push('/auth/find-password')}
-            >
-              비밀번호 찾기
-            </ForgotPwdText>
-          </ForgotContainer>
+          <Forgot />
           <Button
             size="lg"
             type="submit"
@@ -74,9 +62,7 @@ const LoginPage: NextPage = () => {
             로그인
           </Button>
         </form>
-        <Divider>
-          <DividerText>또는</DividerText>
-        </Divider>
+        <Divider />
         <Container>
           <IconButton
             icon="KakaoIcon"
@@ -129,119 +115,16 @@ const LoginPage: NextPage = () => {
             }
           />
         </Container>
-        <SignUp>
-          계정이 없으신가요?
-          <SingUpBtn onClick={() => router.push('/auth/join')}>
-            회원가입
-          </SingUpBtn>
-        </SignUp>
+        <SignUp />
       </AuthLayout>
-
-      <OuterContainer></OuterContainer>
     </>
   );
 };
-
-interface ForgotProps {
-  pwd?: boolean;
-}
-
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const OuterContainer = styled.div`
-  width: 100%;
-  max-width: 32rem;
-  margin: 0 auto;
-  padding: 0 1.25rem;
-  @media (min-width: 768px) {
-    padding: 2.5rem;
-  }
-`;
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
-`;
-
-const ForgotContainer = styled.div`
-  display: flex;
-  justify-content: end;
-`;
-
-const ForgotPwdText = styled.em<ForgotProps>`
-  display: inline-block;
-  position: relative;
-  padding-left: 10px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray[500]};
-  text-align: right;
-  cursor: pointer;
-  ${({ pwd }) =>
-    pwd &&
-    css`
-      &::after {
-        display: block;
-        position: absolute;
-        top: 3px;
-        left: 5px;
-        width: 1px;
-        height: 8px;
-        background-color: ${({ theme }) => theme.colors.gray[300]};
-        content: '';
-      }
-    `}
-`;
-
-const Divider = styled.div`
-  position: relative;
-  margin: 2.5rem 0;
-  display: flex;
-  justify-content: center;
-  color: ${({ theme }) => theme.colors.gray[400]};
-`;
-
-const DividerText = styled.div`
-  font-size: red;
-  &::before {
-    background: ${({ theme }) => theme.colors.gray[400]};
-    height: 1px;
-    position: absolute;
-    right: 0;
-    width: 40%;
-    top: 50%;
-    content: '';
-  }
-  &::after {
-    background: ${({ theme }) => theme.colors.gray[400]};
-    height: 1px;
-    position: absolute;
-    left: 0;
-    width: 40%;
-    top: 50%;
-    content: '';
-  }
-`;
-
-const SignUp = styled.p`
-  text-align: center;
-  margin: 3rem 0;
-  color: ${({ theme }) => theme.colors.gray[400]};
-`;
-
-const SingUpBtn = styled.em`
-  margin-left: 0.5rem;
-  color: ${({ theme }) => theme.colors.primary.hex};
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 export default LoginPage;
