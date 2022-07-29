@@ -8,18 +8,11 @@ interface LoginType {
 
 export const login = async ({ loginId, password }: LoginType) => {
   try {
-    const data = await instance.post(
-      '/auth/login',
-      {
-        loginId,
-        password,
-      },
-      {
-        withCredentials: true,
-      },
-    );
+    const data = await instance.post('/auth/login', {
+      loginId,
+      password,
+    });
     console.log(data);
-    console.log(data.headers['set-cookie']);
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
