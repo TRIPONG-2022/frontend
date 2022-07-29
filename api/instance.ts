@@ -7,9 +7,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   if (config.headers) {
-    config.headers.Authorization = localStorage.getItem(
-      'Authorization',
-    ) as string;
+    config.headers.Authorization = localStorage.getItem('Authorization') ?? '';
   }
   return config;
 });
