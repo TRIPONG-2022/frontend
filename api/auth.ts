@@ -24,7 +24,7 @@ export const login = async ({ loginId, loginPwd }: LoginType) => {
 
 export const requestVerifyEmail = async (userId: string, email: string) => {
   try {
-    const { data } = await instance.post('/users/auth/email/send', {
+    const { data } = await instance.post('/users/auth/send/email', {
       userId,
       email,
     });
