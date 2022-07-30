@@ -10,7 +10,6 @@ import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
 import IconButton from '@/components/shared/IconButton';
 import { Divider, Forgot, SignUp } from '@/components/Login';
-import { LoginDiv } from '@/layouts/GNB/GNB.styled';
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
