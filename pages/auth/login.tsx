@@ -10,6 +10,8 @@ import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
 import IconButton from '@/components/shared/IconButton';
 import { Divider, Forgot, SignUp } from '@/components/Login';
+import Link from 'next/link';
+import { OAUTH_DATA } from '@/constants/Oauth_data';
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
@@ -63,56 +65,20 @@ const LoginPage: NextPage = () => {
         </form>
         <Divider />
         <Container>
-          <IconButton
-            icon="KakaoIcon"
-            aria-label="카카오 로그인"
-            colorScheme="kakao"
-            isRound
-            size="xlg"
-            onClick={() =>
-              router.push(
-                'http://13.209.251.206:8080/oauth2/authorization/kakao',
-              )
-            }
-          />
-          <IconButton
-            icon="NaverIcon"
-            aria-label="네이버 로그인"
-            colorScheme="naver"
-            isRound
-            size="xlg"
-            onClick={() =>
-              router.push(
-                'http://13.209.251.206:8080/oauth2/authorization/naver',
-              )
-            }
-          />
-
-          <IconButton
-            icon="GoogleIcon"
-            aria-label="구글 로그인"
-            colorScheme="google"
-            isRound
-            size="xlg"
-            onClick={() =>
-              router.push(
-                'http://13.209.251.206:8080/oauth2/authorization/google',
-              )
-            }
-          />
-
-          <IconButton
-            icon="FacebookIcon"
-            aria-label="페이스북 로그인"
-            colorScheme="facebook"
-            isRound
-            size="xlg"
-            onClick={() =>
-              router.push(
-                'http://13.209.251.206:8080/oauth2/authorization/facebook',
-              )
-            }
-          />
+          {OAUTH_DATA.map(({ iconName, title, colorSchemeName, LinkData }) => (
+            <Link
+              href={`${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/${LinkData}`}
+              key={LinkData}
+            >
+              <IconButton
+                icon={iconName}
+                aria-label={title}
+                colorScheme={colorSchemeName}
+                isRound
+                size="xlg"
+              />
+            </Link>
+          ))}
         </Container>
         <SignUp />
       </AuthLayout>
