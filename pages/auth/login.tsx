@@ -2,20 +2,19 @@ import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import { login } from 'api/auth';
-import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema, LOGIN_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
 import IconButton from '@/components/shared/IconButton';
-import { Divider, Forgot, SignUp } from '@/components/Login';
 import Link from 'next/link';
 import { OAUTH_DATA } from '@/constants/Oauth_data';
+import Divider from '@/components/Login/Divider';
+import FindAccountArea from '@/components/Login/FindAccountArea';
+import SignUpArea from '@/components/Login/SingUpArea/SignUpArea';
 
 const LoginPage: NextPage = () => {
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -49,7 +48,7 @@ const LoginPage: NextPage = () => {
             errorMessage={errors.password?.message}
             {...register('password')}
           />
-          <Forgot />
+          <FindAccountArea />
           <Button
             size="lg"
             type="submit"
@@ -80,7 +79,7 @@ const LoginPage: NextPage = () => {
             </Link>
           ))}
         </Container>
-        <SignUp />
+        <SignUpArea />
       </AuthLayout>
     </>
   );

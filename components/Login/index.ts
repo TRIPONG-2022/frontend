@@ -1,3 +1,3 @@
-export * from './Divider';
-export * from './Forgot';
-export * from './SignUp';
+export * from './Divider/Divider';
+export * from './FindAccountArea/FindAccountArea';
+export * from './SingUpArea/SignUpArea';

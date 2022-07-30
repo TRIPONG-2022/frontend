@@ -1,14 +1,6 @@
 import styled from 'styled-components';
 
-export const Divider = () => {
-  return (
-    <DividerContainer>
-      <DividerText>또는</DividerText>
-    </DividerContainer>
-  );
-};
-
-const DividerContainer = styled.div`
+export const DividerContainer = styled.div`
   position: relative;
   margin: 2.5rem 0;
   display: flex;
@@ -16,7 +8,7 @@ const DividerContainer = styled.div`
   color: ${({ theme }) => theme.colors.gray[400]};
 `;
 
-const DividerText = styled.div`
+export const DividerText = styled.div`
   font-size: red;
   &::before {
     background: ${({ theme }) => theme.colors.gray[400]};
