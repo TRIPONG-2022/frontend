@@ -71,6 +71,22 @@ export const JOIN_SCHEMA = yup.object({
   notiBar: yup.string(),
 });
 
+export const PROFILE_PATCH_SCHEMA = yup.object({
+  loginId: LOGIN_ID_SCHEMA,
+  email: EMAIL_SCHEMA,
+  nickName: NICKNAME_SCHEMA,
+  name: yup.string().required(),
+  gender: yup.string().required(),
+  authentication: yup.number(),
+  birthDate: yup.string(),
+  city: yup.string(),
+  district: yup.string(),
+  introduction: yup.string(),
+  phoneNumber: yup.string(),
+  picture: yup.string(),
+  tags: yup.array(),
+});
+
 export const RESET_PASSWORD_SCHEMA = yup.object({
   password: PASSWORD_CHEMA,
   passwordCheck: yup
@@ -84,6 +100,7 @@ export const SEND_EMAIL_SCHEMA = yup.object({
 });
 
 export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
+export type ProfilePatchSchema = yup.InferType<typeof PROFILE_PATCH_SCHEMA>;
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;

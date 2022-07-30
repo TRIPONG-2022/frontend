@@ -5,6 +5,7 @@ export const SCHEMA_MESSAGES = {
   WRONG_EMAIL_FORMAT: '잘못된 이메일 형식입니다.',
   WRONG_NICKNAME_FORMAT: '닉네임에 특수문자가 포함되면 안됩니다!',
   WRONG_LOGINID_FORMAT: '아이디에 특수문자 또는 한글이 포함되면 안됩니다!',
+  INTRODUCTION_MAX_LENGTH_EXCEEDED: '최대 500자까지 작성 가능합니다.',
 } as const;
 
 type DuplicateMessageType = {
@@ -15,5 +16,4 @@ export const DUPLICATE_MESSAGES: DuplicateMessageType = {
   DUPLICATE_NICKNAME: '이미 사용중인 닉네임입니다.',
   DUPLICATE_LOGINID: '이미 사용중인 아이디입니다.',
   DUPLICATE_EMAIL: '이미 사용중인 이메일입니다.',
-
 } as const;

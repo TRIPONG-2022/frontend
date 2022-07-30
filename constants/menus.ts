@@ -1,6 +1,3 @@
-import { useRouter } from 'next/router';
-
-// layout/GNB/GNB.styled.ts에서 사용
 export const LOGIN_MENUS = [
   {
     name: '로그인',

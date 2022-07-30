@@ -3,14 +3,14 @@ import { SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
 interface ModifyProps {
-  isModified?: boolean;
+  isEdit?: boolean;
 }
 
 export const Container = styled.div<ModifyProps>`
   width: 100%;
 
-  ${({ isModified }) =>
-    isModified &&
+  ${({ isEdit }) =>
+    isEdit &&
     css`
       ${InformationTextarea} {
         color: black;
@@ -19,9 +19,9 @@ export const Container = styled.div<ModifyProps>`
         }
       }
 
-      ${CharacteristicTagDiv} {
+      ${TagsDiv} {
         height: calc(100% - 3rem);
-        padding: 1.5rem 1.5rem 3rem 1.5rem;
+        /* padding: 1.5rem 1.5rem 3rem 1.5rem; */
       }
     `}
 `;
@@ -47,11 +47,18 @@ export const InfoContentInput = styled.input`
   border-radius: 1rem;
   box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
   border: none;
-  color: ${({ theme }) => theme.colors.blackAlpha[500]};
+  color: black;
   font-size: 1rem;
 
   :focus {
-    outline: none;
+    outline: 2px solid ${({ theme }) => theme.colors.primary.hex};
+  }
+
+  :read-only {
+    color: ${({ theme }) => theme.colors.blackAlpha[500]};
+    :focus {
+      outline: none;
+    }
   }
 `;
 
@@ -85,7 +92,7 @@ export const InformationTextarea = styled.textarea<InformationTextareaProps>`
   }
 `;
 
-export const CharacteristicDiv = styled.div`
+export const TagsDiv = styled.div`
   width: 100%;
   min-height: 12rem;
   border-radius: 1rem;
@@ -98,7 +105,7 @@ export const CharacteristicDiv = styled.div`
   box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
 `;
 
-export const CharacteristicTagDiv = styled.div`
+export const TagDiv = styled.div`
   width: 100%;
   height: 100%;
   background: white;
@@ -107,7 +114,7 @@ export const CharacteristicTagDiv = styled.div`
   border-radius: 1rem;
 `;
 
-export const CharacteristicTag = styled.span`
+export const Tag = styled.span`
   display: inline-block;
   padding: 0.5rem 0.75rem;
   margin-right: 0.5rem;
@@ -125,7 +132,7 @@ export const CharacteristicTag = styled.span`
   }
 `;
 
-export const CharacteristicInputDiv = styled.div`
+export const TagsInputDiv = styled.div`
   width: 100%;
   height: 3rem;
   background: ${({ theme }) => theme.colors.gray[400]};
@@ -137,7 +144,7 @@ export const CharacteristicInputDiv = styled.div`
   animation: ${opacityIncrease} 0.5s ease-in-out;
 `;
 
-export const CharacteristicInput = styled.input`
+export const TagsInput = styled.input`
   width: calc(100% - 3.75rem);
   height: 100%;
   padding: 0 1rem;
@@ -160,7 +167,7 @@ export const CharacteristicInput = styled.input`
     }
   }
 `;
-export const CharacteristicButton = styled.div`
+export const TagsButton = styled.div`
   width: 3.75rem;
   height: 100%;
   background: ${({ theme }) => theme.colors.gray[600]};
