@@ -32,7 +32,7 @@ const FindPasswordPage: NextPage = () => {
     }
   };
 
-  if (!isEmailSent) {
+  if (isEmailSent) {
     return (
       <AuthLayout
         title="비밀번호 찾기"
