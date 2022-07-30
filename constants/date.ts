@@ -29,3 +29,7 @@ export const days = (year: number, month: number) => {
   });
   // }
 };
+
+export const getCurrentMonth = () => new Date().getMonth() + 1;
+
+export const getCurrentDay = () => new Date().getDate();
