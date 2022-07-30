@@ -6,7 +6,7 @@ export const LOGIN_MENUS = [
   },
   {
     name: '회원가입',
-    link: '/',
+    link: '/auth/join',
     show: false,
   },
   {

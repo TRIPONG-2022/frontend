@@ -1,6 +1,7 @@
-import MainLayout from '@/layouts/MainLayout';
 import type { NextPage } from 'next';
 import React from 'react';
+
+import MainLayout from '@/layouts/MainLayout';
 
 const HomePage: NextPage = () => {
   return (
