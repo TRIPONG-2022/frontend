@@ -35,10 +35,10 @@ export const login = async ({ loginId, password }: LoginType) => {
 
 export const userConfirm = async () => {
   try {
-    const data = await instance.get('/users/profile');
+    const { data } = await instance.get('/users/profile');
 
     return {
-      data: data.data,
+      data: data,
       isLogIn: true,
     };
   } catch (err) {
