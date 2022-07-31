@@ -3,21 +3,22 @@ import instance from './instance';
 
 interface LoginType {
   loginId: string;
-  loginPwd: string;
+  password: string;
 }
 
-const login = async ({ loginId, loginPwd }: LoginType) => {
+export const login = async ({ loginId, password }: LoginType) => {
   try {
-    const { data } = await instance.post('/login', {
+    const data = await instance.post('/auth/login', {
       loginId,
-      loginPwd,
+      password,
     });
-    console.log(data);
   } catch (err) {
     const errors = err as Error | AxiosError;
-
     if (axios.isAxiosError(errors)) {
+      console.log('axios err');
+      console.log(err);
     } else {
+      console.log(err);
     }
   }
 };
