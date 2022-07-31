@@ -13,6 +13,9 @@ import { OAUTH_DATA } from '@/constants/Oauth_data';
 import Divider from '@/components/Login/Divider';
 import FindAccountArea from '@/components/Login/FindAccountArea';
 import SignUpArea from '@/components/Login/SingUpArea/SignUpArea';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveUser } from 'store/slice/userSlice';
+import { RootState } from 'store';
 
 const LoginPage: NextPage = () => {
   const {
@@ -24,8 +27,12 @@ const LoginPage: NextPage = () => {
     resolver: yupResolver(LOGIN_SCHEMA),
   });
 
-  const onSubmit = (data: LoginSchema) => {
-    login(data);
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);
+  const onSubmit = async (logInData: LoginSchema) => {
+    const { data, isLogIn } = await login(logInData);
+    dispatch(saveUser({ isLogIn, ...data }));
   };
 
   return (
