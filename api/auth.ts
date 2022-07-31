@@ -23,6 +23,40 @@ export const login = async ({ loginId, password }: LoginType) => {
   }
 };
 
+interface JoinType {
+  nickName: string;
+  loginId: string;
+  email: string;
+  password: string;
+}
+
+interface JoinErrorType {
+  status: number;
+  errors: [
+    {
+      code: number;
+      field: string;
+      invalidValue: string;
+      kind: string;
+      message: string;
+    },
+  ];
+}
+
+export const requestJoin = async (userData: JoinType) => {
+  try {
+    const { status, data } = await instance.post<JoinErrorType>(
+      '/auth/signup/normal',
+      userData,
+    );
+    if (data?.errors) {
+      return data.errors[0].message;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const requestVerifyEmail = async (userId: string, email: string) => {
   try {
     const { data } = await instance.post('/users/auth/send/email', {

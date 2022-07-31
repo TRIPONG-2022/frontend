@@ -78,7 +78,6 @@ export const JOIN_SCHEMA = yup.object({
     .string()
     .oneOf([yup.ref('password'), null], SCHEMA_MESSAGES.NOT_MATCH_PASSWORD)
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  notiBar: yup.string(),
 });
 
 export const RESET_PASSWORD_SCHEMA = yup.object({

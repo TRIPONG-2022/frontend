@@ -1,45 +1,44 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
-import JoinNotiBar from '@/components/shared/JoinNotiBar';
-import { JoinSchema, JOIN_SCHEMA } from '@/constants/schema';
-import { joinApi } from 'api/auth';
 import Button from '@/components/shared/Button';
+import { requestJoin } from '@/api/auth';
+import { JoinSchema, JOIN_SCHEMA } from '@/constants/schema';
+import { useRouter } from 'next/router';
 
 const JoinPage: NextPage = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    setError,
     formState: { isValid, isDirty, errors },
   } = useForm<JoinSchema>({
     mode: 'onChange',
     resolver: yupResolver(JOIN_SCHEMA),
   });
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const onSubmit = useCallback(
     async (data: JoinSchema) => {
-      const errMessage = await joinApi(data);
-      console.log(errMessage);
+      const errMessage = await requestJoin(data);
       if (errMessage) {
-        setError('notiBar', {
-          message: errMessage.message,
-        });
+        setErrorMessage(errMessage);
+      } else {
+        alert('회원가입 완료');
+        router.replace('/auth/login');
       }
     },
-    [setError],
+    [router],
   );
 
   return (
-    <AuthLayout title="회원가입" description="회원가입 페이지 입니다.">
-      <JoinNotiBar
-        {...register('notiBar')}
-        errorMessages={errors.notiBar?.message}
-      />
+    <AuthLayout title="회원가입" errorMessage={errorMessage}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
           id="nickName"
