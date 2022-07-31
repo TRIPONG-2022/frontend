@@ -6,3 +6,6 @@ export { default as DeleteIcon } from './icon-delete.svg';
 export { default as LogoIcon } from './logo.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as ErrorWarningIcon } from './error-warning.svg';
+export { default as LocationIcon } from './location.svg';
+export { default as LikeIcon } from './like.svg';
+export { default as CalendarIcon } from './calendar.svg';

@@ -13,6 +13,10 @@ export const IconButtonSizeStyles = {
     width: 3rem;
     height: 3rem;
   `,
+  xlg: css`
+    width: 3.5rem;
+    height: 3.5rem;
+  `,
 };
 
 export const IconButtonColorSchemeStyles = {
