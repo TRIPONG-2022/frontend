@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!user.nickName) {
+    if (!user.isLogIn) {
       (async function logincheck() {
         const { data, isLogIn } = await userConfirm();
         dispatch(saveUser({ isLogIn, ...data }));

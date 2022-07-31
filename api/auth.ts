@@ -36,7 +36,7 @@ export const login = async ({ loginId, password }: LoginType) => {
 export const userConfirm = async () => {
   try {
     const data = await instance.get('/users/profile');
-    console.log(data);
+
     return {
       data: data.data,
       isLogIn: true,
