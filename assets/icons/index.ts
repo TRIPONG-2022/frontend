@@ -8,3 +8,6 @@ export { default as SearchIcon } from './search.svg';
 export { default as AuthenticatedIcon } from './authenticated.svg';
 export { default as ArrowDown } from './arrow-down.svg';
 export { default as PlusIcon } from './plus.svg';
+export { default as LocationIcon } from './location.svg';
+export { default as LikeIcon } from './like.svg';
+export { default as CalendarIcon } from './calendar.svg';
