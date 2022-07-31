@@ -13,20 +13,34 @@ export const ProfileImageDiv = styled.div`
   width: 15rem;
   aspect-ratio: 1 / 1;
   margin-bottom: 1rem;
+  position: relative;
+
+  svg {
+    position: absolute;
+    right: 0;
+    :hover {
+      cursor: pointer;
+    }
+  }
 
   ${SCREEN_TABLET} {
     width: 17.5rem;
   }
 `;
 
-export const ProfileImage = styled.img`
+export const ProfileBlankDiv = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   box-shadow: inset 0px 2.5px 10px 5px ${({ theme }) => theme.colors.gray[300]};
-  overflow: hidden;
   cursor: pointer;
-  background-image: red;
+`;
+
+export const ProfileImage = styled.img`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
 `;
 
 export const NicknameDiv = styled.div`

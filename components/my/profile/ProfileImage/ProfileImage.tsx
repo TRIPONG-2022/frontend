@@ -1,5 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { UseFormRegister, UseFormWatch } from 'react-hook-form';
+import React, { useCallback, useRef, useState } from 'react';
+import {
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 
 import * as Styled from './ProfileImage.styled';
 import { ProfilePatchSchema } from '@/constants/schema';
@@ -11,6 +15,7 @@ interface ProfileImageProps {
   isEdit: boolean;
   register: UseFormRegister<ProfilePatchSchema>;
   watch: UseFormWatch<ProfilePatchSchema>;
+  setValue: UseFormSetValue<ProfilePatchSchema>;
 }
 
 const ProfileImage = ({
@@ -19,6 +24,7 @@ const ProfileImage = ({
   isEdit,
   register,
   watch,
+  setValue,
 }: ProfileImageProps) => {
   const [image, setImage] = useState(picture ?? undefined);
   const imgRef = useRef<HTMLInputElement | null>(null);
@@ -30,7 +36,12 @@ const ProfileImage = ({
     if (isEdit) imgRef.current!.click();
   };
 
-  const getImage = () => {
+  const removeImage = () => {
+    setImage('');
+    setValue('picture', '');
+  };
+
+  const getImage = useCallback(() => {
     if (imgRef.current!.files) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -38,11 +49,14 @@ const ProfileImage = ({
       };
       reader.readAsDataURL(imgRef.current!.files[0]);
     }
-  };
+  }, []);
 
   return (
     <Styled.Container>
       <Styled.ProfileImageDiv>
+        {isEdit && (
+          <SVGIcon icon="DeleteIcon" size="20" onClick={removeImage} />
+        )}
         <input
           type="file"
           ref={(e) => {
@@ -56,7 +70,9 @@ const ProfileImage = ({
           {...rest}
           hidden
         />
-        <Styled.ProfileImage onClick={onChangeImage} src={image} />
+        <Styled.ProfileBlankDiv onClick={onChangeImage}>
+          {image && <Styled.ProfileImage src={image} />}
+        </Styled.ProfileBlankDiv>
       </Styled.ProfileImageDiv>
       <Styled.NicknameDiv>
         {!isEdit && <Styled.Nickname>{watchedNickName}</Styled.Nickname>}

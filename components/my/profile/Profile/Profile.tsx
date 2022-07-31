@@ -18,6 +18,7 @@ const Profile = ({ userData }: UserDataType) => {
     watch,
     handleSubmit,
     control,
+    setValue,
     formState: { isDirty, errors, isValid },
   } = useForm<ProfilePatchSchema>({
     defaultValues: {
@@ -53,6 +54,7 @@ const Profile = ({ userData }: UserDataType) => {
               authentication={authentication}
               isEdit={isEdit}
               register={register}
+              setValue={setValue}
               watch={watch}
             />
           </Styled.ProfileImageWrapper>
