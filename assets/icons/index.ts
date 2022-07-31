@@ -2,7 +2,12 @@ export { default as NaverIcon } from './naver.svg';
 export { default as KakaoIcon } from './kakao.svg';
 export { default as GoogleIcon } from './google.svg';
 export { default as FacebookIcon } from './facebook.svg';
-
+export { default as DeleteIcon } from './icon-delete.svg';
+export { default as LogoIcon } from './logo.svg';
+export { default as SearchIcon } from './search.svg';
+export { default as ErrorWarningIcon } from './error-warning.svg';
+export { default as LocationIcon } from './location.svg';
+export { default as LikeIcon } from './like.svg';
 export { default as EditorH1Icon } from './editor-h1.svg';
 export { default as EditorH2Icon } from './editor-h2.svg';
 export { default as EditorParagraphIcon } from './editor-paragraph.svg';
