@@ -29,7 +29,7 @@ const LoginPage: NextPage = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
+
   const onSubmit = async (logInData: LoginSchema) => {
     const { data, isLogIn } = await login(logInData);
     dispatch(saveUser({ isLogIn, ...data }));
