@@ -1,11 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Stats } from 'fs';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
-  authentication: false,
-  name: '',
-  nickName: '',
-  picture: '',
+interface User {
+  authentication: boolean;
+  name: string;
+  nickName: string;
+  picture: string;
+}
+
+export interface UserState {
+  user: User | null;
+  isLogIn: boolean;
+}
+
+const initialState: UserState = {
+  user: null,
   isLogIn: false,
 };
 
@@ -13,12 +21,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    saveUser(state, action) {
-      state.authentication = action.payload.authentication == 1 ? true : false;
-      state.name = action.payload.name;
-      state.nickName = action.payload.nickName;
-      state.picture = action.payload.picture;
-      state.isLogIn = action.payload.isLogIn;
+    saveUser: (state: UserState, action: PayloadAction<User>) => {
+      state.user = action.payload;
+      state.isLogIn = true;
     },
   },
 });
