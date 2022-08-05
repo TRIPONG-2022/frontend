@@ -14,8 +14,8 @@ import Divider from '@/components/Login/Divider';
 import FindAccountArea from '@/components/Login/FindAccountArea';
 import SignUpArea from '@/components/Login/SingUpArea/SignUpArea';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveUser } from 'store/slice/userSlice';
-import { RootState } from 'store';
+import { AppState } from '@/store/index';
+import { saveUser } from '@/store/slice/userSlice';
 
 const LoginPage: NextPage = () => {
   const {
@@ -28,11 +28,13 @@ const LoginPage: NextPage = () => {
   });
 
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: AppState) => state.user);
 
   const onSubmit = async (logInData: LoginSchema) => {
-    const { data, isLogIn } = await login(logInData);
-    dispatch(saveUser({ isLogIn, ...data }));
+    const { userInfo } = await login(logInData);
+    if (userInfo) {
+      dispatch(saveUser(userInfo));
+    }
   };
 
   return (

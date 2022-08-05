@@ -6,6 +6,13 @@ interface LoginType {
   password: string;
 }
 
+export interface ConfirmUserResponse {
+  authentication: any;
+  name: string;
+  nickName: string;
+  picture: string;
+}
+
 export const login = async ({ loginId, password }: LoginType) => {
   try {
     const response = await instance.post('/auth/login', {
@@ -13,44 +20,55 @@ export const login = async ({ loginId, password }: LoginType) => {
       password,
     });
 
-    const { data, isLogIn } = await userConfirm();
+    const { userInfo, isError, error } = await userConfirm();
 
     return {
-      data,
-      isLogIn,
+      userInfo,
+      isError,
+      error,
     };
   } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
+    if (axios.isAxiosError(err)) {
       console.log('axios err');
       console.log(err);
     } else {
       console.log(err);
     }
     return {
-      isLogIn: false,
+      isError: true,
+      error: '로그인 실패하였습니다.',
     };
   }
 };
 
 export const userConfirm = async () => {
   try {
-    const { data } = await instance.get('/users/profile');
-
+    const data = await instance.get<ConfirmUserResponse>('/users/profile');
+    console.log(data);
+    if (data) {
+      const userInfo = {
+        ...data.data,
+        authentication: !!data.data.authentication,
+      };
+      return {
+        userInfo,
+        isError: false,
+      };
+    }
     return {
-      data: data,
-      isLogIn: true,
+      isError: true,
+      error: '유저 데이터가 비어있습니다.',
     };
   } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
+    if (axios.isAxiosError(err)) {
       console.log('axios err');
       console.log(err);
     } else {
       console.log(err);
     }
     return {
-      isLogIn: false,
+      isError: true,
+      error: '해당 유저 정보를 가져오는데 실패하였습니다.',
     };
   }
 };
