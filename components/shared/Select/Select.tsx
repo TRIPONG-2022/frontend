@@ -33,15 +33,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       <Styled.Container>
         {label && <Styled.Label htmlFor={id}>{label}</Styled.Label>}
 
-        <Styled.Select id={id} {...selectProps} ref={ref}>
-          <Styled.Option value="defaultValue"> {defaultLabel} </Styled.Option>
-
-          {options?.map(({ value, label }) => (
-            <Styled.Option key={`${id}-${value}`} value={value}>
-              {label}
-            </Styled.Option>
-          ))}
-        </Styled.Select>
+        <Styled.Select id={id} {...selectProps} ref={ref}></Styled.Select>
 
         <CustomDivContainer
           onClick={() => {
