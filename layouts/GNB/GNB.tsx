@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
+
 import * as Styled from './GNB.styled';
 import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
+
 import useWindowSize from '@/hooks/useWindowSize';
 import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
 import SVGIcon from '@/components/shared/SVGIcon';
 import NavigationDiv from '@/layouts/MobileNaviation';
-import { logout } from 'api/auth';
-import { useDispatch } from 'react-redux';
-import { logoutUser } from '@/store/slice/userSlice';
+
 interface GNBProps {
   isLogin: boolean;
 }
@@ -24,8 +24,6 @@ function GNB({ isLogin }: GNBProps) {
   useEffect(() => {
     if (window.innerWidth > 1280) setToggle(false);
   }, [windowWidth]);
-
-  const dispatch = useDispatch();
 
   return (
     <Styled.GNBHeader>
@@ -58,14 +56,7 @@ function GNB({ isLogin }: GNBProps) {
               if (isLogin === show)
                 return (
                   <Styled.LoginBtn key={name}>
-                    <p
-                      onClick={() => {
-                        logout();
-                        dispatch(logoutUser());
-                      }}
-                    >
-                      {name}
-                    </p>
+                    <Link href={link}>{name}</Link>
                   </Styled.LoginBtn>
                 );
             })}
