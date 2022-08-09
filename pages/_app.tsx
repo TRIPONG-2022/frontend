@@ -3,6 +3,11 @@ import { ThemeProvider } from 'styled-components';
 import theme from '@/styles/theme';
 import GlobalStyle from '@/styles/global';
 import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
+import wrapper, { AppState } from 'store';
+import { userConfirm } from 'api/auth';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveUser } from '@/store/slice/userSlice';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -14,6 +19,22 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
     },
   });
+  const user = useSelector((state: AppState) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!user.isLogIn) {
+      (async function logincheck() {
+        const { userInfo, isError, error } = await userConfirm();
+        if (userInfo) {
+          dispatch(saveUser(userInfo));
+        } else if (isError) {
+          console.log(error);
+        }
+      })();
+    }
+  }, []);
+
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -27,4 +48,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
