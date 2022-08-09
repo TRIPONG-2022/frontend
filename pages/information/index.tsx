@@ -77,7 +77,7 @@ const InformationPage: NextPage = () => {
         <Flex>
           <Select
             id="year"
-            defaultLabel="날짜를 입력해주세요."
+            defaultLabel="연도 입력"
             options={years(getCurrentYear())}
             setValue={setValue}
             {...register('year')}
