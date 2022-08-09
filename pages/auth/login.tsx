@@ -13,8 +13,7 @@ import { OAUTH_DATA } from '@/constants/Oauth_data';
 import Divider from '@/components/Login/Divider';
 import FindAccountArea from '@/components/Login/FindAccountArea';
 import SignUpArea from '@/components/Login/SingUpArea/SignUpArea';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '@/store/index';
+import { useDispatch } from 'react-redux';
 import { saveUser } from '@/store/slice/userSlice';
 import { useRouter } from 'next/router';
 
