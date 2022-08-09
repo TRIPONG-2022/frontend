@@ -16,6 +16,7 @@ import SignUpArea from '@/components/Login/SingUpArea/SignUpArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '@/store/index';
 import { saveUser } from '@/store/slice/userSlice';
+import { useRouter } from 'next/router';
 
 const LoginPage: NextPage = () => {
   const {
@@ -27,13 +28,14 @@ const LoginPage: NextPage = () => {
     resolver: yupResolver(LOGIN_SCHEMA),
   });
 
+  const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector((state: AppState) => state.user);
 
   const onSubmit = async (logInData: LoginSchema) => {
     const { userInfo } = await login(logInData);
     if (userInfo) {
       dispatch(saveUser(userInfo));
+      router.push('/');
     }
   };
 

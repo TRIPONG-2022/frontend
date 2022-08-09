@@ -72,3 +72,13 @@ export const userConfirm = async () => {
     };
   }
 };
+
+export const logout = async () => {
+  try {
+    const data = await instance.post('/users/logout', {});
+
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
