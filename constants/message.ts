@@ -15,5 +15,4 @@ export const DUPLICATE_MESSAGES: DuplicateMessageType = {
   DUPLICATE_NICKNAME: '이미 사용중인 닉네임입니다.',
   DUPLICATE_LOGINID: '이미 사용중인 아이디입니다.',
   DUPLICATE_EMAIL: '이미 사용중인 이메일입니다.',
-
 } as const;
