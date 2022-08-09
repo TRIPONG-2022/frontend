@@ -28,12 +28,6 @@ export const login = async ({ loginId, password }: LoginType) => {
       error,
     };
   } catch (err) {
-    if (axios.isAxiosError(err)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
     return {
       isError: true,
       error: '로그인 실패하였습니다.',
@@ -44,7 +38,7 @@ export const login = async ({ loginId, password }: LoginType) => {
 export const userConfirm = async () => {
   try {
     const data = await instance.get<ConfirmUserResponse>('/users/profile');
-    console.log(data);
+
     if (data) {
       const userInfo = {
         ...data.data,
@@ -61,15 +55,16 @@ export const userConfirm = async () => {
     };
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      console.log('axios err');
-      console.log(err);
+      return {
+        isError: true,
+        error: '해당 유저 정보를 가져오는데 실패하였습니다.',
+      };
     } else {
-      console.log(err);
+      return {
+        isError: true,
+        error: '알 수 없는 오류',
+      };
     }
-    return {
-      isError: true,
-      error: '해당 유저 정보를 가져오는데 실패하였습니다.',
-    };
   }
 };
 

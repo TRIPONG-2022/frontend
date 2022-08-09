@@ -32,10 +32,12 @@ const LoginPage: NextPage = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (logInData: LoginSchema) => {
-    const { userInfo } = await login(logInData);
+    const { userInfo, isError, error } = await login(logInData);
     if (userInfo) {
       dispatch(saveUser(userInfo));
       router.push('/');
+    } else if (isError) {
+      console.log(error);
     }
   };
 
