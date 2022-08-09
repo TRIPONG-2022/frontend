@@ -7,7 +7,7 @@ import { SendEmailSchema, SEND_EMAIL_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
 import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
-import { requestFindID } from 'api/auth';
+import { requestFindID } from '@/api/auth';
 
 const FindIDPage: NextPage = () => {
   const router = useRouter();

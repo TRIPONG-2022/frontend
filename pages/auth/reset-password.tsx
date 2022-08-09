@@ -6,7 +6,7 @@ import AuthInput from '@/components/shared/AuthInput';
 import AuthLayout from '@/layouts/AuthLayout';
 import { ResetPasswordSchema, RESET_PASSWORD_SCHEMA } from '@/constants/schema';
 import Button from '@/components/shared/Button';
-import { requestResetPassword } from 'api/auth';
+import { requestResetPassword } from '@/api/auth';
 
 function ResetPasswordPage() {
   const router = useRouter();

@@ -80,6 +80,7 @@ const JoinPage: NextPage = () => {
           disabled={!isValid || !isDirty}
           aria-disabled={!isValid || !isDirty}
           css={{ width: '100%' }}
+          size="lg"
         >
           회원가입
         </Button>
