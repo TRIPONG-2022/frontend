@@ -27,3 +27,12 @@ export const opacityIncrease = keyframes`
   opacity: 1;
 }
 `;
+
+export const FADE_IN = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;

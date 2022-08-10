@@ -16,12 +16,14 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
+      "@/api/*": ["./api/*"],
       "@/assets/*": ["./assets/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/styles/*": ["./styles/*"],
       "@/layouts/*": ["./layouts/*"],
       "@/constants/*": ["./constants/*"],
-      "@/components/*": ["./components/*"]
+      "@/components/*": ["./components/*"],
+      "@/store/*": ["./store/*"]
     }
   },
   "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx"],
