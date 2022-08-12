@@ -75,7 +75,7 @@ export const PROFILE_PATCH_SCHEMA = yup.object({
   loginId: LOGIN_ID_SCHEMA,
   email: EMAIL_SCHEMA,
   nickName: NICKNAME_SCHEMA,
-  name: yup.string().required(),
+  name: yup.string(),
   gender: yup.string().required(),
   authentication: yup.number(),
   birthDate: yup.string(),

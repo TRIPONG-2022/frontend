@@ -1,30 +1,74 @@
-import React, { MouseEvent, useCallback, useState } from 'react';
+import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import * as Styled from './Profile.styled';
-import { UserDataType } from 'pages/my/profile';
+
 import ProfileImage from '../ProfileImage';
 import ProfileInfo from '../ProfileInfo';
 import Button from '@/components/shared/Button';
 import theme from '@/styles/theme';
 import { ProfilePatchSchema } from '@/constants/schema';
+import { useEffect } from 'react';
+import {
+  getProfileInfomation,
+  patchProfileInformation,
+  UserDataType,
+} from '@/api/myPage';
 
-const Profile = ({ userData }: UserDataType) => {
-  const [isEdit, setIsEdit] = useState(false);
+const initialUserData = {
+  loginId: '',
+  email: '',
+  gender: '',
+  name: '',
+  nickName: '',
+  joinMethod: '',
+  authentication: 0,
+  birthDate: '',
+  city: '',
+  district: '',
+  introduction: '',
+  latitude: 0,
+  longitude: 0,
+  phoneNumber: '',
+  picture: '',
+  tags: [{ tag: '' }],
+};
+
+const Profile = () => {
+  const [userData, setUserData] = useState<UserDataType>(initialUserData);
   const { picture, authentication } = userData;
+  const [isEdit, setIsEdit] = useState(false);
 
   const {
     register,
+    reset,
     watch,
     handleSubmit,
-    control,
     setValue,
+    control,
     formState: { isDirty, errors, isValid },
   } = useForm<ProfilePatchSchema>({
-    defaultValues: {
-      ...userData,
-    },
+    defaultValues: useMemo(() => {
+      return userData;
+    }, [userData]),
   });
+
+  useEffect(() => {
+    (async function setUser() {
+      const userProfile = await getProfileInfomation();
+      if (userProfile) {
+        setUserData(userProfile);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log(isDirty, errors, isValid);
+  }, [isDirty, errors, isValid]);
+
+  useEffect(() => {
+    reset(userData);
+  }, [reset, userData]);
 
   const changeEditMode = useCallback(
     (e: MouseEvent) => {
@@ -34,13 +78,14 @@ const Profile = ({ userData }: UserDataType) => {
     [setIsEdit, isEdit],
   );
 
-  const onSubmit: SubmitHandler<ProfilePatchSchema> = (data) => {
+  const onSubmit: SubmitHandler<ProfilePatchSchema> = async (data) => {
     console.log(data);
     const sendData = {
       ...data,
       tags: data.tags!.map((tag) => tag.tag),
     };
-    console.log(sendData);
+    // await patchProfileInformation(sendData);
+    // console.log(response)
     setIsEdit(!isEdit);
   };
 
@@ -81,7 +126,7 @@ const Profile = ({ userData }: UserDataType) => {
               <Button
                 css={{ background: `${theme.colors.gray[500]}` }}
                 size="lg"
-                disabled={authentication === 1}
+                disabled={!!authentication}
               >
                 {authentication ? '인증완료' : '인증하기'}
               </Button>

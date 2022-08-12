@@ -39,7 +39,7 @@ const ProfileInfo = ({
   });
 
   const tagRef = useRef<HTMLInputElement>(null);
-  const intro = watch('introduction');
+  const intro = watch('introduction') || '';
   const bool = fields.length >= 10;
 
   const onResizeTextArea = useCallback(
@@ -199,7 +199,7 @@ const ModifyInfo = React.forwardRef<HTMLInputElement, ModifyInfo>(
     return (
       <>
         <Styled.InfoLabel htmlFor={id}>{label}</Styled.InfoLabel>
-        <Styled.InfoContentInput ref={ref} {...inputProps} name={id} />
+        <Styled.InfoContentInput id={id} ref={ref} name={id} {...inputProps} />
       </>
     );
   },

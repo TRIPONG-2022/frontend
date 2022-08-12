@@ -11,7 +11,7 @@ import SVGIcon from '@/components/shared/SVGIcon';
 
 interface ProfileImageProps {
   picture: string | null | undefined;
-  authentication: number;
+  authentication: number | undefined;
   isEdit: boolean;
   register: UseFormRegister<ProfilePatchSchema>;
   watch: UseFormWatch<ProfilePatchSchema>;
@@ -77,9 +77,7 @@ const ProfileImage = ({
       <Styled.NicknameDiv>
         {!isEdit && <Styled.Nickname>{watchedNickName}</Styled.Nickname>}
         {isEdit && <Styled.NicknameInput {...register('nickName')} />}
-        {authentication === 1 && !isEdit && (
-          <SVGIcon icon="AuthenticatedIcon" />
-        )}
+        {!!authentication && !isEdit && <SVGIcon icon="AuthenticatedIcon" />}
       </Styled.NicknameDiv>
     </Styled.Container>
   );
