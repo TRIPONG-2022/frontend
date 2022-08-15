@@ -12,6 +12,7 @@ import * as Styled from './Editor.styled';
 import PublishModal from '../PublishModal';
 import { PostEditorSchema, POST_EDITOR_SCHEMA } from '@/constants/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { requestCreatePost } from '@/api/post';
 
 interface EditorProps {
   initialValues?: Partial<PostEditorSchema>;
@@ -92,8 +93,9 @@ export default function Editor({ initialValues }: EditorProps) {
     router.back();
   };
 
-  const onSubmit = (data: PostEditorSchema) => {
-    console.log(data);
+  const onSubmit = async (data: PostEditorSchema) => {
+    const res = await requestCreatePost(data);
+    router.replace('/posts');
   };
 
   const openPublishModal = () => {
