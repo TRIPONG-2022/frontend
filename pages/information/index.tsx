@@ -129,4 +129,5 @@ export default InformationPage;
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 2rem;
 `;
