@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/shared/Button';
 import SVGIcon from '@/components/shared/SVGIcon';
@@ -6,8 +6,8 @@ import * as Styled from './PublishModal.styled';
 
 interface PublishModalProps {
   isOpen: boolean;
-  thumbnail?: string;
-  onChangeThumbnail: (thumbnail: string) => void;
+  thumbnail?: File;
+  onChangeThumbnail: (thumbnail?: File) => void;
   onClose?: () => void;
   onPublish?: () => void;
 }
@@ -19,17 +19,44 @@ export default function PublishModal({
   onClose,
   onPublish,
 }: PublishModalProps) {
+  const [thumbnailBase64, SetThumbnailBase64] = useState<
+    string | ArrayBuffer | null
+  >(null);
+
+  const toBase64 = useCallback(
+    (file: File): Promise<string | ArrayBuffer | null> =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      }),
+    [],
+  );
+
   const resetThumbnail = () => {
-    onChangeThumbnail('');
+    onChangeThumbnail(undefined);
   };
 
   const handleChangeThumbnail = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    onChangeThumbnail(
-      'https://images.unsplash.com/photo-1657299143474-c456e8388ee2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1001&q=80',
-    );
+    const files = event.target.files;
+    if (files) {
+      const imageFile = files[0];
+      onChangeThumbnail(imageFile);
+    }
   };
+
+  useEffect(() => {
+    (async () => {
+      if (!thumbnail) {
+        return;
+      }
+      const base64 = await toBase64(thumbnail);
+      SetThumbnailBase64(base64);
+    })();
+  }, [thumbnail, toBase64]);
 
   return (
     <Styled.OuterContainer $isOpen={isOpen}>
@@ -42,9 +69,9 @@ export default function PublishModal({
           </Styled.ThumbnailHandleContainer>
         )}
         <Styled.ThumbnailContainer>
-          {thumbnail ? (
+          {thumbnail && thumbnailBase64 ? (
             <Image
-              src={thumbnail}
+              src={thumbnailBase64.toString()}
               alt="thumbnail"
               layout="fill"
               objectFit="cover"

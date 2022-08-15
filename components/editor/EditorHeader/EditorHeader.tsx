@@ -25,7 +25,6 @@ export default function EditorHeader({
           <option value="gathering">여행메이트모집</option>
         </select>
       </div>
-      <div>서울특별시 강남구</div>
     </Styled.Container>
   );
 }

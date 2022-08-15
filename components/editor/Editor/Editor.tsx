@@ -11,12 +11,12 @@ import DateRangeInput from '../DateRangeInput';
 import * as Styled from './Editor.styled';
 import PublishModal from '../PublishModal';
 
-interface PostSchema {
+export interface PostSchema {
   category: string;
   title: string;
   tags: string[];
   content: string;
-  thumbnail: string;
+  thumbnail?: File;
   totalHeadCount?: number;
   startDate?: Date;
   endDate?: Date;
@@ -29,9 +29,10 @@ interface EditorProps {
 export default function Editor({ initialValues }: EditorProps) {
   const router = useRouter();
   const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
-  const { register, handleSubmit, watch, setValue } = useForm<PostSchema>({
-    defaultValues: { tags: [], ...initialValues },
-  });
+  const { register, handleSubmit, watch, setValue, formState } =
+    useForm<PostSchema>({
+      defaultValues: { tags: [], ...initialValues },
+    });
 
   const onChangeCategory = useCallback(
     (category: string) => {
@@ -76,7 +77,7 @@ export default function Editor({ initialValues }: EditorProps) {
   );
 
   const onChangeThumbnail = useCallback(
-    (thumbnail: string) => {
+    (thumbnail?: File) => {
       setValue('thumbnail', thumbnail);
     },
     [setValue],
@@ -126,7 +127,11 @@ export default function Editor({ initialValues }: EditorProps) {
       />
       <TagInput tags={watch('tags')} onChange={onChangeTags} />
       <TipTap content={initialValues?.content} onChange={onChangeContent} />
-      <EditorFooter onCancel={onCancel} onPublish={openPublishModal} />
+      <EditorFooter
+        formState={formState}
+        onCancel={onCancel}
+        onPublish={openPublishModal}
+      />
       <PublishModal
         thumbnail={watch('thumbnail')}
         onChangeThumbnail={onChangeThumbnail}
