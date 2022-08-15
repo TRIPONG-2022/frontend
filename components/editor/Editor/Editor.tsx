@@ -10,11 +10,11 @@ import HeadCountInput from '../HeadCountInput';
 import DateRangeInput from '../DateRangeInput';
 import * as Styled from './Editor.styled';
 import PublishModal from '../PublishModal';
-import { PostSchema, POST_SCHEMA } from '@/constants/schema';
+import { PostEditorSchema, POST_EDITOR_SCHEMA } from '@/constants/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 interface EditorProps {
-  initialValues?: PostSchema;
+  initialValues?: Partial<PostEditorSchema>;
 }
 
 export default function Editor({ initialValues }: EditorProps) {
@@ -32,10 +32,10 @@ export default function Editor({ initialValues }: EditorProps) {
   const router = useRouter();
   const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue, formState } =
-    useForm<PostSchema>({
+    useForm<PostEditorSchema>({
       mode: 'onBlur',
       reValidateMode: 'onBlur',
-      resolver: yupResolver(POST_SCHEMA),
+      resolver: yupResolver(POST_EDITOR_SCHEMA),
       defaultValues: { ...defaultValues, ...initialValues },
     });
 
@@ -92,7 +92,7 @@ export default function Editor({ initialValues }: EditorProps) {
     router.back();
   };
 
-  const onSubmit = (data: PostSchema) => {
+  const onSubmit = (data: PostEditorSchema) => {
     console.log(data);
   };
 

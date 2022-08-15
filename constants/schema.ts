@@ -89,7 +89,7 @@ const requiredWhenCategoryIsGathering =
     return category === 'gathering' ? field.required(message) : field;
   };
 
-export const POST_SCHEMA = yup.object({
+export const POST_EDITOR_SCHEMA = yup.object({
   title: yup.string().required('제목을 입력해주세요.'),
   category: yup
     .string()
@@ -123,4 +123,4 @@ export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
-export type PostSchema = yup.InferType<typeof POST_SCHEMA>;
+export type PostEditorSchema = yup.InferType<typeof POST_EDITOR_SCHEMA>;

@@ -2,12 +2,12 @@ import React from 'react';
 import Button from '@/components/shared/Button';
 import * as Styled from './EditorFooter.styled';
 import { FormState } from 'react-hook-form';
-import { PostSchema } from '@/constants/schema';
+import { PostEditorSchema } from '@/constants/schema';
 
 interface EditorFooterProps {
   onCancel?: () => void;
   onPublish?: () => void;
-  formState: FormState<PostSchema>;
+  formState: FormState<PostEditorSchema>;
 }
 
 export default function EditorFooter({
