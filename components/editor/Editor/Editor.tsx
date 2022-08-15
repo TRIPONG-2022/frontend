@@ -10,75 +10,80 @@ import HeadCountInput from '../HeadCountInput';
 import DateRangeInput from '../DateRangeInput';
 import * as Styled from './Editor.styled';
 import PublishModal from '../PublishModal';
-
-export interface PostSchema {
-  category: string;
-  title: string;
-  tags: string[];
-  content: string;
-  thumbnail?: File;
-  totalHeadCount?: number;
-  startDate?: Date;
-  endDate?: Date;
-}
+import { PostSchema, POST_SCHEMA } from '@/constants/schema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface EditorProps {
   initialValues?: PostSchema;
 }
 
 export default function Editor({ initialValues }: EditorProps) {
+  const defaultValues = {
+    title: '',
+    category: undefined,
+    tags: [],
+    content: '',
+    totalHeadCount: 1,
+    startDate: new Date(),
+    endDate: new Date(),
+    thumbnail: undefined,
+  };
+
   const router = useRouter();
   const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue, formState } =
     useForm<PostSchema>({
-      defaultValues: { tags: [], ...initialValues },
+      mode: 'onBlur',
+      reValidateMode: 'onBlur',
+      resolver: yupResolver(POST_SCHEMA),
+      defaultValues: { ...defaultValues, ...initialValues },
     });
 
   const onChangeCategory = useCallback(
     (category: string) => {
-      setValue('category', category);
+      setValue('category', category, { shouldValidate: true });
     },
     [setValue],
   );
 
   const onChangeHeadCount = useCallback(
     (headCount: number) => {
-      setValue('totalHeadCount', headCount);
+      setValue('totalHeadCount', headCount, { shouldValidate: true });
     },
     [setValue],
   );
 
   const onChangeStartDate = useCallback(
     (date: Date) => {
-      setValue('startDate', date);
+      setValue('startDate', date, { shouldValidate: true });
     },
     [setValue],
   );
 
   const onChangeEndDate = useCallback(
     (date: Date) => {
-      setValue('endDate', date);
+      setValue('endDate', date, { shouldValidate: true });
     },
     [setValue],
   );
 
   const onChangeTags = useCallback(
     (tags: string[]) => {
-      setValue('tags', tags);
+      setValue('tags', tags, { shouldValidate: true });
     },
     [setValue],
   );
 
   const onChangeContent = useCallback(
     (content: string) => {
-      setValue('content', content);
+      setValue('content', content, { shouldValidate: true });
     },
     [setValue],
   );
 
   const onChangeThumbnail = useCallback(
     (thumbnail?: File) => {
-      setValue('thumbnail', thumbnail);
+      setValue('thumbnail', thumbnail, { shouldValidate: true });
     },
     [setValue],
   );
@@ -87,7 +92,7 @@ export default function Editor({ initialValues }: EditorProps) {
     router.back();
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: PostSchema) => {
     console.log(data);
   };
 
@@ -101,6 +106,7 @@ export default function Editor({ initialValues }: EditorProps) {
 
   return (
     <Styled.Container>
+      <>{formState.errors.totalHeadCount}</>
       <EditorHeader
         category={watch('category')}
         onChangeCategory={onChangeCategory}

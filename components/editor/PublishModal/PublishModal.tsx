@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/shared/Button';
 import SVGIcon from '@/components/shared/SVGIcon';
@@ -19,6 +19,7 @@ export default function PublishModal({
   onClose,
   onPublish,
 }: PublishModalProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [thumbnailBase64, SetThumbnailBase64] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -36,6 +37,9 @@ export default function PublishModal({
 
   const resetThumbnail = () => {
     onChangeThumbnail(undefined);
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   };
 
   const handleChangeThumbnail = (
@@ -90,6 +94,7 @@ export default function PublishModal({
             type="file"
             accept="image/png, image/jpeg"
             onChange={handleChangeThumbnail}
+            ref={inputRef}
             hidden
           />
         </Styled.ThumbnailContainer>

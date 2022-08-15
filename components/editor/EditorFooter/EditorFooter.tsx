@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@/components/shared/Button';
 import * as Styled from './EditorFooter.styled';
 import { FormState } from 'react-hook-form';
-import { PostSchema } from '../Editor/Editor';
+import { PostSchema } from '@/constants/schema';
 
 interface EditorFooterProps {
   onCancel?: () => void;
@@ -11,16 +11,16 @@ interface EditorFooterProps {
 }
 
 export default function EditorFooter({
+  formState: { isValid },
   onCancel,
   onPublish,
-  formState: { isValid, isDirty },
 }: EditorFooterProps) {
   return (
     <Styled.Container>
       <Button variant="outline" onClick={onCancel}>
         취소
       </Button>
-      <Button onClick={onPublish} disabled={!isValid || !isDirty}>
+      <Button onClick={onPublish} disabled={!isValid}>
         등록
       </Button>
     </Styled.Container>
