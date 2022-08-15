@@ -13,7 +13,6 @@ export const baseInput = css<InputProps>`
   border-radius: 8px;
   width: 100%;
   color: ${(props) => props.theme.colors.gray[400]};
-
   outline: none;
 `;
 
@@ -22,7 +21,16 @@ export const Container = styled.div`
   flex-basis: 100%;
 `;
 
-export const Label = styled.label``;
+export const Label = styled.label`
+  margin-bottom: 0.5rem;
+  display: block;
+
+  width: 100%;
+  height: 1rem;
+
+  font-size: 0.875rem;
+  font-weight: bold;
+`;
 
 export const CustomDivContainer = styled.button`
   position: relative;

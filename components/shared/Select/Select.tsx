@@ -48,7 +48,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 
     return (
       <Styled.Container>
-        {label && <Styled.Label htmlFor={id}>{label}</Styled.Label>}
+        <Styled.Label htmlFor={id}>{label}</Styled.Label>
 
         <Styled.CustomDivContainer
           type="button"

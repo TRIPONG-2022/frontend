@@ -61,7 +61,7 @@ const InformationPage: NextPage = () => {
           errorMessage={errors.name?.message}
           {...register('name')}
         />
-        <p>성별</p>
+
         <Select
           id="gender"
           defaultLabel="성별을 선택하세요."
@@ -70,17 +70,16 @@ const InformationPage: NextPage = () => {
             { value: 'female', label: '여' },
           ]}
           setValue={setValue}
-          {...register('gender')}
+          label="성별"
         />
 
-        <p>생년월일</p>
         <Flex>
           <Select
             id="year"
             defaultLabel="연도 입력"
             options={years(getCurrentYear())}
             setValue={setValue}
-            {...register('year')}
+            label="생년월일"
           ></Select>
 
           <Select
@@ -88,7 +87,6 @@ const InformationPage: NextPage = () => {
             defaultLabel="월 입력"
             options={months}
             setValue={setValue}
-            {...register('month')}
           />
 
           <Select
@@ -96,25 +94,22 @@ const InformationPage: NextPage = () => {
             defaultLabel="날짜 입력"
             options={days(watchYear, watchMonth)}
             setValue={setValue}
-            {...register('day')}
           />
         </Flex>
 
-        <p>지역</p>
         <Flex>
           <Select
             id="city"
             defaultLabel="도시를 선택해주세요"
             options={city}
             setValue={setValue}
-            {...register('city')}
+            label="지역"
           />
           <Select
             id="district"
             defaultLabel="구를 선택해주세요"
             options={district}
             setValue={setValue}
-            {...register('district')}
           />
         </Flex>
         <button
