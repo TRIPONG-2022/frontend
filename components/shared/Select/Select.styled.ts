@@ -36,10 +36,11 @@ export const CustomDivContainer = styled.button`
   position: relative;
   width: 100%;
 `;
-export const CustomDivTitle = styled.div`
+export const CustomDivTitle = styled.div<OptionProps>`
   padding: 1rem 1.25rem;
   width: 100%;
-  border: 1px solid #e8eaed;
+  border: 2px solid;
+  border-color: #e8eaed;
   border-radius: 1rem;
   background: white;
   box-shadow: 0 1px 3px -2px #9098a9;
@@ -49,6 +50,11 @@ export const CustomDivTitle = styled.div`
   font-weight: bold;
   position: relative;
   text-align: center;
+  ${({ isOpen }) =>
+    isOpen &&
+    css`
+      border-color: ${({ theme }) => theme.colors.primary.hex};
+    `}
 `;
 
 const Arrow = styled.div`
@@ -101,7 +107,9 @@ export const CustomLi = styled.li`
   width: 100%;
   padding: 0.5rem 0.5rem;
   border-radius: 4px;
-  color: ${(props) => props.theme.colors.gray[400]};
+  color: ${({ theme }) => theme.colors.gray[500]};
+  font-size: 0.75rem;
+  font-weight: bold;
 
   transition: all 0.5s;
   cursor: pointer;

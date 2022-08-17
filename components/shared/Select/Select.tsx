@@ -50,7 +50,7 @@ const Select = ({
           setOpen((prev) => !prev);
         }}
       >
-        <Styled.CustomDivTitle>
+        <Styled.CustomDivTitle isOpen={isOpen}>
           {options?.find((item) => item.value === selectedValue)?.label ||
             defaultLabel}
 
