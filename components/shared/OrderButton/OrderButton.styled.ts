@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 
 export const OrderDiv = styled.div`
-  height: 100%;
   padding: 0.5rem 1rem;
   color: ${({ theme }) => theme.colors.primary.hex};
   border-radius: 0.5rem;
@@ -15,12 +14,15 @@ interface OrderProps {
 }
 
 export const Order = styled(OrderDiv)<OrderProps>`
-  width: 7.5rem;
+  width: 5.75rem;
+  height: 2.5rem;
+  padding: 0.25rem 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   border: 1px solid ${({ theme }) => theme.colors.primary.hex};
+  font-size: 0.75rem;
 
   :hover {
     background: ${({ theme }) => theme.colors.primary.hex};

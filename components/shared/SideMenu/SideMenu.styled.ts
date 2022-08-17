@@ -14,8 +14,9 @@ export const Container = styled.div<ActiveProps>`
   height: fit-content;
   border-radius: 10px;
   box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
-  cursor: pointer;
   position: relative;
+  z-index: 10;
+  cursor: pointer;
 
   ${({ active }) =>
     active &&

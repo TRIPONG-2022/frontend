@@ -2,7 +2,6 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import CategoryPicker from '@/components/shared/CategoryPicker';
-import DatePicker from '@/components/shared/DatePicker';
 import OrderButton from '@/components/shared/OrderButton';
 import {
   setSendCategory,
@@ -11,18 +10,21 @@ import {
   setSendStartDate,
 } from 'store/postSlice';
 
-import * as Styled from './PostLayout.styled';
+import * as Styled from './MyPagePostLayout.styled';
+import ProfileDateRangeInput from '@/components/shared/ProfileDateRangeInput';
 
 interface PostLayoutProps {
   children: ReactNode;
   existCategory?: boolean;
   existCalendar?: boolean;
+  contentTitle: string;
 }
 
 const PostLayout = ({
   children,
   existCalendar,
   existCategory,
+  contentTitle,
 }: PostLayoutProps) => {
   const dispatch = useDispatch();
 
@@ -33,10 +35,19 @@ const PostLayout = ({
 
   useEffect(() => {
     dispatch(setSendStartDate(JSON.stringify(selectedStartDate)));
-    dispatch(setSendEndDate(JSON.stringify(selectedEndDate)));
-    dispatch(setSendCategory(storeCategory));
-    dispatch(setSendOrder(order));
   }, [dispatch, selectedStartDate, selectedEndDate, storeCategory, order]);
+
+  useEffect(() => {
+    dispatch(setSendEndDate(JSON.stringify(selectedEndDate)));
+  }, [dispatch, selectedEndDate]);
+
+  useEffect(() => {
+    dispatch(setSendCategory(storeCategory));
+  }, [dispatch, storeCategory]);
+
+  useEffect(() => {
+    dispatch(setSendOrder(order));
+  }, [dispatch, order]);
 
   return (
     <Styled.Container>
@@ -44,8 +55,12 @@ const PostLayout = ({
         <>
           <Styled.Title>조회기간</Styled.Title>
           <Styled.DatePickerWrapper>
-            <DatePicker setDate={setSelectedStartDate} />
-            <DatePicker setDate={setSelectedEndDate} />
+            <ProfileDateRangeInput
+              startDate={selectedStartDate}
+              endDate={selectedEndDate}
+              onChangeStartDate={setSelectedStartDate}
+              onChangeEndDate={setSelectedEndDate}
+            />
           </Styled.DatePickerWrapper>
         </>
       )}
@@ -58,7 +73,7 @@ const PostLayout = ({
         </>
       )}
       <Styled.PostWrapper>
-        <Styled.Title>총 {5}개의 글</Styled.Title>
+        <Styled.Title>{contentTitle}</Styled.Title>
         <OrderButton setOrder={setOrder} />
       </Styled.PostWrapper>
       <Styled.ContentBox>{children}</Styled.ContentBox>

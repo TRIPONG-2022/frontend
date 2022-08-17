@@ -1,11 +1,22 @@
+import { useMyPageInfo } from '@/hooks/useMyPageInfo';
 import MainLayout from '@/layouts/MainLayout';
 import MyPageLayout from '@/layouts/MyPageLayout';
-import React from 'react';
+import PostLayout from '@/layouts/MyPagePostLayout';
+import React, { useEffect } from 'react';
 
 const MyPageLikesPage = () => {
+  const aaa = useMyPageInfo();
+
+  useEffect(() => {
+    console.log(aaa);
+  }, [aaa]);
   return (
     <MainLayout>
-      <MyPageLayout>좋아요한 글 페이지 입니다.</MyPageLayout>
+      <MyPageLayout>
+        <PostLayout contentTitle={`총 ${5}개의 글`} existCategory>
+          글이다
+        </PostLayout>
+      </MyPageLayout>
     </MainLayout>
   );
 };

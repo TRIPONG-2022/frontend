@@ -9,3 +9,7 @@ export { default as Authenticated } from './authenticated.svg';
 export { default as ArrowDownIcon } from './arrow-down.svg';
 export { default as PlusIcon } from './plus.svg';
 export { default as CalendarIcon } from './calendar.svg';
+export { default as ChevronRightIcon } from './chevron-right.svg';
+export { default as ChevronLeftIcon } from './chevron-left.svg';
+export { default as ArrowRightIcon } from './arrow-right.svg';
+export { default as SubtractLineIcon } from './subtract-line.svg';

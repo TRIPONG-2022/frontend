@@ -6,6 +6,7 @@ export const Container = styled.div`
 
 export const CategoryUl = styled.ul`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 interface CategoryLiProps {
@@ -14,7 +15,7 @@ interface CategoryLiProps {
 
 export const CategoryLi = styled.li<CategoryLiProps>`
   padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
+  margin: 0 0.5rem 0.5rem 0.5rem;
   background: white;
   color: ${({ theme }) => theme.colors.primary.hex};
   border: 1px solid ${({ theme }) => theme.colors.primary.hex};

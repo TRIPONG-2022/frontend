@@ -13,7 +13,7 @@ const OrderButton = ({ setOrder }: OrderButtonProps) => {
 
   const onChangeOrder = (e: MouseEvent, idx: number, value: string) => {
     if (active === true) e.stopPropagation();
-    if (idx === 1) {
+    if (idx !== 0) {
       const [a, b] = [...orderMenu];
       setOrderMenu([b, a]);
       setOrder(value);
