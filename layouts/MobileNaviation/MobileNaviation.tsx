@@ -1,14 +1,19 @@
 import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
+import MakeMenu from '@/util/MakeMenu';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import * as Styled from './MobileNaviation.styled';
 
 interface MobileNavigationProps {
   toggle: boolean;
   isLogin: boolean;
+  logout: () => void;
 }
 
-function MobileNavigation({ toggle, isLogin }: MobileNavigationProps) {
+function MobileNavigation({ toggle, isLogin, logout }: MobileNavigationProps) {
+  const router = useRouter();
+
   return (
     <Styled.NavDiv toggle={toggle}>
       <Styled.NavMenuUl>
@@ -18,16 +23,19 @@ function MobileNavigation({ toggle, isLogin }: MobileNavigationProps) {
           </Styled.NavMenuLi>
         ))}
       </Styled.NavMenuUl>
-      <Styled.NavLoginUl>
+      <Styled.NavBottomUl>
         {LOGIN_MENUS.map(({ name, link, show }) => {
           if (isLogin === show)
             return (
-              <Styled.NavLoginLi key={name}>
-                <Link href={link}>{name}</Link>
-              </Styled.NavLoginLi>
+              <Styled.NavBottomLi
+                key={name}
+                onClick={() => MakeMenu({ name, link, fn: logout }, router)}
+              >
+                {name}
+              </Styled.NavBottomLi>
             );
         })}
-      </Styled.NavLoginUl>
+      </Styled.NavBottomUl>
     </Styled.NavDiv>
   );
 }

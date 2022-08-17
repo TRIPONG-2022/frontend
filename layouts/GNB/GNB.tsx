@@ -1,21 +1,30 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as Styled from './GNB.styled';
 import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
 
-import useWindowSize from '@/hooks/useWindowSize';
-import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
 import SVGIcon from '@/components/shared/SVGIcon';
 import NavigationDiv from '@/layouts/MobileNaviation';
+import { AppState } from '@/store/index';
+import { logoutUser } from '@/store/slice/userSlice';
+import useWindowSize from '@/hooks/useWindowSize';
+import MakeMenu from '@/util/MakeMenu';
+import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
 
-interface GNBProps {
-  isLogin: boolean;
-}
+const GNB = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-function GNB({ isLogin }: GNBProps) {
+  const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
   const [toggle, setToggle] = useState<boolean>(false);
   const { windowWidth, windowHeight } = useWindowSize(0);
+
+  const logout = () => {
+    dispatch(logoutUser());
+  };
 
   const onToggle = useCallback(() => {
     setToggle(!toggle);
@@ -51,26 +60,29 @@ function GNB({ isLogin }: GNBProps) {
           <Styled.SearchBtn>
             <SVGIcon icon={'SearchIcon'} width={25} height={25} />
           </Styled.SearchBtn>
-          <Styled.LoginDiv>
+          <Styled.RightButtonDiv>
             {LOGIN_MENUS.map(({ name, link, show }) => {
               if (isLogin === show)
                 return (
-                  <Styled.LoginBtn key={name}>
-                    <Link href={link}>{name}</Link>
-                  </Styled.LoginBtn>
+                  <Styled.RightButton
+                    key={name}
+                    onClick={() => MakeMenu({ name, link, fn: logout }, router)}
+                  >
+                    {name}
+                  </Styled.RightButton>
                 );
             })}
-          </Styled.LoginDiv>
+          </Styled.RightButtonDiv>
           <Styled.NavBtn onClick={onToggle}>
             <HamburgerButton width={50} toggle={toggle} />
           </Styled.NavBtn>
         </Styled.RightDiv>
 
         {/* 네비게이션 창 */}
-        <NavigationDiv isLogin={isLogin} toggle={toggle} />
+        <NavigationDiv isLogin={isLogin} logout={logout} toggle={toggle} />
       </Styled.GNBNav>
     </Styled.GNBHeader>
   );
-}
+};
 
 export default GNB;

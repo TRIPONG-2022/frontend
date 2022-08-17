@@ -40,7 +40,7 @@ export const NavMenuLi = styled.li`
   margin-top: 2rem;
 `;
 
-export const NavLoginUl = styled.ul`
+export const NavBottomUl = styled.ul`
   width: 100%;
   list-style: none;
   margin-top: 15rem;
@@ -52,8 +52,9 @@ export const NavLoginUl = styled.ul`
   padding-right: 2rem;
 `;
 
-export const NavLoginLi = styled.li`
+export const NavBottomLi = styled.li`
   margin-top: 2rem;
   font-size: 2rem;
   font-weight: bold;
+  cursor: pointer;
 `;
