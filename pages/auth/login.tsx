@@ -77,18 +77,19 @@ const LoginPage: NextPage = () => {
         <Divider />
         <Container>
           {OAUTH_DATA.map(({ iconName, title, colorSchemeName, LinkData }) => (
-            <Link
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/${LinkData}`}
+            <IconButton
               key={LinkData}
-            >
-              <IconButton
-                icon={iconName}
-                aria-label={title}
-                colorScheme={colorSchemeName}
-                isRound
-                size="xlg"
-              />
-            </Link>
+              icon={iconName}
+              aria-label={title}
+              colorScheme={colorSchemeName}
+              isRound
+              size="xlg"
+              onClick={() =>
+                router.push(
+                  `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/${LinkData}`,
+                )
+              }
+            />
           ))}
         </Container>
         <SignUpArea />
