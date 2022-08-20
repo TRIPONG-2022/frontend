@@ -70,7 +70,7 @@ export const RightDiv = styled.div`
   }
 `;
 
-export const RightButtonDiv = styled.div`
+export const LoginJoinDiv = styled.div`
   display: none;
 
   ${SCREEN_DESKTOP} {

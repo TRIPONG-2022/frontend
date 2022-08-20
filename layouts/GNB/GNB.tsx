@@ -7,12 +7,12 @@ import * as Styled from './GNB.styled';
 import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
 
 import SVGIcon from '@/components/shared/SVGIcon';
+import LoginJoinList from '@/components/shared/LoginJoinList';
 import NavigationDiv from '@/layouts/MobileNaviation';
 import { AppState } from '@/store/index';
 import { logoutUser } from '@/store/slice/userSlice';
 import useWindowSize from '@/hooks/useWindowSize';
-import MakeMenu from '@/util/MakeMenu';
-import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
+import { GNB_MENUS } from '@/constants/menus';
 
 const GNB = () => {
   const router = useRouter();
@@ -60,26 +60,16 @@ const GNB = () => {
           <Styled.SearchBtn>
             <SVGIcon icon={'SearchIcon'} width={25} height={25} />
           </Styled.SearchBtn>
-          <Styled.RightButtonDiv>
-            {LOGIN_MENUS.map(({ name, link, show }) => {
-              if (isLogin === show)
-                return (
-                  <Styled.RightButton
-                    key={name}
-                    onClick={() => MakeMenu({ name, link, fn: logout }, router)}
-                  >
-                    {name}
-                  </Styled.RightButton>
-                );
-            })}
-          </Styled.RightButtonDiv>
+          <Styled.LoginJoinDiv>
+            <LoginJoinList divide="GNB" isLogin={isLogin} />
+          </Styled.LoginJoinDiv>
           <Styled.NavBtn onClick={onToggle}>
             <HamburgerButton width={50} toggle={toggle} />
           </Styled.NavBtn>
         </Styled.RightDiv>
 
         {/* 네비게이션 창 */}
-        <NavigationDiv isLogin={isLogin} logout={logout} toggle={toggle} />
+        <NavigationDiv isLogin={isLogin} toggle={toggle} />
       </Styled.GNBNav>
     </Styled.GNBHeader>
   );

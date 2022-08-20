@@ -1,6 +1,6 @@
-import { HEADER_HEIGHT } from '@/constants/menus';
-import { SCREEN_DESKTOP } from '@/styles/screen';
 import styled, { css } from 'styled-components';
+import { SCREEN_DESKTOP } from '@/styles/screen';
+import { HEADER_HEIGHT } from '@/constants/menus';
 
 interface NavDivProps {
   toggle: boolean;
@@ -14,14 +14,15 @@ export const NavDiv = styled.div<NavDivProps>`
   background: white;
   position: fixed;
   top: ${HEADER_HEIGHT};
-  transform: none;
-  transition: transform ease-in-out 0.45s;
+  opacity: 0;
+  transform: translateX(100vw);
+  transition: transform 0.4s ease-in-out, opacity 0.2s ease;
 
   ${({ toggle }) =>
-    !toggle &&
+    toggle &&
     css`
-      transition: transform ease-in-out 0.45s;
-      transform: translateX(125vw);
+      opacity: 1;
+      transform: translateX(0);
     `}
 
   ${SCREEN_DESKTOP} {
