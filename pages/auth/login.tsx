@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import styled, { css } from 'styled-components';
-import { login } from 'api/auth';
+import { login } from '@/api/auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema, LOGIN_SCHEMA } from '@/constants/schema';
 import AuthLayout from '@/layouts/AuthLayout';
