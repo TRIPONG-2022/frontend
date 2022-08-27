@@ -87,3 +87,10 @@ export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
+
+export const ADDROLE_SCHEMA = yup.object({
+  roleName: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  description: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+});
+
+export type AddRoleSchema = yup.InferType<typeof ADDROLE_SCHEMA>;

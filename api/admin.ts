@@ -8,9 +8,19 @@ interface EnroleAdminType {
 
 // 권한
 
+interface RoleType {
+  roleId: number;
+  roleName: string;
+  description: string;
+}
+
 export const getRoles = async () => {
   try {
-    const data = await instance.get('/admin/roles');
+    const { data } = await instance.get<RoleType[]>('/admin/roles');
+    return {
+      data,
+      isError: false,
+    };
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -19,6 +29,9 @@ export const getRoles = async () => {
     } else {
       console.log(err);
     }
+    return {
+      isError: true,
+    };
   }
 };
 
@@ -26,11 +39,13 @@ export const enrolRoles = async ({
   roleName,
   description,
 }: EnroleAdminType) => {
+  console.log(roleName);
   try {
     const data = await instance.post('/admin/roles', {
       roleName,
       description,
     });
+    console.log(data);
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -62,7 +77,11 @@ export const deleteRoles = async (roleId: number) => {
 
 export const getUsers = async () => {
   try {
-    const data = await instance.get('/admin/users');
+    const { data } = await instance.get('/admin/users');
+    return {
+      data,
+      isError: false,
+    };
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -71,12 +90,19 @@ export const getUsers = async () => {
     } else {
       console.log(err);
     }
+    return {
+      isError: true,
+    };
   }
 };
 
 export const getReportUsers = async () => {
   try {
-    const data = await instance.get('/admin/reports/users');
+    const { data } = await instance.get('/admin/reports/users');
+    return {
+      data,
+      isError: false,
+    };
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -85,6 +111,9 @@ export const getReportUsers = async () => {
     } else {
       console.log(err);
     }
+    return {
+      isError: true,
+    };
   }
 };
 
@@ -122,7 +151,12 @@ export const roleUser = async (userId: number, roleNames: string) => {
 
 export const getPosts = async () => {
   try {
-    const data = await instance.get('/admin/posts');
+    const { data } = await instance.get('/admin/posts');
+    console.log(data);
+    return {
+      data,
+      isError: false,
+    };
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -131,12 +165,19 @@ export const getPosts = async () => {
     } else {
       console.log(err);
     }
+    return {
+      isError: true,
+    };
   }
 };
 
 export const getReportPosts = async () => {
   try {
-    const data = await instance.get('/admin/reports/posts');
+    const { data } = await instance.get('/admin/reports/posts');
+    return {
+      data,
+      isError: false,
+    };
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -145,6 +186,9 @@ export const getReportPosts = async () => {
     } else {
       console.log(err);
     }
+    return {
+      isError: true,
+    };
   }
 };
 
