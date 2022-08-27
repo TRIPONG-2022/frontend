@@ -10,13 +10,18 @@ export const AddRoleInPutWrapper = styled.div`
 
 export const AddRoleWrapper = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const Button = styled.button`
   width: 10rem;
 
   margin-left: 1rem;
-  border-radius: 2rem;
+  border-radius: 1rem;
+  padding: 1.75rem;
 
   background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.4);
+
+  font-size: 1.25rem;
+  font-weight: 600;
 `;

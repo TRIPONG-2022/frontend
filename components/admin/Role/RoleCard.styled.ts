@@ -33,4 +33,5 @@ export const Menu = styled.div`
   position: absolute;
   top: 0.75rem;
   right: 1rem;
+  cursor: pointer;
 `;
