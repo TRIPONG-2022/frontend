@@ -6,17 +6,22 @@ import * as Styled from './Card.Styled';
 
 export interface ICard {
   id: number;
+  author: string;
+  budget: number;
   category: string;
-  thumbnail: string;
   title: string;
-  description: string;
-  tag: string[];
-  userName: string;
-  userImg: string;
-  like: number;
-  location: string;
+  content: string;
+  curHeadCount: number;
   totalHeadCount: number;
+  startDate: string;
   endDate: string;
+  thumbnail: string;
+  images: string[];
+  tags: string[];
+  likeCount: number;
+  viewCount: number;
+  latitude: number;
+  longitude: number;
 }
 
 interface CardProps {
@@ -43,7 +48,8 @@ export default function Card({ card }: CardProps) {
             <Styled.IconBox>
               <SVGIcon icon="LocationIcon" />
             </Styled.IconBox>
-            <Styled.Location>{card.location}</Styled.Location>
+            <Styled.Location>{`임시 장소`}</Styled.Location>
+            {/* 위에는 원래 location 으로 목적지가 들어갔어야한다 */}
           </Styled.LocationContainer>
         </Styled.ThumbnailContainer>
 
@@ -58,10 +64,10 @@ export default function Card({ card }: CardProps) {
                 )}
                 {card.title}
               </Styled.Title>
-              <Styled.Description>{card.description}</Styled.Description>
+              <Styled.Description>{card.content}</Styled.Description>
             </Styled.TextContainer>
             <Styled.TagContainer>
-              {card.tag.slice(0, 3).map((tagname) => (
+              {card.tags.slice(0, 3).map((tagname) => (
                 <Styled.Tag key={`id=${tagname}`}>#{tagname}</Styled.Tag>
               ))}
             </Styled.TagContainer>
@@ -69,13 +75,14 @@ export default function Card({ card }: CardProps) {
 
           <Styled.BottomContanier>
             <Styled.UserContainer>
-              <Styled.UserImg img={card.userImg} />
-              <Styled.UserName>{card.userName}</Styled.UserName>
+              <Styled.UserImg img={card.thumbnail} />
+              {/* 위에는 원래 userImg가 들어가야한다. */}
+              <Styled.UserName>{card.author}</Styled.UserName>
             </Styled.UserContainer>
             <Styled.LikeContainer onClick={onToggleLike}>
               <LikeButton />
               <Styled.LikeCount>
-                {Number(card.like) > 99 ? 99 + '+' : card.like}
+                {Number(card.likeCount) > 99 ? 99 + '+' : card.likeCount}
               </Styled.LikeCount>
             </Styled.LikeContainer>
           </Styled.BottomContanier>
