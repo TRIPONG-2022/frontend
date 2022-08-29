@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
@@ -43,4 +43,37 @@ export const Menu = styled.div`
   right: 1rem;
 
   cursor: pointer;
+`;
+
+interface ActiveProps {
+  activeMenu: boolean;
+}
+
+export const MenuUl = styled.ul<ActiveProps>`
+  position: absolute;
+  top: 1rem;
+  right: 0;
+
+  ${({ activeMenu }) =>
+    !activeMenu &&
+    css`
+      display: none;
+    `}
+`;
+
+export const MenuLi = styled.li`
+  width: 5rem;
+
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.colors.gray[500]};
+  border-radius: 0.5rem;
+
+  padding: 0.5rem;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.gray[500]};
+
+  z-index: 10;
 `;

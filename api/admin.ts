@@ -77,7 +77,8 @@ export const deleteRoles = async (roleId: number) => {
 
 export const getUsers = async () => {
   try {
-    const { data } = await instance.get('/admin/users');
+    const { data } = await instance.get(`/admin/users`);
+    // const { data } = await instance.get(`/admin/users?page=0&size=${4}`);
     return {
       data,
       isError: false,
@@ -120,6 +121,9 @@ export const getReportUsers = async () => {
 export const blackUser = async (userId: number) => {
   try {
     const data = await instance.patch(`/admin/reports/users/black/${userId}`);
+    return {
+      isError: false,
+    };
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -128,6 +132,9 @@ export const blackUser = async (userId: number) => {
     } else {
       console.log(err);
     }
+    return {
+      isError: true,
+    };
   }
 };
 
