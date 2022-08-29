@@ -3,7 +3,7 @@ import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
 import useModal from '@/hooks/useModal';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import * as Styled from './UserCard.styled';
 import UserRoleChange from './UserRoleChange';
 
@@ -18,7 +18,8 @@ const UserCard = ({ userData }: any) => {
     [key: string]: {
       title: string;
       onClick: (userId: any) => void;
-      roles?: any;
+      roles?: JSX.Element;
+      // React.ReactNode 는 광범위하게 tag
     };
   }
 
