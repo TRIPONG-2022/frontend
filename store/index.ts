@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
-import profileReducer from './postSlice';
+import profileReducer from './slice/postSlice';
 
 const makeStore = () =>
   configureStore({

@@ -3,15 +3,15 @@ import { useDispatch } from 'react-redux';
 
 import CategoryPicker from '@/components/shared/CategoryPicker';
 import OrderButton from '@/components/shared/OrderButton';
+
+import * as Styled from './MyPagePostLayout.styled';
+import ProfileDateRangeInput from '@/components/shared/ProfileDateRangeInput';
 import {
   setSendCategory,
   setSendEndDate,
   setSendOrder,
   setSendStartDate,
-} from 'store/postSlice';
-
-import * as Styled from './MyPagePostLayout.styled';
-import ProfileDateRangeInput from '@/components/shared/ProfileDateRangeInput';
+} from 'store/slice/postSlice';
 
 interface PostLayoutProps {
   children: ReactNode;
