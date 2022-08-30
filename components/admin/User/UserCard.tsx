@@ -1,7 +1,8 @@
-import { blackUser } from '@/api/admin';
+import { blackUser, roleUser } from '@/api/admin';
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
+import { menuObj } from '@/constants/admin';
 import useModal from '@/hooks/useModal';
 import React, { useState } from 'react';
 import * as Styled from './UserCard.styled';
@@ -13,30 +14,16 @@ const UserCard = ({ userData }: any) => {
 
   const [activeMenu, setActiveMenu] = useState(false);
   const [menu, setMenu] = useState('');
-
-  interface MenuTupe {
-    [key: string]: {
-      title: string;
-      onClick: (userId: any) => void;
-      roles?: JSX.Element;
-      // React.ReactNode 는 광범위하게 tag
-    };
-  }
-
-  const menuObj: MenuTupe = {
-    black: {
-      title: '해당 유저를 블랙하시겠습니까?',
-      onClick: (userId) => black(userId),
-    },
-    roleChange: {
-      title: '해당 유저의 권한을 변경하시겠습니까?',
-      onClick: (userId) => alert(`${userId}`),
-      roles: <UserRoleChange />,
-    },
-  };
+  const [selectRoles, setSelectRoles] = useState<string[]>([]);
 
   const black = async (userId: number) => {
     const { isError } = await blackUser(userId);
+
+    if (!isError) close();
+  };
+
+  const changeRole = async (userId: number) => {
+    const { isError } = await roleUser(userId, selectRoles);
 
     if (!isError) close();
   };
@@ -74,9 +61,21 @@ const UserCard = ({ userData }: any) => {
           </Styled.MenuLi>
         </Styled.MenuUl>
       </Styled.Menu>
+      {/* <Styled.Back
+        activeMenu={activeMenu}
+        onClick={() => setActiveMenu(false)}
+      /> 
+          해당 코드로 menu 가 active 되어있는 상태에서 menu와 관계없는 바깥구역을 클릭하면 active가 false로 변환되게끔 하고싶었다.
+      */}
+
       <Modal isModal={isModal} close={close}>
         <Modal.Title>{menuObj[menu]?.title}</Modal.Title>
-        {menuObj[menu]?.roles}
+        {menu == 'roleChange' && (
+          <UserRoleChange
+            selectRoles={selectRoles}
+            setSelectRoles={setSelectRoles}
+          />
+        )}
         <Modal.BtnContainers>
           <Button
             size="lg"
@@ -85,7 +84,12 @@ const UserCard = ({ userData }: any) => {
               width: 100%;
               margin-top: 2rem;
             `}
-            onClick={() => menuObj[menu]?.onClick(userData.id)}
+            onClick={() =>
+              menuObj[menu]?.onClick(userData.id, {
+                black,
+                changeRole,
+              })
+            }
           >
             예
           </Button>
@@ -97,7 +101,10 @@ const UserCard = ({ userData }: any) => {
               width: 100%;
               margin-top: 2rem;
             `}
-            onClick={() => close()}
+            onClick={() => {
+              setSelectRoles([]);
+              close();
+            }}
           >
             닫기
           </Button>
