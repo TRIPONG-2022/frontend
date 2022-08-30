@@ -121,6 +121,7 @@ export const getReportUsers = async () => {
 export const blackUser = async (userId: number) => {
   try {
     const data = await instance.patch(`/admin/reports/users/black/${userId}`);
+    console.log(data);
     return {
       isError: false,
     };
@@ -138,11 +139,15 @@ export const blackUser = async (userId: number) => {
   }
 };
 
-export const roleUser = async (userId: number, roleNames: string) => {
+export const roleUser = async (userId: number, roleNames: string[]) => {
   try {
     const data = await instance.patch(`/admin/users/${userId}`, {
       roleNames,
     });
+    console.log(data);
+    return {
+      isError: false,
+    };
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -151,6 +156,9 @@ export const roleUser = async (userId: number, roleNames: string) => {
     } else {
       console.log(err);
     }
+    return {
+      isError: true,
+    };
   }
 };
 
