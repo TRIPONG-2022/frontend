@@ -42,12 +42,29 @@ export const Menu = styled.div`
   top: 0.5rem;
   right: 1rem;
 
+  z-index: 10;
   cursor: pointer;
 `;
 
 interface ActiveProps {
   activeMenu: boolean;
 }
+
+// export const Back = styled.div<ActiveProps>`
+//   ${({ activeMenu }) =>
+//     activeMenu &&
+//     css`
+//       position: absolute;
+//       top: 0;
+//       bottom: 0;
+//       left: 0;
+//       right: 0;
+
+//       background-color: green;
+
+//       z-index: 5;
+//     `}
+// `;
 
 export const MenuUl = styled.ul<ActiveProps>`
   position: absolute;
@@ -59,6 +76,8 @@ export const MenuUl = styled.ul<ActiveProps>`
     css`
       display: none;
     `}
+
+  z-index: 20;
 `;
 
 export const MenuLi = styled.li`
