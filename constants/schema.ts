@@ -3,6 +3,12 @@ import { SCHEMA_MESSAGES } from './message';
 
 export const NICKNAME_SCHEMA = yup
   .string()
+  .min(2, SCHEMA_MESSAGES.WRONG_NICK_NAME_LENGTH)
+  .max(11, SCHEMA_MESSAGES.WRONG_NICK_NAME_LENGTH)
+  .matches(/^(?!kakao).+/, SCHEMA_MESSAGES.DONT_START_KAKAO_STRING)
+  .matches(/^(?!naver).+/, SCHEMA_MESSAGES.DONT_START_NAVER_STRING)
+  .matches(/^(?!google).+/, SCHEMA_MESSAGES.DONT_START_GOOGLE_STRING)
+  .matches(/^(?!facebook).+/, SCHEMA_MESSAGES.DONT_START_FACEBOOK_STRING)
   .matches(
     /^[가-힣a-zA-Z0-9][^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/,
     SCHEMA_MESSAGES.WRONG_NICKNAME_FORMAT,
@@ -11,6 +17,8 @@ export const NICKNAME_SCHEMA = yup
 
 export const LOGIN_ID_SCHEMA = yup
   .string()
+  .min(5, SCHEMA_MESSAGES.WRONG_LOGIN_ID_LENGTH)
+  .max(11, SCHEMA_MESSAGES.WRONG_LOGIN_ID_LENGTH)
   .matches(
     /^[a-z0-9][^ㄱ-ㅎ가-힣A-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/,
     SCHEMA_MESSAGES.WRONG_LOGINID_FORMAT,
@@ -24,6 +32,8 @@ export const EMAIL_SCHEMA = yup
 
 export const PASSWORD_CHEMA = yup
   .string()
+  .min(4, SCHEMA_MESSAGES.WRONG_PASSWORD_LENGTH)
+  .max(15, SCHEMA_MESSAGES.WRONG_PASSWORD_LENGTH)
   .matches(new RegExp(''))
   .required(SCHEMA_MESSAGES.REQUIRED_FIELD);
 
@@ -68,7 +78,6 @@ export const JOIN_SCHEMA = yup.object({
     .string()
     .oneOf([yup.ref('password'), null], SCHEMA_MESSAGES.NOT_MATCH_PASSWORD)
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  notiBar: yup.string(),
 });
 
 export const RESET_PASSWORD_SCHEMA = yup.object({
