@@ -9,6 +9,7 @@ import { days, getCurrentYear, months, years } from '@/constants/date';
 import React from 'react';
 import Select from '@/components/shared/Select/Select';
 import useRegionFetch from '@/hooks/useRegionFetch';
+import { useState } from 'react';
 
 const InformationPage: NextPage = () => {
   const {
@@ -51,6 +52,29 @@ const InformationPage: NextPage = () => {
     [cityMap, districtMap],
   );
 
+  const formIdType = {
+    name: 'name',
+    gender: 'gender',
+    month: 'month',
+    year: 'year',
+    day: 'day',
+    city: 'city',
+    district: 'district',
+  };
+
+  const getSetValue = ({
+    id,
+    value,
+  }: {
+    id: keyof typeof formIdType;
+    value: string | number;
+  }) => {
+    setValue(id, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
   return (
     <AuthLayout title="로그인">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +93,7 @@ const InformationPage: NextPage = () => {
             { value: 'male', label: '남' },
             { value: 'female', label: '여' },
           ]}
-          setValue={setValue}
+          onClickOption={getSetValue}
           label="성별"
         />
 
@@ -78,7 +102,7 @@ const InformationPage: NextPage = () => {
             id="year"
             defaultLabel="연도 입력"
             options={years(getCurrentYear())}
-            setValue={setValue}
+            onClickOption={getSetValue}
             label="생년월일"
           ></Select>
 
@@ -86,14 +110,14 @@ const InformationPage: NextPage = () => {
             id="month"
             defaultLabel="월 입력"
             options={months}
-            setValue={setValue}
+            onClickOption={getSetValue}
           />
 
           <Select
             id="day"
             defaultLabel="날짜 입력"
             options={days(watchYear, watchMonth)}
-            setValue={setValue}
+            onClickOption={getSetValue}
           />
         </Flex>
 
@@ -102,14 +126,14 @@ const InformationPage: NextPage = () => {
             id="city"
             defaultLabel="도시를 선택해주세요"
             options={city}
-            setValue={setValue}
+            onClickOption={getSetValue}
             label="지역"
           />
           <Select
             id="district"
             defaultLabel="구를 선택해주세요"
             options={district}
-            setValue={setValue}
+            onClickOption={getSetValue}
           />
         </Flex>
         <button

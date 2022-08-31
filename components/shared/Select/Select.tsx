@@ -13,7 +13,7 @@ interface SelectProps {
   errorMessage?: string;
   defaultLabel?: string;
   options?: SelectOption[];
-  setValue?: any;
+  onClickOption?: any;
 }
 
 const Select = ({
@@ -21,7 +21,7 @@ const Select = ({
   id,
   options,
   defaultLabel,
-  setValue,
+  onClickOption,
 }: SelectProps) => {
   const [isOpen, setOpen] = useState(false);
   const [selectedValue, setselectedValue] = useState(defaultLabel);
@@ -49,10 +49,7 @@ const Select = ({
               key={item.value}
               onClick={() => {
                 setselectedValue(item?.value as string);
-                setValue(id, item?.value, {
-                  shouldValidate: true,
-                  shouldDirty: true,
-                });
+                onClickOption({ id, value: item?.value });
               }}
             >
               <span data-value={item.value}>{item.label}</span>
@@ -64,7 +61,6 @@ const Select = ({
         <Styled.Back
           onClick={() => {
             setOpen(false);
-            console.log('안녕');
           }}
         />
       )}
