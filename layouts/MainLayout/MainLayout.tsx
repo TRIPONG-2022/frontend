@@ -10,7 +10,7 @@ interface MainLayoutProps {
 function MainLayout({ children, fullWidth }: MainLayoutProps) {
   return (
     <Styled.Container>
-      <GNB isLogin={true} />
+      <GNB isLogin={false} />
       <Styled.Body fullWidth={fullWidth}>{children}</Styled.Body>
       <Styled.Footer />
     </Styled.Container>
