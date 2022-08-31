@@ -12,8 +12,8 @@ interface SelectProps {
   id: string;
   errorMessage?: string;
   defaultLabel?: string;
-  setValue: any;
   options?: SelectOption[];
+  setValue?: any;
 }
 
 const Select = ({
@@ -26,26 +26,12 @@ const Select = ({
   const [isOpen, setOpen] = useState(false);
   const [selectedValue, setselectedValue] = useState(defaultLabel);
 
-  // 바깥 부분 클릭시 code
-  const selectRef = useRef<HTMLButtonElement>(null);
-  const outSideClick = (event: MouseEvent) => {
-    if (!selectRef.current || selectRef.current.contains(event?.target as Node))
-      return;
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', outSideClick);
-    return () => document.removeEventListener('click', outSideClick);
-  });
-
   return (
     <Styled.Container>
       <Styled.Label htmlFor={id}>{label}</Styled.Label>
 
       <Styled.CustomDivContainer
         type="button"
-        ref={selectRef}
         onClick={() => {
           setOpen((prev) => !prev);
         }}
@@ -56,6 +42,7 @@ const Select = ({
 
           {/* <Arrow /> */}
         </Styled.CustomDivTitle>
+
         <Styled.CustomUl isOpen={isOpen}>
           {options?.map((item) => (
             <Styled.CustomLi
@@ -73,6 +60,14 @@ const Select = ({
           ))}
         </Styled.CustomUl>
       </Styled.CustomDivContainer>
+      {isOpen && (
+        <Styled.Back
+          onClick={() => {
+            setOpen(false);
+            console.log('안녕');
+          }}
+        />
+      )}
     </Styled.Container>
   );
 };
