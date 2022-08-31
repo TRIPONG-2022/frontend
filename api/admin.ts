@@ -75,9 +75,19 @@ export const deleteRoles = async (roleId: number) => {
 
 // 유저
 
-export const getUsers = async () => {
+interface GetUserType {
+  searchType?: string;
+  keyword?: string;
+}
+
+export const getUsers = async ({
+  searchType = '',
+  keyword = '',
+}: GetUserType) => {
   try {
-    const { data } = await instance.get(`/admin/users`);
+    const { data } = await instance.get(
+      `/admin/users?searchType=${searchType}&keyword=${keyword}`,
+    );
     // const { data } = await instance.get(`/admin/users?page=0&size=${4}`);
     return {
       data,
@@ -97,9 +107,14 @@ export const getUsers = async () => {
   }
 };
 
-export const getReportUsers = async () => {
+export const getReportUsers = async ({
+  searchType = '',
+  keyword = '',
+}: GetUserType) => {
   try {
-    const { data } = await instance.get('/admin/reports/users');
+    const { data } = await instance.get(
+      `/admin/reports/users?searchType=${searchType}&keyword=${keyword}`,
+    );
     return {
       data,
       isError: false,
