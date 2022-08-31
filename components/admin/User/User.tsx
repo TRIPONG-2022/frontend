@@ -5,22 +5,27 @@ import { useEffect } from 'react';
 import * as Styled from './User.styled';
 import UserCard from './UserCard';
 import useModal from '@/hooks/useModal';
+import UserSearch from './UserSearch';
 
 interface DataType {
   id: number;
   name: string;
   loginId: string;
   nickName: string;
-  createDate: string;
+  createdDate: string;
   roles: { roleName: string }[];
+  reportType?: string;
+  reporterName?: string;
 }
 
 const User = () => {
-  const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState<DataType[]>([]);
   const [activeBtn, setActiveBtn] = useState(true);
+
   const [isModal, open, close] = useModal();
+
   const getUserList = async () => {
-    const { data } = await getUsers();
+    const { data } = await getUsers({});
     console.log(data);
     if (data) {
       setUserList(data.content);
@@ -28,7 +33,7 @@ const User = () => {
   };
 
   const getReportUserList = async () => {
-    const { data } = await getReportUsers();
+    const { data } = await getReportUsers({});
     console.log(data);
     if (data) {
       setUserList(data.content);
@@ -47,6 +52,7 @@ const User = () => {
       <Styled.LayoutBody>
         <Styled.Container>
           <Styled.Title>유저목록</Styled.Title>
+
           <Styled.GetUsersBtn
             active={activeBtn}
             onClick={() => {
@@ -65,6 +71,9 @@ const User = () => {
           >
             신고된 유저 조회
           </Styled.GetUsersBtn>
+
+          <UserSearch setUserList={setUserList} isUserSearch={activeBtn} />
+
           {userList?.map((data: DataType) => (
             <UserCard userData={data} key={data.id} />
           ))}
