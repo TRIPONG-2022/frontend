@@ -18,7 +18,17 @@ export const NameWrapper = styled.div`
   margin-bottom: 0.25rem;
 `;
 
-export const NickName = styled.p`
+interface NickNameProps {
+  isBlack: boolean;
+}
+
+export const NickName = styled.p<NickNameProps>`
+  ${({ isBlack }) =>
+    isBlack &&
+    css`
+      color: red;
+    `}
+
   font-size: 1.25rem;
   font-weight: 700;
   margin-right: 1rem;
@@ -35,6 +45,10 @@ export const LoginId = styled.p`
 
 export const CreateDate = styled.p`
   font-weight: 500;
+`;
+
+export const CreateDateSpan = styled.span`
+  margin-left: 0.5rem;
 `;
 
 export const Menu = styled.div`
@@ -95,4 +109,53 @@ export const MenuLi = styled.li`
   color: ${({ theme }) => theme.colors.gray[500]};
 
   z-index: 10;
+`;
+
+export const RoleText = styled.p`
+  margin-bottom: 0.75rem;
+
+  font-size: 1rem;
+  line-height: 2rem;
+`;
+
+export const RoleSpan = styled.span`
+  position: relative;
+
+  margin-right: 1rem;
+
+  padding: 0.25rem 0.375rem;
+  background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.4);
+  border-radius: 1rem;
+
+  font-weight: 600;
+
+  &:first-child {
+    margin-left: 0.5rem;
+  }
+
+  &:not(:last-child)::after {
+    position: absolute;
+    width: 1.75rem;
+    text-align: center;
+    content: '-';
+  }
+`;
+
+export const ReportWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 1rem;
+`;
+
+export const Reporter = styled.p`
+  font-weight: 600;
+
+  margin-right: 2rem;
+`;
+
+export const ReportType = styled.p`
+  font-weight: 600;
+
+  margin-right: 2rem;
 `;

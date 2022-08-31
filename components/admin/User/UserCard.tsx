@@ -4,42 +4,79 @@ import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
 import { menuObj } from '@/constants/admin';
 import useModal from '@/hooks/useModal';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as Styled from './UserCard.styled';
 import UserRoleChange from './UserRoleChange';
 
-// 임시
-const UserCard = ({ userData }: any) => {
+interface DataType {
+  userData: {
+    id: number;
+    name: string;
+    loginId: string;
+    nickName: string;
+    createdDate: string;
+    roles: { roleName: string }[];
+    reportType?: string;
+    reporterName?: string;
+  };
+}
+const UserCard = ({ userData }: DataType) => {
   const [isModal, open, close] = useModal();
 
   const [activeMenu, setActiveMenu] = useState(false);
   const [menu, setMenu] = useState('');
   const [selectRoles, setSelectRoles] = useState<string[]>([]);
 
-  const black = async (userId: number) => {
-    const { isError } = await blackUser(userId);
+  const black = useCallback(
+    async (userId: number) => {
+      const { isError } = await blackUser(userId);
 
-    if (!isError) close();
-  };
+      if (!isError) close();
+    },
+    [close],
+  );
 
-  const changeRole = async (userId: number) => {
-    const { isError } = await roleUser(userId, selectRoles);
+  const changeRole = useCallback(
+    async (userId: number) => {
+      const { isError } = await roleUser(userId, selectRoles);
 
-    if (!isError) close();
-  };
+      if (!isError) close();
+    },
+    [selectRoles, close],
+  );
 
   // 이렇게 구조를 짠거를 어떻게 바꿔야지...
 
   return (
     <Styled.Container>
+      {userData.reporterName && (
+        <Styled.ReportWrapper>
+          <Styled.Reporter>신고자 : {userData.reporterName}</Styled.Reporter>
+          <Styled.ReportType>
+            신고 유형 : {userData.reportType}
+          </Styled.ReportType>
+        </Styled.ReportWrapper>
+      )}
       <Styled.NameWrapper>
-        <Styled.NickName>{userData.nickName}</Styled.NickName>
+        <Styled.NickName isBlack={!!userData.reporterName}>
+          {userData.nickName}
+        </Styled.NickName>
         <Styled.Name>
           {userData.name ? userData.name : '추가정보 입력X'}
         </Styled.Name>
       </Styled.NameWrapper>
       <Styled.LoginId>{userData.loginId}</Styled.LoginId>
-      <Styled.CreateDate>가입날짜 : {userData.createdDate}</Styled.CreateDate>
+      <Styled.RoleText>
+        유저권한 :
+        {userData.roles?.map(({ roleName }: { roleName: string }) => (
+          <Styled.RoleSpan key={roleName}>{roleName}</Styled.RoleSpan>
+        ))}
+      </Styled.RoleText>
+      <Styled.CreateDate>
+        가입날짜 :
+        <Styled.CreateDateSpan>{userData.createdDate}</Styled.CreateDateSpan>
+      </Styled.CreateDate>
+
       <Styled.Menu onClick={() => setActiveMenu((prev) => !prev)}>
         <SVGIcon icon="DotThree" />
         <Styled.MenuUl activeMenu={activeMenu}>
