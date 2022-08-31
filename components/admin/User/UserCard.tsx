@@ -76,7 +76,6 @@ const UserCard = ({ userData }: DataType) => {
         가입날짜 :
         <Styled.CreateDateSpan>{userData.createdDate}</Styled.CreateDateSpan>
       </Styled.CreateDate>
-
       <Styled.Menu onClick={() => setActiveMenu((prev) => !prev)}>
         <SVGIcon icon="DotThree" />
         <Styled.MenuUl activeMenu={activeMenu}>
@@ -98,12 +97,10 @@ const UserCard = ({ userData }: DataType) => {
           </Styled.MenuLi>
         </Styled.MenuUl>
       </Styled.Menu>
-      {/* <Styled.Back
+      <Styled.Back
         activeMenu={activeMenu}
         onClick={() => setActiveMenu(false)}
-      /> 
-          해당 코드로 menu 가 active 되어있는 상태에서 menu와 관계없는 바깥구역을 클릭하면 active가 false로 변환되게끔 하고싶었다.
-      */}
+      />
 
       <Modal isModal={isModal} close={close}>
         <Modal.Title>{menuObj[menu]?.title}</Modal.Title>

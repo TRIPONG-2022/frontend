@@ -64,21 +64,19 @@ interface ActiveProps {
   activeMenu: boolean;
 }
 
-// export const Back = styled.div<ActiveProps>`
-//   ${({ activeMenu }) =>
-//     activeMenu &&
-//     css`
-//       position: absolute;
-//       top: 0;
-//       bottom: 0;
-//       left: 0;
-//       right: 0;
+export const Back = styled.div<ActiveProps>`
+  ${({ activeMenu }) =>
+    activeMenu &&
+    css`
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
 
-//       background-color: green;
-
-//       z-index: 5;
-//     `}
-// `;
+      z-index: 5;
+    `}
+`;
 
 export const MenuUl = styled.ul<ActiveProps>`
   position: absolute;
