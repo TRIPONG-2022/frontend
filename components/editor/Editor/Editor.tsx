@@ -77,8 +77,9 @@ export default function Editor({ initialValues }: EditorProps) {
   };
 
   const onSubmit = async (data: PostEditorSchema) => {
-    await requestCreatePost(data);
-    router.replace('/posts');
+    alert(JSON.stringify(data));
+    // await requestCreatePost(data);
+    // router.replace('/posts');
   };
 
   const openPublishModal = () => {
@@ -91,10 +92,7 @@ export default function Editor({ initialValues }: EditorProps) {
 
   return (
     <Styled.Container>
-      <EditorHeader
-        category={watch('category')}
-        onChangeCategory={onChangeCategory}
-      />
+      <EditorHeader />
       {watch('category') === 'gathering' && (
         <React.Fragment>
           <HeadCountInput
