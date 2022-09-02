@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import TipTap from '../TipTap';
 import TagInput from '../TagInput';
 import TitleInput from '../TitleInput';
@@ -8,37 +8,20 @@ import EditorFooter from '../EditorFooter';
 import EditorHeader from '../EditorHeader';
 import HeadCountInput from '../HeadCountInput';
 import DateRangeInput from '../DateRangeInput';
-import * as Styled from './Editor.styled';
 import PublishModal from '../PublishModal';
-import { PostEditorSchema, POST_EDITOR_SCHEMA } from '@/constants/schema';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { PostEditorSchema } from '@/constants/schema';
 import { requestCreatePost } from '@/api/post';
+import * as Styled from './Editor.styled';
 
 interface EditorProps {
   initialValues?: Partial<PostEditorSchema>;
 }
 
 export default function Editor({ initialValues }: EditorProps) {
-  const defaultValues = {
-    title: '',
-    category: undefined,
-    tags: [],
-    content: '',
-    totalHeadCount: 1,
-    startDate: new Date(),
-    endDate: new Date(),
-    thumbnail: undefined,
-  };
-
   const router = useRouter();
   const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue, formState } =
-    useForm<PostEditorSchema>({
-      mode: 'onBlur',
-      reValidateMode: 'onBlur',
-      resolver: yupResolver(POST_EDITOR_SCHEMA),
-      defaultValues: { ...defaultValues, ...initialValues },
-    });
+    useFormContext<PostEditorSchema>();
 
   const onChangeCategory = useCallback(
     (category: string) => {
@@ -94,7 +77,7 @@ export default function Editor({ initialValues }: EditorProps) {
   };
 
   const onSubmit = async (data: PostEditorSchema) => {
-    const res = await requestCreatePost(data);
+    await requestCreatePost(data);
     router.replace('/posts');
   };
 
@@ -108,7 +91,6 @@ export default function Editor({ initialValues }: EditorProps) {
 
   return (
     <Styled.Container>
-      <>{formState.errors.totalHeadCount}</>
       <EditorHeader
         category={watch('category')}
         onChangeCategory={onChangeCategory}
