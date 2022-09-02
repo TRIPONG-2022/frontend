@@ -95,10 +95,7 @@ export default function Editor({ initialValues }: EditorProps) {
       <EditorHeader />
       {watch('category') === 'gathering' && (
         <React.Fragment>
-          <HeadCountInput
-            headCount={watch('totalHeadCount') || 0}
-            onChange={onChangeHeadCount}
-          />
+          <HeadCountInput />
           <DateRangeInput
             startDate={watch('startDate') || new Date()}
             endDate={watch('endDate') || new Date()}

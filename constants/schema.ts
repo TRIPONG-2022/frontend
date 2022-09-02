@@ -112,7 +112,8 @@ export const POST_EDITOR_SCHEMA = yup.object({
     .when(
       'category',
       requiredWhenCategoryIsGathering('모집인원을 입력해주세요.'),
-    ),
+    )
+    .required(),
   startDate: yup
     .date()
     .when(
