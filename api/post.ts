@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import instance from './instance';
 import { PostEditorSchema } from '@/constants/schema';
 
@@ -28,10 +29,11 @@ const createPostFormData = ({
       formData.append(key, value);
     }
   });
+
   if (postEditorSchema.category === 'gathering') {
-    formData.append('startDate', startDate?.toDateString() || '');
-    formData.append('endDate', endDate?.toDateString() || '');
-    formData.append('totalHeadCount', totalHeadCount?.toString() || '');
+    formData.append('startDate', format(startDate ?? new Date(), 'yyyy-MM-dd'));
+    formData.append('endDate', format(endDate ?? new Date(), 'yyyy-MM-dd'));
+    formData.append('totalHeadCount', totalHeadCount?.toString() ?? '');
   }
 
   return formData;
