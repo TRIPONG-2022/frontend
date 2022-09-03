@@ -9,15 +9,15 @@ import EditorHeader from '../EditorHeader';
 import HeadCountInput from '../HeadCountInput';
 import DateRangeInput from '../DateRangeInput';
 import PublishModal from '../PublishModal';
-import { requestCreatePost } from '@/api/post';
 import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './Editor.styled';
 
 interface EditorProps {
+  onSubmit: (data: PostEditorSchema) => void | Promise<void>;
   initialContent: string;
 }
 
-export default function Editor({ initialContent }: EditorProps) {
+export default function Editor({ initialContent, onSubmit }: EditorProps) {
   const router = useRouter();
   const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue, formState } =
@@ -25,12 +25,6 @@ export default function Editor({ initialContent }: EditorProps) {
 
   const onCancel = () => {
     router.back();
-  };
-
-  const onSubmit = async (data: PostEditorSchema) => {
-    console.log(data);
-    // await requestCreatePost(data);
-    router.replace('/posts');
   };
 
   const openPublishModal = () => {
