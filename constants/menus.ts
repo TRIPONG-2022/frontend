@@ -2,7 +2,7 @@ import { logoutUser } from '@/store/slice/userSlice';
 import { NextRouter } from 'next/router';
 import { Dispatch } from '@reduxjs/toolkit';
 
-interface ParamType {
+interface LoginJoinListParamType {
   router: NextRouter;
   dispatch: Dispatch;
   link: string;
@@ -13,7 +13,7 @@ export const LOGIN_MENUS = [
     name: '로그인',
     link: '/auth/login',
     isLoggedIn: false,
-    onClick: function ({ router, dispatch, link }: ParamType) {
+    excuteFn: function ({ router, dispatch, link }: LoginJoinListParamType) {
       router.push(link);
     },
   },
@@ -21,7 +21,7 @@ export const LOGIN_MENUS = [
     name: '회원가입',
     link: '/auth/join',
     isLoggedIn: false,
-    onClick: function ({ router, dispatch, link }: ParamType) {
+    excuteFn: function ({ router, dispatch, link }: LoginJoinListParamType) {
       router.push(link);
     },
   },
@@ -29,7 +29,7 @@ export const LOGIN_MENUS = [
     name: '로그아웃',
     link: '/',
     isLoggedIn: true,
-    onClick: function ({ router, dispatch, link }: ParamType) {
+    excuteFn: function ({ router, dispatch, link }: LoginJoinListParamType) {
       dispatch(logoutUser());
     },
   },
@@ -37,7 +37,7 @@ export const LOGIN_MENUS = [
     name: '마이페이지',
     link: '/',
     isLoggedIn: true,
-    onClick: function ({ router, dispatch, link }: ParamType) {
+    excuteFn: function ({ router, dispatch, link }: LoginJoinListParamType) {
       router.push(link);
     },
   },

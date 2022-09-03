@@ -14,8 +14,11 @@ export const NavDiv = styled.div<NavDivProps>`
   background: white;
   position: fixed;
   top: ${HEADER_HEIGHT};
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0;
-  transform: translateX(100vw);
+  transform: translateX(100%);
   transition: transform 0.4s ease-in-out, opacity 0.2s ease;
 
   ${({ toggle }) =>

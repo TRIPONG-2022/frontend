@@ -1,7 +1,8 @@
-import { LOGIN_MENUS } from '@/constants/menus';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+
+import { LOGIN_MENUS } from '@/constants/menus';
 import * as Styled from './LoginJoinList.styled';
 
 interface LoginJoinListType {
@@ -15,12 +16,12 @@ const LoginJoinList = ({ isLogin, divide }: LoginJoinListType) => {
   return (
     <>
       {LOGIN_MENUS.map(
-        ({ name, link, isLoggedIn, onClick }) =>
+        ({ name, link, isLoggedIn, excuteFn }) =>
           isLoggedIn === isLogin && (
             <Styled.LoginJoinLi
               divide={divide}
               key={name}
-              onClick={() => onClick({ router, dispatch, link })}
+              onClick={() => excuteFn({ router, dispatch, link })}
             >
               {name}
             </Styled.LoginJoinLi>

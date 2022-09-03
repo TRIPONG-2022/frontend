@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import * as Styled from './GNB.styled';
 import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
@@ -10,21 +9,13 @@ import SVGIcon from '@/components/shared/SVGIcon';
 import LoginJoinList from '@/components/shared/LoginJoinList';
 import NavigationDiv from '@/layouts/MobileNaviation';
 import { AppState } from '@/store/index';
-import { logoutUser } from '@/store/slice/userSlice';
 import useWindowSize from '@/hooks/useWindowSize';
 import { GNB_MENUS } from '@/constants/menus';
 
 const GNB = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-
   const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
   const [toggle, setToggle] = useState<boolean>(false);
   const { windowWidth, windowHeight } = useWindowSize(0);
-
-  const logout = () => {
-    dispatch(logoutUser());
-  };
 
   const onToggle = useCallback(() => {
     setToggle(!toggle);
