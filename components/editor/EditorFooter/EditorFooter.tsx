@@ -1,20 +1,22 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import Button from '@/components/shared/Button';
-import * as Styled from './EditorFooter.styled';
-import { FormState } from 'react-hook-form';
 import { PostEditorSchema } from '@/constants/schema';
+import * as Styled from './EditorFooter.styled';
 
 interface EditorFooterProps {
   onCancel?: () => void;
   onPublish?: () => void;
-  formState: FormState<PostEditorSchema>;
 }
 
 export default function EditorFooter({
-  formState: { isValid },
   onCancel,
   onPublish,
 }: EditorFooterProps) {
+  const {
+    formState: { isValid },
+  } = useFormContext<PostEditorSchema>();
+
   return (
     <Styled.Container>
       <Button variant="outline" onClick={onCancel}>

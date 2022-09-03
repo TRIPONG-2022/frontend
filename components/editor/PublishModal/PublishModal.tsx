@@ -1,28 +1,32 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import Image from 'next/image';
 import Button from '@/components/shared/Button';
 import SVGIcon from '@/components/shared/SVGIcon';
+import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './PublishModal.styled';
 
 interface PublishModalProps {
   isOpen: boolean;
-  thumbnail?: File;
-  onChangeThumbnail: (thumbnail?: File) => void;
   onClose?: () => void;
   onPublish?: () => void;
 }
 
 export default function PublishModal({
   isOpen,
-  thumbnail,
-  onChangeThumbnail,
   onClose,
   onPublish,
 }: PublishModalProps) {
+  const { control, setValue } = useFormContext<PostEditorSchema>();
+  const thumbnail = useWatch({ name: 'thumbnail', control });
   const inputRef = useRef<HTMLInputElement>(null);
   const [thumbnailBase64, SetThumbnailBase64] = useState<
     string | ArrayBuffer | null
   >(null);
+
+  const onChangeThumbnail = (thumbnail?: File) => {
+    setValue('thumbnail', thumbnail);
+  };
 
   const toBase64 = useCallback(
     (file: File): Promise<string | ArrayBuffer | null> =>

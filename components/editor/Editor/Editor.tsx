@@ -9,49 +9,28 @@ import EditorHeader from '../EditorHeader';
 import HeadCountInput from '../HeadCountInput';
 import DateRangeInput from '../DateRangeInput';
 import PublishModal from '../PublishModal';
-import { PostEditorSchema } from '@/constants/schema';
 import { requestCreatePost } from '@/api/post';
+import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './Editor.styled';
 
 interface EditorProps {
-  initialValues?: Partial<PostEditorSchema>;
+  initialContent: string;
 }
 
-export default function Editor({ initialValues }: EditorProps) {
+export default function Editor({ initialContent }: EditorProps) {
   const router = useRouter();
   const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue, formState } =
     useFormContext<PostEditorSchema>();
-
-  const onChangeTags = useCallback(
-    (tags: string[]) => {
-      setValue('tags', tags, { shouldValidate: true });
-    },
-    [setValue],
-  );
-
-  const onChangeContent = useCallback(
-    (content: string) => {
-      setValue('content', content, { shouldValidate: true });
-    },
-    [setValue],
-  );
-
-  const onChangeThumbnail = useCallback(
-    (thumbnail?: File) => {
-      setValue('thumbnail', thumbnail, { shouldValidate: true });
-    },
-    [setValue],
-  );
 
   const onCancel = () => {
     router.back();
   };
 
   const onSubmit = async (data: PostEditorSchema) => {
-    alert(JSON.stringify(data));
+    console.log(data);
     // await requestCreatePost(data);
-    // router.replace('/posts');
+    router.replace('/posts');
   };
 
   const openPublishModal = () => {
@@ -77,16 +56,10 @@ export default function Editor({ initialValues }: EditorProps) {
         placeholder="제목을 입력하세요."
         {...register('title')}
       />
-      <TagInput tags={watch('tags')} onChange={onChangeTags} />
-      <TipTap content={initialValues?.content} onChange={onChangeContent} />
-      <EditorFooter
-        formState={formState}
-        onCancel={onCancel}
-        onPublish={openPublishModal}
-      />
+      <TagInput />
+      <TipTap initialContent={initialContent} />
+      <EditorFooter onCancel={onCancel} onPublish={openPublishModal} />
       <PublishModal
-        thumbnail={watch('thumbnail')}
-        onChangeThumbnail={onChangeThumbnail}
         isOpen={isOpenPublishModal}
         onClose={closePublishModal}
         onPublish={handleSubmit(onSubmit)}

@@ -6,8 +6,7 @@ import { PostEditorSchema, POST_EDITOR_SCHEMA } from '@/constants/schema';
 
 const WritePage: NextPage = () => {
   const methods = useForm<PostEditorSchema>({
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    mode: 'onChange',
     resolver: yupResolver(POST_EDITOR_SCHEMA),
     defaultValues: {
       title: '',
@@ -23,7 +22,7 @@ const WritePage: NextPage = () => {
 
   return (
     <FormProvider {...methods}>
-      <Editor />
+      <Editor initialContent="" />
     </FormProvider>
   );
 };

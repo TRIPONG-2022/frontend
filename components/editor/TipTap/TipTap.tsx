@@ -1,19 +1,25 @@
+import { useCallback } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import StarterKit from '@tiptap/starter-kit';
 import { useEditor, EditorContent } from '@tiptap/react';
 import TipTapLink from '@tiptap/extension-link';
 import TipTapImage from '@tiptap/extension-image';
 import TipTapMenu from '../TipTapMenu';
+import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './TipTap.styled';
 
-interface TipTapProps {
-  content?: string;
-  onChange: (content: string) => void;
+interface TiptapProps {
+  initialContent: string;
 }
+export default function TipTap({ initialContent }: TiptapProps) {
+  const { setValue } = useFormContext<PostEditorSchema>();
+  const onChange = useCallback(
+    (content: string) => {
+      setValue('content', content);
+    },
+    [setValue],
+  );
 
-export default function TipTap({
-  content: initalContent,
-  onChange,
-}: TipTapProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -37,7 +43,7 @@ export default function TipTap({
       }),
     ],
     injectCSS: true,
-    content: initalContent || '',
+    content: initialContent || '',
     onUpdate: ({ editor }) => {
       const content = editor.getHTML();
       onChange(content);
