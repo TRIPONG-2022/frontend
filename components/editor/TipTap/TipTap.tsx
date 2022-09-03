@@ -15,7 +15,7 @@ export default function TipTap({ initialContent }: TiptapProps) {
   const { setValue } = useFormContext<PostEditorSchema>();
   const onChange = useCallback(
     (content: string) => {
-      setValue('content', content);
+      setValue('content', content, { shouldValidate: true });
     },
     [setValue],
   );
