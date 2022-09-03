@@ -23,34 +23,6 @@ export default function Editor({ initialValues }: EditorProps) {
   const { register, handleSubmit, watch, setValue, formState } =
     useFormContext<PostEditorSchema>();
 
-  const onChangeCategory = useCallback(
-    (category: string) => {
-      setValue('category', category, { shouldValidate: true });
-    },
-    [setValue],
-  );
-
-  const onChangeHeadCount = useCallback(
-    (headCount: number) => {
-      setValue('totalHeadCount', headCount, { shouldValidate: true });
-    },
-    [setValue],
-  );
-
-  const onChangeStartDate = useCallback(
-    (date: Date) => {
-      setValue('startDate', date, { shouldValidate: true });
-    },
-    [setValue],
-  );
-
-  const onChangeEndDate = useCallback(
-    (date: Date) => {
-      setValue('endDate', date, { shouldValidate: true });
-    },
-    [setValue],
-  );
-
   const onChangeTags = useCallback(
     (tags: string[]) => {
       setValue('tags', tags, { shouldValidate: true });
@@ -96,12 +68,7 @@ export default function Editor({ initialValues }: EditorProps) {
       {watch('category') === 'gathering' && (
         <React.Fragment>
           <HeadCountInput />
-          <DateRangeInput
-            startDate={watch('startDate') || new Date()}
-            endDate={watch('endDate') || new Date()}
-            onChangeStartDate={onChangeStartDate}
-            onChangeEndDate={onChangeEndDate}
-          />
+          <DateRangeInput />
         </React.Fragment>
       )}
       <TitleInput

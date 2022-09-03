@@ -119,13 +119,15 @@ export const POST_EDITOR_SCHEMA = yup.object({
     .when(
       'category',
       requiredWhenCategoryIsGathering('시작 일자를 입력해주세요.'),
-    ),
+    )
+    .required(),
   endDate: yup
     .date()
     .when(
       'category',
       requiredWhenCategoryIsGathering('종료 일자를 입력해주세요.'),
-    ),
+    )
+    .required(),
   thumbnail: yup.mixed().optional(),
 });
 
