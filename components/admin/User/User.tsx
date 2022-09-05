@@ -6,6 +6,7 @@ import * as Styled from './User.styled';
 import UserCard from './UserCard';
 import useModal from '@/hooks/useModal';
 import UserSearch from './UserSearch';
+import { useQuery, useQueryClient } from 'react-query';
 
 interface DataType {
   id: number;
@@ -22,11 +23,23 @@ const User = () => {
   const [userList, setUserList] = useState<DataType[]>([]);
   const [activeBtn, setActiveBtn] = useState(true);
 
+  const { data } = useQuery('userList', () => getUsers({}), {
+    staleTime: Infinity, // 5초
+    cacheTime: Infinity, // 제한 없음
+  });
+
+  const queryClient = useQueryClient();
+
+  console.log(queryClient);
+  // queryClient.setQueryData('userList', data);
+  const test = queryClient.getQueryData('userList');
+  console.log(test);
+
   const [isModal, open, close] = useModal();
 
   const getUserList = async () => {
     const { data } = await getUsers({});
-    console.log(data);
+
     if (data) {
       setUserList(data.content);
     }
@@ -34,12 +47,12 @@ const User = () => {
 
   const getReportUserList = async () => {
     const { data } = await getReportUsers({});
-    console.log(data);
+
     if (data) {
       setUserList(data.content);
     }
   };
-  console.log(userList);
+
   useEffect(() => {
     getUserList();
   }, []);

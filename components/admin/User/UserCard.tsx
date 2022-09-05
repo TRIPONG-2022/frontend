@@ -5,6 +5,7 @@ import SVGIcon from '@/components/shared/SVGIcon';
 import { menuObj } from '@/constants/admin';
 import useModal from '@/hooks/useModal';
 import React, { useCallback, useState } from 'react';
+import { Query, useQuery, useQueryClient } from 'react-query';
 import * as Styled from './UserCard.styled';
 import UserRoleChange from './UserRoleChange';
 
@@ -26,6 +27,13 @@ const UserCard = ({ userData }: DataType) => {
   const [activeMenu, setActiveMenu] = useState(false);
   const [menu, setMenu] = useState('');
   const [selectRoles, setSelectRoles] = useState<string[]>([]);
+
+  const userList = useQuery('userList');
+  console.log(userList.data);
+
+  const queryClient = useQueryClient();
+  const test = queryClient.getQueryData('userList');
+  console.log(test);
 
   const black = useCallback(
     async (userId: number) => {
@@ -68,8 +76,10 @@ const UserCard = ({ userData }: DataType) => {
       <Styled.LoginId>{userData.loginId}</Styled.LoginId>
       <Styled.RoleText>
         유저권한 :
-        {userData.roles?.map(({ roleName }: { roleName: string }) => (
-          <Styled.RoleSpan key={roleName}>{roleName}</Styled.RoleSpan>
+        {userData.roles?.map(({ roleName }: { roleName: string }, index) => (
+          <Styled.RoleSpan key={`${roleName}+ ${index}`}>
+            {roleName}
+          </Styled.RoleSpan>
         ))}
       </Styled.RoleText>
       <Styled.CreateDate>
