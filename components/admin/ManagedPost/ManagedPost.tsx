@@ -1,7 +1,7 @@
 import { getPosts, getReportPosts } from '@/api/admin';
 import { useEffect, useState } from 'react';
-import * as Styled from './AdminPost.styled';
-import AdminPostCard from './AdminPostCard';
+import * as Styled from './ManagedPost.styled';
+import AdminPostCard from './ManagedPostCard';
 
 interface PostType {
   userId: number;

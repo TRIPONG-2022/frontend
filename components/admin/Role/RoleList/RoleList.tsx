@@ -1,7 +1,7 @@
 import { getRoles } from '@/api/admin';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import RoleCard from './RoleCard';
+import RoleCard from '../RoleCard/RoleCard';
 import * as Styled from './RoleList.styled';
 
 interface GetRoleType {
