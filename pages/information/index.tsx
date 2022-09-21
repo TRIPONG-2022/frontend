@@ -9,7 +9,6 @@ import { days, getCurrentYear, months, years } from '@/constants/date';
 import React from 'react';
 import Select from '@/components/shared/Select/Select';
 import useRegionFetch from '@/hooks/useRegionFetch';
-import { useState } from 'react';
 
 const InformationPage: NextPage = () => {
   const {
@@ -52,28 +51,14 @@ const InformationPage: NextPage = () => {
     [cityMap, districtMap],
   );
 
-  const formIdType = {
-    name: 'name',
-    gender: 'gender',
-    month: 'month',
-    year: 'year',
-    day: 'day',
-    city: 'city',
-    district: 'district',
-  };
-
-  const getSetValue = ({
-    id,
-    value,
-  }: {
-    id: keyof typeof formIdType;
-    value: string | number;
-  }) => {
-    setValue(id, value, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-  };
+  const onChangeOption =
+    (id: 'name' | 'gender' | 'year' | 'month' | 'day' | 'city' | 'district') =>
+    (value: string | number) => {
+      setValue(id, value, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    };
 
   return (
     <AuthLayout title="로그인">
@@ -93,7 +78,7 @@ const InformationPage: NextPage = () => {
             { value: 'male', label: '남' },
             { value: 'female', label: '여' },
           ]}
-          onClickOption={getSetValue}
+          onChangeOption={onChangeOption('gender')}
           label="성별"
         />
 
@@ -102,7 +87,7 @@ const InformationPage: NextPage = () => {
             id="year"
             defaultLabel="연도 입력"
             options={years(getCurrentYear())}
-            onClickOption={getSetValue}
+            onChangeOption={onChangeOption('year')}
             label="생년월일"
           ></Select>
 
@@ -110,14 +95,14 @@ const InformationPage: NextPage = () => {
             id="month"
             defaultLabel="월 입력"
             options={months}
-            onClickOption={getSetValue}
+            onChangeOption={onChangeOption('month')}
           />
 
           <Select
             id="day"
             defaultLabel="날짜 입력"
             options={days(watchYear, watchMonth)}
-            onClickOption={getSetValue}
+            onChangeOption={onChangeOption('day')}
           />
         </Flex>
 
@@ -126,14 +111,14 @@ const InformationPage: NextPage = () => {
             id="city"
             defaultLabel="도시를 선택해주세요"
             options={city}
-            onClickOption={getSetValue}
+            onChangeOption={onChangeOption('city')}
             label="지역"
           />
           <Select
             id="district"
             defaultLabel="구를 선택해주세요"
             options={district}
-            onClickOption={getSetValue}
+            onChangeOption={onChangeOption('district')}
           />
         </Flex>
         <button
@@ -153,5 +138,5 @@ export default InformationPage;
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
 `;
