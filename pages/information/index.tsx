@@ -1,14 +1,18 @@
-import { NextPage } from 'next';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import AuthLayout from '@/layouts/AuthLayout';
-import AuthInput from '@/components/shared/AuthInput';
-import { ADD_INFORMATION_SCHEMA, InformationSchema } from '@/constants/schema';
-import styled from 'styled-components';
-import { days, getCurrentYear, months, years } from '@/constants/date';
+import type { NextPage } from 'next';
 import React from 'react';
-import Select from '@/components/shared/Select/Select';
-import useRegionFetch from '@/hooks/useRegionFetch';
+import styled from 'styled-components';
+import { useForm, useWatch } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import AuthLayout from '@/layouts/AuthLayout';
+import Select from '@/components/shared/Select';
+import Button from '@/components/shared/Button';
+import AuthInput from '@/components/shared/AuthInput';
+import { days, getCurrentYear, months, years } from '@/constants/date';
+import { ADD_INFORMATION_SCHEMA, InformationSchema } from '@/constants/schema';
+
+import { useCityQuery } from '@/hooks/useCityQuery';
+import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 
 const InformationPage: NextPage = () => {
   const {
@@ -16,6 +20,7 @@ const InformationPage: NextPage = () => {
     register,
     watch,
     setValue,
+    control,
     formState: { isValid, isDirty, errors },
   } = useForm<InformationSchema>({
     mode: 'onChange',
@@ -26,42 +31,47 @@ const InformationPage: NextPage = () => {
     },
   });
 
-  const watchYear: number = watch('year', 2022);
-  const watchMonth: number = watch('month', 1);
-  const watchRegionCode = watch('city');
+  const selectedYear = useWatch({ control, name: 'year' });
+  const selectedMonth = useWatch({ control, name: 'month' });
+  const selectedCity = useWatch({ control, name: 'city' });
 
-  const [city, cityMap] = useRegionFetch({
-    url: 'https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00000000',
-  });
+  const { data: cityData } = useCityQuery();
 
-  const [district, districtMap] = useRegionFetch({
-    url: `https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=${watchRegionCode?.substring(
-      0,
-      2,
-    )}*000000&is_ignore_zero=true`,
-    deps: watchRegionCode,
-  });
+  const { data: districtData } = useDistrictQuery(selectedCity);
 
-  const onSubmit = React.useCallback(
-    (data: InformationSchema) => {
-      const cityName = cityMap.get(data.city);
-      const districtName = districtMap.get(data.district);
-      console.log({ ...data, cityName, districtName });
-    },
-    [cityMap, districtMap],
-  );
+  const onSubmit = (data: InformationSchema) => {
+    if (!cityData || !districtData) return;
+    const cityName = cityData.regionMapData.get(data.city);
+    const districtName = districtData.regionMapData.get(data.district);
+    console.log({ ...data, cityName, districtName });
+  };
 
   const onChangeOption =
     (id: 'name' | 'gender' | 'year' | 'month' | 'day' | 'city' | 'district') =>
     (value: string | number) => {
-      setValue(id, value, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
+      setValue(id, value);
     };
 
+  const allYears = React.useMemo(() => years(getCurrentYear()), []);
+
+  const allDays = React.useMemo(
+    () => days(selectedYear, selectedMonth),
+    [selectedYear, selectedMonth],
+  );
+
+  const genderOptions = React.useMemo(
+    () => [
+      { value: 'male', label: '남' },
+      { value: 'female', label: '여' },
+    ],
+    [],
+  );
+
   return (
-    <AuthLayout title="로그인">
+    <AuthLayout
+      title="추가 정보 입력"
+      description="추가적인 정보를 입력해주세요."
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
           id="name"
@@ -70,73 +80,71 @@ const InformationPage: NextPage = () => {
           errorMessage={errors.name?.message}
           {...register('name')}
         />
-
         <Select
           id="gender"
           defaultLabel="성별을 선택하세요."
-          options={[
-            { value: 'male', label: '남' },
-            { value: 'female', label: '여' },
-          ]}
+          options={genderOptions}
           onChangeOption={onChangeOption('gender')}
           label="성별"
         />
-
         <Flex>
           <Select
             id="year"
             defaultLabel="연도 입력"
-            options={years(getCurrentYear())}
+            options={allYears}
             onChangeOption={onChangeOption('year')}
             label="생년월일"
-          ></Select>
-
+          />
           <Select
             id="month"
             defaultLabel="월 입력"
             options={months}
             onChangeOption={onChangeOption('month')}
           />
-
           <Select
             id="day"
             defaultLabel="날짜 입력"
-            options={days(watchYear, watchMonth)}
+            options={allDays}
             onChangeOption={onChangeOption('day')}
           />
         </Flex>
-
         <Flex>
           <Select
             id="city"
             defaultLabel="도시를 선택해주세요"
-            options={city}
+            options={cityData?.regionData}
             onChangeOption={onChangeOption('city')}
             label="지역"
           />
           <Select
             id="district"
             defaultLabel="구를 선택해주세요"
-            options={district}
+            options={districtData?.regionData}
+            disabled={!selectedCity}
             onChangeOption={onChangeOption('district')}
           />
         </Flex>
-        <button
+        <Button
+          size="lg"
           type="submit"
+          css={`
+            width: 100%;
+            margin-top: 1rem;
+          `}
           disabled={!isValid || !isDirty}
           aria-disabled={!isValid || !isDirty}
         >
-          등록
-        </button>
+          확인
+        </Button>
       </form>
     </AuthLayout>
   );
 };
-
-export default InformationPage;
 
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 `;
+
+export default InformationPage;
