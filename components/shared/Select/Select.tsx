@@ -2,34 +2,34 @@ import React, { useState, useEffect } from 'react';
 import SVGIcon from '../SVGIcon';
 import * as Styled from './Select.styled';
 
-export interface SelectOption {
-  value: string | number;
-  label: string | number;
+export interface SelectOption<T> {
+  value: T;
+  label: string;
 }
 
-interface SelectProps {
+interface SelectProps<T> {
   label?: string;
   id: string;
   disabled?: boolean;
   defaultLabel: string;
-  options?: SelectOption[];
-  onChangeOption: (value: string | number) => void;
+  options?: SelectOption<T>[];
+  onChangeOption: (value: T) => void;
 }
 
-const Select = ({
+export default function Select<T>({
   label,
   id,
   disabled,
   options,
   defaultLabel,
   onChangeOption,
-}: SelectProps) => {
+}: SelectProps<T>) {
   const [isOpen, setOpen] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<SelectOption | null>(
+  const [selectedOption, setSelectedOption] = useState<SelectOption<T> | null>(
     null,
   );
 
-  const handleClick = (option: SelectOption) => {
+  const handleClick = (option: SelectOption<T>) => {
     setSelectedOption(option);
     onChangeOption(option.value);
   };
@@ -68,7 +68,7 @@ const Select = ({
         <Styled.OptionList isOpen={isOpen}>
           {options?.map((option) => (
             <Styled.OptionItem
-              key={option.value}
+              key={option.label}
               selected={selectedOption?.value === option.value}
               onClick={() => {
                 handleClick(option);
@@ -85,6 +85,4 @@ const Select = ({
       </Styled.OptionContainer>
     </Styled.Container>
   );
-};
-
-export default Select;
+}
