@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SVGIcon from '../SVGIcon';
 import * as Styled from './Select.styled';
 
-interface SelectOption {
+export interface SelectOption {
   value: string | number;
   label: string | number;
 }
@@ -10,7 +10,7 @@ interface SelectOption {
 interface SelectProps {
   label?: string;
   id: string;
-  errorMessage?: string;
+  disabled?: boolean;
   defaultLabel: string;
   options?: SelectOption[];
   onChangeOption: (value: string | number) => void;
@@ -19,6 +19,7 @@ interface SelectProps {
 const Select = ({
   label,
   id,
+  disabled,
   options,
   defaultLabel,
   onChangeOption,
@@ -33,6 +34,16 @@ const Select = ({
     onChangeOption(option.value);
   };
 
+  useEffect(() => {
+    if (!selectedOption || !options) return;
+    const isOptionExist = options.some(
+      ({ value }) => value === selectedOption.value,
+    );
+    if (!isOptionExist) {
+      setSelectedOption(null);
+    }
+  }, [options, selectedOption]);
+
   return (
     <Styled.Container>
       <Styled.Label htmlFor={id}>{label}</Styled.Label>
@@ -45,11 +56,12 @@ const Select = ({
       )}
       <Styled.OptionContainer
         type="button"
+        disabled={disabled}
         onClick={() => {
           setOpen((prev) => !prev);
         }}
       >
-        <Styled.OptionTitle isOpen={isOpen}>
+        <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedOption)}>
           {selectedOption === null ? defaultLabel : selectedOption.label}
           <SVGIcon icon="ChevronDownIcon" size={16} />
         </Styled.OptionTitle>
@@ -57,10 +69,15 @@ const Select = ({
           {options?.map((option) => (
             <Styled.OptionItem
               key={option.value}
+              selected={selectedOption?.value === option.value}
               onClick={() => {
                 handleClick(option);
               }}
             >
+              {selectedOption?.value === option.value && (
+                <SVGIcon icon="CheckIcon" size={16} />
+              )}
+
               <span>{option.label}</span>
             </Styled.OptionItem>
           ))}

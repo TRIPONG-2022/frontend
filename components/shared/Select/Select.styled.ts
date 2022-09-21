@@ -2,7 +2,8 @@ import { Z_INDEX } from '@/styles/z-index';
 import styled, { css } from 'styled-components';
 
 interface OptionProps {
-  isOpen: boolean;
+  isOpen?: boolean;
+  selected?: boolean;
 }
 
 export const Container = styled.div`
@@ -24,6 +25,9 @@ export const Label = styled.label`
 export const OptionContainer = styled.button`
   position: relative;
   width: 100%;
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export const OptionTitle = styled.div<OptionProps>`
@@ -38,11 +42,12 @@ export const OptionTitle = styled.div<OptionProps>`
   border-radius: 1rem;
   padding: 1.25rem 0.75rem 1.25rem 1.25rem;
 
+  color: ${({ selected, theme }) =>
+    selected ? '#000' : theme.colors.gray[500]};
   background-color: ${({ theme }) => theme.colors.gray[50]};
 
   font-size: 0.875rem;
   text-align: center;
-  cursor: pointer;
   svg {
     transition: transform 0.2s ease-in-out;
   }
@@ -65,11 +70,8 @@ export const OptionList = styled.ul<OptionProps>`
   right: 0;
   top: calc(100% + 0.5rem);
 
-  max-height: 12rem;
+  max-height: 11rem;
   overflow-y: auto;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 
   opacity: 0;
   visibility: hidden;
@@ -89,22 +91,42 @@ export const OptionList = styled.ul<OptionProps>`
       visibility: visible;
       pointer-events: all;
     `}
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-export const OptionItem = styled.li`
+export const OptionItem = styled.li<OptionProps>`
   position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   padding: 0.75rem;
   font-size: 0.875rem;
   line-height: 1rem;
   transition: all 0.2s ease-in;
   cursor: pointer;
+
   &:hover {
     background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.1);
   }
+  svg {
+    display: none;
+    position: absolute;
+    left: 1rem;
+    color: ${({ theme }) => theme.colors.primary.hex};
+  }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      font-weight: 700;
+      svg {
+        display: block;
+      }
+    `};
 `;
 
 export const Backdrop = styled.div`
