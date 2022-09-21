@@ -6,3 +6,4 @@ export { default as DeleteIcon } from './icon-delete.svg';
 export { default as LogoIcon } from './logo.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as ChevronDownIcon } from './chevron-down.svg';
+export { default as CheckIcon } from './check.svg';
