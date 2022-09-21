@@ -1,20 +1,9 @@
+import { Z_INDEX } from '@/styles/z-index';
 import styled, { css } from 'styled-components';
-
-interface InputProps {
-  error?: boolean;
-}
 
 interface OptionProps {
   isOpen: boolean;
 }
-
-export const baseInput = css<InputProps>`
-  padding: 7px 32px 7px 12px;
-  border-radius: 8px;
-  width: 100%;
-  color: ${(props) => props.theme.colors.gray[400]};
-  outline: none;
-`;
 
 export const Container = styled.div`
   margin-bottom: 1.5rem;
@@ -29,103 +18,100 @@ export const Label = styled.label`
   height: 1rem;
 
   font-size: 0.875rem;
-  font-weight: bold;
+  font-weight: 700;
 `;
 
-export const CustomDivContainer = styled.button`
+export const OptionContainer = styled.button`
   position: relative;
   width: 100%;
 `;
-export const CustomDivTitle = styled.div<OptionProps>`
-  padding: 1rem 1.25rem;
-  width: 100%;
-  border: 2px solid;
-  border-color: #e8eaed;
-  border-radius: 1rem;
-  background: white;
-  box-shadow: 0 1px 3px -2px #9098a9;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.gray[500]};
-  font-size: 0.75rem;
-  font-weight: bold;
+
+export const OptionTitle = styled.div<OptionProps>`
   position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 2px solid;
+  border-color: transparent;
+  border-radius: 1rem;
+  padding: 1.25rem 0.75rem 1.25rem 1.25rem;
+
+  background-color: ${({ theme }) => theme.colors.gray[50]};
+
+  font-size: 0.875rem;
   text-align: center;
+  cursor: pointer;
+  svg {
+    transition: transform 0.2s ease-in-out;
+  }
+
   ${({ isOpen }) =>
     isOpen &&
     css`
       border-color: ${({ theme }) => theme.colors.primary.hex};
+
+      svg {
+        transform: rotate(180deg);
+      }
     `}
 `;
 
-const Arrow = styled.div`
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  right: 0;
-  top: 0;
-  transform: translate(0, +50%);
-  background-color: black;
-`;
-
-export const CustomUl = styled.ul<OptionProps>`
+export const OptionList = styled.ul<OptionProps>`
   position: absolute;
   display: block;
-  top: 100%;
   left: 0;
   right: 0;
-  background: white;
-  transition: all 0.5s;
+  top: calc(100% + 0.5rem);
+
+  max-height: 12rem;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  z-index: 2;
-  border: 1px solid #e8eaed;
+  transition: all 0.2s ease-in;
+  padding: 0.5rem 0;
+  background-color: ${({ theme }) => theme.colors.gray[50]};
   border-radius: 1rem;
-  max-height: 200px;
-  overflow-y: auto;
+  text-align: center;
+  z-index: ${Z_INDEX.DROPDOWN};
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
   ${({ isOpen }) =>
-    isOpen
-      ? css`
-          opacity: 1;
-          visibility: visible;
-          pointer-events: all;
-          margin-top: 8px;
-          box-shadow: -1px 1px 2px rgba(67, 70, 74, 0.0001),
-            -2px 2px 5px rgba(67, 86, 100, 0.123689);
-          border-radius: 8px;
-        `
-      : null}
-  text-align: center;
+    isOpen &&
+    css`
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    `}
 `;
 
-export const CustomLi = styled.li`
+export const OptionItem = styled.li`
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  padding: 0.5rem 0.5rem;
-  border-radius: 4px;
-  color: ${({ theme }) => theme.colors.gray[500]};
-  font-size: 0.75rem;
-  font-weight: bold;
-
-  transition: all 0.5s;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  transition: all 0.2s ease-in;
   cursor: pointer;
   &:hover {
-    background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.4);
+    background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.1);
   }
 `;
 
-export const Back = styled.div`
+export const Backdrop = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-
-  /* background-color: green; */
+  z-index: ${Z_INDEX.DROPDOWN};
 `;
-
-export const ErrorMessage = styled.p``;
