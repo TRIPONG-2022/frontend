@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import SVGIcon from '../SVGIcon';
 import * as Styled from './Select.styled';
 
@@ -8,11 +8,12 @@ export interface SelectOption<T> {
 }
 
 interface SelectProps<T> {
-  label?: string;
   id: string;
+  label?: string;
   disabled?: boolean;
   defaultLabel: string;
   options?: SelectOption<T>[];
+  selectedValue?: T;
   onChangeOption: (value: T) => void;
 }
 
@@ -22,27 +23,20 @@ export default function Select<T>({
   disabled,
   options,
   defaultLabel,
+  selectedValue,
   onChangeOption,
 }: SelectProps<T>) {
   const [isOpen, setOpen] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<SelectOption<T> | null>(
-    null,
-  );
+  const selectedLabel = useMemo(() => {
+    const selectedOption = options?.find(
+      ({ value }) => value === selectedValue,
+    );
+    return selectedOption ? selectedOption.label : defaultLabel;
+  }, [options, selectedValue, defaultLabel]);
 
   const handleClick = (option: SelectOption<T>) => {
-    setSelectedOption(option);
     onChangeOption(option.value);
   };
-
-  useEffect(() => {
-    if (!selectedOption || !options) return;
-    const isOptionExist = options.some(
-      ({ value }) => value === selectedOption.value,
-    );
-    if (!isOptionExist) {
-      setSelectedOption(null);
-    }
-  }, [options, selectedOption]);
 
   return (
     <Styled.Container>
@@ -61,23 +55,22 @@ export default function Select<T>({
           setOpen((prev) => !prev);
         }}
       >
-        <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedOption)}>
-          {selectedOption === null ? defaultLabel : selectedOption.label}
+        <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedValue)}>
+          {selectedLabel}
           <SVGIcon icon="ChevronDownIcon" size={16} />
         </Styled.OptionTitle>
         <Styled.OptionList isOpen={isOpen}>
           {options?.map((option) => (
             <Styled.OptionItem
               key={option.label}
-              selected={selectedOption?.value === option.value}
+              selected={selectedValue === option.value}
               onClick={() => {
                 handleClick(option);
               }}
             >
-              {selectedOption?.value === option.value && (
+              {selectedValue === option.value && (
                 <SVGIcon icon="CheckIcon" size={16} />
               )}
-
               <span>{option.label}</span>
             </Styled.OptionItem>
           ))}

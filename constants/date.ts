@@ -19,15 +19,15 @@ export const LastDay = (year: number, month: number) => {
   return new Date(year, month, 0).getDate();
 };
 
-export const days = (year: number, month: number) => {
-  // if (typeof year == 'number' && typeof month == 'number') {
-  return new Array(LastDay(year, month)).fill(undefined).map((_, i) => {
-    return {
-      value: i + 1,
-      label: i + 1 + '일',
-    };
-  });
-  // }
+export const days = (year?: number, month = 1) => {
+  return new Array(LastDay(year ?? getCurrentYear(), month))
+    .fill(undefined)
+    .map((_, i) => {
+      return {
+        value: i + 1,
+        label: i + 1 + '일',
+      };
+    });
 };
 
 export const getCurrentMonth = () => new Date().getMonth() + 1;
