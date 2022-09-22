@@ -40,6 +40,12 @@ const LoginPage: NextPage = () => {
     }
   };
 
+  const onClickOAuthLink = (linkData: string) => () => {
+    router.push(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/${linkData}`,
+    );
+  };
+
   return (
     <>
       <AuthLayout title="로그인">
@@ -76,19 +82,15 @@ const LoginPage: NextPage = () => {
         </form>
         <Divider />
         <Container>
-          {OAUTH_DATA.map(({ iconName, title, colorSchemeName, LinkData }) => (
+          {OAUTH_DATA.map(({ iconName, title, colorSchemeName, linkData }) => (
             <IconButton
-              key={LinkData}
+              key={linkData}
               icon={iconName}
               aria-label={title}
               colorScheme={colorSchemeName}
               isRound
               size="xlg"
-              onClick={() =>
-                router.push(
-                  `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/${LinkData}`,
-                )
-              }
+              onClick={onClickOAuthLink(linkData)}
             />
           ))}
         </Container>
