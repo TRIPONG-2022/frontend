@@ -11,19 +11,20 @@ import NavigationDiv from '@/layouts/MobileNaviation';
 import { AppState } from '@/store/index';
 import useWindowSize from '@/hooks/useWindowSize';
 import { GNB_MENUS } from '@/constants/menus';
+import useToggle from '@/hooks/useToggle';
 
 const GNB = () => {
   const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
-  const [toggle, setToggle] = useState<boolean>(false);
+  const [toggle, setToggle] = useToggle(false);
   const { windowWidth, windowHeight } = useWindowSize(0);
 
   const onToggle = useCallback(() => {
     setToggle(!toggle);
-  }, [toggle]);
+  }, [toggle, setToggle]);
 
   useEffect(() => {
     if (window.innerWidth > 1280) setToggle(false);
-  }, [windowWidth]);
+  }, [windowWidth, setToggle]);
 
   return (
     <Styled.GNBHeader>
