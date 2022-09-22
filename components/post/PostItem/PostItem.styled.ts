@@ -29,6 +29,14 @@ export const DetailContainer = styled.div`
   padding: 0.6255rem 0;
 `;
 
+export const PostLink = styled.a`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: block;
+  cursor: pointer;
+`;
+
 export const Title = styled.strong`
   font-size: 1.25rem;
   font-weight: 700;

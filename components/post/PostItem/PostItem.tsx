@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
+import Link from 'next/link';
 
 import { Post } from '@/types/post';
-import { removeHTMLTag } from 'utils/post';
+import { createPostLink, removeHTMLTag } from 'utils/post';
 import SVGIcon from '@/components/shared/SVGIcon';
 
 import * as Styled from './PostItem.styled';
@@ -16,23 +17,29 @@ export default function PostItem({ post }: PostItemProps) {
     <Styled.PostItemContainer>
       {post.thumbnail && (
         <Styled.ThumbnailContainer>
-          <Image
-            src={`data:image/png;base64,${post.thumbnail}`}
-            alt="Thumbnail"
-            layout="fill"
-            quality={90}
-            objectFit="cover"
-          />
+          <Link href={createPostLink(post.id, post.category)}>
+            <Styled.PostLink>
+              <Image
+                src={`data:image/png;base64,${post.thumbnail}`}
+                alt="Thumbnail"
+                layout="fill"
+                quality={90}
+                objectFit="cover"
+              />
+            </Styled.PostLink>
+          </Link>
         </Styled.ThumbnailContainer>
       )}
       <Styled.ContentContainer>
         <Styled.DetailContainer>
-          <div>
-            <Styled.Title>{post.title}</Styled.Title>
-            <Styled.Description>
-              {removeHTMLTag(post.content)}
-            </Styled.Description>
-          </div>
+          <Link href={createPostLink(post.id, post.category)}>
+            <Styled.PostLink>
+              <Styled.Title>{post.title}</Styled.Title>
+              <Styled.Description>
+                {removeHTMLTag(post.content)}
+              </Styled.Description>
+            </Styled.PostLink>
+          </Link>
           <Styled.TagList>
             {post.tags.map((tag, index) => (
               <Styled.TagItem key={index}>#{tag}</Styled.TagItem>
