@@ -8,7 +8,7 @@ import AuthLayout from '@/layouts/AuthLayout';
 import Select from '@/components/shared/Select';
 import Button from '@/components/shared/Button';
 import AuthInput from '@/components/shared/AuthInput';
-import { days, getCurrentYear, months, years } from '@/constants/date';
+import { days, getCurrentYear, months, years } from 'utils/date';
 import { ADD_INFORMATION_SCHEMA, InformationSchema } from '@/constants/schema';
 
 import { useCityQuery } from '@/hooks/useCityQuery';
