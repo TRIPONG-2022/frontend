@@ -1,7 +1,13 @@
 import type { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useForm, useWatch, FieldErrors } from 'react-hook-form';
+import {
+  useForm,
+  useWatch,
+  FieldErrors,
+  useFormContext,
+  FormProvider,
+} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import AuthLayout from '@/layouts/AuthLayout';
@@ -21,27 +27,26 @@ import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { createErrorMessage } from 'utils/validate';
 
 const InformationPage: NextPage = () => {
-  const {
-    handleSubmit,
-    register,
-    watch,
-    setValue,
-    control,
-    formState: { isValid, isDirty, errors },
-  } = useForm<InformationSchema>({
+  const methods = useForm<InformationSchema>({
     mode: 'onSubmit',
     resolver: yupResolver(ADD_INFORMATION_SCHEMA),
   });
+
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    control,
+    formState: { isValid, isDirty, errors },
+  } = methods;
+
   const [formErrorMessage, setFormErrorMessage] = useState<string | undefined>(
     '',
   );
 
   const selectedGender = useWatch({ control, name: 'gender' });
-  const selectedYear = useWatch({ control, name: 'year' });
-  const selectedMonth = useWatch({ control, name: 'month' });
-  const selectedDay = useWatch({ control, name: 'day' });
+
   const selectedCity = useWatch({ control, name: 'city' });
-  const selectedDistrict = useWatch({ control, name: 'district' });
 
   const { data: cityData } = useCityQuery();
 
@@ -80,21 +85,9 @@ const InformationPage: NextPage = () => {
     );
   };
 
-  const onChangeOption =
-    (id: 'name' | 'gender' | 'year' | 'month' | 'day' | 'city' | 'district') =>
-    (value: string | number) => {
-      setValue(id, value);
-    };
-
-  const allYears = React.useMemo(
-    () => getOptionYears(getCurrentYear(), 100),
-    [],
-  );
-
-  const allDays = React.useMemo(
-    () => getOptionDays(selectedYear, selectedMonth),
-    [selectedYear, selectedMonth],
-  );
+  const onChangeOption = (id: 'gender') => (value: string) => {
+    setValue(id, value);
+  };
 
   const genderOptions = React.useMemo(
     () => [
@@ -114,76 +107,126 @@ const InformationPage: NextPage = () => {
       description="추가적인 정보를 입력해주세요."
       errorMessage={formErrorMessage}
     >
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <AuthInput
-          id="name"
-          label="이름"
-          type="text"
-          errorMessage={errors.name?.message}
-          {...register('name')}
-        />
-        <Select
-          id="gender"
-          label="성별"
-          defaultLabel="성별을 선택하세요."
-          options={genderOptions}
-          selectedValue={selectedGender}
-          onChangeOption={onChangeOption('gender')}
-        />
-        <Flex>
-          <Select
-            id="year"
-            label="생년월일"
-            defaultLabel="연도 입력"
-            options={allYears}
-            selectedValue={selectedYear}
-            onChangeOption={onChangeOption('year')}
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <AuthInput
+            id="name"
+            label="이름"
+            type="text"
+            errorMessage={errors.name?.message}
+            {...register('name')}
           />
           <Select
-            id="month"
-            defaultLabel="월 입력"
-            options={getOptionMonths}
-            selectedValue={selectedMonth}
-            onChangeOption={onChangeOption('month')}
+            id="gender"
+            label="성별"
+            defaultLabel="성별을 선택하세요."
+            options={genderOptions}
+            selectedValue={selectedGender}
+            onChangeOption={onChangeOption('gender')}
           />
-          <Select
-            id="day"
-            defaultLabel="날짜 입력"
-            options={allDays}
-            selectedValue={selectedDay}
-            onChangeOption={onChangeOption('day')}
-          />
-        </Flex>
-        <Flex>
-          <Select
-            id="city"
-            label="지역"
-            defaultLabel="도시를 선택해주세요"
-            options={cityData?.regionData}
-            selectedValue={selectedCity}
-            onChangeOption={onChangeOption('city')}
-          />
-          <Select
-            id="district"
-            defaultLabel="구를 선택해주세요"
-            options={districtData?.regionData}
-            disabled={!selectedCity}
-            selectedValue={selectedDistrict}
-            onChangeOption={onChangeOption('district')}
-          />
-        </Flex>
-        <Button
-          size="lg"
-          type="submit"
-          css={`
-            width: 100%;
-            margin-top: 1rem;
-          `}
-        >
-          확인
-        </Button>
-      </form>
+
+          <BirthDaySelect />
+
+          <RegionSelect />
+
+          <Button
+            size="lg"
+            type="submit"
+            css={`
+              width: 100%;
+              margin-top: 1rem;
+            `}
+          >
+            확인
+          </Button>
+        </form>
+      </FormProvider>
     </AuthLayout>
+  );
+};
+
+const BirthDaySelect = () => {
+  const { control, setValue } = useFormContext<InformationSchema>();
+
+  const selectedYear = useWatch({ control, name: 'year' });
+  const selectedMonth = useWatch({ control, name: 'month' });
+  const selectedDay = useWatch({ control, name: 'day' });
+
+  const allYears = React.useMemo(
+    () => getOptionYears(getCurrentYear(), 100),
+    [],
+  );
+
+  const allDays = React.useMemo(
+    () => getOptionDays(selectedYear, selectedMonth),
+    [selectedYear, selectedMonth],
+  );
+
+  const onChangeOption = (id: 'year' | 'month' | 'day') => (value: number) => {
+    setValue(id, value);
+  };
+
+  return (
+    <Flex>
+      <Select
+        id="year"
+        label="생년월일"
+        defaultLabel="연도 입력"
+        options={allYears}
+        selectedValue={selectedYear}
+        onChangeOption={onChangeOption('year')}
+      />
+      <Select
+        id="month"
+        defaultLabel="월 입력"
+        options={getOptionMonths}
+        selectedValue={selectedMonth}
+        onChangeOption={onChangeOption('month')}
+      />
+      <Select
+        id="day"
+        defaultLabel="날짜 입력"
+        options={allDays}
+        selectedValue={selectedDay}
+        onChangeOption={onChangeOption('day')}
+      />
+    </Flex>
+  );
+};
+
+const RegionSelect = () => {
+  const { control, setValue } = useFormContext<InformationSchema>();
+
+  const selectedCity = useWatch({ control, name: 'city' });
+  const selectedDistrict = useWatch({ control, name: 'district' });
+
+  const { data: cityData } = useCityQuery();
+
+  const { data: districtData } = useDistrictQuery(selectedCity);
+
+  const onChangeOption = (id: 'city' | 'district') => (value: string) => {
+    setValue(id, value);
+  };
+
+  return (
+    <Flex>
+      <Select
+        id="city"
+        label="지역"
+        defaultLabel="도시를 선택해주세요"
+        options={cityData?.regionData}
+        selectedValue={selectedCity}
+        onChangeOption={onChangeOption('city')}
+      />
+      <Select
+        id="district"
+        defaultLabel="구를 선택해주세요"
+        options={districtData?.regionData}
+        disabled={!selectedCity}
+        selectedValue={selectedDistrict}
+        onChangeOption={onChangeOption('district')}
+      />
+    </Flex>
   );
 };
 
