@@ -3,6 +3,7 @@ import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 
 const PostListSizeStyles = {
   md: css`
+    gap: 1rem;
     grid-template-columns: repeat(1, minmax(0, 1fr));
 
     ${SCREEN_DESKTOP} {
@@ -10,6 +11,7 @@ const PostListSizeStyles = {
     }
   `,
   lg: css`
+    gap: 1rem;
     grid-template-columns: repeat(1, minmax(0, 1fr));
 
     ${SCREEN_TABLET} {
@@ -17,6 +19,7 @@ const PostListSizeStyles = {
     }
 
     ${SCREEN_DESKTOP} {
+      gap: 1.125rem;
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   `,
@@ -28,7 +31,6 @@ export const PostListContainer = styled.ul<{
   size: PostListSize;
 }>`
   display: grid;
-  gap: 1rem;
 
   ${({ size }) => PostListSizeStyles[size]};
 `;
