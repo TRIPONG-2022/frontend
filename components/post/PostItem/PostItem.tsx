@@ -1,0 +1,68 @@
+import Image from 'next/image';
+import React from 'react';
+
+import { Post } from '@/types/post';
+import { removeHTMLTag } from 'utils/post';
+import SVGIcon from '@/components/shared/SVGIcon';
+
+import * as Styled from './PostItem.styled';
+
+interface PostItemProps {
+  post: Post;
+}
+
+export default function PostItem({ post }: PostItemProps) {
+  return (
+    <Styled.PostItemContainer>
+      {post.thumbnail && (
+        <Styled.ThumbnailContainer>
+          <Image
+            src={`data:image/png;base64,${post.thumbnail}`}
+            alt="Thumbnail"
+            layout="fill"
+            quality={90}
+            objectFit="cover"
+          />
+        </Styled.ThumbnailContainer>
+      )}
+      <Styled.ContentContainer>
+        <Styled.DetailContainer>
+          <div>
+            <Styled.Title>{post.title}</Styled.Title>
+            <Styled.Description>
+              {removeHTMLTag(post.content)}
+            </Styled.Description>
+          </div>
+          <Styled.TagList>
+            {post.tags.map((tag, index) => (
+              <Styled.TagItem key={index}>#{tag}</Styled.TagItem>
+            ))}
+          </Styled.TagList>
+        </Styled.DetailContainer>
+        <Styled.BottomContainer>
+          <Styled.ProfileContainer>
+            <Styled.ProfileImageContainer>
+              <Image
+                src="/images/profile.png"
+                alt="프로필 이미지"
+                layout="fill"
+                objectFit="cover"
+              />
+            </Styled.ProfileImageContainer>
+            <span>{post.author}</span>
+          </Styled.ProfileContainer>
+          <Styled.InfoContainer>
+            <Styled.InfoContainer>
+              <SVGIcon icon="HeartIcon" size={16} />
+              <span>{post.likeCount}</span>
+            </Styled.InfoContainer>
+            <Styled.InfoContainer>
+              <SVGIcon icon="EyeIcon" size={16} />
+              <span>{post.viewCount}</span>
+            </Styled.InfoContainer>
+          </Styled.InfoContainer>
+        </Styled.BottomContainer>
+      </Styled.ContentContainer>
+    </Styled.PostItemContainer>
+  );
+}
