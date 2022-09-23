@@ -12,7 +12,7 @@ interface PostItemProps {
   post: Post;
 }
 
-export default function PostItem({ post }: PostItemProps) {
+function PostItem({ post }: PostItemProps) {
   return (
     <Styled.PostItemContainer>
       {post.thumbnail && (
@@ -73,3 +73,5 @@ export default function PostItem({ post }: PostItemProps) {
     </Styled.PostItemContainer>
   );
 }
+
+export default React.memo(PostItem);

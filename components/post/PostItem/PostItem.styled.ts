@@ -5,6 +5,8 @@ export const PostItemContainer = styled.div`
   flex-direction: column;
   aspect-ratio: 1 / 1;
   overflow: hidden;
+  border-radius: 0.25rem;
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `;
 
 export const ThumbnailContainer = styled.div`
@@ -26,7 +28,7 @@ export const DetailContainer = styled.div`
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0.6255rem 0;
+  padding: 0.75rem;
 `;
 
 export const PostLink = styled.a`
@@ -74,7 +76,8 @@ export const BottomContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[100]};
 `;
 
 export const ProfileContainer = styled.div`
