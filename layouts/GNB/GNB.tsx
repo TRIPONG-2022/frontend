@@ -1,30 +1,25 @@
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import * as Styled from './GNB.styled';
-import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
-
-import SVGIcon from '@/components/shared/SVGIcon';
-import LoginJoinList from '@/components/shared/LoginJoinList';
-import NavigationDiv from '@/layouts/MobileNaviation';
 import { AppState } from '@/store/index';
 import useWindowSize from '@/hooks/useWindowSize';
-import { GNB_MENUS } from '@/constants/menus';
 import useToggle from '@/hooks/useToggle';
+import NavigationDiv from '@/layouts/MobileNaviation';
+import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
+import SVGIcon from '@/components/shared/SVGIcon';
+import LoginJoinList from '@/components/shared/LoginJoinList';
+import { GNB_MENUS } from '@/constants/menus';
+import * as Styled from './GNB.styled';
 
 const GNB = () => {
   const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
-  const [toggle, setToggle] = useToggle(false);
+  const { toggle, onToggle, setOff } = useToggle(false);
   const { windowWidth, windowHeight } = useWindowSize(0);
 
-  const onToggle = useCallback(() => {
-    setToggle(!toggle);
-  }, [toggle, setToggle]);
-
   useEffect(() => {
-    if (window.innerWidth > 1280) setToggle(false);
-  }, [windowWidth, setToggle]);
+    if (window.innerWidth > 1280) setOff();
+  }, [windowWidth, setOff]);
 
   return (
     <Styled.GNBHeader>
