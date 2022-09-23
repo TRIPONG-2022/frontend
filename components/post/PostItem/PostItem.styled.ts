@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PostItemContainer = styled.div`
+export const PostItemContainer = styled.article`
   display: flex;
   flex-direction: column;
   aspect-ratio: 1 / 1;
