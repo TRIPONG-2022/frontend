@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import {
-  RegionData,
-  RegionResponseData,
   convertToRegionMapData,
   convertToRegionData,
   convertCityCodeToDistrictCode,
 } from 'utils/region';
+import { RegionResponseData } from '@/types/region';
 
 const requestGetDistrict = async (cityCode?: string) => {
   if (cityCode === undefined) {

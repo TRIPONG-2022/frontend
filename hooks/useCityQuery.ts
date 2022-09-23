@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import {
-  convertToRegionMapData,
-  convertToRegionData,
-  RegionData,
-  RegionResponseData,
-} from 'utils/region';
+import { convertToRegionMapData, convertToRegionData } from 'utils/region';
+
+import { RegionResponseData } from '@/types/region';
 
 export const requestGetCities = async () => {
   const { data } = await axios.get<RegionResponseData>(
