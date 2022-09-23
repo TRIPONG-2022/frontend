@@ -1,9 +1,5 @@
 import { FieldErrors, FieldValues, DeepPartial } from 'react-hook-form';
-
-interface FieldErrorMessage {
-  keys: string[];
-  label: string;
-}
+import { FieldErrorMessage } from '@/types/validate';
 
 export const createErrorMessage = <T extends FieldValues>(
   errors: FieldErrors<T>,

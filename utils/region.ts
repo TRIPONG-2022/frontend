@@ -1,14 +1,4 @@
-export interface RegionResponseData {
-  regcodes: {
-    code: string;
-    name: string;
-  }[];
-}
-
-export interface RegionData {
-  value: string;
-  label: string;
-}
+import { RegionData, RegionResponseData } from '@/types/region';
 
 export const convertToRegionMapData = (data: RegionData[]) => {
   return new Map<string, string>(
