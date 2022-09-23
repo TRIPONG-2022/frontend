@@ -5,7 +5,7 @@ interface OauthInterface {
   iconName: SVGIconType;
   title: string;
   colorSchemeName: IconButtonColorScheme;
-  LinkData: string;
+  linkData: string;
 }
 
 export const OAUTH_DATA: OauthInterface[] = [
@@ -13,24 +13,24 @@ export const OAUTH_DATA: OauthInterface[] = [
     iconName: 'KakaoIcon',
     title: '카카오 로그인',
     colorSchemeName: 'kakao',
-    LinkData: 'kakao',
+    linkData: 'kakao',
   },
   {
     iconName: 'NaverIcon',
     title: '네이버 로그인',
     colorSchemeName: 'naver',
-    LinkData: 'naver',
+    linkData: 'naver',
   },
   {
     iconName: 'GoogleIcon',
     title: '구글 로그인',
     colorSchemeName: 'google',
-    LinkData: 'google',
+    linkData: 'google',
   },
   {
     iconName: 'FacebookIcon',
     title: '페이스북 로그인',
     colorSchemeName: 'facebook',
-    LinkData: 'facebook',
+    linkData: 'facebook',
   },
 ];

@@ -50,6 +50,7 @@ export const MenuLi = styled.li`
   align-items: center;
   margin: 0 1.25vw;
   display: none;
+  cursor: pointer;
 
   ${SCREEN_DESKTOP} {
     display: flex;
@@ -69,7 +70,7 @@ export const RightDiv = styled.div`
   }
 `;
 
-export const LoginDiv = styled.div`
+export const LoginJoinDiv = styled.div`
   display: none;
 
   ${SCREEN_DESKTOP} {
@@ -77,7 +78,7 @@ export const LoginDiv = styled.div`
   }
 `;
 
-export const LoginBtn = styled.button`
+export const RightButton = styled.button`
   display: none;
   margin-left: 1.5vw;
   font-size: 0.825rem;
