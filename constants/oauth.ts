@@ -6,6 +6,7 @@ interface OauthInterface {
   title: string;
   colorSchemeName: IconButtonColorScheme;
   linkData: string;
+
 }
 
 export const OAUTH_DATA: OauthInterface[] = [

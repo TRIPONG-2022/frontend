@@ -9,7 +9,7 @@ import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
 import IconButton from '@/components/shared/IconButton';
 import Link from 'next/link';
-import { OAUTH_DATA } from '@/constants/Oauth_data';
+import { OAUTH_DATA } from '@/constants/oauth';
 import Divider from '@/components/Login/Divider';
 import FindAccountArea from '@/components/Login/FindAccountArea';
 import SignUpArea from '@/components/Login/SingUpArea/SignUpArea';
