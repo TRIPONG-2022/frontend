@@ -4,7 +4,7 @@ import {
   convertToRegionMapData,
   convertToRegionData,
   convertCityCodeToDistrictCode,
-} from 'utils/region';
+} from '@/utils/region';
 import { RegionResponseData } from '@/types/region';
 
 const requestGetDistrict = async (cityCode?: string) => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { convertToRegionMapData, convertToRegionData } from 'utils/region';
+import { convertToRegionMapData, convertToRegionData } from '@/utils/region';
 
 import { RegionResponseData } from '@/types/region';
 

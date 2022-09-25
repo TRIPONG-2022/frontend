@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import { Post } from '@/types/post';
-import { createPostLink, removeHTMLTag } from 'utils/post';
+import { createPostLink, removeHTMLTag } from '@/utils/post';
 import SVGIcon from '@/components/shared/SVGIcon';
 
 import * as Styled from './PostItem.styled';
