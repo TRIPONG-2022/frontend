@@ -1,31 +1,24 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { PostEditorSchema } from '@/constants/schema';
+import { POST_CATEGORIES } from '@/constants/post-category';
 import * as Styled from './EditorHeader.styled';
 
-interface EditorHeaderProps {
-  category: string;
-  onChangeCategory: (category: string) => void;
-}
+export default function EditorHeader() {
+  const { register } = useFormContext<PostEditorSchema>();
 
-export default function EditorHeader({
-  category,
-  onChangeCategory,
-}: EditorHeaderProps) {
   return (
     <Styled.Container>
       <div>
-        <select
-          defaultValue=""
-          value={category}
-          onChange={(event) => onChangeCategory(event.target.value)}
-        >
+        <select {...register('category')}>
           <option value="">카테고리</option>
-          <option value="review">후기, 리뷰</option>
-          <option value="community">자유게시판</option>
-          <option value="qna">Q&A</option>
-          <option value="gathering">여행메이트모집</option>
+          {Object.entries(POST_CATEGORIES).map(([category, label]) => (
+            <option value={category} key={`category-option-${category}`}>
+              {label}
+            </option>
+          ))}
         </select>
       </div>
-      <div>서울특별시 강남구</div>
     </Styled.Container>
   );
 }

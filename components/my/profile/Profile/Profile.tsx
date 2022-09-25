@@ -1,19 +1,24 @@
-import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
+import React, {
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
-import * as Styled from './Profile.styled';
 
 import ProfileImage from '../ProfileImage';
 import ProfileInfo from '../ProfileInfo';
 import Button from '@/components/shared/Button';
-import theme from '@/styles/theme';
 import { ProfilePatchSchema } from '@/constants/schema';
-import { useEffect } from 'react';
 import {
   getProfileInfomation,
   patchProfileInformation,
   UserDataType,
 } from '@/api/myPage';
+
+import theme from '@/styles/theme';
+import * as Styled from './Profile.styled';
 
 const initialUserData = {
   loginId: '',
@@ -114,9 +119,18 @@ const Profile = () => {
 
         <Styled.ButtonWrapper>
           {isEdit && (
-            <Button size="lg" type="submit">
-              수정완료
-            </Button>
+            <>
+              <Button size="lg" type="submit">
+                수정완료
+              </Button>
+              <Button
+                css={{ background: `${theme.colors.gray[500]}` }}
+                size="lg"
+                type="submit"
+              >
+                취소
+              </Button>
+            </>
           )}
           {!isEdit && (
             <>

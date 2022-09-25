@@ -21,7 +21,6 @@ export const Container = styled.div<ModifyProps>`
 
       ${TagsDiv} {
         height: calc(100% - 3rem);
-        /* padding: 1.5rem 1.5rem 3rem 1.5rem; */
       }
     `}
 `;
@@ -116,7 +115,7 @@ export const TagDiv = styled.div`
 
 export const Tag = styled.span`
   display: inline-block;
-  padding: 0.5rem 0.75rem;
+  padding: 0.375rem 0.75rem;
   margin-right: 0.5rem;
   margin-bottom: 0.75rem;
   background: ${({ theme }) => theme.colors.gray[600]};
@@ -129,6 +128,10 @@ export const Tag = styled.span`
 
   :hover {
     opacity: 0.8;
+  }
+  :before {
+    content: '#';
+    margin-right: 0.25rem;
   }
 `;
 

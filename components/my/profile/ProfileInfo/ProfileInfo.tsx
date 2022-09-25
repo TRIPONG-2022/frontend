@@ -163,7 +163,7 @@ const ProfileInfo = ({
                 key={field.id}
                 {...register(`tags.${idx}.tag`)}
               >
-                {`#${field.tag}`}
+                {`${field.tag}`}
               </Styled.Tag>
             ))}
           </Styled.TagDiv>
