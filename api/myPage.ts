@@ -14,7 +14,25 @@ export type UserDataType = {
   introduction: string | undefined;
   phoneNumber: string | undefined;
   tags: {
-    tag: string;
+    tag: string | null;
+  }[];
+};
+
+type UserSendDataType = {
+  loginId: string;
+  email: string;
+  nickName: string;
+  name: string | undefined;
+  gender: string;
+  picture: FormData | undefined;
+  authentication: number | undefined;
+  birthDate: string | undefined;
+  city: string | undefined;
+  district: string | undefined;
+  introduction: string | undefined;
+  phoneNumber: string | undefined;
+  tags: {
+    tag: string | null;
   }[];
 };
 
@@ -27,9 +45,17 @@ export const getProfileInfomation = async () => {
   }
 };
 
-export const patchProfileInformation = async (updateUserData: UserDataType) => {
+export const patchProfileInformation = async (
+  updateUserData: UserSendDataType,
+) => {
+  console.log(updateUserData);
   try {
-    const response = await instance.patch('/users/profile');
+    const response = await instance.patch('/users/profile', updateUserData, {
+      headers: {
+        'Content-Type': 'multipart/form-data;',
+      },
+      withCredentials: true,
+    });
     console.log(response);
   } catch (err) {
     console.log(err);

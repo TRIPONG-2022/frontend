@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import SVGIcon from '../SVGIcon';
 import * as Styled from './Select.styled';
 
@@ -9,6 +9,8 @@ export interface SelectOption<T> {
 
 interface SelectProps<T> {
   id: string;
+  type?: 'auth' | 'profile';
+  isEdit?: boolean;
   label?: string;
   disabled?: boolean;
   defaultLabel: string;
@@ -18,8 +20,10 @@ interface SelectProps<T> {
 }
 
 export default function Select<T>({
-  label,
   id,
+  type,
+  isEdit = true,
+  label,
   disabled,
   options,
   defaultLabel,
@@ -38,8 +42,14 @@ export default function Select<T>({
     onChangeOption(option.value);
   };
 
+  const openOptions = () => {
+    if (isEdit) {
+      setOpen((prev) => !prev);
+    }
+  };
+
   return (
-    <Styled.Container>
+    <Styled.Container type={type}>
       <Styled.Label htmlFor={id}>{label}</Styled.Label>
       {isOpen && (
         <Styled.Backdrop
@@ -51,13 +61,11 @@ export default function Select<T>({
       <Styled.OptionContainer
         type="button"
         disabled={disabled}
-        onClick={() => {
-          setOpen((prev) => !prev);
-        }}
+        onClick={openOptions}
       >
         <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedValue)}>
           {selectedLabel}
-          <SVGIcon icon="ChevronDownIcon" size={16} />
+          {isEdit && <SVGIcon icon="ChevronDownIcon" size={16} />}
         </Styled.OptionTitle>
         <Styled.OptionList isOpen={isOpen}>
           {options?.map((option) => (

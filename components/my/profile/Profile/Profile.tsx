@@ -5,12 +5,19 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from 'react-hook-form';
 
 import ProfileImage from '../ProfileImage';
 import ProfileInfo from '../ProfileInfo';
-import Button from '@/components/shared/Button';
+import { useCityQuery } from '@/hooks/useCityQuery';
+import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { ProfilePatchSchema } from '@/constants/schema';
+import Button from '@/components/shared/Button';
 import {
   getProfileInfomation,
   patchProfileInformation,
@@ -36,7 +43,7 @@ const initialUserData = {
   longitude: 0,
   phoneNumber: '',
   picture: '',
-  tags: [{ tag: '' }],
+  tags: [{ tag: null }],
 };
 
 const Profile = () => {
@@ -49,6 +56,11 @@ const Profile = () => {
       return userData;
     }, [userData]),
   });
+
+  const selectedCity = useWatch({ control: methods.control, name: 'city' });
+
+  const { data: cityData } = useCityQuery();
+  const { data: districtData } = useDistrictQuery(selectedCity);
 
   const {
     reset,
@@ -65,13 +77,13 @@ const Profile = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(isDirty, errors, isValid);
-  }, [isDirty, errors, isValid]);
+  // useEffect(() => {
+  //   console.log(isDirty, errors, isValid);
+  // }, [isDirty, errors, isValid]);
 
   useEffect(() => {
     reset(userData);
-  }, [reset, userData]);
+  }, [userData, reset]);
 
   const changeEditMode = useCallback(
     (e: MouseEvent) => {
@@ -81,14 +93,34 @@ const Profile = () => {
     [setIsEdit, isEdit],
   );
 
+  const cancelEdit = useCallback(() => {
+    reset(userData);
+    setIsEdit(!isEdit);
+  }, [isEdit, reset, userData]);
+
   const onSubmit: SubmitHandler<ProfilePatchSchema> = async (data) => {
     console.log(data);
+    const { year, month, day } = data;
+    if (!cityData || !districtData || !year || !month || !day) return;
+    const city = cityData.regionMapData.get(data.city);
+    const district = districtData.regionMapData.get(data.district);
+    const birthDate = `${year}-${month}-${day}`;
+    const tags = data.tags!.map((tag) => tag.tag);
+
+    const formData = new FormData();
+    if (data.picture) {
+      formData.append('picture', data.picture[0]);
+    }
     const sendData = {
       ...data,
-      tags: data.tags!.map((tag) => tag.tag),
+      tags,
+      birthDate,
+      city,
+      district,
+      picture: formData,
     };
-    // await patchProfileInformation(sendData);
-    // console.log(response)
+    console.log(sendData);
+    await patchProfileInformation(sendData);
     setIsEdit(!isEdit);
   };
 
@@ -111,13 +143,13 @@ const Profile = () => {
           <Styled.ButtonWrapper>
             {isEdit && (
               <>
-                <Button size="lg" type="submit">
+                <Button size="lg" type="submit" disabled={!isValid}>
                   수정완료
                 </Button>
                 <Button
                   css={{ background: `${theme.colors.gray[500]}` }}
                   size="lg"
-                  type="submit"
+                  onClick={cancelEdit}
                 >
                   취소
                 </Button>

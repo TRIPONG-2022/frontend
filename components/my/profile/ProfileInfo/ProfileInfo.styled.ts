@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { opacityIncrease } from '@/styles/keyframes';
+import { SCREEN_TABLET } from '@/styles/screen';
 
 interface ModifyProps {
   isEdit?: boolean;
@@ -37,7 +38,7 @@ export const InfoLabel = styled.label`
 
 export const InfoContentInput = styled.input`
   width: 100%;
-  padding: 1.5rem;
+  padding: 1rem;
   background: white;
   border-radius: 1rem;
   box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
@@ -54,6 +55,10 @@ export const InfoContentInput = styled.input`
     :focus {
       outline: none;
     }
+  }
+
+  ${SCREEN_TABLET} {
+    padding: 1.5rem;
   }
 `;
 
@@ -84,5 +89,9 @@ export const InformationTextarea = styled.textarea<InformationTextareaProps>`
 
   :focus {
     outline: none;
+  }
+
+  ${SCREEN_TABLET} {
+    padding: 1.5rem;
   }
 `;

@@ -1,10 +1,11 @@
 import axios from 'axios';
+
 import {
   convertCityCodeToDistrictCode,
   convertToRegionData,
   convertToRegionMapData,
-  RegionResponseData,
-} from 'utils/region';
+} from '@/utils/region';
+import { RegionResponseData } from '@/types/region';
 
 export const requestGetCities = async () => {
   const { data } = await axios.get<RegionResponseData>(
