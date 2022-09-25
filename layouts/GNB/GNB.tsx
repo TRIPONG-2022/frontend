@@ -1,29 +1,25 @@
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import * as Styled from './GNB.styled';
-import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
-
+import { AppState } from '@/store/index';
 import useWindowSize from '@/hooks/useWindowSize';
-import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
-import SVGIcon from '@/components/shared/SVGIcon';
+import useToggle from '@/hooks/useToggle';
 import NavigationDiv from '@/layouts/MobileNaviation';
+import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
+import SVGIcon from '@/components/shared/SVGIcon';
+import LoginJoinList from '@/components/shared/LoginJoinList';
+import { GNB_MENUS } from '@/constants/menus';
+import * as Styled from './GNB.styled';
 
-interface GNBProps {
-  isLogin: boolean;
-}
-
-function GNB({ isLogin }: GNBProps) {
-  const [toggle, setToggle] = useState<boolean>(false);
+const GNB = () => {
+  const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
+  const { toggle, onToggle, setOff } = useToggle(false);
   const { windowWidth, windowHeight } = useWindowSize(0);
 
-  const onToggle = useCallback(() => {
-    setToggle(!toggle);
-  }, [toggle]);
-
   useEffect(() => {
-    if (window.innerWidth > 1280) setToggle(false);
-  }, [windowWidth]);
+    if (window.innerWidth > 1280) setOff();
+  }, [windowWidth, setOff]);
 
   return (
     <Styled.GNBHeader>
@@ -51,16 +47,9 @@ function GNB({ isLogin }: GNBProps) {
           <Styled.SearchBtn>
             <SVGIcon icon={'SearchIcon'} width={25} height={25} />
           </Styled.SearchBtn>
-          <Styled.LoginDiv>
-            {LOGIN_MENUS.map(({ name, link, show }) => {
-              if (isLogin === show)
-                return (
-                  <Styled.LoginBtn key={name}>
-                    <Link href={link}>{name}</Link>
-                  </Styled.LoginBtn>
-                );
-            })}
-          </Styled.LoginDiv>
+          <Styled.LoginJoinDiv>
+            <LoginJoinList divide="GNB" isLogin={isLogin} />
+          </Styled.LoginJoinDiv>
           <Styled.NavBtn onClick={onToggle}>
             <HamburgerButton width={50} toggle={toggle} />
           </Styled.NavBtn>
@@ -71,6 +60,6 @@ function GNB({ isLogin }: GNBProps) {
       </Styled.GNBNav>
     </Styled.GNBHeader>
   );
-}
+};
 
 export default GNB;
