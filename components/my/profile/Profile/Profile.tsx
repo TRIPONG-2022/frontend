@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import ProfileImage from '../ProfileImage';
 import ProfileInfo from '../ProfileInfo';
@@ -44,19 +44,17 @@ const Profile = () => {
   const { picture, authentication } = userData;
   const [isEdit, setIsEdit] = useState(false);
 
-  const {
-    register,
-    reset,
-    watch,
-    handleSubmit,
-    setValue,
-    control,
-    formState: { isDirty, errors, isValid },
-  } = useForm<ProfilePatchSchema>({
+  const methods = useForm<ProfilePatchSchema>({
     defaultValues: useMemo(() => {
       return userData;
     }, [userData]),
   });
+
+  const {
+    reset,
+    handleSubmit,
+    formState: { isDirty, errors, isValid },
+  } = methods;
 
   useEffect(() => {
     (async function setUser() {
@@ -96,58 +94,52 @@ const Profile = () => {
 
   return (
     <Styled.Container>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Styled.ProfileWrapper>
-          <Styled.ProfileImageWrapper>
-            <ProfileImage
-              picture={picture}
-              authentication={authentication}
-              isEdit={isEdit}
-              register={register}
-              setValue={setValue}
-              watch={watch}
-            />
-          </Styled.ProfileImageWrapper>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Styled.ProfileWrapper>
+            <Styled.ProfileImageWrapper>
+              <ProfileImage
+                picture={picture}
+                authentication={authentication}
+                isEdit={isEdit}
+              />
+            </Styled.ProfileImageWrapper>
 
-          <ProfileInfo
-            watch={watch}
-            isEdit={isEdit}
-            control={control}
-            register={register}
-          />
-        </Styled.ProfileWrapper>
+            <ProfileInfo isEdit={isEdit} />
+          </Styled.ProfileWrapper>
 
-        <Styled.ButtonWrapper>
-          {isEdit && (
-            <>
-              <Button size="lg" type="submit">
-                수정완료
-              </Button>
-              <Button
-                css={{ background: `${theme.colors.gray[500]}` }}
-                size="lg"
-                type="submit"
-              >
-                취소
-              </Button>
-            </>
-          )}
-          {!isEdit && (
-            <>
-              <Button onClick={changeEditMode} size={'lg'}>
-                수정하기
-              </Button>
-              <Button
-                css={{ background: `${theme.colors.gray[500]}` }}
-                size="lg"
-                disabled={!!authentication}
-              >
-                {authentication ? '인증완료' : '인증하기'}
-              </Button>
-            </>
-          )}
-        </Styled.ButtonWrapper>
-      </form>
+          <Styled.ButtonWrapper>
+            {isEdit && (
+              <>
+                <Button size="lg" type="submit">
+                  수정완료
+                </Button>
+                <Button
+                  css={{ background: `${theme.colors.gray[500]}` }}
+                  size="lg"
+                  type="submit"
+                >
+                  취소
+                </Button>
+              </>
+            )}
+            {!isEdit && (
+              <>
+                <Button onClick={changeEditMode} size={'lg'}>
+                  수정하기
+                </Button>
+                <Button
+                  css={{ background: `${theme.colors.gray[500]}` }}
+                  size="lg"
+                  disabled={!!authentication}
+                >
+                  {authentication ? '인증완료' : '인증하기'}
+                </Button>
+              </>
+            )}
+          </Styled.ButtonWrapper>
+        </form>
+      </FormProvider>
     </Styled.Container>
   );
 };

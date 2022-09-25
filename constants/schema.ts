@@ -85,12 +85,29 @@ export const PROFILE_PATCH_SCHEMA = yup.object({
   loginId: LOGIN_ID_SCHEMA,
   email: EMAIL_SCHEMA,
   nickName: NICKNAME_SCHEMA,
-  name: yup.string(),
-  gender: yup.string().required(),
+  name: yup
+    .string()
+    .matches(
+      /^[a-zA-Z가-힣][^0-9!@#$^&%*()+=-\[\]\/{}|:<>?,.]*$/,
+      SCHEMA_MESSAGES.NAME_FORMAT,
+    )
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  gender: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   authentication: yup.number(),
-  birthDate: yup.string(),
-  city: yup.string(),
-  district: yup.string(),
+  year: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  month: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  day: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  city: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  district: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
   introduction: yup.string(),
   phoneNumber: yup.string(),
   picture: yup.string(),

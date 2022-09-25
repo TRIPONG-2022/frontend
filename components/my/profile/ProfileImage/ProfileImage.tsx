@@ -1,36 +1,28 @@
 import React, { useCallback, useRef, useState } from 'react';
-import {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
-import * as Styled from './ProfileImage.styled';
 import { ProfilePatchSchema } from '@/constants/schema';
 import SVGIcon from '@/components/shared/SVGIcon';
+import * as Styled from './ProfileImage.styled';
 
 interface ProfileImageProps {
   picture: string | null | undefined;
   authentication: number | undefined;
   isEdit: boolean;
-  register: UseFormRegister<ProfilePatchSchema>;
-  watch: UseFormWatch<ProfilePatchSchema>;
-  setValue: UseFormSetValue<ProfilePatchSchema>;
 }
 
 const ProfileImage = ({
   picture,
   authentication,
   isEdit,
-  register,
-  watch,
-  setValue,
 }: ProfileImageProps) => {
   const [image, setImage] = useState(picture ?? undefined);
   const imgRef = useRef<HTMLInputElement | null>(null);
+
+  const { register, watch, setValue } = useFormContext<ProfilePatchSchema>();
   const watchedNickName = watch('nickName');
 
-  let { ref, onChange, ...rest } = register('picture');
+  const { ref, onChange, ...rest } = register('picture');
 
   const onChangeImage = () => {
     if (isEdit) imgRef.current!.click();

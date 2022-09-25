@@ -1,89 +1,27 @@
-import React, {
-  ChangeEvent,
-  KeyboardEvent,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
-import {
-  Control,
-  useFieldArray,
-  UseFormRegister,
-  UseFormWatch,
-} from 'react-hook-form';
-
-import * as Styled from './ProfileInfo.styled';
+import React, { ChangeEvent, useCallback, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { ProfilePatchSchema } from '@/constants/schema';
-import SVGIcon from '@/components/shared/SVGIcon';
+import ProfileTags from '@/components/my/profile/ProfileInfoTags';
+import * as Styled from './ProfileInfo.styled';
 
 interface ProfileInfoProps {
   isEdit: boolean;
-  register: UseFormRegister<ProfilePatchSchema>;
-  control: Control<ProfilePatchSchema>;
-  watch: UseFormWatch<ProfilePatchSchema>;
 }
 
-const ProfileInfo = ({
-  isEdit,
-  watch,
-  register,
-  control,
-}: ProfileInfoProps) => {
+const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
   const [textAreaHeight, setTextAreaHeight] = useState(0);
 
+  const { watch, register } = useFormContext<ProfilePatchSchema>();
   const { onChange, ...rest } = register('introduction');
-  const { fields, append, remove } = useFieldArray({
-    name: 'tags',
-    control,
-  });
 
-  const tagRef = useRef<HTMLInputElement>(null);
   const intro = watch('introduction') || '';
-  const bool = fields.length >= 10;
 
   const onResizeTextArea = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
       setTextAreaHeight(e.target.scrollHeight);
     },
     [],
-  );
-
-  const addCharacter = useCallback(() => {
-    const tag = tagRef.current!.value;
-    console.log(tag);
-    if (tag && isEdit) {
-      const duplicate = fields.filter((field) => {
-        if (field.tag === tag) return field;
-      });
-
-      if (fields.length >= 10) {
-        alert('태그는 10개까지 등록할 수 있습니다.');
-        return;
-      }
-
-      if (duplicate.length === 0) {
-        append({ tag: tag.trim() });
-        tagRef.current!.value = '';
-      }
-    }
-  }, [fields, append, isEdit]);
-
-  const addCharacterEnter = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        addCharacter();
-      }
-    },
-    [addCharacter],
-  );
-
-  const removeCharacter = useCallback(
-    (idx: number) => {
-      if (isEdit) remove(idx);
-    },
-    [remove, isEdit],
   );
 
   return (
@@ -108,13 +46,6 @@ const ProfileInfo = ({
           label="휴대폰 번호"
           type="text"
           {...register('phoneNumber')}
-          readOnly
-        />
-        <ModifyInfo
-          id="birthDate"
-          label="생일"
-          type="text"
-          {...register('birthDate')}
           readOnly
         />
         <ModifyInfo
@@ -149,41 +80,8 @@ const ProfileInfo = ({
           }}
           {...rest}
         />
-        <Styled.InfoLabel>
-          성향{' '}
-          {isEdit && (
-            <Styled.MiniText>{`( ${fields.length} / 10 )`}</Styled.MiniText>
-          )}
-        </Styled.InfoLabel>
-        <Styled.TagsDiv>
-          <Styled.TagDiv>
-            {fields.map((field, idx) => (
-              <Styled.Tag
-                onClick={() => removeCharacter(idx)}
-                key={field.id}
-                {...register(`tags.${idx}.tag`)}
-              >
-                {`${field.tag}`}
-              </Styled.Tag>
-            ))}
-          </Styled.TagDiv>
-          {isEdit && (
-            <Styled.TagsInputDiv>
-              <Styled.TagsInput
-                onKeyDown={addCharacterEnter}
-                disabled={bool}
-                placeholder={
-                  bool ? '성향은 10개까지 등록이 가능합니다.' : undefined
-                }
-                maxLength={10}
-                ref={tagRef}
-              />
-              <Styled.TagsButton onClick={addCharacter}>
-                <SVGIcon icon="PlusIcon" />
-              </Styled.TagsButton>
-            </Styled.TagsInputDiv>
-          )}
-        </Styled.TagsDiv>
+
+        <ProfileTags isEdit={isEdit} />
       </Styled.InfoWrapper>
     </Styled.Container>
   );
