@@ -1,38 +1,34 @@
-import { getRoles } from '@/api/admin';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import Image from 'next/image';
+import LoadingSpinner from '@/assets/icons/Loadinggif.gif';
+import { RoleType } from 'types/role';
+import useRoleQuery from '@/hooks/useRoleQuery';
 import RoleCard from '../RoleCard/RoleCard';
 import * as Styled from './RoleList.styled';
 
-interface GetRoleType {
-  data: RoleType[];
-  isError: boolean;
-}
-
-interface RoleType {
-  roleId: number;
-  roleName: string;
-  description: string;
-}
-
 const RoleList = () => {
   const [roleList, setRoleList] = useState<RoleType[]>([]);
-  const getRoleList = async () => {
-    const { data } = await getRoles();
-    console.log(data);
-    if (data) {
-      setRoleList(data);
-    }
-  };
+  const [errorType, setErrorType] = useState<string>('');
 
-  console.log(roleList);
+  const { data, isLoading, isError, refetch } = useRoleQuery();
 
-  useEffect(() => {
-    getRoleList();
-  }, []);
+  if (isLoading)
+    return (
+      <Styled.LoadingContainer>
+        <Image src={LoadingSpinner} alt="로딩이미지" />
+      </Styled.LoadingContainer>
+    );
+
+  if (isError)
+    return (
+      <>
+        <div>{errorType}</div>
+        <button onClick={() => refetch()}>다시 불러오기</button>
+      </>
+    );
   return (
     <Styled.Container>
-      {roleList?.map((item: RoleType) => (
+      {data?.map((item: RoleType) => (
         <RoleCard item={item} key={item.roleId} />
       ))}
     </Styled.Container>

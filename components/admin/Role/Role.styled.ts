@@ -54,5 +54,3 @@ export const Container = styled.div`
     padding-left: 0;
   }
 `;
-
-//위에는 성진님 코드

@@ -1,10 +1,10 @@
+import { useMutation } from 'react-query';
 import { deleteRoles } from '@/api/admin';
 import Button from '@/components/shared/Button';
-import IconButton from '@/components/shared/IconButton';
 import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
 import useModal from '@/hooks/useModal';
-import styled from 'styled-components';
+import useRoleQuery from '@/hooks/useRoleQuery';
 import * as Styled from './RoleCard.styled';
 
 interface RoleCardProps {
@@ -17,6 +17,14 @@ interface RoleCardProps {
 
 const RoleCard = ({ item }: RoleCardProps) => {
   const [isModal, open, close] = useModal();
+
+  const { refetch } = useRoleQuery();
+
+  const { mutate } = useMutation((roleId: number) => deleteRoles(roleId), {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   return (
     <Styled.Container>
@@ -37,7 +45,10 @@ const RoleCard = ({ item }: RoleCardProps) => {
               width: 100%;
               margin-top: 2rem;
             `}
-            onClick={() => deleteRoles(item.roleId)}
+            onClick={() => {
+              mutate(item.roleId);
+              close();
+            }}
           >
             예
           </Button>

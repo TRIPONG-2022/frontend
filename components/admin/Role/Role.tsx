@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import AddRole from './AddRole/AddRole';
 import * as Styled from './Role.styled';
 import RoleList from './RoleList/RoleList';
@@ -21,5 +20,3 @@ const Role = () => {
 };
 
 export default Role;
-
-const Box = styled.div``;
