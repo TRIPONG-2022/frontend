@@ -116,19 +116,18 @@ const InformationPage: NextPage = () => {
             errorMessage={errors.name?.message}
             {...register('name')}
           />
-          <Select
-            id="gender"
-            label="성별"
-            defaultLabel="성별을 선택하세요."
-            options={genderOptions}
-            selectedValue={selectedGender}
-            onChangeOption={onChangeOption('gender')}
-          />
-
-          <BirthDaySelect />
-
-          <RegionSelect />
-
+          <SelectForm>
+            <Select
+              id="gender"
+              label="성별"
+              defaultLabel="성별을 선택하세요."
+              options={genderOptions}
+              selectedValue={selectedGender}
+              onChangeOption={onChangeOption('gender')}
+            />
+            <BirthDaySelect />
+            <RegionSelect />
+          </SelectForm>
           <Button
             size="lg"
             type="submit"
@@ -230,8 +229,16 @@ const RegionSelect = () => {
   );
 };
 
+const SelectForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  margin-bottom: 2rem;
+`;
+
 const Flex = styled.div`
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
 `;
