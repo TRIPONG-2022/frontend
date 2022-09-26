@@ -9,7 +9,7 @@ import AuthInput from '@/components/shared/AuthInput';
 import Button from '@/components/shared/Button';
 import IconButton from '@/components/shared/IconButton';
 import Link from 'next/link';
-import { OAUTH_DATA } from '@/constants/Oauth_data';
+import { OAUTH_DATA } from '@/constants/oauth';
 import Divider from '@/components/Login/Divider';
 import FindAccountArea from '@/components/Login/FindAccountArea';
 import SignUpArea from '@/components/Login/SingUpArea/SignUpArea';
@@ -38,6 +38,12 @@ const LoginPage: NextPage = () => {
     } else if (isError) {
       console.log(error);
     }
+  };
+
+  const onClickOAuthLink = (linkData: string) => () => {
+    router.push(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/${linkData}`,
+    );
   };
 
   return (
@@ -76,19 +82,16 @@ const LoginPage: NextPage = () => {
         </form>
         <Divider />
         <Container>
-          {OAUTH_DATA.map(({ iconName, title, colorSchemeName, LinkData }) => (
-            <Link
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/${LinkData}`}
-              key={LinkData}
-            >
-              <IconButton
-                icon={iconName}
-                aria-label={title}
-                colorScheme={colorSchemeName}
-                isRound
-                size="xlg"
-              />
-            </Link>
+          {OAUTH_DATA.map(({ iconName, title, colorSchemeName, linkData }) => (
+            <IconButton
+              key={linkData}
+              icon={iconName}
+              aria-label={title}
+              colorScheme={colorSchemeName}
+              isRound
+              size="xlg"
+              onClick={onClickOAuthLink(linkData)}
+            />
           ))}
         </Container>
         <SignUpArea />

@@ -72,9 +72,11 @@ export const markdownStyles = css`
   }
 
   img {
+    display: block;
     max-width: 100%;
     height: auto;
     border-radius: 0.5rem;
+    margin: 0 auto;
   }
 
   @media (min-width: 768px) {

@@ -1,6 +1,6 @@
-import { HEADER_HEIGHT } from '@/constants/menus';
-import { SCREEN_DESKTOP } from '@/styles/screen';
 import styled, { css } from 'styled-components';
+import { SCREEN_DESKTOP } from '@/styles/screen';
+import { HEADER_HEIGHT } from '@/constants/menus';
 
 interface NavDivProps {
   toggle: boolean;
@@ -14,14 +14,18 @@ export const NavDiv = styled.div<NavDivProps>`
   background: white;
   position: fixed;
   top: ${HEADER_HEIGHT};
-  transform: none;
-  transition: transform ease-in-out 0.45s;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.4s ease-in-out, opacity 0.2s ease;
 
   ${({ toggle }) =>
-    !toggle &&
+    toggle &&
     css`
-      transition: transform ease-in-out 0.45s;
-      transform: translateX(125vw);
+      opacity: 1;
+      transform: translateX(0);
     `}
 
   ${SCREEN_DESKTOP} {
@@ -40,7 +44,7 @@ export const NavMenuLi = styled.li`
   margin-top: 2rem;
 `;
 
-export const NavLoginUl = styled.ul`
+export const NavBottomUl = styled.ul`
   width: 100%;
   list-style: none;
   margin-top: 15rem;
@@ -52,8 +56,9 @@ export const NavLoginUl = styled.ul`
   padding-right: 2rem;
 `;
 
-export const NavLoginLi = styled.li`
+export const NavBottomLi = styled.li`
   margin-top: 2rem;
   font-size: 2rem;
   font-weight: bold;
+  cursor: pointer;
 `;

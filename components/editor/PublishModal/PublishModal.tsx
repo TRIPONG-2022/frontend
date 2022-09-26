@@ -1,35 +1,70 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import Image from 'next/image';
 import Button from '@/components/shared/Button';
 import SVGIcon from '@/components/shared/SVGIcon';
+import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './PublishModal.styled';
 
 interface PublishModalProps {
   isOpen: boolean;
-  thumbnail?: string;
-  onChangeThumbnail: (thumbnail: string) => void;
   onClose?: () => void;
   onPublish?: () => void;
 }
 
 export default function PublishModal({
   isOpen,
-  thumbnail,
-  onChangeThumbnail,
   onClose,
   onPublish,
 }: PublishModalProps) {
+  const { control, setValue } = useFormContext<PostEditorSchema>();
+  const thumbnail = useWatch({ name: 'thumbnail', control });
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [thumbnailBase64, SetThumbnailBase64] = useState<
+    string | ArrayBuffer | null
+  >(null);
+
+  const onChangeThumbnail = (thumbnail?: File) => {
+    setValue('thumbnail', thumbnail);
+  };
+
+  const toBase64 = useCallback(
+    (file: File): Promise<string | ArrayBuffer | null> =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      }),
+    [],
+  );
+
   const resetThumbnail = () => {
-    onChangeThumbnail('');
+    onChangeThumbnail(undefined);
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   };
 
   const handleChangeThumbnail = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    onChangeThumbnail(
-      'https://images.unsplash.com/photo-1657299143474-c456e8388ee2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1001&q=80',
-    );
+    const files = event.target.files;
+    if (files) {
+      const imageFile = files[0];
+      onChangeThumbnail(imageFile);
+    }
   };
+
+  useEffect(() => {
+    (async () => {
+      if (!thumbnail) {
+        return;
+      }
+      const base64 = await toBase64(thumbnail);
+      SetThumbnailBase64(base64);
+    })();
+  }, [thumbnail, toBase64]);
 
   return (
     <Styled.OuterContainer $isOpen={isOpen}>
@@ -42,9 +77,9 @@ export default function PublishModal({
           </Styled.ThumbnailHandleContainer>
         )}
         <Styled.ThumbnailContainer>
-          {thumbnail ? (
+          {thumbnail && thumbnailBase64 ? (
             <Image
-              src={thumbnail}
+              src={thumbnailBase64.toString()}
               alt="thumbnail"
               layout="fill"
               objectFit="cover"
@@ -63,6 +98,7 @@ export default function PublishModal({
             type="file"
             accept="image/png, image/jpeg"
             onChange={handleChangeThumbnail}
+            ref={inputRef}
             hidden
           />
         </Styled.ThumbnailContainer>

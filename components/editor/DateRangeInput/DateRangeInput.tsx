@@ -1,30 +1,25 @@
-import React, { useCallback } from 'react';
-import SVGIcon from '@/components/shared/SVGIcon';
+import React from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import InputContainer from '../InputContainer';
+import SVGIcon from '@/components/shared/SVGIcon';
 import DatePicker from '@/components/shared/DatePicker';
+import { PostEditorSchema } from '@/constants/schema';
 
-interface DateRangeInputProps {
-  startDate: Date;
-  onChangeStartDate: (date: Date) => void;
-  endDate: Date;
-  onChangeEndDate: (date: Date) => void;
-}
+export default function DateRangeInput() {
+  const { control, setValue } = useFormContext<PostEditorSchema>();
+  const startDate = useWatch({ name: 'startDate', control });
+  const endDate = useWatch({ name: 'endDate', control });
 
-export default function DateRangeInput({
-  startDate,
-  endDate,
-  onChangeStartDate,
-  onChangeEndDate,
-}: DateRangeInputProps) {
-  const handleChangeStartDate = useCallback(
-    (date: Date) => {
-      onChangeStartDate(date);
-      if (endDate < date) {
-        onChangeEndDate(date);
-      }
-    },
-    [endDate, onChangeEndDate, onChangeStartDate],
-  );
+  const handleChangeStartDate = (date: Date) => {
+    setValue('startDate', date);
+    if (endDate < date) {
+      setValue('endDate', date);
+    }
+  };
+
+  const handleChangeEndDate = (date: Date) => {
+    setValue('endDate', date);
+  };
 
   return (
     <InputContainer>
@@ -40,7 +35,7 @@ export default function DateRangeInput({
       <SVGIcon icon="ArrowRightIcon" />
       <DatePicker
         date={endDate}
-        onChange={onChangeEndDate}
+        onChange={handleChangeEndDate}
         selectsEnd
         startDate={startDate}
         endDate={endDate}

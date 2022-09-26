@@ -1,38 +1,81 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import SVGIcon from '../SVGIcon';
 import * as Styled from './Select.styled';
 
-interface SelectOption {
-  value: string | number;
-  label: string | number;
+export interface SelectOption<T> {
+  value: T;
+  label: string;
 }
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps<T> {
+  id: string;
   label?: string;
-  errorMessage?: string;
-  defaultLabel?: string;
-  options?: SelectOption[];
+  disabled?: boolean;
+  defaultLabel: string;
+  options?: SelectOption<T>[];
+  selectedValue?: T;
+  onChangeOption: (value: T) => void;
 }
 
-const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, id, options, defaultLabel, ...selectProps }, ref) => {
-    return (
-      <Styled.Container>
-        {label && <Styled.Label htmlFor={id}>{label}</Styled.Label>}
-
-        <Styled.Select {...selectProps} ref={ref}>
-          <Styled.Option value="defaultValue"> {defaultLabel} </Styled.Option>
-
-          {options?.map(({ value, label }) => (
-            <Styled.Option key={`${id}-${value}`} value={value}>
-              {label}
-            </Styled.Option>
-          ))}
-        </Styled.Select>
-      </Styled.Container>
+export default function Select<T>({
+  label,
+  id,
+  disabled,
+  options,
+  defaultLabel,
+  selectedValue,
+  onChangeOption,
+}: SelectProps<T>) {
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const selectedLabel = useMemo(() => {
+    const selectedOption = options?.find(
+      ({ value }) => value === selectedValue,
     );
-  },
-);
+    return selectedOption ? selectedOption.label : defaultLabel;
+  }, [options, selectedValue, defaultLabel]);
 
-Select.displayName = 'Select';
+  const handleClick = (option: SelectOption<T>) => {
+    onChangeOption(option.value);
+  };
 
-export default Select;
+  return (
+    <Styled.Container>
+      <Styled.Label htmlFor={id}>{label}</Styled.Label>
+      {isOpen && (
+        <Styled.Backdrop
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+      )}
+      <Styled.OptionContainer
+        type="button"
+        disabled={disabled}
+        onClick={() => {
+          setOpen((prev) => !prev);
+        }}
+      >
+        <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedValue)}>
+          {selectedLabel}
+          <SVGIcon icon="ChevronDownIcon" size={16} />
+        </Styled.OptionTitle>
+        <Styled.OptionList isOpen={isOpen}>
+          {options?.map((option) => (
+            <Styled.OptionItem
+              key={option.label}
+              selected={selectedValue === option.value}
+              onClick={() => {
+                handleClick(option);
+              }}
+            >
+              {selectedValue === option.value && (
+                <SVGIcon icon="CheckIcon" size={16} />
+              )}
+              <span>{option.label}</span>
+            </Styled.OptionItem>
+          ))}
+        </Styled.OptionList>
+      </Styled.OptionContainer>
+    </Styled.Container>
+  );
+}
