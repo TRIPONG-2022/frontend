@@ -7,8 +7,8 @@ interface OptionProps {
 }
 
 export const Container = styled.div`
-  margin-bottom: 1.5rem;
   flex-basis: 100%;
+  width: 100%;
 `;
 
 export const Label = styled.label`

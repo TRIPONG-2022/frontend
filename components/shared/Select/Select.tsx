@@ -40,7 +40,7 @@ export default function Select<T>({
 
   return (
     <Styled.Container>
-      <Styled.Label htmlFor={id}>{label}</Styled.Label>
+      {label && <Styled.Label htmlFor={id}>{label}</Styled.Label>}
       {isOpen && (
         <Styled.Backdrop
           onClick={() => {
