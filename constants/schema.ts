@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { SCHEMA_MESSAGES } from './message';
+import { POST_CATEGORY_KEYS } from './post-category';
 
 export const NICKNAME_SCHEMA = yup
   .string()
@@ -92,7 +93,46 @@ export const SEND_EMAIL_SCHEMA = yup.object({
   email: EMAIL_SCHEMA,
 });
 
+const requiredWhenCategoryIsGathering =
+  (message: string) => (category: string, field: any) => {
+    return category === 'gathering' ? field.required(message) : field;
+  };
+
+export const POST_EDITOR_SCHEMA = yup.object({
+  title: yup.string().required('제목을 입력해주세요.'),
+  category: yup
+    .string()
+    .oneOf(POST_CATEGORY_KEYS, '잘못된 카테고리입니다.')
+    .required('카테고리를 입력해주세요.'),
+  tags: yup.array().of(yup.string().required()).required(),
+  content: yup.string().required('내용을 입력해주세요.'),
+  totalHeadCount: yup
+    .number()
+    .min(1)
+    .when(
+      'category',
+      requiredWhenCategoryIsGathering('모집인원을 입력해주세요.'),
+    )
+    .required(),
+  startDate: yup
+    .date()
+    .when(
+      'category',
+      requiredWhenCategoryIsGathering('시작 일자를 입력해주세요.'),
+    )
+    .required(),
+  endDate: yup
+    .date()
+    .when(
+      'category',
+      requiredWhenCategoryIsGathering('종료 일자를 입력해주세요.'),
+    )
+    .required(),
+  thumbnail: yup.mixed().optional(),
+});
+
 export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
+export type PostEditorSchema = yup.InferType<typeof POST_EDITOR_SCHEMA>;

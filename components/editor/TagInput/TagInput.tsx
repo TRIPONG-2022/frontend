@@ -1,65 +1,56 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import InputContainer from '../InputContainer';
+import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './TagInput.styled';
 
-interface TagInputProps {
-  tags: string[];
-  onChange: (tags: string[]) => void;
-}
-
-export default function TagInput({ tags, onChange }: TagInputProps) {
+export default function TagInput() {
+  const { control, setValue } = useFormContext<PostEditorSchema>();
+  const tags = useWatch({ name: 'tags', control });
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onInsert = useCallback(
-    (tag: string) => {
-      if (tag === '' || tags.includes(tag)) {
-        return;
-      }
-      let processed = tag.trim();
-      if (processed.charAt(0) === '#') {
-        processed = processed.slice(1, processed.length);
-      }
-      onChange([...tags, processed]);
-    },
-    [tags, onChange],
-  );
+  const onChangeTags = (tags: string[]) => {
+    setValue('tags', tags);
+  };
 
-  const onRemove = useCallback(
-    (tag: string) => {
-      onChange(tags.filter((value) => value !== tag));
-    },
-    [tags, onChange],
-  );
+  const onInsert = (tag: string) => {
+    if (tag === '' || tags.includes(tag)) {
+      return;
+    }
+    let processed = tag.trim();
+    if (processed.charAt(0) === '#') {
+      processed = processed.slice(1, processed.length);
+    }
+    onChangeTags([...tags, processed]);
+  };
 
-  const onKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter') {
+  const onRemove = (tag: string) => {
+    onChangeTags(tags.filter((value) => value !== tag));
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      return;
+    }
+    if (inputRef.current) {
+      const currentValue = inputRef.current.value;
+      if (event.key === 'Backspace' && currentValue === '') {
         event.preventDefault();
-        return;
+        onChangeTags(tags.slice(0, -1));
       }
-      if (inputRef.current) {
-        const currentValue = inputRef.current.value;
-        if (event.key === 'Backspace' && currentValue === '') {
-          event.preventDefault();
-          onChange(tags.slice(0, -1));
-        }
-      }
-    },
-    [tags, onChange],
-  );
+    }
+  };
 
-  const onKeyUp = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (inputRef.current) {
-        const currentValue = inputRef.current.value;
-        if (event.key === 'Enter' && currentValue) {
-          onInsert(currentValue);
-          inputRef.current.value = '';
-        }
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (inputRef.current) {
+      const currentValue = inputRef.current.value;
+      if (event.key === 'Enter' && currentValue) {
+        onInsert(currentValue);
+        inputRef.current.value = '';
       }
-    },
-    [onInsert],
-  );
+    }
+  };
 
   return (
     <InputContainer>

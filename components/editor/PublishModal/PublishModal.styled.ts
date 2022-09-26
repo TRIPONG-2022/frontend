@@ -30,7 +30,7 @@ export const PublishModalHeading = styled.h3`
 
 export const ThumbnailHandleContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-end;
   margin-bottom: 1rem;
   column-gap: 0.5rem;

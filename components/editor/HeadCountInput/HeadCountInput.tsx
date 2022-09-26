@@ -1,25 +1,25 @@
 import React from 'react';
-import SVGIcon from '@/components/shared/SVGIcon';
+import { useFormContext, useWatch } from 'react-hook-form';
 import InputContainer from '../InputContainer';
+import SVGIcon from '@/components/shared/SVGIcon';
+import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './HeadCountInput.styled';
 
-interface HeadCountInputProps {
-  headCount: number;
-  onChange: (value: number) => void;
-}
+export default function HeadCountInput() {
+  const { control, setValue } = useFormContext<PostEditorSchema>();
+  const headCount = useWatch({
+    name: 'totalHeadCount',
+    control,
+  });
 
-export default function HeadCountInput({
-  headCount,
-  onChange,
-}: HeadCountInputProps) {
   const subCount = () => {
     if (0 < headCount) {
-      onChange(headCount - 1);
+      setValue('totalHeadCount', headCount - 1);
     }
   };
 
   const addCount = () => {
-    onChange(headCount + 1);
+    setValue('totalHeadCount', headCount + 1);
   };
 
   return (
