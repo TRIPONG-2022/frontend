@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import { SCHEMA_MESSAGES } from './message';
-import { POST_CATEGORY_KEYS } from './post-category';
+import { PostCategory } from '@/types/post';
 
 export const NICKNAME_SCHEMA = yup
   .string()
@@ -101,8 +101,8 @@ const requiredWhenCategoryIsGathering =
 export const POST_EDITOR_SCHEMA = yup.object({
   title: yup.string().required('제목을 입력해주세요.'),
   category: yup
-    .string()
-    .oneOf(POST_CATEGORY_KEYS, '잘못된 카테고리입니다.')
+    .mixed<PostCategory>()
+    .oneOf(Object.values(PostCategory))
     .required('카테고리를 입력해주세요.'),
   tags: yup.array().of(yup.string().required()).required(),
   content: yup.string().required('내용을 입력해주세요.'),
