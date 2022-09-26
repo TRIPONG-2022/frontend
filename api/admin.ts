@@ -15,37 +15,20 @@ interface RoleType {
 }
 
 export const getRoles = async () => {
-  try {
-    const { data } = await instance.get<RoleType[]>('/admin/roles');
-    return {
-      data,
-      isError: false,
-    };
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-    return {
-      isError: true,
-    };
-  }
+  const { data } = await instance.get('/admin/roles');
+
+  return data;
 };
 
 export const enrolRoles = async ({
   roleName,
   description,
 }: EnroleAdminType) => {
-  console.log(roleName);
   try {
     const data = await instance.post('/admin/roles', {
       roleName,
       description,
     });
-    console.log(data);
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -75,50 +58,38 @@ export const deleteRoles = async (roleId: number) => {
 
 // 유저
 
-interface GetUserType {
+interface GetUserParams {
   searchType?: string;
   keyword?: string;
+  page?: number;
+  size?: number;
+  pageParam?: number;
 }
 
-export const getUsers = async ({
-  searchType = '',
-  keyword = '',
-}: GetUserType) => {
-  try {
-    const { data } = await instance.get(
-      `/admin/users?searchType=${searchType}&keyword=${keyword}`,
-    );
-    // const { data } = await instance.get(`/admin/users?page=0&size=${4}`);
-    return {
-      data,
-      isError: false,
-    };
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-    return {
-      isError: true,
-    };
-  }
+interface User {
+  id: number;
+  name: string;
+  loginId: string;
+  nickName: string;
+  createdDate: string;
+  roles: { roleName: string }[];
+  reportType?: string;
+  reporterName?: string;
+}
+export const getUsers = async (params?: GetUserParams) => {
+  const { data } = await instance.get(`/admin/users`, {
+    params: params,
+  });
+
+  return data;
 };
 
-export const getReportUsers = async ({
-  searchType = '',
-  keyword = '',
-}: GetUserType) => {
+export const getReportUsers = async (params?: GetUserParams) => {
   try {
-    const { data } = await instance.get(
-      `/admin/reports/users?searchType=${searchType}&keyword=${keyword}`,
-    );
-    return {
-      data,
-      isError: false,
-    };
+    const { data } = await instance.get(`/admin/reports/users`, {
+      params: {},
+    });
+    return data;
   } catch (err) {
     const errors = err as Error | AxiosError;
     if (axios.isAxiosError(errors)) {
@@ -127,9 +98,6 @@ export const getReportUsers = async ({
     } else {
       console.log(err);
     }
-    return {
-      isError: true,
-    };
   }
 };
 
