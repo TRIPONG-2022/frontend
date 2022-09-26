@@ -23,7 +23,9 @@
       "@/layouts/*": ["./layouts/*"],
       "@/constants/*": ["./constants/*"],
       "@/components/*": ["./components/*"],
-      "@/store/*": ["./store/*"]
+      "@/store/*": ["./store/*"],
+      "@/types/*": ["./types/*"],
+      "@/utils/*": ["./utils/*"]
     }
   },
   "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx"],
