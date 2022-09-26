@@ -6,7 +6,7 @@ export const PostItemContainer = styled.article`
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 0.25rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.gray[200]};
 `;
 
 export const ThumbnailContainer = styled.div`
