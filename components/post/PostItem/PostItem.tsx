@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import { Post } from '@/types/post';
-import { createPostLink, removeHTMLTag } from '@/utils/post';
+import { createPostLink, decodeHTML, removeHTMLTag } from '@/utils/post';
 import SVGIcon from '@/components/shared/SVGIcon';
 
 import * as Styled from './PostItem.styled';
@@ -36,7 +36,7 @@ function PostItem({ post }: PostItemProps) {
             <Styled.PostLink>
               <Styled.Title>{post.title}</Styled.Title>
               <Styled.Description>
-                {removeHTMLTag(post.content)}
+                {removeHTMLTag(decodeHTML(post.content))}
               </Styled.Description>
             </Styled.PostLink>
           </Link>
