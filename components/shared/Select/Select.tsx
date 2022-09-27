@@ -57,7 +57,7 @@ export default function Select<T>({
       >
         <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedValue)}>
           {selectedLabel}
-          <SVGIcon icon="ChevronDownIcon" size={16} />
+          {!disabled && <SVGIcon icon="ChevronDownIcon" size={16} />}
         </Styled.OptionTitle>
         <Styled.OptionList isOpen={isOpen}>
           {options?.map((option) => (
