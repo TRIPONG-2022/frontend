@@ -77,6 +77,7 @@ interface User {
   reporterName?: string;
 }
 export const getUsers = async (params?: GetUserParams) => {
+  console.log(params);
   const { data } = await instance.get(`/admin/users`, {
     params: params,
   });
