@@ -26,7 +26,7 @@ export const PostTagList = styled.ul`
 export const PostTagItem = styled.li`
   font-size: 0.875rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${({ theme }) => theme.colors.primary.hex};
   cursor: pointer;
 
   ${SCREEN_TABLET} {

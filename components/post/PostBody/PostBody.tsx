@@ -10,22 +10,6 @@ interface PostBodyProps {
 }
 
 export default function PostBody({ post }: PostBodyProps) {
-  const tags: string[] = [
-    '123',
-    '123123',
-    '123',
-    '123123',
-    '123',
-    '123123',
-    '123',
-    '123123',
-    '123',
-    '123123',
-    '123',
-    '123123',
-    '123',
-    '123123',
-  ];
   return (
     <Styled.PostBodyContainer>
       <Styled.PostContent
@@ -33,7 +17,7 @@ export default function PostBody({ post }: PostBodyProps) {
       />
       <Styled.PostTagListContainer>
         <Styled.PostTagList>
-          {tags.map((tag, i) => (
+          {post.tags.map((tag, i) => (
             <Styled.PostTagItem key={i}>{tag}</Styled.PostTagItem>
           ))}
         </Styled.PostTagList>
