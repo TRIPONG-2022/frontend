@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { getReportUsers, getUsers } from '@/api/admin';
 import styled from 'styled-components';
 import { prepareServerlessUrl } from 'next/dist/server/base-server';
-
+import { SearchUserParams } from '@/types/search-params';
+import useManagedUserQuery from '@/hooks/useManagedUserQuery';
+import useManagedBlackUserQuery from '@/hooks/useManagedBlackUserQuery';
+import Select from '@/components/shared/Select';
 interface DataType {
   id: number;
   name: string;
@@ -19,56 +22,41 @@ interface Props {
   isUserSearch: boolean;
 }
 
-interface SearchQueryType {
-  searchType: string;
-  keyword: string;
-}
-
 const UserSearch = ({ setUserList, isUserSearch }: Props) => {
-  const [searchValue, setSearchValue] = useState({
+  const [searchValue, setSearchValue] = useState<SearchUserParams>({
     searchType: 'loginId',
     keyword: '',
   });
 
-  const getUserList = async ({ searchType, keyword }: SearchQueryType) => {
-    const { data } = await getUsers({ searchType, keyword });
-    console.log(data);
-    if (data) {
-      setUserList(data.content);
-    }
-  };
+  const { refetch: userRefetch } = useManagedUserQuery(searchValue);
 
-  const getReportUserList = async ({
-    searchType,
-    keyword,
-  }: SearchQueryType) => {
-    const { data } = await getReportUsers({ searchType, keyword });
-    console.log(data);
-    if (data) {
-      setUserList(data.content);
-    }
-  };
+  const { refetch: blackRefetch } = useManagedBlackUserQuery(searchValue);
+
+  const setState =
+    (setSearchValue: React.Dispatch<React.SetStateAction<SearchUserParams>>) =>
+    (value: string) =>
+      setSearchValue((prev) => ({ ...prev, searchType: value }));
 
   return (
-    <InputWrapper>
-      <SearchCategoryWrapper>
-        <SearchCategory
-          onClick={() =>
-            setSearchValue((prev) => ({ ...prev, searchType: 'loginId' }))
-          }
-        >
-          loginId
-        </SearchCategory>
-
-        <SearchCategory
-          onClick={() =>
-            setSearchValue((prev) => ({ ...prev, searchType: 'nickName' }))
-          }
-        >
-          nickName
-        </SearchCategory>
-      </SearchCategoryWrapper>
-
+    <Container>
+      <SelectContainer>
+        <Select
+          id="1"
+          options={[
+            {
+              value: 'loginId',
+              label: '로그인아이디',
+            },
+            {
+              value: 'nickName',
+              label: '닉네임',
+            },
+          ]}
+          defaultLabel="검색 타입"
+          selectedValue={searchValue.searchType}
+          onChangeOption={setState(setSearchValue)}
+        />
+      </SelectContainer>
       <SearchInput
         onChange={(e: any) => {
           setSearchValue((prev) => ({ ...prev, keyword: e.target.value }));
@@ -77,38 +65,34 @@ const UserSearch = ({ setUserList, isUserSearch }: Props) => {
       />
 
       <SearchButton
-        onClick={() =>
-          isUserSearch === true
-            ? getUserList(searchValue)
-            : getReportUserList(searchValue)
-        }
+        onClick={() => (isUserSearch === true ? userRefetch() : blackRefetch())}
       >
         검색
       </SearchButton>
-    </InputWrapper>
+    </Container>
   );
 };
 
-const InputWrapper = styled.div`
+const Container = styled.div`
   display: flex;
   gap: 1rem;
-
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 2rem;
 `;
 
-const SearchCategoryWrapper = styled.ul``;
-
-const SearchCategory = styled.li`
-  margin-bottom: 1rem;
-  padding: 1rem;
-
-  border-radius: 1rem;
-
-  background-color: gray;
-  cursor: pointer;
+const SelectContainer = styled.div`
+  min-width: 10rem;
 `;
 
-const SearchInput = styled.input``;
+const SearchInput = styled.input`
+  border: 2px solid;
+  border-radius: 1rem;
+  padding: 1.25rem;
+
+  font-size: 1rem;
+  color: #000000;
+`;
 
 const SearchButton = styled.button`
   padding: 1rem;
