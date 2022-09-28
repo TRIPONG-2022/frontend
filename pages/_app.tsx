@@ -8,7 +8,7 @@ import wrapper, { AppState } from 'store';
 import { userConfirm } from 'api/auth';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { saveUser } from '@/store/slice/userSlice';
+import { saveUser } from '@/store/slice/userSlice';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const user = useSelector((state: AppState) => state.user);
