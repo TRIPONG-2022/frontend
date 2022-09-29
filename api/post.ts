@@ -1,6 +1,14 @@
 import { format } from 'date-fns';
-import instance from './instance';
+
+import { Post } from '@/types/post';
 import { PostEditorSchema } from '@/constants/schema';
+
+import instance from './instance';
+
+export async function requestGetPost(category: string, postId: string) {
+  const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
+  return data;
+}
 
 export async function requestUploadImage(imageFile: File) {
   const formData = new FormData();
