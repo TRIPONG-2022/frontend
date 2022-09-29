@@ -1,33 +1,5 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
-import {
-  convertToRegionMapData,
-  convertToRegionData,
-  convertCityCodeToDistrictCode,
-} from 'utils/region';
-import { RegionResponseData } from '@/types/region';
-
-const requestGetDistrict = async (cityCode?: string) => {
-  if (cityCode === undefined) {
-    return;
-  }
-
-  const { data } = await axios.get<RegionResponseData>(
-    `https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes`,
-    {
-      params: {
-        regcode_pattern: convertCityCodeToDistrictCode(cityCode),
-        is_ignore_zero: true,
-      },
-    },
-  );
-  const regionData = convertToRegionData(data);
-  const regionMapData = convertToRegionMapData(regionData);
-  return {
-    regionData,
-    regionMapData,
-  };
-};
+import { requestGetDistrict } from '@/api/region';
 
 export function useDistrictQuery(cityCode?: string) {
   const results = useQuery(

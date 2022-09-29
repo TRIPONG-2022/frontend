@@ -30,3 +30,5 @@ export { default as ChevronLeftIcon } from './chevron-left.svg';
 export { default as ChevronRightIcon } from './chevron-right.svg';
 export { default as ArrowRightIcon } from './arrow-right.svg';
 export { default as ThumbnailIcon } from './thumbnail.svg';
+export { default as HeartIcon } from './heart.svg';
+export { default as EyeIcon } from './eye.svg';
