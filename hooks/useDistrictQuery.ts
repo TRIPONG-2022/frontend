@@ -8,7 +8,7 @@ import {
 import { RegionResponseData } from '@/types/region';
 
 const requestGetDistrict = async (cityCode?: string) => {
-  if (cityCode === undefined) {
+  if (!cityCode) {
     return;
   }
 

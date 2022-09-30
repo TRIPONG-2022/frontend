@@ -85,7 +85,7 @@ export const PROFILE_PATCH_SCHEMA = yup.object({
   loginId: LOGIN_ID_SCHEMA,
   email: EMAIL_SCHEMA,
   nickName: NICKNAME_SCHEMA,
-  name: yup
+  username: yup
     .string()
     .matches(
       /^[a-zA-Z가-힣][^0-9!@#$^&%*()+=-\[\]\/{}|:<>?,.]*$/,
@@ -96,10 +96,10 @@ export const PROFILE_PATCH_SCHEMA = yup.object({
     .string()
     .matches(/^((?!default).)*$/)
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  authentication: yup.number(),
-  year: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  month: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  day: yup.number().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  authentication: yup.number().required(),
+  year: yup.number().nullable(),
+  month: yup.number().nullable(),
+  day: yup.number().nullable(),
   city: yup
     .string()
     .matches(/^((?!default).)*$/)
@@ -112,6 +112,8 @@ export const PROFILE_PATCH_SCHEMA = yup.object({
   phoneNumber: yup.string(),
   picture: yup.string(),
   tags: yup.array(),
+  latitude: yup.number(),
+  longitude: yup.number(),
 });
 
 export const RESET_PASSWORD_SCHEMA = yup.object({

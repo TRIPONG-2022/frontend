@@ -5,6 +5,7 @@ import { useCityQuery } from '@/hooks/useCityQuery';
 import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { ProfilePatchSchema } from '@/constants/schema';
 import Select from '@/components/shared/Select';
+import { useEffect } from 'react';
 
 interface ProfileInfoRegionSelectProps {
   isEdit: boolean;

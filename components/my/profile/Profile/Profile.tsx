@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, {
   MouseEvent,
   useCallback,
@@ -12,43 +13,29 @@ import {
   useWatch,
 } from 'react-hook-form';
 
-import ProfileImage from '../ProfileImage';
-import ProfileInfo from '../ProfileInfo';
+import {
+  getProfileInfomation,
+  MyPageBirthDateType,
+  patchProfileInformation,
+  UserDataType,
+  UserSendDataType,
+} from '@/api/myPage';
+import { getBirthDate } from '@/utils/date';
 import { useCityQuery } from '@/hooks/useCityQuery';
 import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { ProfilePatchSchema } from '@/constants/schema';
+import ProfileImage from '../ProfileImage';
+import ProfileInfo from '../ProfileInfo';
 import Button from '@/components/shared/Button';
-import {
-  getProfileInfomation,
-  patchProfileInformation,
-  UserDataType,
-} from '@/api/myPage';
 
 import theme from '@/styles/theme';
 import * as Styled from './Profile.styled';
 
-const initialUserData = {
-  loginId: '',
-  email: '',
-  gender: '',
-  name: '',
-  nickName: '',
-  joinMethod: '',
-  authentication: 0,
-  birthDate: '',
-  city: '',
-  district: '',
-  introduction: '',
-  latitude: 0,
-  longitude: 0,
-  phoneNumber: '',
-  picture: '',
-  tags: [{ tag: null }],
-};
-
 const Profile = () => {
-  const [userData, setUserData] = useState<UserDataType>(initialUserData);
-  const { picture, authentication } = userData;
+  const router = useRouter();
+  const [userData, setUserData] = useState<
+    UserDataType & MyPageBirthDateType
+  >();
   const [isEdit, setIsEdit] = useState(false);
 
   const methods = useForm<ProfilePatchSchema>({
@@ -58,6 +45,10 @@ const Profile = () => {
   });
 
   const selectedCity = useWatch({ control: methods.control, name: 'city' });
+  const selectedDistrict = useWatch({
+    control: methods.control,
+    name: 'district',
+  });
 
   const { data: cityData } = useCityQuery();
   const { data: districtData } = useDistrictQuery(selectedCity);
@@ -99,30 +90,47 @@ const Profile = () => {
   }, [isEdit, reset, userData]);
 
   const onSubmit: SubmitHandler<ProfilePatchSchema> = async (data) => {
-    console.log(data);
-    const { year, month, day } = data;
-    if (!cityData || !districtData || !year || !month || !day) return;
-    const city = cityData.regionMapData.get(data.city);
-    const district = districtData.regionMapData.get(data.district);
-    const birthDate = `${year}-${month}-${day}`;
-    const tags = data.tags!.map((tag) => tag.tag);
+    const { year, month, day, tags, picture, latitude, longitude } = data;
+    const convertedTags: string[] = tags!.map((tag) => tag.tag);
 
-    const formData = new FormData();
-    if (data.picture) {
-      formData.append('picture', data.picture[0]);
+    let birthDate: string | null = null;
+    if (year && month && day) {
+      birthDate = getBirthDate(year, month, day);
     }
-    const sendData = {
-      ...data,
-      tags,
+
+    let pic = null;
+    if (picture) {
+      pic = picture[0] as unknown;
+    }
+
+    console.log(picture);
+
+    const sendData: UserSendDataType = {
       birthDate,
-      city,
-      district,
-      picture: formData,
+      picture: pic as File,
+      latitude: !!latitude ? latitude + '' : '',
+      longitude: !!longitude ? longitude + '' : '',
+      city: data.city,
+      district: data.district,
+      nickName: data.nickName,
+      gender: data.gender,
+      introduction: data.introduction,
+      phoneNumber: data.phoneNumber,
     };
-    console.log(sendData);
-    await patchProfileInformation(sendData);
+
+    console.log('sendData', sendData);
+
+    await patchProfileInformation(sendData, convertedTags);
     setIsEdit(!isEdit);
   };
+
+  const moveToVerifyEmail = useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault();
+      router.push('/auth/verify-email');
+    },
+    [router],
+  );
 
   return (
     <Styled.Container>
@@ -131,8 +139,8 @@ const Profile = () => {
           <Styled.ProfileWrapper>
             <Styled.ProfileImageWrapper>
               <ProfileImage
-                picture={picture}
-                authentication={authentication}
+                picture={userData?.picture}
+                authentication={userData?.authentication}
                 isEdit={isEdit}
               />
             </Styled.ProfileImageWrapper>
@@ -163,9 +171,10 @@ const Profile = () => {
                 <Button
                   css={{ background: `${theme.colors.gray[500]}` }}
                   size="lg"
-                  disabled={!!authentication}
+                  disabled={!!userData?.authentication}
+                  onClick={moveToVerifyEmail}
                 >
-                  {authentication ? '인증완료' : '인증하기'}
+                  {userData?.authentication ? '인증완료' : '인증하기'}
                 </Button>
               </>
             )}

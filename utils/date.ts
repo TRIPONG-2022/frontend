@@ -35,3 +35,12 @@ export const getOptionDays = (year?: number, month = 1) => {
       };
     });
 };
+
+export const getBirthDate = (year: number, month: number, day: number) => {
+  if (year || month || day) {
+    const madeMonth = month > 9 ? month : '0' + month;
+    const madeDay = day > 9 ? day : '0' + day;
+    return `${year}-${madeMonth}-${madeDay}`;
+  }
+  return null;
+};

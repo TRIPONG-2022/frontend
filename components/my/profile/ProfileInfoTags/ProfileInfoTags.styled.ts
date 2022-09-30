@@ -46,6 +46,8 @@ export const TagsDiv = styled.div`
 `;
 
 export const TagDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 100%;
   background: white;
@@ -55,7 +57,8 @@ export const TagDiv = styled.div`
 `;
 
 export const Tag = styled.span`
-  display: inline-block;
+  display: flex;
+  width: fit-content;
   padding: 0.375rem 0.75rem;
   margin-right: 0.5rem;
   margin-bottom: 0.75rem;
@@ -69,10 +72,6 @@ export const Tag = styled.span`
 
   :hover {
     opacity: 0.8;
-  }
-  :before {
-    content: '#';
-    margin-right: 0.25rem;
   }
 `;
 

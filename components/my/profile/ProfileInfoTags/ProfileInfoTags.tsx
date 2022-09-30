@@ -67,15 +67,16 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
       </Styled.InfoLabel>
       <Styled.TagsDiv>
         <Styled.TagDiv>
-          {fields.map((field, idx) => (
-            <Styled.Tag
-              onClick={() => removeTag(idx)}
-              key={field.id}
-              {...register(`tags.${idx}.tag`)}
-            >
-              {`${field.tag}`}
-            </Styled.Tag>
-          ))}
+          {fields.length > 0 &&
+            fields.map((field, idx) => (
+              <Styled.Tag
+                onClick={() => removeTag(idx)}
+                key={field.id}
+                {...register(`tags.${idx}.tag`)}
+              >
+                {`#${field.tag}`}
+              </Styled.Tag>
+            ))}
         </Styled.TagDiv>
         {isEdit && (
           <Styled.TagsInputDiv>

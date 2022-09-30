@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { ProfilePatchSchema } from '@/constants/schema';
@@ -16,7 +16,7 @@ const ProfileImage = ({
   authentication,
   isEdit,
 }: ProfileImageProps) => {
-  const [image, setImage] = useState(picture ?? undefined);
+  const [image, setImage] = useState(picture);
   const imgRef = useRef<HTMLInputElement | null>(null);
 
   const { register, watch, setValue } = useFormContext<ProfilePatchSchema>();
