@@ -131,8 +131,16 @@ export const POST_EDITOR_SCHEMA = yup.object({
   thumbnail: yup.mixed().optional(),
 });
 
+export const REPLY_SCHEMA = yup.object({
+  content: yup
+    .string()
+    .max(500, '500자 이하로 입력해주세요.')
+    .required('내용을 입력해주세요.'),
+});
+
 export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
 export type PostEditorSchema = yup.InferType<typeof POST_EDITOR_SCHEMA>;
+export type ReplySchema = yup.InferType<typeof REPLY_SCHEMA>;
