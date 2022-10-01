@@ -99,7 +99,8 @@ export const patchProfileInformation = async (
     for (const key in updateUserData) {
       if (updateUserData[key]) {
         if (key === 'picture') {
-          sendFormData.delete('picture');
+          sendFormData.append(key, updateUserData[key] || '');
+          // sendFormData.delete('picture');
         } else {
           sendFormData.append(key, updateUserData[key] || '');
         }
@@ -109,6 +110,8 @@ export const patchProfileInformation = async (
     // if (tags) {
     //   sendFormData.append('tags', tags.length ? tags + '' : [] + '');
     // }
+
+    console.log('tags', tags);
 
     const response = await instance.patch('/users/profile', sendFormData, {
       withCredentials: true,

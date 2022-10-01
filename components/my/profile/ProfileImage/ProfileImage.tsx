@@ -1,6 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { fileToObjectURL } from '@/utils/image';
 import { ProfilePatchSchema } from '@/constants/schema';
 import SVGIcon from '@/components/shared/SVGIcon';
 import * as Styled from './ProfileImage.styled';
@@ -28,18 +35,21 @@ const ProfileImage = ({
     if (isEdit) imgRef.current!.click();
   };
 
+  useEffect(() => {
+    if (picture) {
+      setImage(`data:image/jpg;base64,${picture}`);
+    }
+  }, [picture]);
+
   const removeImage = () => {
     setImage('');
     setValue('picture', '');
   };
 
-  const getImage = useCallback(() => {
+  const getImage = useCallback(async () => {
     if (imgRef.current!.files) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target!.result as string);
-      };
-      reader.readAsDataURL(imgRef.current!.files[0]);
+      const url = await fileToObjectURL(imgRef.current!.files[0]);
+      setImage(url);
     }
   }, []);
 
