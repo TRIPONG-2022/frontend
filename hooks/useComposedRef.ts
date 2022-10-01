@@ -4,9 +4,7 @@ export default function useComposedRef<T extends HTMLElement>(
   ref1: Ref<T>,
   ref2: Ref<T>,
 ) {
-  const prevUserRef = useRef<T>();
-
-  const composedRef = useCallback(
+  return useCallback(
     (instance: T | null) => {
       if (ref1) {
         updateRef(ref1, instance);
@@ -17,8 +15,6 @@ export default function useComposedRef<T extends HTMLElement>(
     },
     [ref1, ref2],
   );
-
-  return composedRef;
 }
 
 function updateRef<T>(ref: NonNullable<Ref<T>>, instance: T | null): void {
