@@ -25,24 +25,17 @@ export async function requestGetRepliesByReply(
   return data;
 }
 
-export async function requestCreateReplyByPost(
+export function requestCreateReply(
   postId: string | number,
-  content: string,
+  replyId?: string | number,
 ) {
-  await instance.post(`/replies/${postId}`, {
-    content,
-  });
-}
+  const url = replyId ? `/replies/${postId}/${replyId}` : `/replies/${postId}`;
 
-export async function requestCreateReplyByReply(
-  postId: string | number,
-  replyId: string | number,
-  content: string,
-) {
-  await instance.post(`/replies/${postId}`, {
-    content,
-    parentReply: replyId,
-  });
+  return async (content: string) => {
+    await instance.post(url, {
+      content,
+    });
+  };
 }
 
 export async function requestUpdateReply(
