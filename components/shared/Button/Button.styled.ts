@@ -1,6 +1,11 @@
 import styled, { css, CSSProp, DefaultTheme } from 'styled-components';
 
 const ButtonSizeStyles = {
+  sm: css`
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+  `,
   md: css`
     padding: 0.875rem 1rem;
     border-radius: 0.5rem;
