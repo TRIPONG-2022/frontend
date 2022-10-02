@@ -38,17 +38,12 @@ export function requestCreateReply(
   };
 }
 
-export async function requestUpdateReply(
-  postId: string | number,
-  replyId: string | number,
-  content: string,
-) {
-  await instance.patch(`/replies/${postId}/${replyId}`, { content });
+export function requestUpdateReply(reply: Reply) {
+  return async (content: string) => {
+    await instance.patch(`/replies/${reply.postId}/${reply.id}`, { content });
+  };
 }
 
-export async function requestDeleteReply(
-  postId: string | number,
-  replyId: string | number,
-) {
-  await instance.delete(`/replies/${postId}/${replyId}`);
+export async function requestDeleteReply(reply: Reply) {
+  await instance.delete(`/replies/${reply.postId}/${reply.id}`);
 }
