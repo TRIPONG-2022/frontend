@@ -8,11 +8,11 @@ interface MenuType {
 }
 
 interface Callback {
-  black: (userId: number) => Promise<void>;
-  changeRole: (userId: number) => Promise<void>;
+  black: (userId: number) => void;
+  changeRole: (userId: number) => void;
 }
 
-export const menuObj: MenuType = {
+export const ADMINUSER_MENU: MenuType = {
   black: {
     title: '해당 유저를 블랙하시겠습니까?',
     onClick: (userId, { black }) => black(userId),
