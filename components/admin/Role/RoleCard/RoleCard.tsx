@@ -1,10 +1,12 @@
 import { useMutation } from 'react-query';
+
 import { deleteRoles } from '@/api/admin';
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
 import useModal from '@/hooks/useModal';
 import useRoleQuery from '@/hooks/useRoleQuery';
+
 import * as Styled from './RoleCard.styled';
 
 interface RoleCardProps {
