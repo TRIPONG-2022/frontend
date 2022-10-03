@@ -63,7 +63,6 @@ interface GetUserParams {
   keyword?: string;
   page?: number;
   size?: number;
-  pageParam?: number;
 }
 
 interface User {
@@ -76,9 +75,24 @@ interface User {
   reportType?: string;
   reporterName?: string;
 }
+
+interface UserData {
+  content: {
+    id: number;
+    name: string;
+    loginId: string;
+    nickName: string;
+    createdDate: string;
+    roles: { roleName: string }[];
+    reportType?: string;
+    reporterName?: string;
+  }[];
+  totalPages: number;
+  totalElements: number;
+}
+
 export const getUsers = async (params?: GetUserParams) => {
-  console.log(params);
-  const { data } = await instance.get(`/admin/users`, {
+  const { data } = await instance.get<UserData>(`/admin/users`, {
     params: params,
   });
 
