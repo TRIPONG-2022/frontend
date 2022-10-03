@@ -1,95 +1,39 @@
-import { getUsers } from '@/api/admin';
-import useManagedUserQuery from '@/hooks/useManagedUserQuery';
-import { isAllOf } from '@reduxjs/toolkit';
-import { useState } from 'react';
-import { useInfiniteQuery } from 'react-query';
+import React, { SetStateAction, useCallback } from 'react';
+
+import { SearchUserParams } from '@/types/search-params';
+import { ManagedUserInterface } from '@/types/managed-user';
+import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
+
 import styled from 'styled-components';
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
-import { ManagedUserInterface } from '@/types/managed-user';
+import ObserverBottom from './ObserverBottom';
 
-const ManagedUserList = () => {
-  // const { data, isLoading } = useManagedUserQuery();
+interface Props {
+  searchParams: SearchUserParams;
+  setSearchParams: React.Dispatch<SetStateAction<SearchUserParams>>;
+}
 
-  // console.log(data);
+const ManagedUserList = ({ searchParams, setSearchParams }: Props) => {
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
+    useManagedUserQuery(searchParams);
 
-  const [pageNumber, setPageNumber] = useState<number>(0);
+  const getNextPage = useCallback(() => {
+    setSearchParams((prev) => ({ ...prev, page: prev.page + 1 }));
+    fetchNextPage();
+  }, [setSearchParams, fetchNextPage]);
 
-  const {
-    data: infinity,
-    fetchNextPage,
-    fetchPreviousPage,
-    hasPreviousPage,
-    hasNextPage,
-    isError,
-    isLoading,
-  } = useInfiniteQuery(
-    'list',
-    async ({ pageParam = 0 }) => await getUsers({ size: 1, page: pageParam }),
-    {
-      staleTime: 6000,
-      getNextPageParam: (_lastPage, pages) => {
-        if (_lastPage.totalPages - 1 <= pageNumber) {
-          return undefined;
-        }
+  if (isLoading) return <div>로딩 중</div>;
 
-        return pageNumber + 1;
-      },
-      getPreviousPageParam: (_lastPage, pages) => {
-        if (pageNumber < 1) {
-          return undefined;
-        }
-
-        return pageNumber - 1;
-      },
-      onError: () => console.log('에러'),
-    },
-  );
-
-  const hasNextQuery = () => {
-    if (infinity?.pages[pageNumber + 1]) {
-      setPageNumber((prev) => prev + 1);
-    } else {
-      fetchNextPage();
-      setPageNumber((prev) => prev + 1);
-    }
-  };
-
-  if (isLoading)
-    return (
-      <>
-        <p>로딩</p>
-      </>
-    );
-
-  if (isError)
-    return (
-      <>
-        <p>에러발생</p>
-      </>
-    );
+  if (isError) return <div>에러발생</div>;
 
   return (
     <>
-      {infinity?.pages[pageNumber] &&
-        infinity?.pages[pageNumber]?.content?.map(
-          (data: ManagedUserInterface) => (
-            <ManagedUserCard userData={data} key={data.id} />
-          ),
-        )}
-
-      <PageButtonContainer>
-        <Btn
-          onClick={() => {
-            setPageNumber((prev) => prev - 1);
-          }}
-          disabled={!hasPreviousPage}
-        >
-          이전
-        </Btn>
-        <Btn onClick={() => hasNextQuery()} disabled={!hasNextPage}>
-          다음
-        </Btn>
-      </PageButtonContainer>
+      {data?.pages.map(({ content }) =>
+        content?.map((data: ManagedUserInterface) => (
+          <ManagedUserCard userData={data} key={data.id} />
+        )),
+      )}
+      {hasNextPage && <ObserverBottom getNextPage={getNextPage} />}
     </>
   );
 };
@@ -107,6 +51,10 @@ const Btn = styled.button`
   border-radius: 1rem;
   color: white;
   background-color: ${({ theme }) => theme.colors.primary.hex};
+
+  margin-bottom: 100rem;
 `;
+
+const BottomBar = styled.div``;
 
 export default ManagedUserList;
