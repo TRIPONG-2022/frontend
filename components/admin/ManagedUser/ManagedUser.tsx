@@ -1,38 +1,22 @@
-import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useState } from 'react';
 
-import { getReportUsers, getUsers } from '@/api/admin';
-import { ManagedUserInterface } from '@/types/managed-user';
+import useToggle from '@/hooks/useToggle';
+import { SearchUserParams } from '@/types/search-params';
 
 import * as Styled from './ManagedUser.styled';
-import ManagedUserCard from './ManagedUserCard/ManagedUserCard';
 import UserSearch from './ManagedUserSearch/ManagedUserSearch';
 import ManagedUserList from './ManagedUserList/ManagedUserList';
+import ManagedBlackUserList from './ManagedUserList/ManagedBlackUserList';
 
 const ManagedUser = () => {
-  const [userList, setUserList] = useState<ManagedUserInterface[]>([]);
-  const [activeBtn, setActiveBtn] = useState(true);
+  const [searchParams, setSearchParams] = useState<SearchUserParams>({
+    searchType: 'loginId',
+    keyword: '',
+    page: 0,
+    size: 3,
+  });
 
-  const getUserList = async () => {
-    const data = await getUsers();
-
-    if (data) {
-      setUserList(data.content);
-    }
-  };
-
-  const getReportUserList = async () => {
-    const { data } = await getReportUsers();
-
-    if (data) {
-      setUserList(data.content);
-    }
-  };
-
-  useEffect(() => {
-    getUserList();
-  }, []);
+  const { toggle: isUserSearch, onToggle, setOff, setOn } = useToggle(true);
 
   return (
     <Styled.LayoutContainer>
@@ -44,30 +28,40 @@ const ManagedUser = () => {
           <Styled.Title>유저목록</Styled.Title>
 
           <Styled.GetUsersBtn
-            active={activeBtn}
+            active={isUserSearch}
             onClick={() => {
-              setActiveBtn((prev) => !prev);
-              getUserList();
+              setOn();
             }}
           >
             전체 유저 조회
           </Styled.GetUsersBtn>
           <Styled.GetUsersBtn
-            active={!activeBtn}
+            active={!isUserSearch}
             onClick={() => {
-              setActiveBtn((prev) => !prev);
-              getReportUserList();
+              setOff();
             }}
           >
             신고된 유저 조회
           </Styled.GetUsersBtn>
 
-          <UserSearch setUserList={setUserList} isUserSearch={activeBtn} />
-          {/* 
-          {userList?.map((data: ManagedUserInterface) => (
-            <ManagedUserCard userData={data} key={data.id} />
-          ))} */}
-          <ManagedUserList />
+          <UserSearch
+            isUserSearch={isUserSearch}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
+
+          {isUserSearch && (
+            <ManagedUserList
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+            />
+          )}
+          {!isUserSearch && (
+            <ManagedBlackUserList
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+            />
+          )}
         </Styled.Container>
       </Styled.LayoutBody>
     </Styled.LayoutContainer>
