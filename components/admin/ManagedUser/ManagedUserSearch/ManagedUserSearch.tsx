@@ -1,45 +1,51 @@
-import React, { useState } from 'react';
-import { getReportUsers, getUsers } from '@/api/admin';
-import styled from 'styled-components';
-import { prepareServerlessUrl } from 'next/dist/server/base-server';
+import React, { SetStateAction, useState } from 'react';
+
 import { SearchUserParams } from '@/types/search-params';
-import useManagedUserQuery from '@/hooks/useManagedUserQuery';
-import useManagedBlackUserQuery from '@/hooks/useManagedBlackUserQuery';
+import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
+import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import Select from '@/components/shared/Select';
-interface DataType {
-  id: number;
-  name: string;
-  loginId: string;
-  nickName: string;
-  createdDate: string;
-  roles: { roleName: string }[];
-  reportType?: string;
-  reporterName?: string;
-}
+
+import * as Styled from './ManagedUserSearch.styled';
 
 interface Props {
-  setUserList: React.Dispatch<React.SetStateAction<DataType[]>>;
   isUserSearch: boolean;
+  searchParams: SearchUserParams;
+  setSearchParams: React.Dispatch<SetStateAction<SearchUserParams>>;
 }
 
-const UserSearch = ({ setUserList, isUserSearch }: Props) => {
-  const [searchValue, setSearchValue] = useState<SearchUserParams>({
-    searchType: 'loginId',
-    keyword: '',
-  });
+const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
+  const { refetch: userRefetch } = useManagedUserQuery(searchParams);
 
-  const { refetch: userRefetch } = useManagedUserQuery(searchValue);
+  const { refetch: blackRefetch } = useManagedBlackUserQuery(searchParams);
 
-  const { refetch: blackRefetch } = useManagedBlackUserQuery(searchValue);
+  const [searchInput, setsearchInput] = useState<string>('');
 
   const setState =
-    (setSearchValue: React.Dispatch<React.SetStateAction<SearchUserParams>>) =>
+    (setSearchParams: React.Dispatch<React.SetStateAction<SearchUserParams>>) =>
     (value: string) =>
-      setSearchValue((prev) => ({ ...prev, searchType: value }));
+      setSearchParams((prev) => ({ ...prev, searchType: value }));
+
+  const handleUserSearch = async () => {
+    await setSearchParams((prev) => ({
+      ...prev,
+      keyword: searchInput,
+      page: 0,
+    }));
+    userRefetch();
+  };
+
+  const handleBlackUserSearch = async () => {
+    await setSearchParams((prev) => ({
+      ...prev,
+      keyword: searchInput,
+      page: 0,
+    }));
+    blackRefetch();
+  };
 
   return (
-    <Container>
-      <SelectContainer>
+    <Styled.Container>
+      <Styled.SelectContainer>
         <Select
           id="1"
           options={[
@@ -53,52 +59,26 @@ const UserSearch = ({ setUserList, isUserSearch }: Props) => {
             },
           ]}
           defaultLabel="검색 타입"
-          selectedValue={searchValue.searchType}
-          onChangeOption={setState(setSearchValue)}
+          selectedValue={searchParams.searchType}
+          onChangeOption={setState(setSearchParams)}
         />
-      </SelectContainer>
-      <SearchInput
+      </Styled.SelectContainer>
+      <Styled.SearchInput
         onChange={(e: any) => {
-          setSearchValue((prev) => ({ ...prev, keyword: e.target.value }));
+          setsearchInput(e.target.value);
         }}
-        value={searchValue.keyword}
+        value={searchInput}
       />
 
-      <SearchButton
-        onClick={() => (isUserSearch === true ? userRefetch() : blackRefetch())}
+      <Styled.SearchButton
+        onClick={() =>
+          isUserSearch === true ? handleUserSearch() : handleBlackUserSearch()
+        }
       >
         검색
-      </SearchButton>
-    </Container>
+      </Styled.SearchButton>
+    </Styled.Container>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 2rem;
-`;
-
-const SelectContainer = styled.div`
-  min-width: 10rem;
-`;
-
-const SearchInput = styled.input`
-  border: 2px solid;
-  border-radius: 1rem;
-  padding: 1.25rem;
-
-  font-size: 1rem;
-  color: #000000;
-`;
-
-const SearchButton = styled.button`
-  padding: 1rem;
-  border-radius: 1rem;
-
-  background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.4);
-`;
 
 export default UserSearch;

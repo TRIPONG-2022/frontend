@@ -1,6 +1,6 @@
 export interface SearchUserParams {
   searchType?: string;
   keyword?: string;
-  page?: number;
+  page: number;
   size?: number;
 }
