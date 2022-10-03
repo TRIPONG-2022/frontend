@@ -1,46 +1,30 @@
-import { blackUser, getUsers, roleUser } from '@/api/admin';
+import React, { useCallback, useState } from 'react';
+
+import { roleUser } from '@/api/admin';
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
-import { menuObj } from '@/constants/admin';
+import { ADMINUSER_MENU } from '@/constants/admin';
 import useModal from '@/hooks/useModal';
-import React, { useCallback, useState } from 'react';
-import { Query, useQuery, useQueryClient } from 'react-query';
+import useToggle from '@/hooks/useToggle';
+import { ManagedUserInterface } from '@/types/managed-user';
+
 import * as Styled from './ManagedUserCard.styled';
-import UserRoleChange from '../ManagedUserRoleChange/ManagedUserRoleChange';
+import ManagedUserRoleChange from '../ManagedUserRoleChange/ManagedUserRoleChange';
 
-interface DataType {
-  userData: {
-    id: number;
-    name: string;
-    loginId: string;
-    nickName: string;
-    createdDate: string;
-    roles: { roleName: string }[];
-    reportType?: string;
-    reporterName?: string;
-  };
+import useBlackUser from '../hooks/useBlackUser';
+
+interface Props {
+  userData: ManagedUserInterface;
 }
-const ManagedUserCard = ({ userData }: DataType) => {
-  const [isModal, open, close] = useModal();
-
-  const [activeMenu, setActiveMenu] = useState(false);
+const ManagedUserCard = ({ userData }: Props) => {
   const [menu, setMenu] = useState('');
   const [selectRoles, setSelectRoles] = useState<string[]>([]);
 
-  // const userList = useQuery('userList', () => getUsers(), {});
-  // console.log(userList.refetch);
-  // fn 을 넣어줘야한다.
-  // 커스텀 훅으로
+  const [isModal, open, close] = useModal();
+  const { toggle, onToggle, setOff } = useToggle(false);
 
-  const black = useCallback(
-    async (userId: number) => {
-      const { isError } = await blackUser(userId);
-
-      if (!isError) close();
-    },
-    [close],
-  );
+  const { mutate: black } = useBlackUser();
 
   const changeRole = useCallback(
     async (userId: number) => {
@@ -50,8 +34,6 @@ const ManagedUserCard = ({ userData }: DataType) => {
     },
     [selectRoles, close],
   );
-
-  // 이렇게 구조를 짠거를 어떻게 바꿔야지...
 
   return (
     <Styled.Container>
@@ -84,9 +66,9 @@ const ManagedUserCard = ({ userData }: DataType) => {
         가입날짜 :
         <Styled.CreateDateSpan>{userData.createdDate}</Styled.CreateDateSpan>
       </Styled.CreateDate>
-      <Styled.Menu onClick={() => setActiveMenu((prev) => !prev)}>
+      <Styled.Menu onClick={() => onToggle()}>
         <SVGIcon icon="DotThree" />
-        <Styled.MenuUl activeMenu={activeMenu}>
+        <Styled.MenuUl toggle={toggle}>
           <Styled.MenuLi
             onClick={() => {
               setMenu('black');
@@ -105,15 +87,12 @@ const ManagedUserCard = ({ userData }: DataType) => {
           </Styled.MenuLi>
         </Styled.MenuUl>
       </Styled.Menu>
-      <Styled.Back
-        activeMenu={activeMenu}
-        onClick={() => setActiveMenu(false)}
-      />
+      <Styled.Back toggle={toggle} onClick={() => setOff()} />
 
       <Modal isModal={isModal} close={close}>
-        <Modal.Title>{menuObj[menu]?.title}</Modal.Title>
+        <Modal.Title>{ADMINUSER_MENU[menu]?.title}</Modal.Title>
         {menu == 'roleChange' && (
-          <UserRoleChange
+          <ManagedUserRoleChange
             selectRoles={selectRoles}
             setSelectRoles={setSelectRoles}
           />
@@ -126,12 +105,13 @@ const ManagedUserCard = ({ userData }: DataType) => {
               width: 100%;
               margin-top: 2rem;
             `}
-            onClick={() =>
-              menuObj[menu]?.onClick(userData.id, {
+            onClick={() => {
+              ADMINUSER_MENU[menu]?.onClick(userData.id, {
                 black,
                 changeRole,
-              })
-            }
+              });
+              close();
+            }}
           >
             예
           </Button>
