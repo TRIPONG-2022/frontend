@@ -1,27 +1,27 @@
-import { getReportUsers } from '@/api/admin';
 import { useQuery } from 'react-query';
-import { SearchUserParams } from '@/types/search-params';
 import { AxiosError } from 'axios';
 
+import { getReportUsers } from '@/api/admin';
+import { SearchUserParams } from '@/types/search-params';
+
 interface ManagedUserInterface {
-  id: number;
-  name: string;
-  loginId: string;
-  nickName: string;
-  createdDate: string;
-  roles: { roleName: string }[];
-  reportType?: string;
-  reporterName?: string;
+  content: {
+    id: number;
+    name: string;
+    loginId: string;
+    nickName: string;
+    createdDate: string;
+    roles: { roleName: string }[];
+    reportType?: string;
+    reporterName?: string;
+  }[];
 }
 
-function useManagedBlackUserQuery(params?: SearchUserParams) {
-  const query = useQuery<ManagedUserInterface[], AxiosError>(
-    'blackUserList',
+function useManagedBlackUserQuery(params: SearchUserParams) {
+  const query = useQuery<ManagedUserInterface, AxiosError>(
+    ['blackUserList', params.page],
     () => getReportUsers(params),
     {
-      staleTime: 5000,
-      cacheTime: Infinity,
-
       onError: (err: AxiosError) => {
         if (err.response?.status) {
           if (500 <= err.response?.status) {
