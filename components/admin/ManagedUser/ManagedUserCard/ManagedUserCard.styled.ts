@@ -4,6 +4,8 @@ export const Container = styled.div`
   position: relative;
   padding: 1rem;
 
+  height: 30rem;
+
   border: 2px solid;
   border-color: black;
   border-radius: 1rem;
@@ -61,12 +63,12 @@ export const Menu = styled.div`
 `;
 
 interface ActiveProps {
-  activeMenu: boolean;
+  toggle: boolean;
 }
 
 export const Back = styled.div<ActiveProps>`
-  ${({ activeMenu }) =>
-    activeMenu &&
+  ${({ toggle }) =>
+    toggle &&
     css`
       position: fixed;
       top: 0;
@@ -83,8 +85,8 @@ export const MenuUl = styled.ul<ActiveProps>`
   top: 1rem;
   right: 0;
 
-  ${({ activeMenu }) =>
-    !activeMenu &&
+  ${({ toggle }) =>
+    !toggle &&
     css`
       display: none;
     `}
