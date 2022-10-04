@@ -13,6 +13,7 @@ import * as Styled from './ManagedUserCard.styled';
 import ManagedUserRoleChange from '../ManagedUserRoleChange/ManagedUserRoleChange';
 
 import useBlackUser from '../hooks/useBlackUser';
+import useChangeUserRole from '../hooks/useChangeUserRole';
 
 interface Props {
   userData: ManagedUserInterface;
@@ -26,14 +27,7 @@ const ManagedUserCard = ({ userData }: Props) => {
 
   const { mutate: black } = useBlackUser();
 
-  const changeRole = useCallback(
-    async (userId: number) => {
-      const { isError } = await roleUser(userId, selectRoles);
-
-      if (!isError) close();
-    },
-    [selectRoles, close],
-  );
+  const { mutate: changeRole } = useChangeUserRole(selectRoles);
 
   return (
     <Styled.Container>
