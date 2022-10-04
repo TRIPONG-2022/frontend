@@ -1,5 +1,7 @@
-import { getRoles } from '@/api/admin';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+
+import useRoleQuery from '@/hooks/useRoleQuery';
+
 import styled from 'styled-components';
 
 interface RoleType {
@@ -13,42 +15,43 @@ interface PropsType {
   setSelectRoles: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const UserRoleChange = ({ selectRoles, setSelectRoles }: PropsType) => {
-  const [roleList, setRoleList] = useState<RoleType[]>([]);
-
-  const getRoleList = async () => {
-    const { data } = await getRoles();
-    console.log(data);
-    if (data) {
-      setRoleList(data);
-    }
-  };
-
-  useEffect(() => {
-    getRoleList();
-  }, []);
+const ManagedUserRoleChange = ({ selectRoles, setSelectRoles }: PropsType) => {
+  const { data, isLoading } = useRoleQuery();
 
   return (
     <Container>
       <ul>
-        {roleList
-          .filter((list) => !selectRoles?.includes(list.roleName))
-          .map((list) => (
-            <RoleLi
-              key={list.roleId}
-              onClick={() => setSelectRoles((prev) => [...prev, list.roleName])}
-            >
-              {list.roleName}
-            </RoleLi>
-          ))}
+        {data &&
+          data
+            .filter((list) => !selectRoles?.includes(list.roleName))
+            .map((list) => (
+              <RoleItem
+                key={list.roleId}
+                onClick={() =>
+                  setSelectRoles((prev) => [...prev, list.roleName])
+                }
+              >
+                <RoleItemText>{list.roleName}</RoleItemText>
+              </RoleItem>
+            ))}
       </ul>
-      {selectRoles.length !== 0 && (
-        <SelectRoles>
-          {selectRoles.map((item) => (
-            <Role key={`${item}`}>{item}</Role>
+      <SelectContainer>
+        <SelectedText>추가될 권한</SelectedText>
+        {selectRoles.length !== 0 &&
+          selectRoles.map((item) => (
+            <SelectedRoles key={`${item}`}>
+              <RoleItemText
+                onClick={() =>
+                  setSelectRoles((prev) =>
+                    prev.filter((roleName) => roleName !== item),
+                  )
+                }
+              >
+                {item}
+              </RoleItemText>
+            </SelectedRoles>
           ))}
-        </SelectRoles>
-      )}
+      </SelectContainer>
     </Container>
   );
 };
@@ -59,29 +62,32 @@ const Container = styled.div`
   margin-top: 1rem;
 `;
 
-const RoleLi = styled.li`
-  margin-bottom: 1rem;
-  padding: 1rem;
-
-  border-radius: 1rem;
-
-  background-color: gray;
+const RoleItem = styled.li`
+  padding: 0.75rem;
 `;
 
-const SelectRoles = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+const RoleItemText = styled.span`
+  padding: 0.25rem 0.375rem;
+  background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.4);
+  border-radius: 1rem;
 
+  font-weight: 600;
+`;
+
+const SelectedText = styled.p`
+  margin: 1rem auto;
+
+  font-weight: 600;
+  text-align: center;
+`;
+
+const SelectContainer = styled.div`
   border: 1px solid black;
   border-radius: 1rem;
 `;
 
-const Role = styled.p`
-  margin-left: 1rem;
-  padding: 1rem;
-
-  background-color: gray;
+const SelectedRoles = styled.div`
+  padding: 0.75rem;
 `;
 
-export default UserRoleChange;
+export default ManagedUserRoleChange;
