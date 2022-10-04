@@ -1,27 +1,8 @@
-import { getUsers } from '@/api/admin';
 import { useInfiniteQuery, useQuery } from 'react-query';
-import { SearchUserParams } from '@/types/search-params';
 import { AxiosError } from 'axios';
 
-interface ManagedUserInterface {
-  pageParams: string | undefined[];
-  pages: UserData[];
-}
-
-interface UserData {
-  content: {
-    id: number;
-    name: string;
-    loginId: string;
-    nickName: string;
-    createdDate: string;
-    roles: { roleName: string }[];
-    reportType?: string;
-    reporterName?: string;
-  }[];
-  totalPages: number;
-  totalElements: number;
-}
+import { SearchUserParams } from '@/types/search-params';
+import { getUsers } from '@/api/admin';
 
 function useManagedUserQuery(params: SearchUserParams) {
   console.log(params);
