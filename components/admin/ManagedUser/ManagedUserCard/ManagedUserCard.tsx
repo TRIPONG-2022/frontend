@@ -1,19 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 
-import { roleUser } from '@/api/admin';
-import Button from '@/components/shared/Button';
-import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
-import { ADMINUSER_MENU } from '@/constants/admin';
 import useModal from '@/hooks/useModal';
 import useToggle from '@/hooks/useToggle';
 import { ManagedUserInterface } from '@/types/managed-user';
 
 import * as Styled from './ManagedUserCard.styled';
-import ManagedUserRoleChange from '../ManagedUserRoleChange/ManagedUserRoleChange';
-
-import useBlackUser from '../hooks/useBlackUser';
-import useChangeUserRole from '../hooks/useChangeUserRole';
+import ManagedUserCardModal from './ManagedUserCardModal';
 
 interface Props {
   userData: ManagedUserInterface;
@@ -24,10 +17,6 @@ const ManagedUserCard = ({ userData }: Props) => {
 
   const [isModal, open, close] = useModal();
   const { toggle, onToggle, setOff } = useToggle(false);
-
-  const { mutate: black } = useBlackUser();
-
-  const { mutate: changeRole } = useChangeUserRole(selectRoles);
 
   return (
     <Styled.Container>
@@ -83,49 +72,14 @@ const ManagedUserCard = ({ userData }: Props) => {
       </Styled.Menu>
       <Styled.Back toggle={toggle} onClick={() => setOff()} />
 
-      <Modal isModal={isModal} close={close}>
-        <Modal.Title>{ADMINUSER_MENU[menu]?.title}</Modal.Title>
-        {menu == 'roleChange' && (
-          <ManagedUserRoleChange
-            selectRoles={selectRoles}
-            setSelectRoles={setSelectRoles}
-          />
-        )}
-        <Modal.BtnContainers>
-          <Button
-            size="lg"
-            type="submit"
-            css={`
-              width: 100%;
-              margin-top: 2rem;
-            `}
-            onClick={() => {
-              ADMINUSER_MENU[menu]?.onClick(userData.id, {
-                black,
-                changeRole,
-              });
-              close();
-            }}
-          >
-            예
-          </Button>
-          <Button
-            size="lg"
-            type="button"
-            variant="outline"
-            css={`
-              width: 100%;
-              margin-top: 2rem;
-            `}
-            onClick={() => {
-              setSelectRoles([]);
-              close();
-            }}
-          >
-            닫기
-          </Button>
-        </Modal.BtnContainers>
-      </Modal>
+      <ManagedUserCardModal
+        id={userData.id}
+        isModal={isModal}
+        close={close}
+        menu={menu}
+        selectRoles={selectRoles}
+        setSelectRoles={setSelectRoles}
+      />
     </Styled.Container>
   );
 };
