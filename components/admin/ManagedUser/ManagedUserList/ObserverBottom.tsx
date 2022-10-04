@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef, SetStateAction } from 'react';
+import React, { useCallback } from 'react';
 
-import { SearchUserParams } from '@/types/search-params';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 interface Props {
