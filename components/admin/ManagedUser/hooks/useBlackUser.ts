@@ -1,5 +1,6 @@
-import { blackUser } from '@/api/admin';
 import { useMutation, useQueryClient } from 'react-query';
+
+import { blackUser } from '@/api/admin';
 
 function useBlackUser() {
   const queryClient = useQueryClient();
