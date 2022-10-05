@@ -58,7 +58,7 @@ export const deleteRoles = async (roleId: number) => {
 
 // 유저
 
-interface GetUserParams {
+interface GetSearchParams {
   searchType?: string;
   keyword?: string;
   page?: number;
@@ -91,7 +91,7 @@ interface UserData {
   totalElements: number;
 }
 
-export const getUsers = async (params?: GetUserParams) => {
+export const getUsers = async (params?: GetSearchParams) => {
   const { data } = await instance.get<UserData>(`/admin/users`, {
     params: params,
   });
@@ -99,7 +99,7 @@ export const getUsers = async (params?: GetUserParams) => {
   return data;
 };
 
-export const getReportUsers = async (params?: GetUserParams) => {
+export const getReportUsers = async (params?: GetSearchParams) => {
   try {
     const { data } = await instance.get(`/admin/reports/users`, {
       params: {},
@@ -163,25 +163,9 @@ export const roleUser = async (userId: number, roleNames: string[]) => {
 //게시글
 
 export const getPosts = async () => {
-  try {
-    const { data } = await instance.get('/admin/posts');
-    console.log(data);
-    return {
-      data,
-      isError: false,
-    };
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-    return {
-      isError: true,
-    };
-  }
+  const { data } = await instance.get('/admin/posts');
+  console.log(data);
+  return data;
 };
 
 export const getReportPosts = async () => {
