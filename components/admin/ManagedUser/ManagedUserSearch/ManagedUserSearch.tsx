@@ -1,6 +1,6 @@
 import React, { SetStateAction, useState } from 'react';
 
-import { SearchUserParams } from '@/types/search-params';
+import { SearchParams } from '@/types/search-params';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import Select from '@/components/shared/Select';
@@ -9,8 +9,8 @@ import * as Styled from './ManagedUserSearch.styled';
 
 interface Props {
   isUserSearch: boolean;
-  searchParams: SearchUserParams;
-  setSearchParams: React.Dispatch<SetStateAction<SearchUserParams>>;
+  searchParams: SearchParams;
+  setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
 }
 
 const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
@@ -21,7 +21,7 @@ const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
   const [searchInput, setsearchInput] = useState<string>('');
 
   const setState =
-    (setSearchParams: React.Dispatch<React.SetStateAction<SearchUserParams>>) =>
+    (setSearchParams: React.Dispatch<React.SetStateAction<SearchParams>>) =>
     (value: string) =>
       setSearchParams((prev) => ({ ...prev, searchType: value }));
 

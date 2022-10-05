@@ -1,4 +1,4 @@
-export interface SearchUserParams {
+export interface SearchParams {
   searchType?: string;
   keyword?: string;
   page: number;

@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from 'react-query';
 import { AxiosError } from 'axios';
 
-import { SearchUserParams } from '@/types/search-params';
+import { SearchParams } from '@/types/search-params';
 import { getUsers } from '@/api/admin';
 
-function useManagedUserQuery(params: SearchUserParams) {
+function useManagedUserQuery(params: SearchParams) {
   console.log(params);
   const query = useInfiniteQuery(
     'userList',

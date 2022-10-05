@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import useToggle from '@/hooks/useToggle';
-import { SearchUserParams } from '@/types/search-params';
+import { SearchParams } from '@/types/search-params';
 
 import * as Styled from './ManagedUser.styled';
 import UserSearch from './ManagedUserSearch/ManagedUserSearch';
@@ -9,7 +9,7 @@ import ManagedUserList from './ManagedUserList/ManagedUserList';
 import ManagedBlackUserList from './ManagedUserList/ManagedBlackUserList';
 
 const ManagedUser = () => {
-  const [searchParams, setSearchParams] = useState<SearchUserParams>({
+  const [searchParams, setSearchParams] = useState<SearchParams>({
     searchType: 'loginId',
     keyword: '',
     page: 0,

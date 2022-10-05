@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback } from 'react';
 
-import { SearchUserParams } from '@/types/search-params';
+import { SearchParams } from '@/types/search-params';
 import { ManagedUserInterface } from '@/types/managed-user';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
 
@@ -8,8 +8,8 @@ import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
 
 interface Props {
-  searchParams: SearchUserParams;
-  setSearchParams: React.Dispatch<SetStateAction<SearchUserParams>>;
+  searchParams: SearchParams;
+  setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
 }
 
 const ManagedUserList = ({ searchParams, setSearchParams }: Props) => {
