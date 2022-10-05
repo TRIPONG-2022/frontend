@@ -49,27 +49,27 @@ const ManagedUserCard = ({ userData }: Props) => {
         가입날짜 :
         <Styled.CreateDateSpan>{userData.createdDate}</Styled.CreateDateSpan>
       </Styled.CreateDate>
-      <Styled.Menu onClick={() => onToggle()}>
+      <Styled.MenuContainer onClick={() => onToggle()}>
         <SVGIcon icon="DotThree" />
-        <Styled.MenuUl toggle={toggle}>
-          <Styled.MenuLi
+        <Styled.MenuList toggle={toggle}>
+          <Styled.MenuItem
             onClick={() => {
               setMenu('black');
               open();
             }}
           >
             블랙
-          </Styled.MenuLi>
-          <Styled.MenuLi
+          </Styled.MenuItem>
+          <Styled.MenuItem
             onClick={() => {
               setMenu('roleChange');
               open();
             }}
           >
             권한변경
-          </Styled.MenuLi>
-        </Styled.MenuUl>
-      </Styled.Menu>
+          </Styled.MenuItem>
+        </Styled.MenuList>
+      </Styled.MenuContainer>
       <Styled.Back toggle={toggle} onClick={() => setOff()} />
 
       <ManagedUserCardModal
