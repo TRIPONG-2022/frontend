@@ -100,20 +100,10 @@ export const getUsers = async (params?: GetSearchParams) => {
 };
 
 export const getReportUsers = async (params?: GetSearchParams) => {
-  try {
-    const { data } = await instance.get(`/admin/reports/users`, {
-      params: {},
-    });
-    return data;
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-  }
+  const { data } = await instance.get(`/admin/reports/users`, {
+    params: params,
+  });
+  return data;
 };
 
 export const blackUser = async (userId: number) => {
@@ -162,8 +152,10 @@ export const roleUser = async (userId: number, roleNames: string[]) => {
 
 //게시글
 
-export const getPosts = async () => {
-  const { data } = await instance.get('/admin/posts');
+export const getPosts = async (params?: GetSearchParams) => {
+  const { data } = await instance.get('/admin/posts', {
+    params: params,
+  });
   console.log(data);
   return data;
 };

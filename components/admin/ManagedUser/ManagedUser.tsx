@@ -12,7 +12,6 @@ const ManagedUser = () => {
   const [searchParams, setSearchParams] = useState<SearchParams>({
     searchType: 'loginId',
     keyword: '',
-    page: 0,
     size: 3,
   });
 

@@ -29,7 +29,6 @@ const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
     await setSearchParams((prev) => ({
       ...prev,
       keyword: searchInput,
-      page: 0,
     }));
     userRefetch();
   };
@@ -38,7 +37,6 @@ const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
     await setSearchParams((prev) => ({
       ...prev,
       keyword: searchInput,
-      page: 0,
     }));
     blackRefetch();
   };
