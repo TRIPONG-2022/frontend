@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import instance from './instance';
+import { SearchParams } from '@/types/search-params';
 
 interface EnroleAdminType {
   roleName: string;
@@ -7,12 +8,6 @@ interface EnroleAdminType {
 }
 
 // 권한
-
-interface RoleType {
-  roleId: number;
-  roleName: string;
-  description: string;
-}
 
 export const getRoles = async () => {
   const { data } = await instance.get('/admin/roles');
@@ -58,24 +53,6 @@ export const deleteRoles = async (roleId: number) => {
 
 // 유저
 
-interface GetSearchParams {
-  searchType?: string;
-  keyword?: string;
-  page?: number;
-  size?: number;
-}
-
-interface User {
-  id: number;
-  name: string;
-  loginId: string;
-  nickName: string;
-  createdDate: string;
-  roles: { roleName: string }[];
-  reportType?: string;
-  reporterName?: string;
-}
-
 interface UserData {
   content: {
     id: number;
@@ -91,7 +68,7 @@ interface UserData {
   totalElements: number;
 }
 
-export const getUsers = async (params?: GetSearchParams) => {
+export const getUsers = async (params?: SearchParams) => {
   const { data } = await instance.get<UserData>(`/admin/users`, {
     params: params,
   });
@@ -99,7 +76,7 @@ export const getUsers = async (params?: GetSearchParams) => {
   return data;
 };
 
-export const getReportUsers = async (params?: GetSearchParams) => {
+export const getReportUsers = async (params?: SearchParams) => {
   const { data } = await instance.get(`/admin/reports/users`, {
     params: params,
   });
@@ -152,33 +129,20 @@ export const roleUser = async (userId: number, roleNames: string[]) => {
 
 //게시글
 
-export const getPosts = async (params?: GetSearchParams) => {
+export const getPosts = async (params?: SearchParams) => {
   const { data } = await instance.get('/admin/posts', {
     params: params,
   });
-  console.log(data);
+
   return data;
 };
 
-export const getReportPosts = async () => {
-  try {
-    const { data } = await instance.get('/admin/reports/posts');
-    return {
-      data,
-      isError: false,
-    };
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-    return {
-      isError: true,
-    };
-  }
+export const getReportPosts = async (params?: SearchParams) => {
+  const { data } = await instance.get('/admin/reports/posts', {
+    params: params,
+  });
+
+  return data;
 };
 
 export const deleteReportPosts = async (postId: number) => {
