@@ -4,12 +4,15 @@ import useRoleQuery from '@/hooks/useRoleQuery';
 
 import * as Styled from './ManagedUserRoleChange.styled';
 
-interface PropsType {
+interface ManagedUserRoleChangeProps {
   selectRoles: string[];
   setSelectRoles: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const ManagedUserRoleChange = ({ selectRoles, setSelectRoles }: PropsType) => {
+const ManagedUserRoleChange = ({
+  selectRoles,
+  setSelectRoles,
+}: ManagedUserRoleChangeProps) => {
   const { data, isLoading } = useRoleQuery();
 
   return (
