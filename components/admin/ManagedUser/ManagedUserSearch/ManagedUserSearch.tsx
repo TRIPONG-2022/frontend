@@ -7,13 +7,17 @@ import Select from '@/components/shared/Select';
 
 import * as Styled from './ManagedUserSearch.styled';
 
-interface Props {
+interface ManagedUserSearchProps {
   isUserSearch: boolean;
   searchParams: SearchParams;
   setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
 }
 
-const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
+const ManagedUserSearch = ({
+  isUserSearch,
+  searchParams,
+  setSearchParams,
+}: ManagedUserSearchProps) => {
   const { refetch: userRefetch } = useManagedUserQuery(searchParams);
 
   const { refetch: blackRefetch } = useManagedBlackUserQuery(searchParams);
@@ -70,7 +74,7 @@ const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
 
       <Styled.SearchButton
         onClick={() =>
-          isUserSearch === true ? handleUserSearch() : handleBlackUserSearch()
+          isUserSearch ? handleUserSearch() : handleBlackUserSearch()
         }
       >
         검색
@@ -79,4 +83,4 @@ const UserSearch = ({ isUserSearch, searchParams, setSearchParams }: Props) => {
   );
 };
 
-export default UserSearch;
+export default ManagedUserSearch;
