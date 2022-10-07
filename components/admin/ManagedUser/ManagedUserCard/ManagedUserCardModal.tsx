@@ -1,12 +1,11 @@
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
 import { ADMINUSER_MENU } from '@/constants/admin';
-
 import ManagedUserRoleChange from '../ManagedUserRoleChange/ManagedUserRoleChange';
 import useBlackUser from '../hooks/useBlackUser';
 import useChangeUserRole from '../hooks/useChangeUserRole';
 
-interface Props {
+interface ManagedUserCardModalProps {
   id: number;
   isModal: boolean;
   close: () => void;
@@ -24,7 +23,7 @@ const ManagedUserCardModal = ({
   menu,
   selectRoles,
   setSelectRoles,
-}: Props) => {
+}: ManagedUserCardModalProps) => {
   const { mutate: black } = useBlackUser();
 
   const { mutate: changeRole } = useChangeUserRole(selectRoles);

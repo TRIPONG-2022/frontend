@@ -4,14 +4,14 @@ import SVGIcon from '@/components/shared/SVGIcon';
 import useModal from '@/hooks/useModal';
 import useToggle from '@/hooks/useToggle';
 import { ManagedUserInterface } from '@/types/managed-user';
-
-import * as Styled from './ManagedUserCard.styled';
 import ManagedUserCardModal from './ManagedUserCardModal';
 
-interface Props {
+import * as Styled from './ManagedUserCard.styled';
+
+interface ManagedUserCardProps {
   userData: ManagedUserInterface;
 }
-const ManagedUserCard = ({ userData }: Props) => {
+const ManagedUserCard = ({ userData }: ManagedUserCardProps) => {
   const [menu, setMenu] = useState('');
   const [selectRoles, setSelectRoles] = useState<string[]>([]);
 
