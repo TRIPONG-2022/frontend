@@ -1,25 +1,29 @@
 import React, { SetStateAction, useCallback } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { SearchParams } from '@/types/search-params';
 import { ManagedUserInterface } from '@/types/managed-user';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
-
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
 
-interface Props {
+interface ManagedUserListProps {
   searchParams: SearchParams;
   setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
 }
 
-const ManagedUserList = ({ searchParams, setSearchParams }: Props) => {
-  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
+const ManagedUserList = ({
+  searchParams,
+  setSearchParams,
+}: ManagedUserListProps) => {
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useManagedUserQuery(searchParams);
 
   const getNextPage = useCallback(() => {
-    setSearchParams((prev) => ({ ...prev, page: prev.page + 1 }));
     fetchNextPage();
-  }, [setSearchParams, fetchNextPage]);
+  }, [fetchNextPage]);
+
+  const queryClient = useQueryClient();
 
   if (isLoading) return <div>로딩 중</div>;
 
@@ -33,6 +37,20 @@ const ManagedUserList = ({ searchParams, setSearchParams }: Props) => {
         )),
       )}
       {hasNextPage && <ObserverBottom getNextPage={getNextPage} />}
+      <button
+        onClick={async () => {
+          queryClient.setQueryData('userList', (data: any) => {
+            console.log(data);
+            return {
+              pages: data.pages.slice(0, 1),
+              pagesParams: data.pageParams.slice(0, 1),
+            };
+          });
+          refetch();
+        }}
+      >
+        리페치
+      </button>
     </>
   );
 };

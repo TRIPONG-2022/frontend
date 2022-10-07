@@ -3,16 +3,18 @@ import React, { SetStateAction, useCallback } from 'react';
 import { SearchParams } from '@/types/search-params';
 import { ManagedUserInterface } from '@/types/managed-user';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
-
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
 
-interface Props {
+interface ManagedBlackUserListProps {
   searchParams: SearchParams;
   setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
 }
 
-const ManagedUserList = ({ searchParams, setSearchParams }: Props) => {
+const ManagedBlackUserList = ({
+  searchParams,
+  setSearchParams,
+}: ManagedBlackUserListProps) => {
   const { data, isLoading, isError, fetchNextPage, hasNextPage } =
     useManagedBlackUserQuery(searchParams);
 
@@ -36,4 +38,4 @@ const ManagedUserList = ({ searchParams, setSearchParams }: Props) => {
   );
 };
 
-export default ManagedUserList;
+export default ManagedBlackUserList;

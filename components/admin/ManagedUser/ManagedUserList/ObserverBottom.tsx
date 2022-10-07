@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
-interface Props {
+interface ObserverBottomProps {
   getNextPage: () => void;
 }
 
-const ObserverBottom = ({ getNextPage }: Props) => {
+const ObserverBottom = ({ getNextPage }: ObserverBottomProps) => {
   const observerCallback: IntersectionObserverCallback = useCallback(
     (entries) => {
       entries.forEach((entry) => {
