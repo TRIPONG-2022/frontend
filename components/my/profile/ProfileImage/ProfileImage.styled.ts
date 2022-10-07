@@ -69,3 +69,9 @@ export const NicknameInput = styled.input`
     outline: none;
   }
 `;
+
+export const NicknameErrorMessage = styled.p`
+  margin-top: 0.5rem;
+  color: ${({ theme }) => theme.colors.error.hex};
+  font-size: 0.75rem;
+`;

@@ -1,76 +1,49 @@
 import { useRouter } from 'next/router';
-import React, {
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import {
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  useWatch,
-} from 'react-hook-form';
+import { useQuery } from 'react-query';
+import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   getProfileInfomation,
-  MyPageBirthDateType,
+  MyPageBirthDate,
+  UserProfileData,
   patchProfileInformation,
-  UserDataType,
-  UserSendDataType,
 } from '@/api/myPage';
-import { getBirthDate } from '@/utils/date';
-import { useCityQuery } from '@/hooks/useCityQuery';
-import { useDistrictQuery } from '@/hooks/useDistrictQuery';
-import { ProfilePatchSchema } from '@/constants/schema';
+import { ProfilePatchSchema, PROFILE_PATCH_SCHEMA } from '@/constants/schema';
+import Button from '@/components/shared/Button';
+import theme from '@/styles/theme';
 import ProfileImage from '../ProfileImage';
 import ProfileInfo from '../ProfileInfo';
-import Button from '@/components/shared/Button';
 
-import theme from '@/styles/theme';
 import * as Styled from './Profile.styled';
 
 const Profile = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState<
-    UserDataType & MyPageBirthDateType
-  >();
+
   const [isEdit, setIsEdit] = useState(false);
+  const [userData, setUserData] = useState<UserProfileData & MyPageBirthDate>();
+
+  const { isFetching } = useQuery('userProfile', getProfileInfomation, {
+    onSuccess: (userData) => {
+      setUserData(userData);
+    },
+  });
 
   const methods = useForm<ProfilePatchSchema>({
-    defaultValues: useMemo(() => {
-      return userData;
-    }, [userData]),
+    mode: 'onChange',
+    resolver: yupResolver(PROFILE_PATCH_SCHEMA),
   });
-
-  const selectedCity = useWatch({ control: methods.control, name: 'city' });
-  const selectedDistrict = useWatch({
-    control: methods.control,
-    name: 'district',
-  });
-
-  const { data: cityData } = useCityQuery();
-  const { data: districtData } = useDistrictQuery(selectedCity);
 
   const {
     reset,
     handleSubmit,
-    formState: { isDirty, errors, isValid },
+    formState: { isDirty, isValid },
   } = methods;
 
   useEffect(() => {
-    (async function setUser() {
-      const userProfile = await getProfileInfomation();
-      if (userProfile) {
-        setUserData(userProfile);
-      }
-    })();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(isDirty, errors, isValid);
-  // }, [isDirty, errors, isValid]);
+    console.log('isDirty, isValid', isValid);
+  }, [isDirty, isValid]);
 
   useEffect(() => {
     reset(userData);
@@ -81,7 +54,7 @@ const Profile = () => {
       e.preventDefault();
       setIsEdit(!isEdit);
     },
-    [setIsEdit, isEdit],
+    [isEdit],
   );
 
   const cancelEdit = useCallback(() => {
@@ -90,37 +63,7 @@ const Profile = () => {
   }, [isEdit, reset, userData]);
 
   const onSubmit: SubmitHandler<ProfilePatchSchema> = async (data) => {
-    const { year, month, day, tags, picture, latitude, longitude } = data;
-    const convertedTags: string[] = tags!.map((tag) => tag.tag);
-
-    let birthDate: string | null = null;
-    if (year && month && day) {
-      birthDate = getBirthDate(year, month, day);
-    }
-
-    let pic = null;
-    if (picture) {
-      pic = picture[0] as unknown;
-    }
-
-    console.log(picture);
-
-    const sendData: UserSendDataType = {
-      birthDate,
-      picture: pic as File,
-      latitude: !!latitude ? latitude + '' : '',
-      longitude: !!longitude ? longitude + '' : '',
-      city: data.city,
-      district: data.district,
-      nickName: data.nickName,
-      gender: data.gender,
-      introduction: data.introduction,
-      phoneNumber: data.phoneNumber,
-    };
-
-    console.log('sendData', sendData);
-
-    await patchProfileInformation(sendData, convertedTags);
+    await patchProfileInformation(data);
     setIsEdit(!isEdit);
   };
 

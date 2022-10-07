@@ -1,5 +1,6 @@
 import { HEADER_HEIGHT } from '@/constants/menus';
 import { SCREEN_DESKTOP } from '@/styles/screen';
+import { Z_INDEX } from '@/styles/z-index';
 import styled from 'styled-components';
 
 export const GNBHeader = styled.header`
@@ -7,7 +8,7 @@ export const GNBHeader = styled.header`
   height: ${HEADER_HEIGHT};
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: ${Z_INDEX.HEADER};
 `;
 
 export const GNBNav = styled.nav`

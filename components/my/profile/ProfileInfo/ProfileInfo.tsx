@@ -1,30 +1,28 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import React, { ChangeEvent, useCallback } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-import ProfileTags from '@/components/my/profile/ProfileInfoTags';
-import Select from '@/components/shared/Select';
-import ProfileInfoBirthDateSelect from '@/components/my/profile/ProfileInfoBirthDateSelect/ProfileInfoBirthDateSelect';
 import { ProfilePatchSchema } from '@/constants/schema';
-import * as Styled from './ProfileInfo.styled';
+import Select from '@/components/shared/Select';
+import ProfileTags from '@/components/my/profile/ProfileInfoTags';
+import ProfileInfoBirthDateSelect from '@/components/my/profile/ProfileInfoBirthDateSelect/ProfileInfoBirthDateSelect';
 import ProfileInfoRegionSelect from '@/components/my/profile/ProfileInfoRegionSelect/ProfileInfoRegionSelect';
+
+import * as Styled from './ProfileInfo.styled';
 
 interface ProfileInfoProps {
   isEdit: boolean;
 }
 
 const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
-  const [textAreaHeight, setTextAreaHeight] = useState(0);
-
-  const { watch, register, control, setValue } =
+  const { watch, register, setValue, formState } =
     useFormContext<ProfilePatchSchema>();
+  const { errors } = formState;
+
   const { onChange, ...rest } = register('introduction');
 
-  const intro = watch('introduction') || '';
+  const intro = watch('introduction');
+  const selectedGender = watch('gender');
 
-  const onChangeOption = (id: 'gender') => (value: string) => {
-    setValue(id, value);
-  };
-  const selectedGender = useWatch({ control, name: 'gender' });
   const genderOptions = React.useMemo(
     () => [
       { value: 'male', label: '남' },
@@ -33,11 +31,24 @@ const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
     [],
   );
 
+  const onChangeOption = (id: 'gender') => (value: string) => {
+    setValue(id, value);
+  };
+
   const onResizeTextArea = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setTextAreaHeight(e.target.scrollHeight);
+      e.target.style.height = 'auto';
+      e.target.style.height = `${e.target.scrollHeight}px`;
     },
     [],
+  );
+
+  const onChangeTextAreaRef = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      onChange(e);
+      onResizeTextArea(e);
+    },
+    [onChange, onResizeTextArea],
   );
 
   return (
@@ -47,31 +58,31 @@ const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
           id="email"
           label="이메일"
           type="text"
-          {...register('email')}
           readOnly
+          {...register('email')}
         />
         <ModifyInfo
           id="name"
           label="이름"
           type="text"
-          isEdit={isEdit}
-          {...register('username')}
           readOnly
+          {...register('username')}
         />
         <ModifyInfo
           id="phoneNumber"
           label="휴대폰 번호"
           type="text"
           isEdit={isEdit}
-          {...register('phoneNumber')}
           readOnly
+          errorMessage={errors['phoneNumber']?.message}
+          {...register('phoneNumber')}
         />
         <Select
           id="gender"
           type="profile"
           isEdit={isEdit}
           label="성별"
-          defaultLabel="성별을 선택하세요."
+          defaultLabel={'성별을 선택하세요'}
           options={genderOptions}
           selectedValue={selectedGender}
           onChangeOption={onChangeOption('gender')}
@@ -88,13 +99,9 @@ const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
         </Styled.InfoLabel>
         <Styled.InformationTextarea
           id="introduction"
-          textAreaHeight={textAreaHeight}
           maxLength={500}
           readOnly={!isEdit}
-          onChange={(e) => {
-            onChange(e);
-            onResizeTextArea(e);
-          }}
+          onChange={onChangeTextAreaRef}
           {...rest}
         />
 
@@ -108,10 +115,11 @@ interface ModifyInfo extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string;
   isEdit?: boolean;
+  errorMessage?: string;
 }
 
 const ModifyInfo = React.forwardRef<HTMLInputElement, ModifyInfo>(
-  ({ id, label, isEdit, ...inputProps }, ref) => {
+  ({ id, label, isEdit, readOnly, errorMessage, ...inputProps }, ref) => {
     return (
       <>
         <Styled.InfoLabel htmlFor={id}>{label}</Styled.InfoLabel>
@@ -119,9 +127,14 @@ const ModifyInfo = React.forwardRef<HTMLInputElement, ModifyInfo>(
           id={id}
           ref={ref}
           name={id}
+          readOnly={readOnly && !isEdit}
           {...inputProps}
-          readOnly={!isEdit}
         />
+        {errorMessage && (
+          <Styled.InfoContentErrorMessage>
+            {errorMessage}
+          </Styled.InfoContentErrorMessage>
+        )}
       </>
     );
   },

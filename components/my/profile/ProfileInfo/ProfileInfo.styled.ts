@@ -62,9 +62,12 @@ export const InfoContentInput = styled.input`
   }
 `;
 
-interface InformationTextareaProps {
-  textAreaHeight?: number;
-}
+export const InfoContentErrorMessage = styled.p`
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  color: ${({ theme }) => theme.colors.error.hex};
+  font-size: 0.75rem;
+`;
 
 export const MiniText = styled.span`
   font-size: 0.75rem;
@@ -72,10 +75,9 @@ export const MiniText = styled.span`
   animation: ${opacityIncrease} 0.5s ease-in-out;
 `;
 
-export const InformationTextarea = styled.textarea<InformationTextareaProps>`
+export const InformationTextarea = styled.textarea`
   width: 100%;
   min-height: 10rem;
-  height: ${({ textAreaHeight }) => textAreaHeight}px;
   padding: 1.5rem;
   font-size: 16px;
   background: white;

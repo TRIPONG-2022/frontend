@@ -1,5 +1,5 @@
 import React, {
-  MouseEvent,
+  ChangeEvent,
   useCallback,
   useEffect,
   useRef,
@@ -10,12 +10,13 @@ import { useFormContext } from 'react-hook-form';
 import { fileToObjectURL } from '@/utils/image';
 import { ProfilePatchSchema } from '@/constants/schema';
 import SVGIcon from '@/components/shared/SVGIcon';
+
 import * as Styled from './ProfileImage.styled';
 
 interface ProfileImageProps {
   picture: string | null | undefined;
-  authentication: number | undefined;
   isEdit: boolean;
+  authentication: number | undefined;
 }
 
 const ProfileImage = ({
@@ -26,20 +27,26 @@ const ProfileImage = ({
   const [image, setImage] = useState(picture);
   const imgRef = useRef<HTMLInputElement | null>(null);
 
-  const { register, watch, setValue } = useFormContext<ProfilePatchSchema>();
+  const { register, watch, setValue, formState } =
+    useFormContext<ProfilePatchSchema>();
+  const { errors } = formState;
+
   const watchedNickName = watch('nickName');
-
-  const { ref, onChange, ...rest } = register('picture');
-
-  const onChangeImage = () => {
-    if (isEdit) imgRef.current!.click();
-  };
+  const {
+    ref: pictureRef,
+    onChange: pictureOnChange,
+    ...rest
+  } = register('picture');
 
   useEffect(() => {
     if (picture) {
       setImage(`data:image/jpg;base64,${picture}`);
     }
   }, [picture]);
+
+  const onChangeImage = () => {
+    if (isEdit) imgRef.current!.click();
+  };
 
   const removeImage = () => {
     setImage('');
@@ -53,6 +60,16 @@ const ProfileImage = ({
     }
   }, []);
 
+  const setImageRef = (e: HTMLInputElement) => {
+    imgRef.current = e;
+    pictureRef(e);
+  };
+
+  const onChangeImageRef = (e: ChangeEvent<HTMLInputElement>) => {
+    getImage();
+    pictureOnChange(e);
+  };
+
   return (
     <Styled.Container>
       <Styled.ProfileImageDiv>
@@ -61,16 +78,10 @@ const ProfileImage = ({
         )}
         <input
           type="file"
-          ref={(e) => {
-            ref(e);
-            imgRef.current = e;
-          }}
-          onChange={(e) => {
-            onChange(e);
-            getImage();
-          }}
-          {...rest}
+          ref={setImageRef}
+          onChange={onChangeImageRef}
           hidden
+          {...rest}
         />
         <Styled.ProfileBlankDiv onClick={onChangeImage}>
           {image && <Styled.ProfileImage src={image} />}
@@ -78,8 +89,15 @@ const ProfileImage = ({
       </Styled.ProfileImageDiv>
       <Styled.NicknameDiv>
         {!isEdit && <Styled.Nickname>{watchedNickName}</Styled.Nickname>}
-        {isEdit && <Styled.NicknameInput {...register('nickName')} />}
+        {isEdit && (
+          <Styled.NicknameInput maxLength={11} {...register('nickName')} />
+        )}
         {!!authentication && !isEdit && <SVGIcon icon="AuthenticatedIcon" />}
+      </Styled.NicknameDiv>
+      <Styled.NicknameDiv>
+        <Styled.NicknameErrorMessage>
+          {errors.nickName?.message && `*${errors.nickName?.message}`}
+        </Styled.NicknameErrorMessage>
       </Styled.NicknameDiv>
     </Styled.Container>
   );

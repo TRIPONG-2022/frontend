@@ -4,11 +4,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 1.75rem;
-
-  ${SCREEN_TABLET} {
-    padding-left: 0;
-  }
 `;
 
 export const ProfileWrapper = styled.div`

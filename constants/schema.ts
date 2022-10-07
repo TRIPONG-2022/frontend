@@ -82,24 +82,17 @@ export const JOIN_SCHEMA = yup.object({
 });
 
 export const PROFILE_PATCH_SCHEMA = yup.object({
-  loginId: LOGIN_ID_SCHEMA,
   email: EMAIL_SCHEMA,
   nickName: NICKNAME_SCHEMA,
-  username: yup
-    .string()
-    .matches(
-      /^[a-zA-Z가-힣][^0-9!@#$^&%*()+=-\[\]\/{}|:<>?,.]*$/,
-      SCHEMA_MESSAGES.NAME_FORMAT,
-    )
-    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  username: yup.string().nullable(),
   gender: yup
     .string()
     .matches(/^((?!default).)*$/)
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  authentication: yup.number().required(),
-  year: yup.number().nullable(),
-  month: yup.number().nullable(),
-  day: yup.number().nullable(),
+  authentication: yup.number(),
+  year: yup.number(),
+  month: yup.number(),
+  day: yup.number(),
   city: yup
     .string()
     .matches(/^((?!default).)*$/)
@@ -108,12 +101,18 @@ export const PROFILE_PATCH_SCHEMA = yup.object({
     .string()
     .matches(/^((?!default).)*$/)
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
-  introduction: yup.string(),
-  phoneNumber: yup.string(),
-  picture: yup.string(),
-  tags: yup.array(),
-  latitude: yup.number(),
-  longitude: yup.number(),
+  introduction: yup.string().max(500).nullable(),
+  phoneNumber: yup
+    .string()
+    .min(3, SCHEMA_MESSAGES.WRONG_PHONE_NUMBER_MIN_LENGTH)
+    .matches(/[0-9]$/g, {
+      message: SCHEMA_MESSAGES.WRONG_PHONE_NUMBER_FORMAT,
+    })
+    .nullable(),
+  picture: yup.mixed(),
+  tags: yup.array().nullable(),
+  latitude: yup.number().nullable(),
+  longitude: yup.number().nullable(),
 });
 
 export const RESET_PASSWORD_SCHEMA = yup.object({

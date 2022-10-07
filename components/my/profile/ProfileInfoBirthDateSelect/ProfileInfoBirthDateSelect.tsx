@@ -25,9 +25,7 @@ const ProfileInfoBirthDateSelect = ({
   const selectedDay = useWatch({ control, name: 'day' });
 
   const allYears = useMemo(() => getOptionYears(getCurrentYear(), 100), []);
-
   const allMonths = useMemo(() => getOptionMonths, []);
-
   const allDays = useMemo(
     () => getOptionDays(selectedYear, selectedMonth),
     [selectedYear, selectedMonth],
@@ -45,7 +43,7 @@ const ProfileInfoBirthDateSelect = ({
         isEdit={isEdit}
         disabled={!isEdit}
         label="생년월일"
-        defaultLabel="연도 입력"
+        defaultLabel={'연도 입력'}
         options={allYears}
         selectedValue={selectedYear}
         onChangeOption={onChangeOption('year')}
@@ -55,7 +53,7 @@ const ProfileInfoBirthDateSelect = ({
         type="profile"
         isEdit={isEdit}
         disabled={!isEdit}
-        defaultLabel="월 입력"
+        defaultLabel={'월 입력'}
         options={allMonths}
         selectedValue={selectedMonth}
         onChangeOption={onChangeOption('month')}
@@ -65,7 +63,7 @@ const ProfileInfoBirthDateSelect = ({
         type="profile"
         isEdit={isEdit}
         disabled={!isEdit}
-        defaultLabel="날짜 입력"
+        defaultLabel={'일 입력'}
         options={allDays}
         selectedValue={selectedDay}
         onChangeOption={onChangeOption('day')}

@@ -5,7 +5,6 @@ import { useCityQuery } from '@/hooks/useCityQuery';
 import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { ProfilePatchSchema } from '@/constants/schema';
 import Select from '@/components/shared/Select';
-import { useEffect } from 'react';
 
 interface ProfileInfoRegionSelectProps {
   isEdit: boolean;
@@ -32,7 +31,7 @@ const ProfileInfoRegionSelect = ({ isEdit }: ProfileInfoRegionSelectProps) => {
         isEdit={isEdit}
         label="지역"
         disabled={!isEdit}
-        defaultLabel="도시를 선택해주세요"
+        defaultLabel={'도시를 선택해주세요'}
         options={cityData?.regionData}
         selectedValue={selectedCity}
         onChangeOption={onChangeOption('city')}
@@ -41,7 +40,7 @@ const ProfileInfoRegionSelect = ({ isEdit }: ProfileInfoRegionSelectProps) => {
         id="district"
         type="profile"
         isEdit={isEdit}
-        defaultLabel="구를 선택해주세요"
+        defaultLabel={'구를 선택해주세요'}
         options={districtData?.regionData}
         disabled={!selectedCity || !isEdit}
         selectedValue={selectedDistrict}
