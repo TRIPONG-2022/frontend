@@ -1,42 +1,22 @@
-import { getPosts, getReportPosts } from '@/api/admin';
-import { useEffect, useState } from 'react';
-import * as Styled from './ManagedPost.styled';
-import AdminPostCard from './ManagedPostCard';
+import { useState } from 'react';
 
-interface PostType {
-  userId: number;
-  postId: number;
-  title: string;
-  loginId: string;
-  nickName: string;
-  postCreatedDate: string;
-}
+import useToggle from '@/hooks/useToggle';
+import { SearchParams } from '@/types/search-params';
+
+import * as Styled from './ManagedPost.styled';
+import ManagedPostList from './ManagedPostList/ManagedPostList';
+import ManagedReportPostList from './ManagedPostList/ManagedReportPostList';
+import ManagedPostSearch from './ManagedPostSearch/ManagedPostSearch';
 
 const Post = () => {
-  const [postList, setPostList] = useState([
-    {
-      userId: 1,
-      postId: 2,
-      title: '제목',
-      loginId: 'admin',
-      nickName: '관리자',
-      postCreatedDate: '2022-07-26',
-    },
-  ]);
-  const [activeBtn, setActiveBtn] = useState(true);
+  const { toggle: isPostSearch, onToggle, setOff, setOn } = useToggle(true);
 
-  const getAllPost = async () => {
-    const { data } = await getPosts();
-    // setPostList(data.content);
-  };
+  const [searchParams, setSearchParams] = useState<SearchParams>({
+    searchType: 'title',
+    keyword: '',
+    size: 3,
+  });
 
-  const getReportPost = async () => {
-    const { data } = await getReportPosts();
-    // setPostList(data.content);
-  };
-  useEffect(() => {
-    getAllPost();
-  }, []);
   return (
     <Styled.LayoutContainer>
       <Styled.LayoutSideMenu>
@@ -46,27 +26,32 @@ const Post = () => {
         <Styled.Container>
           <Styled.Title>게시글 조회</Styled.Title>
           <Styled.GetPostsBtn
-            active={activeBtn}
+            toggle={isPostSearch}
             onClick={() => {
-              setActiveBtn((prev) => !prev);
-              getAllPost();
+              setOn();
             }}
           >
             전체 게시글 조회
           </Styled.GetPostsBtn>
           <Styled.GetPostsBtn
-            active={!activeBtn}
+            toggle={!isPostSearch}
             onClick={() => {
-              setActiveBtn((prev) => !prev);
-              getReportPost();
+              setOff();
             }}
           >
             신고된 게시글 조회
           </Styled.GetPostsBtn>
 
-          {postList.map((data) => (
-            <AdminPostCard key={data.postId} postData={data} />
-          ))}
+          <ManagedPostSearch
+            isePostSearch={isPostSearch}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
+
+          {isPostSearch && <ManagedPostList searchParams={searchParams} />}
+          {!isPostSearch && (
+            <ManagedReportPostList searchParams={searchParams} />
+          )}
         </Styled.Container>
       </Styled.LayoutBody>
     </Styled.LayoutContainer>

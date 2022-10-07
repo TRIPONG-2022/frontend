@@ -64,13 +64,13 @@ export const Title = styled.h1`
 `;
 
 export const GetPostsBtn = styled.button<{
-  active: boolean;
+  toggle: boolean;
 }>`
   font-size: 1rem;
   font-weight: 800;
   padding: 1rem;
   background-color: rgba(
-    ${({ active, theme }) => (active ? theme.colors.primary.rgb : null)},
+    ${({ toggle, theme }) => (toggle ? theme.colors.primary.rgb : null)},
     0.4
   );
   border-radius: 1.5rem;
