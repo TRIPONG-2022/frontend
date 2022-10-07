@@ -17,9 +17,8 @@ const ManagedUserList = ({ searchParams, setSearchParams }: Props) => {
     useManagedBlackUserQuery(searchParams);
 
   const getNextPage = useCallback(() => {
-    setSearchParams((prev) => ({ ...prev, page: prev.page + 1 }));
     fetchNextPage();
-  }, [setSearchParams, fetchNextPage]);
+  }, [fetchNextPage]);
 
   if (isLoading) return <div>로딩 중</div>;
 
