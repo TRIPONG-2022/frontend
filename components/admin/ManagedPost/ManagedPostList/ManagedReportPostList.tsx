@@ -1,4 +1,4 @@
-import { ManagedPostInterface } from '@/types/managed-post';
+import { ManagedPostData } from '@/types/managed-post';
 import { SearchParams } from '@/types/search-params';
 import ManagedPostCard from '../ManagedPostCard/ManagedPostCard';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
@@ -17,7 +17,7 @@ const ManagedReportPostList = ({
   return (
     <Styled.Container>
       {data?.pages.map(({ content }) =>
-        content?.map((data: ManagedPostInterface) => (
+        content?.map((data: ManagedPostData) => (
           <ManagedPostCard postData={data} key={data.postId} />
         )),
       )}

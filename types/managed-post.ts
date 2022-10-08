@@ -1,4 +1,4 @@
-export interface ManagedPostInterface {
+export interface ManagedPostData {
   userId: number;
   postId: number;
   title: string;

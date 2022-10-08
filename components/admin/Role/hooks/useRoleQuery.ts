@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
 import { AxiosError } from 'axios';
 import { getRoles } from '@/api/admin';
-import { RoleType } from '@/types/role';
+import { RoleData } from '@/types/managed-role';
 
 function useRoleQuery() {
-  const query = useQuery<RoleType[], AxiosError>('roleList', () => getRoles(), {
+  const query = useQuery<RoleData[], AxiosError>('roleList', () => getRoles(), {
     staleTime: 50000,
     onError: (err: AxiosError) => {
       if (err.response?.status) {

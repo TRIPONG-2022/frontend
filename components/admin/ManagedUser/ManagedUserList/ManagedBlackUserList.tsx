@@ -1,7 +1,7 @@
 import React, { SetStateAction, useCallback } from 'react';
 
 import { SearchParams } from '@/types/search-params';
-import { ManagedUserInterface } from '@/types/managed-user';
+import { ManagedUserData } from '@/types/managed-user';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
@@ -29,7 +29,7 @@ const ManagedBlackUserList = ({
   return (
     <>
       {data?.pages.map(({ content }) =>
-        content?.map((data: ManagedUserInterface) => (
+        content?.map((data: ManagedUserData) => (
           <ManagedUserCard userData={data} key={data.id} />
         )),
       )}

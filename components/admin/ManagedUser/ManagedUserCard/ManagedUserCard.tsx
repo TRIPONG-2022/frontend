@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import SVGIcon from '@/components/shared/SVGIcon';
 import useModal from '@/hooks/useModal';
 import useToggle from '@/hooks/useToggle';
-import { ManagedUserInterface } from '@/types/managed-user';
+import { ManagedUserData } from '@/types/managed-user';
 import ManagedUserCardModal from './ManagedUserCardModal';
 
 import * as Styled from './ManagedUserCard.styled';
 
 interface ManagedUserCardProps {
-  userData: ManagedUserInterface;
+  userData: ManagedUserData;
 }
 const ManagedUserCard = ({ userData }: ManagedUserCardProps) => {
   const [menu, setMenu] = useState('');

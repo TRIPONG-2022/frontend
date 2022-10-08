@@ -3,13 +3,13 @@ import { useState } from 'react';
 import useToggle from '@/hooks/useToggle';
 import SVGIcon from '@/components/shared/SVGIcon';
 import useModal from '@/hooks/useModal';
-import { ManagedPostInterface } from '@/types/managed-post';
+import { ManagedPostData } from '@/types/managed-post';
 import ManagedPostCardModal from './ManagedPostCardModal';
 
 import * as Styled from './ManagedPostCard.styled';
 
 interface ManagedPostCardProps {
-  postData: ManagedPostInterface;
+  postData: ManagedPostData;
 }
 
 const AdminPostCard = ({ postData }: ManagedPostCardProps) => {

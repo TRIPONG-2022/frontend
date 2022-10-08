@@ -1,4 +1,4 @@
-export interface ManagedUserInterface {
+export interface ManagedUserData {
   id: number;
   name: string;
   loginId: string;
