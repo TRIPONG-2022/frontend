@@ -1,5 +1,37 @@
 import styled, { css } from 'styled-components';
 
+export const Container = styled.li`
+  position: relative;
+  padding: 1.5rem;
+
+  border: 2px solid;
+  border-color: black;
+  border-radius: 1rem;
+
+  margin-bottom: 1rem;
+`;
+
+export const Title = styled.p`
+  margin-bottom: 1.25rem;
+
+  font-size: 1.25rem;
+  font-weight: 700;
+`;
+
+export const BottomContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  color: ${({ theme }) => theme.colors.gray[500]};
+`;
+
+export const NickName = styled.span`
+  font-size: 0.875rem;
+`;
+
+export const CreatedDate = styled.span`
+  font-size: 0.875rem;
+`;
+
 export const MenuContainer = styled.div`
   position: absolute;
   top: 1rem;

@@ -4,7 +4,7 @@ import { ADMINPOST_MENU } from '@/constants/admin';
 import useBlackUser from '../../ManagedUser/hooks/useBlackUser';
 import useDeletePost from '../hooks/useDeletePost';
 
-interface Props {
+interface ManagedPostCardModalProps {
   userId: number;
   postId: number;
   isModal: boolean;
@@ -18,7 +18,7 @@ const ManagedPostCardModal = ({
   isModal,
   close,
   menu,
-}: Props) => {
+}: ManagedPostCardModalProps) => {
   const { mutate: black } = useBlackUser();
 
   const { mutate: deletePost } = useDeletePost();
