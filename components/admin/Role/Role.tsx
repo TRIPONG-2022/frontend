@@ -1,6 +1,7 @@
 import AddRole from './AddRole/AddRole';
-import * as Styled from './Role.styled';
 import RoleList from './RoleList/RoleList';
+
+import * as Styled from './Role.styled';
 
 const Role = () => {
   return (
