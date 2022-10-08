@@ -1,13 +1,7 @@
-import axios, { AxiosError } from 'axios';
-import instance from './instance';
 import { SearchParams } from '@/types/search-params';
-
-interface EnroleAdminType {
-  roleName: string;
-  description: string;
-}
-
-// 권한
+import { EnroleApiParams } from '@/types/managed-role';
+import { ManagedUserData } from '@/types/managed-user';
+import instance from './instance';
 
 export const getRoles = async () => {
   const { data } = await instance.get('/admin/roles');
@@ -18,35 +12,19 @@ export const getRoles = async () => {
 export const enrolRoles = async ({
   roleName,
   description,
-}: EnroleAdminType) => {
-  try {
-    const data = await instance.post('/admin/roles', {
-      roleName,
-      description,
-    });
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-  }
+}: EnroleApiParams) => {
+  const data = await instance.post('/admin/roles', {
+    roleName,
+    description,
+  });
+
+  return data;
 };
 
 export const deleteRoles = async (roleId: number) => {
-  try {
-    const data = await instance.delete(`/admin/roles/${roleId}`);
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-  }
+  const data = await instance.delete(`/admin/roles/${roleId}`);
+
+  return data;
 };
 
 //자원은 뒤로
@@ -54,16 +32,7 @@ export const deleteRoles = async (roleId: number) => {
 // 유저
 
 interface UserData {
-  content: {
-    id: number;
-    name: string;
-    loginId: string;
-    nickName: string;
-    createdDate: string;
-    roles: { roleName: string }[];
-    reportType?: string;
-    reporterName?: string;
-  }[];
+  content: ManagedUserData[];
   totalPages: number;
   totalElements: number;
 }
@@ -80,51 +49,22 @@ export const getReportUsers = async (params?: SearchParams) => {
   const { data } = await instance.get(`/admin/reports/users`, {
     params: params,
   });
+
   return data;
 };
 
 export const blackUser = async (userId: number) => {
-  try {
-    const data = await instance.patch(`/admin/reports/users/black/${userId}`);
-    console.log(data);
-    return {
-      isError: false,
-    };
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-    return {
-      isError: true,
-    };
-  }
+  const data = await instance.patch(`/admin/reports/users/black/${userId}`);
+
+  return data;
 };
 
 export const roleUser = async (userId: number, roleNames: string[]) => {
-  try {
-    const data = await instance.patch(`/admin/users/${userId}`, {
-      roleNames,
-    });
-    console.log(data);
-    return {
-      isError: false,
-    };
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-    return {
-      isError: true,
-    };
-  }
+  const data = await instance.patch(`/admin/users/${userId}`, {
+    roleNames,
+  });
+
+  return data;
 };
 
 //게시글
@@ -146,15 +86,7 @@ export const getReportPosts = async (params?: SearchParams) => {
 };
 
 export const deleteReportPosts = async (postId: number) => {
-  try {
-    const data = await instance.delete(`/admin/reports/posts/${postId}`);
-  } catch (err) {
-    const errors = err as Error | AxiosError;
-    if (axios.isAxiosError(errors)) {
-      console.log('axios err');
-      console.log(err);
-    } else {
-      console.log(err);
-    }
-  }
+  const data = await instance.delete(`/admin/reports/posts/${postId}`);
+
+  return data;
 };
