@@ -1,16 +1,15 @@
-import { useState } from 'react';
-import useManagedPostQuery from '../hooks/useManagedPostQuery';
-
-import ManagedPostCard from '../ManagedPostCard/ManagedPostCard';
-import * as Styled from './ManagedPostList.styled';
 import { SearchParams } from '@/types/search-params';
 import { ManagedPostInterface } from '@/types/managed-post';
+import useManagedPostQuery from '../hooks/useManagedPostQuery';
+import ManagedPostCard from '../ManagedPostCard/ManagedPostCard';
 
-interface Props {
+import * as Styled from './ManagedPostList.styled';
+
+interface ManagedPostListProps {
   searchParams: SearchParams;
 }
 
-const ManagedPostList = ({ searchParams }: Props) => {
+const ManagedPostList = ({ searchParams }: ManagedPostListProps) => {
   const { data } = useManagedPostQuery(searchParams);
 
   return (

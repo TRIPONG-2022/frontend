@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import useToggle from '@/hooks/useToggle';
 import { SearchParams } from '@/types/search-params';
-
-import * as Styled from './ManagedPost.styled';
 import ManagedPostList from './ManagedPostList/ManagedPostList';
 import ManagedReportPostList from './ManagedPostList/ManagedReportPostList';
 import ManagedPostSearch from './ManagedPostSearch/ManagedPostSearch';
+
+import * as Styled from './ManagedPost.styled';
 
 const Post = () => {
   const { toggle: isPostSearch, onToggle, setOff, setOn } = useToggle(true);

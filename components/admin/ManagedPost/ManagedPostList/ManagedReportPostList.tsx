@@ -1,15 +1,17 @@
 import { ManagedPostInterface } from '@/types/managed-post';
 import { SearchParams } from '@/types/search-params';
-
-import * as Styled from './ManagedPostList.styled';
 import ManagedPostCard from '../ManagedPostCard/ManagedPostCard';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
 
-interface Props {
+import * as Styled from './ManagedPostList.styled';
+
+interface ManagedReportPostListProps {
   searchParams: SearchParams;
 }
 
-const ManagedReportPostList = ({ searchParams }: Props) => {
+const ManagedReportPostList = ({
+  searchParams,
+}: ManagedReportPostListProps) => {
   const { data } = useManagedReportPostQuery(searchParams);
 
   return (

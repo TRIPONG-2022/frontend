@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 import Select from '@/components/shared/Select';
 import { SearchParams } from '@/types/search-params';
-
-import * as Styled from './ManagedPostSearch.styled';
 import useManagedPostQuery from '../hooks/useManagedPostQuery';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
 
-interface Props {
+import * as Styled from './ManagedPostSearch.styled';
+
+interface ManagedPostSearchProps {
   isePostSearch: boolean;
   searchParams: SearchParams;
   setSearchParams: (
@@ -19,7 +19,7 @@ const ManagedPostSearch = ({
   isePostSearch,
   searchParams,
   setSearchParams,
-}: Props) => {
+}: ManagedPostSearchProps) => {
   const [searchInput, setsearchInput] = useState<string>('');
 
   const { refetch: postRefetch } = useManagedPostQuery(searchParams);
