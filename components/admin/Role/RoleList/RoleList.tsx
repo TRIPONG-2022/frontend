@@ -1,7 +1,4 @@
-import Image from 'next/image';
-
-import LoadingSpinner from '@/assets/icons/Loadinggif.gif';
-import useRoleQuery from '@/hooks/useRoleQuery';
+import useRoleQuery from '@/components/admin/Role/hooks/useRoleQuery';
 import { RoleData } from '@/types/managed-role';
 import RoleCard from '../RoleCard/RoleCard';
 
@@ -13,7 +10,7 @@ const RoleList = () => {
   if (isLoading)
     return (
       <Styled.LoadingContainer>
-        <Image src={LoadingSpinner} alt="로딩이미지" />
+        <p>로딩중</p>
       </Styled.LoadingContainer>
     );
 
