@@ -1,32 +1,20 @@
-import { useMutation } from 'react-query';
-
-import { deleteRoles } from '@/api/admin';
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
 import SVGIcon from '@/components/shared/SVGIcon';
 import useModal from '@/hooks/useModal';
-import useRoleQuery from '@/hooks/useRoleQuery';
+import { RoleData } from '@/types/managed-role';
+import useDeleteRole from '../hooks/useDeleteRole';
 
 import * as Styled from './RoleCard.styled';
 
 interface RoleCardProps {
-  item: {
-    roleId: number;
-    roleName: string;
-    description: string;
-  };
+  item: RoleData;
 }
 
 const RoleCard = ({ item }: RoleCardProps) => {
   const [isModal, open, close] = useModal();
 
-  const { refetch } = useRoleQuery();
-
-  const { mutate } = useMutation((roleId: number) => deleteRoles(roleId), {
-    onSuccess: () => {
-      refetch();
-    },
-  });
+  const { mutate } = useDeleteRole();
 
   return (
     <Styled.Container>

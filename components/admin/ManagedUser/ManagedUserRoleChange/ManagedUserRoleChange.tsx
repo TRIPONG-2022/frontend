@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useRoleQuery from '@/hooks/useRoleQuery';
+import useRoleQuery from '@/components/admin/Role/hooks/useRoleQuery';
 
 import * as Styled from './ManagedUserRoleChange.styled';
 

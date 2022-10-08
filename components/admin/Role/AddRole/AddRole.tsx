@@ -1,10 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ADDROLE_SCHEMA, AddRoleSchema } from '@/constants/schema';
 import AuthInput from '@/components/shared/AuthInput';
-import { enrolRoles } from '@/api/admin';
+import useAddRole from '../hooks/useAddRole';
 
 import * as Styled from './AddRole.styled';
 
@@ -19,20 +18,7 @@ const AddRole = () => {
     resolver: yupResolver(ADDROLE_SCHEMA),
   });
 
-  const queryClient = useQueryClient();
-
-  const { mutate, isLoading } = useMutation(
-    (data: AddRoleSchema) => enrolRoles(data),
-    {
-      onMutate: () => {
-        const previousValue = queryClient.getQueryData('roleList');
-      },
-
-      onSuccess: async () => {
-        queryClient.invalidateQueries('roleList');
-      },
-    },
-  );
+  const { mutate } = useAddRole();
 
   const onSubmit = (data: AddRoleSchema) => {
     console.log(data);
