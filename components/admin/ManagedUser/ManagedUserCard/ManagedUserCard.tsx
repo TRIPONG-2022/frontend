@@ -37,14 +37,14 @@ const ManagedUserCard = ({ userData }: ManagedUserCardProps) => {
         </Styled.Name>
       </Styled.NameWrapper>
       <Styled.LoginId>{userData.loginId}</Styled.LoginId>
-      <Styled.RoleText>
+      <Styled.RoleWrapper>
         유저권한 :
         {userData.roles?.map(({ roleName }: { roleName: string }, index) => (
           <Styled.RoleSpan key={`${roleName}+ ${index}`}>
             {roleName}
           </Styled.RoleSpan>
         ))}
-      </Styled.RoleText>
+      </Styled.RoleWrapper>
       <Styled.CreateDate>
         가입날짜 :
         <Styled.CreateDateSpan>{userData.createdDate}</Styled.CreateDateSpan>

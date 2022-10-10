@@ -111,7 +111,7 @@ export const DropdownItem = styled.li`
   z-index: 10;
 `;
 
-export const RoleText = styled.p`
+export const RoleWrapper = styled.p`
   margin-bottom: 0.75rem;
 
   font-size: 1rem;
