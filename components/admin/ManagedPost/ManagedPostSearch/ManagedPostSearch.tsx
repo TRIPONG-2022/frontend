@@ -6,20 +6,15 @@ import useManagedPostQuery from '../hooks/useManagedPostQuery';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
 
 import * as Styled from './ManagedPostSearch.styled';
+import usePostSearchParamsContext from '../contexts/usePostSearchParamsContext';
 
 interface ManagedPostSearchProps {
   isePostSearch: boolean;
-  searchParams: SearchParams;
-  setSearchParams: (
-    searchParams: SearchParams | ((searchParams: SearchParams) => SearchParams),
-  ) => void;
 }
 
-const ManagedPostSearch = ({
-  isePostSearch,
-  searchParams,
-  setSearchParams,
-}: ManagedPostSearchProps) => {
+const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
+  const { searchParams, setSearchParams } = usePostSearchParamsContext();
+
   const [searchInput, setsearchInput] = useState<string>('');
 
   const { refetch: postRefetch } = useManagedPostQuery(searchParams);
