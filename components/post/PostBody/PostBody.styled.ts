@@ -5,6 +5,7 @@ import { SCREEN_TABLET } from '@/styles/screen';
 export const PostBodyContainer = styled.div`
   max-width: 768px;
   margin: 0 auto;
+  padding-bottom: 5rem;
 `;
 
 export const PostContent = styled.div`
@@ -40,5 +41,16 @@ export const PostTagItem = styled.li`
 
   &:hover {
     text-decoration: underline;
+  }
+`;
+
+export const ReplyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
   }
 `;
