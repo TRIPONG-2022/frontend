@@ -1,39 +1,31 @@
 import instance from './instance';
 import { GetReplyParams, Reply } from '@/types/reply';
 
-export async function requestGetRepliesByPost(
+export function requestGetReplies(
   postId: string | number,
-  params: GetReplyParams,
+  replyId?: string | number,
 ) {
-  const { data } = await instance.get<Reply[]>(`/replies/parent/${postId}`, {
-    params,
-  });
-  return data;
-}
-
-export async function requestGetRepliesByReply(
-  postId: string | number,
-  replyId: string | number,
-  params: GetReplyParams,
-) {
-  const { data } = await instance.get<Reply[]>(
-    `/replies/children/${postId}/${replyId}`,
-    {
+  const url = replyId
+    ? `/replies/children/${postId}/${replyId}`
+    : `/replies/parent/${postId}`;
+  return async (params: GetReplyParams) => {
+    const { data } = await instance.get<Reply[]>(url, {
       params,
-    },
-  );
-  return data;
+    });
+    return data;
+  };
 }
 
 export function requestCreateReply(
   postId: string | number,
   replyId?: string | number,
 ) {
-  const url = replyId ? `/replies/${postId}/${replyId}` : `/replies/${postId}`;
+  const url = `/replies/${postId}`;
 
   return async (content: string) => {
     await instance.post(url, {
       content,
+      parentReply: replyId,
     });
   };
 }
