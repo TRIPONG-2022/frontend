@@ -28,6 +28,10 @@ const ButtonVariantStyles = {
     background-color: transparent;
     box-shadow: inset 0 0 0 2px ${({ theme }) => theme.colors.primary.hex};
   `,
+  default: css`
+    color: ${({ theme }) => theme.colors.gray[700]};
+    background-color: ${({ theme }) => theme.colors.gray[100]};
+  `,
 };
 
 export type ButtonSize = keyof typeof ButtonSizeStyles;
