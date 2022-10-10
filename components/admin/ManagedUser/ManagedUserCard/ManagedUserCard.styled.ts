@@ -53,7 +53,7 @@ export const CreateDateSpan = styled.span`
   margin-left: 0.5rem;
 `;
 
-export const MenuContainer = styled.div`
+export const DropdownContainer = styled.div`
   position: absolute;
   top: 0.5rem;
   right: 1rem;
@@ -80,7 +80,7 @@ export const Back = styled.div<ActiveProps>`
     `}
 `;
 
-export const MenuList = styled.ul<ActiveProps>`
+export const DropdownList = styled.ul<ActiveProps>`
   position: absolute;
   top: 1rem;
   right: 0;
@@ -94,7 +94,7 @@ export const MenuList = styled.ul<ActiveProps>`
   z-index: 20;
 `;
 
-export const MenuItem = styled.li`
+export const DropdownItem = styled.li`
   width: 5rem;
 
   border: 1px solid;

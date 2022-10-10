@@ -32,7 +32,7 @@ export const CreatedDate = styled.span`
   font-size: 0.875rem;
 `;
 
-export const MenuContainer = styled.div`
+export const DropdownContainer = styled.div`
   position: absolute;
   top: 1rem;
   right: 1.5rem;
@@ -59,7 +59,7 @@ export const Back = styled.div<ActiveProps>`
     `}
 `;
 
-export const MenuList = styled.ul<ActiveProps>`
+export const DropdownList = styled.ul<ActiveProps>`
   position: absolute;
   top: 1rem;
   right: 0;
@@ -74,7 +74,7 @@ export const MenuList = styled.ul<ActiveProps>`
   background-color: white;
 `;
 
-export const MenuItem = styled.li`
+export const DropdownItem = styled.li`
   width: 5rem;
 
   border: 1px solid;

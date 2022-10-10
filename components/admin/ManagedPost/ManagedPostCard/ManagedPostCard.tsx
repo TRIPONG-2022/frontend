@@ -21,27 +21,27 @@ const AdminPostCard = ({ postData }: ManagedPostCardProps) => {
   return (
     <Styled.Container>
       <Styled.Title>{postData.title}</Styled.Title>
-      <Styled.MenuContainer onClick={() => onToggle()}>
+      <Styled.DropdownContainer onClick={() => onToggle()}>
         <SVGIcon icon="DotThree" />
-        <Styled.MenuList toggle={toggle}>
-          <Styled.MenuItem
+        <Styled.DropdownList toggle={toggle}>
+          <Styled.DropdownItem
             onClick={() => {
               setMenu('deletePost');
               open();
             }}
           >
             게시물 삭제
-          </Styled.MenuItem>
-          <Styled.MenuItem
+          </Styled.DropdownItem>
+          <Styled.DropdownItem
             onClick={() => {
               setMenu('black');
               open();
             }}
           >
             작성자 블랙
-          </Styled.MenuItem>
-        </Styled.MenuList>
-      </Styled.MenuContainer>
+          </Styled.DropdownItem>
+        </Styled.DropdownList>
+      </Styled.DropdownContainer>
 
       <Styled.BottomContainer>
         <Styled.NickName>{postData.nickName}</Styled.NickName>
