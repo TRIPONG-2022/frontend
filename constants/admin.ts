@@ -1,4 +1,4 @@
-interface UserMenu {
+interface UserDropdown {
   [key: string]: {
     title: string;
     onClick: (userId: number, { black, changeRole }: UserCallback) => void;
@@ -10,7 +10,7 @@ interface UserCallback {
   changeRole: (userId: number) => void;
 }
 
-interface PostMenu {
+interface PostDropdown {
   [key: string]: {
     title: string;
     onClick: (
@@ -26,7 +26,7 @@ interface PostCallback {
   deletePost: (postId: number) => void;
 }
 
-export const ADMINUSER_MENU: UserMenu = {
+export const ADMINUSER_DROPDOWN: UserDropdown = {
   black: {
     title: '해당 유저를 블랙하시겠습니까?',
     onClick: (userId, { black }) => black(userId),
@@ -37,7 +37,7 @@ export const ADMINUSER_MENU: UserMenu = {
   },
 };
 
-export const ADMINPOST_MENU: PostMenu = {
+export const ADMINPOST_DROPDOWN: PostDropdown = {
   black: {
     title: '작성자를 블랙하시겠습니까?',
     onClick: ({ userId }, { black }) => black(userId),

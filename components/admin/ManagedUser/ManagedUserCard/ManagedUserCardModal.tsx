@@ -1,6 +1,6 @@
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
-import { ADMINUSER_MENU } from '@/constants/admin';
+import { ADMINUSER_DROPDOWN } from '@/constants/admin';
 import ManagedUserRoleChange from '../ManagedUserRoleChange/ManagedUserRoleChange';
 import useBlackUser from '../hooks/useBlackUser';
 import useChangeUserRole from '../hooks/useChangeUserRole';
@@ -30,7 +30,7 @@ const ManagedUserCardModal = ({
 
   return (
     <Modal isModal={isModal} close={close}>
-      <Modal.Title>{ADMINUSER_MENU[menu]?.title}</Modal.Title>
+      <Modal.Title>{ADMINUSER_DROPDOWN[menu]?.title}</Modal.Title>
       {menu == 'roleChange' && (
         <ManagedUserRoleChange
           selectRoles={selectRoles}
@@ -46,7 +46,7 @@ const ManagedUserCardModal = ({
             margin-top: 2rem;
           `}
           onClick={() => {
-            ADMINUSER_MENU[menu]?.onClick(id, {
+            ADMINUSER_DROPDOWN[menu]?.onClick(id, {
               black,
               changeRole,
             });

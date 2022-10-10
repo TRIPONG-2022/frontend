@@ -1,6 +1,6 @@
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/Modal';
-import { ADMINPOST_MENU } from '@/constants/admin';
+import { ADMINPOST_DROPDOWN } from '@/constants/admin';
 import useBlackUser from '../../ManagedUser/hooks/useBlackUser';
 import useDeletePost from '../hooks/useDeletePost';
 
@@ -25,7 +25,7 @@ const ManagedPostCardModal = ({
 
   return (
     <Modal isModal={isModal} close={close}>
-      <Modal.Title>{ADMINPOST_MENU[menu]?.title}</Modal.Title>
+      <Modal.Title>{ADMINPOST_DROPDOWN[menu]?.title}</Modal.Title>
 
       <Modal.BtnContainers>
         <Button
@@ -36,7 +36,7 @@ const ManagedPostCardModal = ({
             margin-top: 2rem;
           `}
           onClick={() => {
-            ADMINPOST_MENU[menu]?.onClick(
+            ADMINPOST_DROPDOWN[menu]?.onClick(
               { userId, postId },
               {
                 black,
