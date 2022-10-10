@@ -31,6 +31,4 @@ export { default as ChevronLeftIcon } from './chevron-left.svg';
 export { default as ChevronRightIcon } from './chevron-right.svg';
 export { default as ArrowRightIcon } from './arrow-right.svg';
 export { default as ThumbnailIcon } from './thumbnail.svg';
-export { default as Authenticated } from './authenticated.svg';
 export { default as ArrowDown } from './arrow-down.svg';
-export { default as Plus } from './plus.svg';

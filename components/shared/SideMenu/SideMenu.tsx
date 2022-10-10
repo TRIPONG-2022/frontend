@@ -17,8 +17,13 @@ const SideMenu = ({ menus, title = '마이페이지' }: SideMenuProps) => {
   const router = useRouter();
   const [active, setActive] = useState(false);
 
+  const onClickClose = () => {
+    setActive(false);
+  };
+
   return (
-    <Styled.Container active={active}>
+    <Styled.SideMenuContainer active={active}>
+      <Styled.Backdrop active={active} onClick={onClickClose} />
       <Styled.Title active={active} onClick={() => setActive(!active)}>
         {title}
         <SVGIcon icon="ArrowDown" />
@@ -35,7 +40,7 @@ const SideMenu = ({ menus, title = '마이페이지' }: SideMenuProps) => {
           </Link>
         ))}
       </Styled.SideMenuUl>
-    </Styled.Container>
+    </Styled.SideMenuContainer>
   );
 };
 

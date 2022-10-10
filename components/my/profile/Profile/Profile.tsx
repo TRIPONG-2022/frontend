@@ -42,10 +42,6 @@ const Profile = () => {
   } = methods;
 
   useEffect(() => {
-    console.log('isDirty, isValid', isValid);
-  }, [isDirty, isValid]);
-
-  useEffect(() => {
     reset(userData);
   }, [userData, reset]);
 
