@@ -71,7 +71,7 @@ const ProfileImage = ({
   };
 
   return (
-    <Styled.Container>
+    <Styled.ProfileImageContainer>
       <Styled.ProfileImageDiv>
         {isEdit && (
           <SVGIcon icon="DeleteIcon" size="20" onClick={removeImage} />
@@ -99,7 +99,7 @@ const ProfileImage = ({
           {errors.nickName?.message && `*${errors.nickName?.message}`}
         </Styled.NicknameErrorMessage>
       </Styled.NicknameDiv>
-    </Styled.Container>
+    </Styled.ProfileImageContainer>
   );
 };
 

@@ -75,21 +75,25 @@ const Profile = () => {
     [router],
   );
 
+  if (isFetching) {
+    return <Styled.ProfileContainer>로딩 중.....</Styled.ProfileContainer>;
+  }
+
   return (
-    <Styled.Container>
+    <Styled.ProfileContainer>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Styled.ProfileWrapper>
-            <Styled.ProfileImageWrapper>
+          <Styled.ProfileImageWrapper>
+            <Styled.ProfileImageArea>
               <ProfileImage
                 picture={userData?.picture}
                 authentication={userData?.authentication}
                 isEdit={isEdit}
               />
-            </Styled.ProfileImageWrapper>
+            </Styled.ProfileImageArea>
 
             <ProfileInfo isEdit={isEdit} />
-          </Styled.ProfileWrapper>
+          </Styled.ProfileImageWrapper>
 
           <Styled.ButtonWrapper>
             {isEdit && (
@@ -124,7 +128,7 @@ const Profile = () => {
           </Styled.ButtonWrapper>
         </form>
       </FormProvider>
-    </Styled.Container>
+    </Styled.ProfileContainer>
   );
 };
 

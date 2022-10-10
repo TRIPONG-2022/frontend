@@ -52,7 +52,7 @@ const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
   );
 
   return (
-    <Styled.Container isEdit={isEdit}>
+    <Styled.ProfileInfoContainer isEdit={isEdit}>
       <Styled.InfoWrapper>
         <ModifyInfo
           id="email"
@@ -107,7 +107,7 @@ const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
 
         <ProfileTags isEdit={isEdit} />
       </Styled.InfoWrapper>
-    </Styled.Container>
+    </Styled.ProfileInfoContainer>
   );
 };
 

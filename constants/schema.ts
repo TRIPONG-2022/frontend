@@ -104,11 +104,10 @@ export const PROFILE_PATCH_SCHEMA = yup.object({
   introduction: yup.string().max(500).nullable(),
   phoneNumber: yup
     .string()
-    .min(3, SCHEMA_MESSAGES.WRONG_PHONE_NUMBER_MIN_LENGTH)
-    .matches(/[0-9]$/g, {
+    .nullable()
+    .matches(/^[0-9]*$/g, {
       message: SCHEMA_MESSAGES.WRONG_PHONE_NUMBER_FORMAT,
-    })
-    .nullable(),
+    }),
   picture: yup.mixed(),
   tags: yup.array().nullable(),
   latitude: yup.number().nullable(),

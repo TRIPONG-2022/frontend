@@ -18,7 +18,7 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
   });
 
   const tagRef = useRef<HTMLInputElement>(null);
-  const bool = fields.length >= 10;
+  const tagsLengthCheckBoolean = fields.length >= 10;
 
   const addTag = useCallback(() => {
     const tagValue = tagRef.current!.value;
@@ -58,7 +58,7 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
   );
 
   return (
-    <Styled.Container>
+    <Styled.ProfileInfoTagsContainer>
       <Styled.InfoLabel>
         성향{' '}
         {isEdit && (
@@ -70,8 +70,8 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
           {fields.length > 0 &&
             fields.map((field, idx) => (
               <Styled.Tag
-                onClick={() => removeTag(idx)}
                 key={field.id}
+                onClick={() => removeTag(idx)}
                 {...register(`tags.${idx}.tag`)}
               >
                 {`#${field.tag}`}
@@ -81,13 +81,15 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
         {isEdit && (
           <Styled.TagsInputDiv>
             <Styled.TagsInput
-              onKeyDown={addTagEnter}
-              disabled={bool}
-              placeholder={
-                bool ? '성향은 10개까지 등록이 가능합니다.' : undefined
-              }
-              maxLength={10}
               ref={tagRef}
+              disabled={tagsLengthCheckBoolean}
+              maxLength={10}
+              placeholder={
+                tagsLengthCheckBoolean
+                  ? '성향은 10개까지 등록이 가능합니다.'
+                  : undefined
+              }
+              onKeyDown={addTagEnter}
             />
             <Styled.TagsButton onClick={addTag}>
               <SVGIcon icon="PlusIcon" />
@@ -95,7 +97,7 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
           </Styled.TagsInputDiv>
         )}
       </Styled.TagsDiv>
-    </Styled.Container>
+    </Styled.ProfileInfoTagsContainer>
   );
 };
 

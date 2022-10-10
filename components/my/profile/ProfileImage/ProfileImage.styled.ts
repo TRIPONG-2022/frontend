@@ -1,7 +1,7 @@
 import { SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const ProfileImageContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;

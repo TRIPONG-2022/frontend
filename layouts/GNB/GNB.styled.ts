@@ -1,7 +1,8 @@
+import styled from 'styled-components';
+
 import { HEADER_HEIGHT } from '@/constants/menus';
 import { SCREEN_DESKTOP } from '@/styles/screen';
 import { Z_INDEX } from '@/styles/z-index';
-import styled from 'styled-components';
 
 export const GNBHeader = styled.header`
   width: 100%;

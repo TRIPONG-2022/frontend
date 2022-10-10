@@ -7,7 +7,7 @@ interface ModifyProps {
   isEdit?: boolean;
 }
 
-export const Container = styled.div<ModifyProps>`
+export const ProfileInfoContainer = styled.div<ModifyProps>`
   width: 100%;
 
   ${({ isEdit }) =>

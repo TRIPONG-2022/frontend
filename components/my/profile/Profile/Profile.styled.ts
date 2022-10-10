@@ -1,12 +1,12 @@
 import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const ProfileContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
 
-export const ProfileWrapper = styled.div`
+export const ProfileImageWrapper = styled.div`
   display: block;
 
   ${SCREEN_DESKTOP} {
@@ -14,7 +14,7 @@ export const ProfileWrapper = styled.div`
   }
 `;
 
-export const ProfileImageWrapper = styled.div`
+export const ProfileImageArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
