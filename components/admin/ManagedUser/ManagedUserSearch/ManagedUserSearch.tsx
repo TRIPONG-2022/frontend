@@ -1,23 +1,20 @@
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 
 import { SearchParams } from '@/types/search-params';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import Select from '@/components/shared/Select';
+import useSearchParamsContext from '../contexts/useSearchParamsContext';
 
 import * as Styled from './ManagedUserSearch.styled';
 
 interface ManagedUserSearchProps {
   isUserSearch: boolean;
-  searchParams: SearchParams;
-  setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
 }
 
-const ManagedUserSearch = ({
-  isUserSearch,
-  searchParams,
-  setSearchParams,
-}: ManagedUserSearchProps) => {
+const ManagedUserSearch = ({ isUserSearch }: ManagedUserSearchProps) => {
+  const { searchParams, setSearchParams } = useSearchParamsContext();
+
   const { refetch: userRefetch } = useManagedUserQuery(searchParams);
 
   const { refetch: blackRefetch } = useManagedBlackUserQuery(searchParams);

@@ -1,20 +1,14 @@
-import React, { SetStateAction, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
-import { SearchParams } from '@/types/search-params';
 import { ManagedUserData } from '@/types/managed-user';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
+import useSearchParamsContext from '../contexts/useSearchParamsContext';
 
-interface ManagedBlackUserListProps {
-  searchParams: SearchParams;
-  setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
-}
+const ManagedBlackUserList = () => {
+  const { searchParams } = useSearchParamsContext();
 
-const ManagedBlackUserList = ({
-  searchParams,
-  setSearchParams,
-}: ManagedBlackUserListProps) => {
   const { data, isLoading, isError, fetchNextPage, hasNextPage } =
     useManagedBlackUserQuery(searchParams);
 

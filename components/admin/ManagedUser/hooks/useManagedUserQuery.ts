@@ -5,7 +5,6 @@ import { SearchParams } from '@/types/search-params';
 import { getUsers } from '@/api/admin';
 
 function useManagedUserQuery(params: SearchParams) {
-  console.log(params);
   const query = useInfiniteQuery(
     'userList',
     ({ pageParam = 0 }) => {

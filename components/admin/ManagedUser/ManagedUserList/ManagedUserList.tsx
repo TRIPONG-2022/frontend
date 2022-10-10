@@ -1,21 +1,15 @@
-import React, { SetStateAction, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
-import { SearchParams } from '@/types/search-params';
 import { ManagedUserData } from '@/types/managed-user';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
+import useSearchParamsContext from '../contexts/useSearchParamsContext';
 
-interface ManagedUserListProps {
-  searchParams: SearchParams;
-  setSearchParams: React.Dispatch<SetStateAction<SearchParams>>;
-}
+const ManagedUserList = () => {
+  const { searchParams } = useSearchParamsContext();
 
-const ManagedUserList = ({
-  searchParams,
-  setSearchParams,
-}: ManagedUserListProps) => {
   const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useManagedUserQuery(searchParams);
 
