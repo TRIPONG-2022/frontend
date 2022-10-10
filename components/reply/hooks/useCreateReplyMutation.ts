@@ -9,7 +9,7 @@ export default function useCreateReplyMutation(
   const queryClient = useQueryClient();
   const mutations = useMutation(requestCreateReply(postId, replyId), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['reply', postId]);
+      queryClient.invalidateQueries(['reply', postId, replyId]);
     },
   });
   return mutations;
