@@ -18,28 +18,27 @@ interface PostPageProps {
 }
 
 const PostPage: NextPage<PostPageProps> = ({ category, postId }) => {
-  const { data: post } = useQuery<Post>(['post', category, postId], () =>
-    requestGetPost(category, postId),
+  const { data: post, isLoading } = useQuery<Post>(
+    ['post', category, postId],
+    () => requestGetPost(category, postId),
   );
 
-  if (!post) {
-    return (
-      <MainLayout>
-        <PostNotFound />
-      </MainLayout>
-    );
-  }
-
   return (
-    <React.Fragment>
+    <>
       <Head>
-        <title>{post.title} | TRIPONG</title>
+        <title>{post?.title ?? 'TRIPONG, 포스트를 찾을 수 없습니다.'}</title>
       </Head>
       <MainLayout>
-        <PostHeader post={post} />
-        <PostBody post={post} />
+        {post ? (
+          <>
+            <PostHeader post={post} />
+            <PostBody post={post} />
+          </>
+        ) : (
+          <PostNotFound />
+        )}
       </MainLayout>
-    </React.Fragment>
+    </>
   );
 };
 
