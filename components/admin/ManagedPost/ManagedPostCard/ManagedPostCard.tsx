@@ -19,7 +19,7 @@ const AdminPostCard = ({ postData }: ManagedPostCardProps) => {
   const { toggle, onToggle, setOff } = useToggle(false);
 
   return (
-    <Styled.Container>
+    <Styled.ManagedPostCardContainer>
       <Styled.Title>{postData.title}</Styled.Title>
       <Styled.DropdownContainer onClick={() => onToggle()}>
         <SVGIcon icon="DotThree" />
@@ -56,7 +56,7 @@ const AdminPostCard = ({ postData }: ManagedPostCardProps) => {
         close={close}
         menu={menu}
       />
-    </Styled.Container>
+    </Styled.ManagedPostCardContainer>
   );
 };
 

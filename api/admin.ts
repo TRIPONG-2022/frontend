@@ -1,4 +1,4 @@
-import { SearchParams } from '@/types/search-params';
+import { ManagedSearchParams } from '@/types/search-params';
 import { EnroleApiParams } from '@/types/managed-role';
 import { ManagedUserData } from '@/types/managed-user';
 import instance from './instance';
@@ -37,7 +37,7 @@ interface UserData {
   totalElements: number;
 }
 
-export const getUsers = async (params?: SearchParams) => {
+export const getUsers = async (params?: ManagedSearchParams) => {
   const { data } = await instance.get<UserData>(`/admin/users`, {
     params: params,
   });
@@ -45,7 +45,7 @@ export const getUsers = async (params?: SearchParams) => {
   return data;
 };
 
-export const getReportUsers = async (params?: SearchParams) => {
+export const getReportUsers = async (params?: ManagedSearchParams) => {
   const { data } = await instance.get(`/admin/reports/users`, {
     params: params,
   });
@@ -69,7 +69,7 @@ export const roleUser = async (userId: number, roleNames: string[]) => {
 
 //게시글
 
-export const getPosts = async (params?: SearchParams) => {
+export const getPosts = async (params?: ManagedSearchParams) => {
   const { data } = await instance.get('/admin/posts', {
     params: params,
   });
@@ -77,7 +77,7 @@ export const getPosts = async (params?: SearchParams) => {
   return data;
 };
 
-export const getReportPosts = async (params?: SearchParams) => {
+export const getReportPosts = async (params?: ManagedSearchParams) => {
   const { data } = await instance.get('/admin/reports/posts', {
     params: params,
   });

@@ -2,9 +2,9 @@ import { useInfiniteQuery } from 'react-query';
 import { AxiosError } from 'axios';
 
 import { getReportPosts } from '@/api/admin';
-import { SearchParams } from '@/types/search-params';
+import { ManagedSearchParams } from '@/types/search-params';
 
-function useManagedReportPostQuery(params: SearchParams) {
+function useManagedReportPostQuery(params: ManagedSearchParams) {
   const query = useInfiniteQuery(
     'postList',
     ({ pageParam = 0 }) => getReportPosts({ ...params, page: pageParam }),

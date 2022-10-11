@@ -1,4 +1,4 @@
-export interface SearchParams {
+export interface ManagedSearchParams {
   searchType?: string;
   keyword?: string;
   page?: number;

@@ -16,7 +16,7 @@ const Post = () => {
           <Styled.SideMenu></Styled.SideMenu>
         </Styled.LayoutSideMenu>
         <Styled.LayoutBody>
-          <Styled.Container>
+          <Styled.ManagedPostContainer>
             <Styled.Title>게시글 조회</Styled.Title>
             <Styled.GetPostsBtn
               toggle={isPostSearch}
@@ -39,7 +39,7 @@ const Post = () => {
 
             {isPostSearch && <ManagedPostList />}
             {!isPostSearch && <ManagedReportPostList />}
-          </Styled.Container>
+          </Styled.ManagedPostContainer>
         </Styled.LayoutBody>
       </Styled.LayoutContainer>
     </PostSearchParamsContextProvider>

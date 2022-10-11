@@ -6,11 +6,11 @@ import React, {
   useState,
 } from 'react';
 
-import { SearchParams } from '@/types/search-params';
+import { ManagedSearchParams } from '@/types/search-params';
 
 interface SearchParamsState {
-  searchParams: SearchParams;
-  setSearchParams: Dispatch<SetStateAction<SearchParams>>;
+  searchParams: ManagedSearchParams;
+  setSearchParams: Dispatch<SetStateAction<ManagedSearchParams>>;
 }
 
 interface SearchParamsContextProviderProps {
@@ -34,7 +34,7 @@ export function useUserSearchParamsContext(componentName: string) {
 const UserSearchParamsContextProvider = ({
   children,
 }: SearchParamsContextProviderProps) => {
-  const [searchParams, setSearchParams] = useState<SearchParams>({
+  const [searchParams, setSearchParams] = useState<ManagedSearchParams>({
     searchType: 'loginId',
     keyword: '',
     size: 3,

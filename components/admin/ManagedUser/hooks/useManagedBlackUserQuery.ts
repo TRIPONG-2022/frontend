@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from 'react-query';
 import { AxiosError } from 'axios';
 
-import { SearchParams } from '@/types/search-params';
+import { ManagedSearchParams } from '@/types/search-params';
 import { getReportUsers } from '@/api/admin';
 
-function useManagedUserQuery(params: SearchParams) {
+function useManagedUserQuery(params: ManagedSearchParams) {
   const query = useInfiniteQuery(
     'userList',
     ({ pageParam = 0 }) => {

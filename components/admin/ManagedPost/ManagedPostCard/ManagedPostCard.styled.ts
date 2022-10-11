@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.li`
+export const ManagedPostCardContainer = styled.li`
   position: relative;
   padding: 1.5rem;
 

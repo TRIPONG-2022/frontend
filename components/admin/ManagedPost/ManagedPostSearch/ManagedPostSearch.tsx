@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Select from '@/components/shared/Select';
-import { SearchParams } from '@/types/search-params';
+import { ManagedSearchParams } from '@/types/search-params';
 import useManagedPostQuery from '../hooks/useManagedPostQuery';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
 
@@ -27,8 +27,8 @@ const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
     (
       setSearchParams: (
         searchParams:
-          | SearchParams
-          | ((searchParams: SearchParams) => SearchParams),
+          | ManagedSearchParams
+          | ((searchParams: ManagedSearchParams) => ManagedSearchParams),
       ) => void,
     ) =>
     (value: string) =>
@@ -51,8 +51,8 @@ const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
   };
 
   return (
-    <Styled.Container>
-      <Styled.SelectContainer>
+    <Styled.ManagedPostSearchContainer>
+      <Styled.SelectWrapper>
         <Select
           id="1"
           options={[
@@ -73,7 +73,7 @@ const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
           selectedValue={searchParams.searchType}
           onChangeOption={setState(setSearchParams)}
         />
-      </Styled.SelectContainer>
+      </Styled.SelectWrapper>
       <Styled.SearchInput
         onChange={(e: any) => {
           setsearchInput(e.target.value);
@@ -88,7 +88,7 @@ const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
       >
         검색
       </Styled.SearchButton>
-    </Styled.Container>
+    </Styled.ManagedPostSearchContainer>
   );
 };
 

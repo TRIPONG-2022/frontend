@@ -12,13 +12,13 @@ const ManagedReportPostList = () => {
   const { data } = useManagedReportPostQuery(searchParams);
 
   return (
-    <Styled.Container>
+    <Styled.ManagedPostListContainer>
       {data?.pages.map(({ content }) =>
         content?.map((data: ManagedPostData) => (
           <ManagedPostCard postData={data} key={data.postId} />
         )),
       )}
-    </Styled.Container>
+    </Styled.ManagedPostListContainer>
   );
 };
 
