@@ -25,7 +25,9 @@ export function useUserSearchParamsContext(componentName: string) {
   const context = useContext(SearchParamsContext);
 
   if (context === null) {
-    throw new Error(`${componentName}이 존재하지 않습니다. `);
+    throw new Error(
+      `${componentName}에 상위 <UserSearchParamsContextProvider>가 존재하지 않습니다. `,
+    );
   }
 
   return context;
