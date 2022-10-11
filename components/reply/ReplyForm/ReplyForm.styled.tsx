@@ -21,7 +21,7 @@ export const ReplyTextArea = styled(ResizableTextArea)`
   }
 `;
 
-export const ReplySubmitContainer = styled.div`
+export const ReplySubmitWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   column-gap: 0.75rem;

@@ -47,7 +47,7 @@ export default function ReplyForm({
         placeholder="댓글을 남겨보세요."
         {...register('content')}
       />
-      <Styled.ReplySubmitContainer>
+      <Styled.ReplySubmitWrapper>
         {onCancel && (
           <Button type="button" variant="default" size="sm" onClick={onCancel}>
             취소
@@ -60,7 +60,7 @@ export default function ReplyForm({
         >
           등록
         </Button>
-      </Styled.ReplySubmitContainer>
+      </Styled.ReplySubmitWrapper>
     </Styled.ReplyFormContainer>
   );
 }
