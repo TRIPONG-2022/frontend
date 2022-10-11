@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const ManagedUserSearchContainer = styled.div`
   display: flex;
   gap: 1rem;
   justify-content: flex-start;
@@ -8,7 +8,7 @@ export const Container = styled.div`
   margin-bottom: 2rem;
 `;
 
-export const SelectContainer = styled.div`
+export const SelectWrapper = styled.div`
   min-width: 10rem;
 `;
 

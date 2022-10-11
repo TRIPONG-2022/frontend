@@ -48,8 +48,8 @@ const ManagedUserSearch = ({ isUserSearch }: ManagedUserSearchProps) => {
   };
 
   return (
-    <Styled.Container>
-      <Styled.SelectContainer>
+    <Styled.ManagedUserSearchContainer>
+      <Styled.SelectWrapper>
         <Select
           id="1"
           options={[
@@ -66,7 +66,7 @@ const ManagedUserSearch = ({ isUserSearch }: ManagedUserSearchProps) => {
           selectedValue={searchParams.searchType}
           onChangeOption={setState(setSearchParams)}
         />
-      </Styled.SelectContainer>
+      </Styled.SelectWrapper>
       <Styled.SearchInput
         onChange={(e: any) => {
           setsearchInput(e.target.value);
@@ -81,7 +81,7 @@ const ManagedUserSearch = ({ isUserSearch }: ManagedUserSearchProps) => {
       >
         검색
       </Styled.SearchButton>
-    </Styled.Container>
+    </Styled.ManagedUserSearchContainer>
   );
 };
 

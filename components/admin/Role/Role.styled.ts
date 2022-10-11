@@ -46,7 +46,7 @@ export const SideMenu = styled.div<ActiveProps>`
   }
 `;
 
-export const Container = styled.div`
+export const RoleContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 1.75rem;

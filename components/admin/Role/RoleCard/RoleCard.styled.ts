@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  /* background-color: ${({ theme }) => theme.colors.gray[200]}; */
+export const RoleCardContainer = styled.div`
   padding: 1rem;
   border: 2px solid;
   border-color: ${({ theme }) => theme.colors.gray[400]};

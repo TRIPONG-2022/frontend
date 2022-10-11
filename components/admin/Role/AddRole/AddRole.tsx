@@ -26,7 +26,7 @@ const AddRole = () => {
   };
 
   return (
-    <Styled.Container>
+    <Styled.AddRoleContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Styled.AddRoleWrapper>
           <Styled.AddRoleInPutWrapper>
@@ -50,7 +50,7 @@ const AddRole = () => {
           <Styled.Button type="submit">등록</Styled.Button>
         </Styled.AddRoleWrapper>
       </form>
-    </Styled.Container>
+    </Styled.AddRoleContainer>
   );
 };
 

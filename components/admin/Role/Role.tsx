@@ -10,11 +10,11 @@ const Role = () => {
         <Styled.SideMenu></Styled.SideMenu>
       </Styled.LayoutSideMenu>
       <Styled.LayoutBody>
-        <Styled.Container>
+        <Styled.RoleContainer>
           <AddRole />
 
           <RoleList />
-        </Styled.Container>
+        </Styled.RoleContainer>
       </Styled.LayoutBody>
     </Styled.LayoutContainer>
   );

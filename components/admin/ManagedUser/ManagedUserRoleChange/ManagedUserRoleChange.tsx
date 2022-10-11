@@ -16,7 +16,7 @@ const ManagedUserRoleChange = ({
   const { data, isLoading } = useRoleQuery();
 
   return (
-    <Styled.Container>
+    <Styled.ManagedUserRoleChangeContainer>
       <ul>
         {data &&
           data
@@ -49,7 +49,7 @@ const ManagedUserRoleChange = ({
             </Styled.RoleItemContainer>
           ))}
       </Styled.SelectContainer>
-    </Styled.Container>
+    </Styled.ManagedUserRoleChangeContainer>
   );
 };
 

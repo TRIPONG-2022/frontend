@@ -17,7 +17,7 @@ const RoleCard = ({ item }: RoleCardProps) => {
   const { mutate } = useDeleteRole();
 
   return (
-    <Styled.Container>
+    <Styled.RoleCardContainer>
       <Styled.Label>권한</Styled.Label>
       <Styled.Title>{item.roleName}</Styled.Title>
       <Styled.Label>권한 설명</Styled.Label>
@@ -56,7 +56,7 @@ const RoleCard = ({ item }: RoleCardProps) => {
           </Button>
         </Modal.BtnContainers>
       </Modal>
-    </Styled.Container>
+    </Styled.RoleCardContainer>
   );
 };
 

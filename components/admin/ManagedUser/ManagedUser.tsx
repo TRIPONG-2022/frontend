@@ -16,7 +16,7 @@ const ManagedUser = () => {
           <Styled.SideMenu></Styled.SideMenu>
         </Styled.LayoutSideMenu>
         <Styled.LayoutBody>
-          <Styled.Container>
+          <Styled.ManagedUserContainer>
             <Styled.Title>유저목록</Styled.Title>
 
             <Styled.GetUsersBtn
@@ -40,7 +40,7 @@ const ManagedUser = () => {
 
             {isUserSearch && <ManagedUserList />}
             {!isUserSearch && <ManagedBlackUserList />}
-          </Styled.Container>
+          </Styled.ManagedUserContainer>
         </Styled.LayoutBody>
       </Styled.LayoutContainer>
     </UserSearchParamsContextProvider>

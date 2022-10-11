@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const RoleListContainer = styled.div`
   width: 100%;
   display: grid;
   margin-top: 4rem;

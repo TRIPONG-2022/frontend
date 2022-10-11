@@ -22,11 +22,11 @@ const RoleList = () => {
       </>
     );
   return (
-    <Styled.Container>
+    <Styled.RoleListContainer>
       {data?.map((item: RoleData) => (
         <RoleCard item={item} key={item.roleId} />
       ))}
-    </Styled.Container>
+    </Styled.RoleListContainer>
   );
 };
 
