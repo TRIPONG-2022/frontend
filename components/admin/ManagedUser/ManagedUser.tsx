@@ -2,15 +2,15 @@ import useToggle from '@/hooks/useToggle';
 import UserSearch from './ManagedUserSearch/ManagedUserSearch';
 import ManagedUserList from './ManagedUserList/ManagedUserList';
 import ManagedBlackUserList from './ManagedUserList/ManagedBlackUserList';
+import UserSearchParamsContextProvider from './contexts/UserSearchParamsContext';
 
 import * as Styled from './ManagedUser.styled';
-import SearchParamsContextProvider from './contexts/SearchParamsContex';
 
 const ManagedUser = () => {
   const { toggle: isUserSearch, onToggle, setOff, setOn } = useToggle(true);
 
   return (
-    <SearchParamsContextProvider>
+    <UserSearchParamsContextProvider>
       <Styled.LayoutContainer>
         <Styled.LayoutSideMenu>
           <Styled.SideMenu></Styled.SideMenu>
@@ -43,7 +43,7 @@ const ManagedUser = () => {
           </Styled.Container>
         </Styled.LayoutBody>
       </Styled.LayoutContainer>
-    </SearchParamsContextProvider>
+    </UserSearchParamsContextProvider>
   );
 };
 

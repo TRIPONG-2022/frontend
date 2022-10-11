@@ -2,9 +2,9 @@ import useToggle from '@/hooks/useToggle';
 import ManagedPostList from './ManagedPostList/ManagedPostList';
 import ManagedReportPostList from './ManagedPostList/ManagedReportPostList';
 import ManagedPostSearch from './ManagedPostSearch/ManagedPostSearch';
+import PostSearchParamsContextProvider from './contexts/PostSearchParamsContext';
 
 import * as Styled from './ManagedPost.styled';
-import PostSearchParamsContextProvider from './contexts/PostSearchParamsContext';
 
 const Post = () => {
   const { toggle: isPostSearch, onToggle, setOff, setOn } = useToggle(true);

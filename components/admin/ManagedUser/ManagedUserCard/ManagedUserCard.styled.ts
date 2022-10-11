@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const ManagedUserCardContainer = styled.div`
   position: relative;
   padding: 1rem;
 
@@ -95,6 +95,7 @@ export const DropdownList = styled.ul<ActiveProps>`
 `;
 
 export const DropdownItem = styled.li`
+  position: relative;
   width: 5rem;
 
   border: 1px solid;

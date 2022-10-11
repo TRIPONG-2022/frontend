@@ -19,7 +19,7 @@ const ManagedUserCard = ({ userData }: ManagedUserCardProps) => {
   const { toggle, onToggle, setOff } = useToggle(false);
 
   return (
-    <Styled.Container>
+    <Styled.ManagedUserCardContainer>
       {userData.reporterName && (
         <Styled.ReportWrapper>
           <Styled.Reporter>신고자 : {userData.reporterName}</Styled.Reporter>
@@ -52,6 +52,7 @@ const ManagedUserCard = ({ userData }: ManagedUserCardProps) => {
       <Styled.DropdownContainer onClick={() => onToggle()}>
         <SVGIcon icon="DotThree" />
         <Styled.DropdownList toggle={toggle}>
+          <Styled.Back toggle={toggle} onClick={() => setOff()} />
           <Styled.DropdownItem
             onClick={() => {
               setMenu('black');
@@ -70,7 +71,6 @@ const ManagedUserCard = ({ userData }: ManagedUserCardProps) => {
           </Styled.DropdownItem>
         </Styled.DropdownList>
       </Styled.DropdownContainer>
-      <Styled.Back toggle={toggle} onClick={() => setOff()} />
 
       <ManagedUserCardModal
         id={userData.id}
@@ -80,7 +80,7 @@ const ManagedUserCard = ({ userData }: ManagedUserCardProps) => {
         selectRoles={selectRoles}
         setSelectRoles={setSelectRoles}
       />
-    </Styled.Container>
+    </Styled.ManagedUserCardContainer>
   );
 };
 

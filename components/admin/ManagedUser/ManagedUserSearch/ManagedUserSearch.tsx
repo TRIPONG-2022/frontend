@@ -4,7 +4,7 @@ import { SearchParams } from '@/types/search-params';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import Select from '@/components/shared/Select';
-import useSearchParamsContext from '../contexts/useSearchParamsContext';
+import { useUserSearchParamsContext } from '../contexts/UserSearchParamsContext';
 
 import * as Styled from './ManagedUserSearch.styled';
 
@@ -13,7 +13,8 @@ interface ManagedUserSearchProps {
 }
 
 const ManagedUserSearch = ({ isUserSearch }: ManagedUserSearchProps) => {
-  const { searchParams, setSearchParams } = useSearchParamsContext();
+  const { searchParams, setSearchParams } =
+    useUserSearchParamsContext('ManagedUserSearch');
 
   const { refetch: userRefetch } = useManagedUserQuery(searchParams);
 

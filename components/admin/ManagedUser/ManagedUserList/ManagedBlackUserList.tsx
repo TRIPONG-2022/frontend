@@ -4,10 +4,10 @@ import { ManagedUserData } from '@/types/managed-user';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
-import useSearchParamsContext from '../contexts/useSearchParamsContext';
+import { useUserSearchParamsContext } from '../contexts/UserSearchParamsContext';
 
 const ManagedBlackUserList = () => {
-  const { searchParams } = useSearchParamsContext();
+  const { searchParams } = useUserSearchParamsContext('ManagedBlackUserList');
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage } =
     useManagedBlackUserQuery(searchParams);

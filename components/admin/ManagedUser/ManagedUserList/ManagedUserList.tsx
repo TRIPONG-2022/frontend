@@ -5,10 +5,10 @@ import { ManagedUserData } from '@/types/managed-user';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
 import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
-import useSearchParamsContext from '../contexts/useSearchParamsContext';
+import { useUserSearchParamsContext } from '../contexts/UserSearchParamsContext';
 
 const ManagedUserList = () => {
-  const { searchParams } = useSearchParamsContext();
+  const { searchParams } = useUserSearchParamsContext('ManagedUserList');
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useManagedUserQuery(searchParams);
