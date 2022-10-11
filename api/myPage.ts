@@ -1,8 +1,9 @@
 import { ProfilePatchSchema } from '@/constants/schema';
 import { getBirthDate } from '@/utils/date';
+import { base64ToFile } from '@/utils/image';
 import instance from './instance';
 
-interface TagsType {
+interface TagsData {
   tags: string[];
 }
 interface MyPageTags {
@@ -11,7 +12,7 @@ interface MyPageTags {
   }[];
 }
 
-interface BirthDateType {
+interface BirthDateData {
   birthDate: string | null;
 }
 
@@ -52,7 +53,7 @@ export interface UserProfileSendData extends CommonProfileData {
 export const getProfileInfomation = async () => {
   try {
     const { data } = await instance.get<
-      UserProfileData & TagsType & BirthDateType
+      UserProfileData & TagsData & BirthDateData
     >('/users/profile');
 
     console.log(data);
@@ -103,7 +104,7 @@ export const patchProfileInformation = async (
 
   let sendPicture: File | string | null = null;
   if (typeof picture === 'string') {
-    sendPicture = picture;
+    sendPicture = base64ToFile(picture, 'profile_image');
   } else if (picture) {
     sendPicture = picture[0];
   }
@@ -121,7 +122,6 @@ export const patchProfileInformation = async (
     phoneNumber: patchData.phoneNumber,
   };
 
-  console.log('updateUserData', patchData);
   try {
     const sendFormData = new FormData();
 
@@ -138,9 +138,10 @@ export const patchProfileInformation = async (
       );
     }
 
-    const response = await instance.patch('/users/profile', sendFormData);
-    console.log(response);
+    await instance.patch('/users/profile', sendFormData);
+    alert('정상적으로 수정 완료 되었습니다!');
   } catch (err) {
     console.log(err);
+    alert('수정에 실패하였습니다!');
   }
 };

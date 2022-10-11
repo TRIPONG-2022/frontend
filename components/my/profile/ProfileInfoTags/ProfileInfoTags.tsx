@@ -22,7 +22,7 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
 
   const addTag = useCallback(() => {
     const tagValue = tagRef.current!.value;
-    console.log(tagValue);
+
     if (tagValue && isEdit) {
       const duplicate = fields.filter((field) => {
         if (field.tag === tagValue) return field;

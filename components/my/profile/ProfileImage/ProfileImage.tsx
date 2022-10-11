@@ -24,7 +24,9 @@ const ProfileImage = ({
   authentication,
   isEdit,
 }: ProfileImageProps) => {
-  const [image, setImage] = useState(picture);
+  const [image, setImage] = useState(
+    picture && `data:image/jpg;base64,${picture}`,
+  );
   const imgRef = useRef<HTMLInputElement | null>(null);
 
   const { register, watch, setValue, formState } =
@@ -37,12 +39,6 @@ const ProfileImage = ({
     onChange: pictureOnChange,
     ...rest
   } = register('picture');
-
-  useEffect(() => {
-    if (picture) {
-      setImage(`data:image/jpg;base64,${picture}`);
-    }
-  }, [picture]);
 
   const onChangeImage = () => {
     if (isEdit) imgRef.current!.click();
