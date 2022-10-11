@@ -19,8 +19,8 @@ export default function PostHeader({ post }: PostHeaderProps) {
       </Styled.PostCategory>
       <Styled.PostTitle>{post.title}</Styled.PostTitle>
 
-      <Styled.PostDetailContainer>
-        <Styled.PostDetailLeftContainer>
+      <Styled.PostDetailWrapper>
+        <Styled.PostDetailLeftWrapper>
           <Styled.AuthorProfileImage>
             <Image
               src="/images/profile.png"
@@ -28,14 +28,14 @@ export default function PostHeader({ post }: PostHeaderProps) {
               layout="fill"
             />
           </Styled.AuthorProfileImage>
-          <Styled.PostAuthorAndDate>
+          <Styled.PostAuthorAndDateWrapper>
             <Styled.PostAuthor>{post.author}</Styled.PostAuthor>
             <Styled.PostDate>
               {format(new Date(), 'yyyy.MM.dd')}
             </Styled.PostDate>
-          </Styled.PostAuthorAndDate>
-        </Styled.PostDetailLeftContainer>
-        <Styled.PostDetailRightContainer>
+          </Styled.PostAuthorAndDateWrapper>
+        </Styled.PostDetailLeftWrapper>
+        <Styled.PostDetailRightWrapper>
           <Styled.PostInfo>
             <SVGIcon icon="HeartIcon" size={16} />
             <span>{post.likeCount}</span>
@@ -44,8 +44,8 @@ export default function PostHeader({ post }: PostHeaderProps) {
             <SVGIcon icon="EyeIcon" size={16} />
             <span>{post.viewCount}</span>
           </Styled.PostInfo>
-        </Styled.PostDetailRightContainer>
-      </Styled.PostDetailContainer>
+        </Styled.PostDetailRightWrapper>
+      </Styled.PostDetailWrapper>
     </Styled.PostHeaderContainer>
   );
 }

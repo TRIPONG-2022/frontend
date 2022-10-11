@@ -39,13 +39,13 @@ export const PostTitle = styled.h1`
   }
 `;
 
-export const PostDetailContainer = styled.div`
+export const PostDetailWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-export const PostDetailLeftContainer = styled.div`
+export const PostDetailLeftWrapper = styled.div`
   display: flex;
   align-items: center;
   column-gap: 0.75rem;
@@ -65,7 +65,7 @@ export const AuthorProfileImage = styled.div`
   }
 `;
 
-export const PostAuthorAndDate = styled.div`
+export const PostAuthorAndDateWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,7 +94,7 @@ export const PostDate = styled.span`
   }
 `;
 
-export const PostDetailRightContainer = styled.div`
+export const PostDetailRightWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
