@@ -45,12 +45,12 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
   };
 
   return (
-    <Styled.ReplyItemOuter>
-      <Styled.ReplyItemInner>
-        <Styled.ProfileImageContainer>
+    <Styled.ReplyItemContainer>
+      <Styled.ReplyItemWrapper>
+        <Styled.ProfileImageWrapper>
           <Image src="/images/profile.png" alt="프로필 이미지" layout="fill" />
-        </Styled.ProfileImageContainer>
-        <Styled.ContentContainer>
+        </Styled.ProfileImageWrapper>
+        <Styled.ContentWrapper>
           <Styled.Author>
             {isEditable && <Styled.EditIndicator>수정중</Styled.EditIndicator>}
             {reply.userId}
@@ -63,9 +63,9 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
               onCancel={onToggleIsEditable}
             />
           )}
-        </Styled.ContentContainer>
-        {isAuthor && !isEditable && (
-          <Styled.UtilContainer>
+        </Styled.ContentWrapper>
+        <Styled.UtilWrapper>
+          {isAuthor && !isEditable && (
             <Dropdown>
               <Dropdown.Button>
                 <SVGIcon icon="MoreVerticalIcon" />
@@ -77,10 +77,10 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
                 <Dropdown.Item onClick={onDelete}>삭제하기</Dropdown.Item>
               </Dropdown.Items>
             </Dropdown>
-          </Styled.UtilContainer>
-        )}
-      </Styled.ReplyItemInner>
-      <Styled.ReplyOfReplyContainer>
+          )}
+        </Styled.UtilWrapper>
+      </Styled.ReplyItemWrapper>
+      <Styled.ReplyItemWrapper>
         {isOpenReplyForm === reply.id && (
           <ReplyForm
             postId={reply.postId}
@@ -89,8 +89,8 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
           />
         )}
         <ReplyList postId={reply.postId} replyId={reply.id} />
-      </Styled.ReplyOfReplyContainer>
-    </Styled.ReplyItemOuter>
+      </Styled.ReplyItemWrapper>
+    </Styled.ReplyItemContainer>
   );
 }
 
@@ -99,9 +99,9 @@ function ReplyContent({ reply }: ReplyItemProps) {
   const { isLogIn } = useSelector((state: AppState) => state.user);
 
   return (
-    <React.Fragment>
+    <Styled.ReplyContentContainer>
       <Styled.Content>{reply.content}</Styled.Content>
-      <Styled.DetailContainer>
+      <Styled.DetailWrapper>
         <span>
           {format(new Date(`${reply.modifiedDate} UTC`), 'yyyy.MM.dd hh:mm')}
         </span>
@@ -110,8 +110,8 @@ function ReplyContent({ reply }: ReplyItemProps) {
             답글쓰기
           </button>
         )}
-      </Styled.DetailContainer>
-    </React.Fragment>
+      </Styled.DetailWrapper>
+    </Styled.ReplyContentContainer>
   );
 }
 
@@ -143,14 +143,14 @@ function ReplyContentEditor({
         placeholder="수정할 댓글을 입력해주세요."
         {...register('content')}
       />
-      <Styled.EditUtilContainer>
+      <Styled.EditUtilWrapper>
         <Button variant="default" size="sm" onClick={onCancel}>
           취소
         </Button>
         <Button type="submit" size="sm" disabled={!isValid || !isDirty}>
           수정
         </Button>
-      </Styled.EditUtilContainer>
+      </Styled.EditUtilWrapper>
     </form>
   );
 }

@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import ResizableTextArea from '@/components/shared/ResizableTextArea';
 
-export const ReplyItemOuter = styled.div`
+export const ReplyItemContainer = styled.div`
   padding-top: 0.75rem;
 `;
 
-export const ReplyItemInner = styled.div`
+export const ReplyItemWrapper = styled.div`
   position: relative;
   display: flex;
   column-gap: 0.75rem;
   padding-bottom: 0.75rem;
 `;
 
-export const ProfileImageContainer = styled.div`
+export const ProfileImageWrapper = styled.div`
   position: relative;
   width: 2.5rem;
   height: 2.5rem;
@@ -20,7 +20,7 @@ export const ProfileImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const ContentContainer = styled.div`
+export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -41,6 +41,8 @@ export const EditIndicator = styled.span`
   }
 `;
 
+export const ReplyContentContainer = styled.div``;
+
 export const Content = styled.p`
   font-size: 1rem;
   line-height: 1.5;
@@ -50,7 +52,7 @@ export const Content = styled.p`
   white-space: pre-line;
 `;
 
-export const DetailContainer = styled.div`
+export const DetailWrapper = styled.div`
   display: flex;
   column-gap: 0.5rem;
   font-size: 0.875rem;
@@ -63,7 +65,7 @@ export const DetailContainer = styled.div`
   }
 `;
 
-export const UtilContainer = styled.div`
+export const UtilWrapper = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -80,7 +82,7 @@ export const ContentTextArea = styled(ResizableTextArea)`
   }
 `;
 
-export const EditUtilContainer = styled.div`
+export const EditUtilWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -88,6 +90,6 @@ export const EditUtilContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const ReplyOfReplyContainer = styled.div`
+export const ReplyOfReplyWrapper = styled.div`
   padding-left: 3rem;
 `;
