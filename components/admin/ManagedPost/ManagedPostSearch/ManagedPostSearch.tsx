@@ -6,14 +6,15 @@ import useManagedPostQuery from '../hooks/useManagedPostQuery';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
 
 import * as Styled from './ManagedPostSearch.styled';
-import usePostSearchParamsContext from '../contexts/usePostSearchParamsContext';
+import { usePostSearchParamsContext } from '../contexts/PostSearchParamsContext';
 
 interface ManagedPostSearchProps {
   isePostSearch: boolean;
 }
 
 const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
-  const { searchParams, setSearchParams } = usePostSearchParamsContext();
+  const { searchParams, setSearchParams } =
+    usePostSearchParamsContext('ManagedPostSearch');
 
   const [searchInput, setsearchInput] = useState<string>('');
 

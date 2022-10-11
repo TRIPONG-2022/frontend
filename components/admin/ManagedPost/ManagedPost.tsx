@@ -4,7 +4,7 @@ import ManagedReportPostList from './ManagedPostList/ManagedReportPostList';
 import ManagedPostSearch from './ManagedPostSearch/ManagedPostSearch';
 
 import * as Styled from './ManagedPost.styled';
-import PostSearchParamsContextProvider from './contexts/PostSearchParamsContex';
+import PostSearchParamsContextProvider from './contexts/PostSearchParamsContext';
 
 const Post = () => {
   const { toggle: isPostSearch, onToggle, setOff, setOn } = useToggle(true);

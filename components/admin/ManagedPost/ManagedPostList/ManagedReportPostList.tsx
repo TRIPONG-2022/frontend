@@ -4,10 +4,10 @@ import ManagedPostCard from '../ManagedPostCard/ManagedPostCard';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
 
 import * as Styled from './ManagedPostList.styled';
-import usePostSearchParamsContext from '../contexts/usePostSearchParamsContext';
+import { usePostSearchParamsContext } from '../contexts/PostSearchParamsContext';
 
 const ManagedReportPostList = () => {
-  const { searchParams } = usePostSearchParamsContext();
+  const { searchParams } = usePostSearchParamsContext('ManagedReportPostList');
 
   const { data } = useManagedReportPostQuery(searchParams);
 

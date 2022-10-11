@@ -2,6 +2,7 @@ import React, {
   createContext,
   Dispatch,
   SetStateAction,
+  useContext,
   useState,
 } from 'react';
 
@@ -12,12 +13,22 @@ interface SearchParamsState {
   setSearchParams: Dispatch<SetStateAction<SearchParams>>;
 }
 
+interface SearchParamsContextProviderProps {
+  children: React.ReactNode;
+}
+
 export const PostSearchParamsContext = createContext<SearchParamsState | null>(
   null,
 );
 
-interface SearchParamsContextProviderProps {
-  children: React.ReactNode;
+export function usePostSearchParamsContext(componentName: string) {
+  const context = useContext(PostSearchParamsContext);
+
+  if (context === null) {
+    throw new Error(`${componentName}이 존재하지 않습니다. `);
+  }
+
+  return context;
 }
 
 const PostSearchParamsContextProvider = ({
