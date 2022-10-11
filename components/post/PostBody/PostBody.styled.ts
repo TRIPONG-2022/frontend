@@ -12,7 +12,7 @@ export const PostContent = styled.div`
   ${markdownStyles}
 `;
 
-export const PostTagListContainer = styled.div`
+export const PostTagListWrapper = styled.div`
   margin-top: 4rem;
   margin-bottom: 4rem;
 `;
@@ -44,7 +44,7 @@ export const PostTagItem = styled.li`
   }
 `;
 
-export const ReplyContainer = styled.div`
+export const ReplyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 1rem;

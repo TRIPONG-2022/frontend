@@ -17,18 +17,18 @@ export default function PostBody({ post }: PostBodyProps) {
       <Styled.PostContent
         dangerouslySetInnerHTML={{ __html: decodeHTML(post.content) }}
       />
-      <Styled.PostTagListContainer>
+      <Styled.PostTagListWrapper>
         <Styled.PostTagList>
           {post.tags.map((tag, i) => (
             <Styled.PostTagItem key={i}>{tag}</Styled.PostTagItem>
           ))}
         </Styled.PostTagList>
-      </Styled.PostTagListContainer>
-      <Styled.ReplyContainer>
+      </Styled.PostTagListWrapper>
+      <Styled.ReplyWrapper>
         <h2>댓글</h2>
         <ReplyForm postId={post.id} />
         <ReplyList postId={post.id} />
-      </Styled.ReplyContainer>
+      </Styled.ReplyWrapper>
     </Styled.PostBodyContainer>
   );
 }
