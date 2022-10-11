@@ -8,3 +8,9 @@ export interface ManagedUserData {
   reportType?: string;
   reporterName?: string;
 }
+
+export interface ManagedUserPageData {
+  content: ManagedUserData[];
+  totalPages: number;
+  totalElements: number;
+}

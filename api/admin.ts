@@ -1,6 +1,6 @@
 import { ManagedSearchParams } from '@/types/search-params';
 import { EnroleApiParams } from '@/types/managed-role';
-import { ManagedUserData } from '@/types/managed-user';
+import { ManagedUserPageData } from '@/types/managed-user';
 import instance from './instance';
 
 export const getRoles = async () => {
@@ -31,14 +31,8 @@ export const deleteRoles = async (roleId: number) => {
 
 // 유저
 
-interface UserData {
-  content: ManagedUserData[];
-  totalPages: number;
-  totalElements: number;
-}
-
 export const getUsers = async (params?: ManagedSearchParams) => {
-  const { data } = await instance.get<UserData>(`/admin/users`, {
+  const { data } = await instance.get<ManagedUserPageData>(`/admin/users`, {
     params: params,
   });
 
