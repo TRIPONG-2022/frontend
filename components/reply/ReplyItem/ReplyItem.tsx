@@ -80,7 +80,7 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
           )}
         </Styled.UtilWrapper>
       </Styled.ReplyItemWrapper>
-      <Styled.ReplyItemWrapper>
+      <Styled.ReplyOfReplyWrapper>
         {isOpenReplyForm === reply.id && (
           <ReplyForm
             postId={reply.postId}
@@ -89,7 +89,7 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
           />
         )}
         <ReplyList postId={reply.postId} replyId={reply.id} />
-      </Styled.ReplyItemWrapper>
+      </Styled.ReplyOfReplyWrapper>
     </Styled.ReplyItemContainer>
   );
 }
