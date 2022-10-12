@@ -21,7 +21,6 @@ const AddRole = () => {
   const { mutate } = useAddRole();
 
   const onSubmit = (data: AddRoleSchema) => {
-    console.log(data);
     mutate(data);
   };
 

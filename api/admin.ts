@@ -1,11 +1,14 @@
 import { ManagedSearchParams } from '@/types/search-params';
-import { EnroleApiParams } from '@/types/managed-role';
+import { RoleData, EnroleApiParams } from '@/types/managed-role';
 import { ManagedUserPageData } from '@/types/managed-user';
+import { ManagedPostPageData } from '@/types/managed-post';
+
 import instance from './instance';
 
 export const getRoles = async () => {
-  const { data } = await instance.get('/admin/roles');
+  const { data } = await instance.get<RoleData[]>('/admin/roles');
 
+  console.log(data);
   return data;
 };
 
@@ -40,9 +43,12 @@ export const getUsers = async (params?: ManagedSearchParams) => {
 };
 
 export const getReportUsers = async (params?: ManagedSearchParams) => {
-  const { data } = await instance.get(`/admin/reports/users`, {
-    params: params,
-  });
+  const { data } = await instance.get<ManagedUserPageData>(
+    `/admin/reports/users`,
+    {
+      params: params,
+    },
+  );
 
   return data;
 };
@@ -64,7 +70,7 @@ export const roleUser = async (userId: number, roleNames: string[]) => {
 //게시글
 
 export const getPosts = async (params?: ManagedSearchParams) => {
-  const { data } = await instance.get('/admin/posts', {
+  const { data } = await instance.get<ManagedPostPageData>('/admin/posts', {
     params: params,
   });
 
@@ -72,9 +78,12 @@ export const getPosts = async (params?: ManagedSearchParams) => {
 };
 
 export const getReportPosts = async (params?: ManagedSearchParams) => {
-  const { data } = await instance.get('/admin/reports/posts', {
-    params: params,
-  });
+  const { data } = await instance.get<ManagedPostPageData>(
+    '/admin/reports/posts',
+    {
+      params: params,
+    },
+  );
 
   return data;
 };

@@ -6,3 +6,9 @@ export interface ManagedPostData {
   nickName: string;
   postCreatedDate: string;
 }
+
+export interface ManagedPostPageData {
+  content: ManagedPostData[];
+  totalPages: number;
+  totalElements: number;
+}
