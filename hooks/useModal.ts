@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function useModal() {
+function useModal(): [boolean, () => void, () => void] {
   const [isModal, setIsModal] = useState(false);
 
   const open = () => {

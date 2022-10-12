@@ -65,6 +65,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  z-index: 100;
 `;
 
 Modal.Title = Title;
