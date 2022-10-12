@@ -24,7 +24,7 @@ import { ADD_INFORMATION_SCHEMA, InformationSchema } from '@/constants/schema';
 
 import { useCityQuery } from '@/hooks/useCityQuery';
 import { useDistrictQuery } from '@/hooks/useDistrictQuery';
-import { createErrorMessage } from 'utils/validate';
+import { createErrorMessage } from '@/utils/validate';
 
 const InformationPage: NextPage = () => {
   const methods = useForm<InformationSchema>({
