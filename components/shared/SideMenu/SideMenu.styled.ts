@@ -15,12 +15,7 @@ export const SideMenuContainer = styled.div<ActiveProps>`
   border-radius: 10px;
   box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
   position: relative;
-<<<<<<< HEAD
-  z-index: 10;
-  cursor: pointer;
-=======
   z-index: 1000;
->>>>>>> e17514cf4d55a9acea8009eb9ad98fb59ad0d3d7
 
   ${({ active }) =>
     active &&
@@ -141,6 +136,7 @@ export const SideMenuLi = styled.li<ActiveProps>`
   justify-content: center;
   opacity: 0;
   color: ${({ theme }) => theme.colors.gray[400]};
+  cursor: pointer;
 
   // 함수형태로 반복문 사용
   // keyframes components 사용 불가

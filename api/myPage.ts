@@ -107,3 +107,25 @@ export const patchProfileInformation = async (
     alert('수정에 실패하였습니다!');
   }
 };
+
+interface getMyPagePostsProps {
+  category: string;
+  startDate: string;
+  endDate: string;
+}
+
+export const getMyPagePosts = async ({
+  category,
+  startDate,
+  endDate,
+}: getMyPagePostsProps) => {
+  try {
+    const { data } = await instance.get(
+      `/users/profile/posts?category=${category}&fromDate=${startDate}&endDate=${endDate}`,
+    );
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};

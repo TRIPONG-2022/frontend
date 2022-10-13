@@ -1,48 +1,52 @@
+import moment from 'moment';
 import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import SVGIcon from '@/components/shared/SVGIcon';
 import ProfileDatePicker from '@/components/shared/ProfileDatePicker';
+import { AppState } from '@/store/index';
+import { setSendEndDate, setSendStartDate } from '@/store/slice/myPageSlice';
+
 import * as Styled from './ProfileDateRangeInput.styled';
 
-interface DateRangeInputProps {
-  startDate: Date;
-  onChangeStartDate: (date: Date) => void;
-  endDate: Date;
-  onChangeEndDate: (date: Date) => void;
-}
+export default function DateRangeInput() {
+  const dispatch = useDispatch();
+  const { startDate, endDate } = useSelector(({ myPage }: AppState) => myPage);
 
-export default function DateRangeInput({
-  startDate,
-  endDate,
-  onChangeStartDate,
-  onChangeEndDate,
-}: DateRangeInputProps) {
   const handleChangeStartDate = useCallback(
     (date: Date) => {
-      onChangeStartDate(date);
-      if (endDate < date) {
-        onChangeEndDate(date);
+      dispatch(setSendStartDate(moment(date).format('YYYY-MM-DD')));
+      if (moment(endDate).toDate() < date) {
+        dispatch(setSendEndDate(moment(date).format('YYYY-MM-DD')));
       }
     },
-    [endDate, onChangeEndDate, onChangeStartDate],
+    [dispatch, endDate],
+  );
+
+  const handleChangeEndDate = useCallback(
+    (date: Date) => {
+      dispatch(setSendEndDate(moment(date).format('YYYY-MM-DD')));
+    },
+    [dispatch],
   );
 
   return (
     <Styled.Container>
       <ProfileDatePicker
-        date={startDate}
+        date={moment(startDate).toDate()}
         onChange={handleChangeStartDate}
         selectsStart
-        startDate={startDate}
-        endDate={endDate}
+        startDate={moment(startDate).toDate()}
+        endDate={moment(endDate).toDate()}
       />
       <SVGIcon icon="SubtractLineIcon" />
       <ProfileDatePicker
-        date={endDate}
-        onChange={onChangeEndDate}
+        date={moment(endDate).toDate()}
+        onChange={handleChangeEndDate}
         selectsEnd
-        startDate={startDate}
-        endDate={endDate}
-        minDate={startDate}
+        startDate={moment(startDate).toDate()}
+        endDate={moment(endDate).toDate()}
+        minDate={moment(startDate).toDate()}
       />
     </Styled.Container>
   );

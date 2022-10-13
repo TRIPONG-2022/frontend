@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface initialStateType {
@@ -8,14 +9,14 @@ interface initialStateType {
 }
 
 const initialState: initialStateType = {
-  startDate: JSON.stringify(new Date()),
-  endDate: JSON.stringify(new Date()),
+  startDate: moment().format('YYYY-MM-DD'),
+  endDate: moment().format('YYYY-MM-DD'),
   category: 'all',
   order: 'desc',
 };
 
-const profileSlice = createSlice({
-  name: 'profile',
+const myPageSlice = createSlice({
+  name: 'myPage',
   initialState,
   reducers: {
     setSendStartDate(
@@ -47,5 +48,5 @@ export const {
   setSendEndDate,
   setSendCategory,
   setSendOrder,
-} = profileSlice.actions;
-export default profileSlice.reducer;
+} = myPageSlice.actions;
+export default myPageSlice.reducer;

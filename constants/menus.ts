@@ -113,10 +113,10 @@ export const CATEGORY_MENUS = [
 export const OLD_NEW_MENUS = [
   {
     name: '최신순',
-    value: 'new',
+    value: 'desc',
   },
   {
     name: '오래된순',
-    value: 'old',
+    value: 'asc',
   },
 ];

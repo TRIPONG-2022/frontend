@@ -1,17 +1,22 @@
 import moment from 'moment';
+import { getMyPagePosts } from '@/api/myPage';
+import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { RootState } from 'store';
+import { AppState } from 'store';
 
 export const useMyPageInfo = () => {
-  const startDate = useSelector(({ profile }: RootState) => profile.startDate);
-  const endDate = useSelector(({ profile }: RootState) => profile.endDate);
-  const category = useSelector(({ profile }: RootState) => profile.category);
-  const order = useSelector(({ profile }: RootState) => profile.order);
+  const { startDate, endDate, order } = useSelector(
+    ({ myPage }: AppState) => myPage,
+  );
+
+  // useQuery(['useMyPageInfo', 'all', startDate, endDate, order], () =>
+  //   getMyPagePosts({ category: 'all', startDate, endDate }),
+  // );
 
   return {
-    startDate: moment(JSON.parse(startDate)).format('YY-MM-DD'),
-    endDate: moment(JSON.parse(endDate)).format('YY-MM-DD'),
-    category,
+    startDate,
+    endDate,
+    // category,
     order,
   };
 };

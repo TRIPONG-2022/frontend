@@ -1,39 +1,59 @@
 import { OLD_NEW_MENUS } from '@/constants/menus';
-import React, { MouseEvent, SetStateAction, useState } from 'react';
+import { AppState } from '@/store/index';
+import { setSendOrder } from '@/store/slice/myPageSlice';
+import React, {
+  MouseEvent,
+  SetStateAction,
+  useCallback,
+  useState,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import SVGIcon from '../SVGIcon';
 import * as Styled from './OrderButton.styled';
 
-interface OrderButtonProps {
-  setOrder: React.Dispatch<SetStateAction<string>>;
-}
+const OrderButton = () => {
+  const dispatch = useDispatch();
+  const { order } = useSelector(({ myPage }: AppState) => myPage);
 
-const OrderButton = ({ setOrder }: OrderButtonProps) => {
-  const [active, setActive] = useState(false);
-  const [orderMenu, setOrderMenu] = useState(OLD_NEW_MENUS);
+  const [active, setActive] = useState<boolean>(false);
 
-  const onChangeOrder = (e: MouseEvent, idx: number, value: string) => {
-    if (active === true) e.stopPropagation();
-    if (idx !== 0) {
-      const [a, b] = [...orderMenu];
-      setOrderMenu([b, a]);
-      setOrder(value);
-    }
-    setActive(false);
-  };
+  const onClickActive = useCallback(() => {
+    setActive(!active);
+  }, [active]);
+
+  const onChangeOrder = useCallback(
+    (value: string) => {
+      dispatch(setSendOrder(value));
+      setActive(false);
+    },
+    [dispatch],
+  );
 
   return (
-    <Styled.OrderDiv onClick={() => setActive(true)}>
-      {orderMenu.map(({ name, value }, idx) => (
-        <Styled.Order
-          onClick={(e) => onChangeOrder(e, idx, value)}
-          active={active}
-          key={name}
-        >
-          {name}
-          {idx === 0 && <SVGIcon icon="ArrowDownIcon" />}
-        </Styled.Order>
-      ))}
-    </Styled.OrderDiv>
+    <Styled.OrderButtonContainer>
+      <Styled.Backdrop onClick={onClickActive} active={active} />
+      {OLD_NEW_MENUS.map(
+        ({ name, value }) =>
+          value === order && (
+            <Styled.SelectOrder key={name} onClick={onClickActive}>
+              {name}
+              <SVGIcon icon="ArrowDownIcon" />
+            </Styled.SelectOrder>
+          ),
+      )}
+      {OLD_NEW_MENUS.map(
+        ({ name, value }) =>
+          value !== order && (
+            <Styled.Order
+              onClick={() => onChangeOrder(value)}
+              active={active}
+              key={name}
+            >
+              {name}
+            </Styled.Order>
+          ),
+      )}
+    </Styled.OrderButtonContainer>
   );
 };
 

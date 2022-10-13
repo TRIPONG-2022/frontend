@@ -9,9 +9,9 @@ import { useMyPageInfo } from '@/hooks/useMyPageInfo';
 const MyPagePostsPage: NextPage = () => {
   const aaa = useMyPageInfo();
 
-  useEffect(() => {
-    console.log(aaa);
-  }, [aaa]);
+  // useEffect(() => {
+  //   console.log(aaa);
+  // }, [aaa]);
 
   return (
     <MainLayout>
