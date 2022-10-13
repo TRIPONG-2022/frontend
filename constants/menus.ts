@@ -35,7 +35,7 @@ export const LOGIN_MENUS = [
   },
   {
     name: '마이페이지',
-    link: '/',
+    link: '/my/profile',
     isLoggedIn: true,
     excuteFn: function ({ router, dispatch, link }: LoginJoinListParamType) {
       router.push(link);

@@ -10,6 +10,7 @@ export { default as ArrowDownIcon } from './arrow-down.svg';
 export { default as SubtractLineIcon } from './subtract-line.svg';
 export { default as ChevronDownIcon } from './chevron-down.svg';
 export { default as CheckIcon } from './check.svg';
+export { default as AuthenticatedIcon } from './authenticated.svg';
 export { default as ErrorWarningIcon } from './error-warning.svg';
 export { default as LocationIcon } from './location.svg';
 export { default as LikeIcon } from './like.svg';

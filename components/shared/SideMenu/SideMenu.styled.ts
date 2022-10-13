@@ -9,14 +9,18 @@ interface ActiveProps {
   menus?: typeof MY_PAGE_MENUS;
 }
 
-export const Container = styled.div<ActiveProps>`
+export const SideMenuContainer = styled.div<ActiveProps>`
   width: ${({ width = 10 }) => width}rem;
   height: fit-content;
   border-radius: 10px;
   box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
   position: relative;
+<<<<<<< HEAD
   z-index: 10;
   cursor: pointer;
+=======
+  z-index: 1000;
+>>>>>>> e17514cf4d55a9acea8009eb9ad98fb59ad0d3d7
 
   ${({ active }) =>
     active &&
@@ -34,6 +38,21 @@ export const Container = styled.div<ActiveProps>`
   }
 `;
 
+export const Backdrop = styled.div<ActiveProps>`
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  ${({ active }) =>
+    active &&
+    css`
+      display: block;
+    `}
+`;
+
 export const Title = styled.div<ActiveProps>`
   width: 100%;
   height: 3rem;
@@ -46,6 +65,7 @@ export const Title = styled.div<ActiveProps>`
   padding-left: 0.5rem;
   font-size: 1rem;
   font-weight: bold;
+  cursor: pointer;
 
   :hover {
     opacity: 0.9;

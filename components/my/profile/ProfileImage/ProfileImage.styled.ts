@@ -1,53 +1,46 @@
 import { SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
-interface ContainerProps {
-  flexDirection: 'column' | 'row';
-}
-
-export const Container = styled.div<ContainerProps>`
+export const ProfileImageContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  ${({ flexDirection }) =>
-    flexDirection === 'row' &&
-    css`
-      flex-direction: ${flexDirection};
-      * {
-        margin-bottom: 0;
-      }
-      ${NicknameDiv} {
-        justify-content: flex-start;
-        margin-left: 1rem;
-      }
-    `};
 `;
 
-interface ProfileImageDivProps {
-  width: number;
-}
-
-export const ProfileImageDiv = styled.div<ProfileImageDivProps>`
-  width: ${({ width }) => width}rem;
+export const ProfileImageDiv = styled.div`
+  width: 15rem;
   aspect-ratio: 1 / 1;
   margin-bottom: 1rem;
+  position: relative;
+
+  svg {
+    position: absolute;
+    right: 0;
+    :hover {
+      cursor: pointer;
+    }
+  }
 
   ${SCREEN_TABLET} {
-    width: ${({ width }) => width * 1.125}rem;
+    width: 17.5rem;
   }
+`;
+
+export const ProfileBlankDiv = styled.div`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  box-shadow: inset 0px 2.5px 10px 5px ${({ theme }) => theme.colors.gray[300]};
+  cursor: pointer;
 `;
 
 export const ProfileImage = styled.img`
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: white;
-  box-shadow: inset 0px 2.5px 10px 5px ${({ theme }) => theme.colors.gray[300]};
   overflow: hidden;
-  cursor: pointer;
 `;
 
 export const NicknameDiv = styled.div`
@@ -57,14 +50,10 @@ export const NicknameDiv = styled.div`
   justify-content: center;
 `;
 
-interface NicknameProps {
-  fontSize: number;
-}
-
-export const Nickname = styled.p<NicknameProps>`
+export const Nickname = styled.p`
   text-align: center;
   border: none;
-  font-size: ${({ fontSize }) => fontSize}rem;
+  font-size: 2rem;
   padding: 0.25rem 0;
   width: fit-content;
 `;
@@ -79,4 +68,10 @@ export const NicknameInput = styled.input`
   :focus {
     outline: none;
   }
+`;
+
+export const NicknameErrorMessage = styled.p`
+  margin-top: 0.5rem;
+  color: ${({ theme }) => theme.colors.error.hex};
+  font-size: 0.75rem;
 `;

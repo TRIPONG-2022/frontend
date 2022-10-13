@@ -12,7 +12,7 @@ export const Container = styled.div`
   }
 `;
 
-export const SideMenu = styled.div`
+export const SideMenuContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-bottom: 3.75rem;

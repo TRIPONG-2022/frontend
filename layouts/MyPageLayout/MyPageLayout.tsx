@@ -17,9 +17,9 @@ const MyPageLayout = ({
 }: MyPageLayoutProps) => {
   return (
     <Styled.Container>
-      <Styled.SideMenu>
+      <Styled.SideMenuContainer>
         <SideMenu title="마이페이지" menus={menus} />
-      </Styled.SideMenu>
+      </Styled.SideMenuContainer>
       <Styled.Body>{children}</Styled.Body>
     </Styled.Container>
   );
