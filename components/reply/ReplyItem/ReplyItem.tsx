@@ -19,6 +19,7 @@ import useDeleteReplyMutation from '../hooks/useDeleteReplyMutation';
 import { useReplyListContext } from '../contexts/ReplyListContext';
 
 import * as Styled from './ReplyItem.styled';
+import { elapsedTime } from '@/utils/date';
 
 interface ReplyItemProps {
   reply: Reply;
@@ -97,13 +98,18 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
 function ReplyContent({ reply }: ReplyItemProps) {
   const { openReplyForm } = useReplyListContext('ReplyContent');
   const { isLogIn } = useSelector((state: AppState) => state.user);
-
+  const isEdited = useMemo(
+    () => reply.createdDate !== reply.modifiedDate,
+    [reply],
+  );
+  console.log(reply);
   return (
     <Styled.ReplyContentContainer>
       <Styled.Content>{reply.content}</Styled.Content>
       <Styled.DetailWrapper>
         <span>
-          {format(new Date(`${reply.modifiedDate} UTC`), 'yyyy.MM.dd hh:mm')}
+          {elapsedTime(`${reply.modifiedDate} UTC`)}
+          {isEdited && ' • 수정됨'}
         </span>
         {isLogIn && !reply.parentReply && (
           <button type="button" onClick={() => openReplyForm(reply.id)}>
