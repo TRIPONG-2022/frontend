@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { format } from 'date-fns';
 import { Post } from '@/types/post';
 import { POST_CATEGORIES } from '@/constants/post-category';
 
@@ -30,9 +29,6 @@ export default function PostHeader({ post }: PostHeaderProps) {
           </Styled.AuthorProfileImage>
           <Styled.PostAuthorAndDateWrapper>
             <Styled.PostAuthor>{post.author}</Styled.PostAuthor>
-            <Styled.PostDate>
-              {format(new Date(), 'yyyy.MM.dd')}
-            </Styled.PostDate>
           </Styled.PostAuthorAndDateWrapper>
         </Styled.PostDetailLeftWrapper>
         <Styled.PostDetailRightWrapper>
