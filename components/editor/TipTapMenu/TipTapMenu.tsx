@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { Editor } from '@tiptap/react';
 import SVGIcon, { SVGIconType } from '@/components/shared/SVGIcon';
 import * as Styled from './TipTapMenu.styled';
+import { requestUploadImage } from '@/api/post';
 
 interface TipTapMenuItem {
   icon: SVGIconType;
@@ -14,33 +15,22 @@ interface TipTapMenuProps {
 }
 
 export default function TipTapMenu({ editor }: TipTapMenuProps) {
-  const toBase64 = useCallback(
-    (file: File): Promise<string | ArrayBuffer | null> =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      }),
-    [],
-  );
-
   const onChangeImage = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
       if (files) {
         const imageFile = files[0];
-        const imageBase64 = await toBase64(imageFile);
-        if (imageBase64) {
+        const imageURL = await requestUploadImage(imageFile);
+        if (imageURL) {
           editor
             .chain()
             .focus()
-            .setImage({ src: imageBase64.toString(), alt: imageFile.name })
+            .setImage({ src: imageURL, alt: imageFile.name })
             .run();
         }
       }
     },
-    [editor, toBase64],
+    [editor],
   );
 
   const setLink = useCallback(() => {

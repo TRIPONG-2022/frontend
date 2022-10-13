@@ -1,6 +1,8 @@
-import { GNB_MENUS, LOGIN_MENUS } from '@/constants/menus';
 import Link from 'next/link';
 import React from 'react';
+
+import LoginJoinButton from '@/components/shared/LoginJoinList';
+import { GNB_MENUS } from '@/constants/menus';
 import * as Styled from './MobileNaviation.styled';
 
 interface MobileNavigationProps {
@@ -18,16 +20,9 @@ function MobileNavigation({ toggle, isLogin }: MobileNavigationProps) {
           </Styled.NavMenuLi>
         ))}
       </Styled.NavMenuUl>
-      <Styled.NavLoginUl>
-        {LOGIN_MENUS.map(({ name, link, show }) => {
-          if (isLogin === show)
-            return (
-              <Styled.NavLoginLi key={name}>
-                <Link href={link}>{name}</Link>
-              </Styled.NavLoginLi>
-            );
-        })}
-      </Styled.NavLoginUl>
+      <Styled.NavBottomUl>
+        <LoginJoinButton divide="Navi" isLogin={isLogin} />
+      </Styled.NavBottomUl>
     </Styled.NavDiv>
   );
 }

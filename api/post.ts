@@ -1,25 +1,54 @@
-import axios, { AxiosError } from 'axios';
+import { format } from 'date-fns';
 import instance from './instance';
+import { PostEditorSchema } from '@/constants/schema';
 
-export const getPosts = async () => {
-  try {
-    const { data } = await instance.get(`/posts`);
-    console.log(data);
-    return {
-      isError: false,
-      data,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return {
-        isError: true,
-        error: '게시글을 받아오지 못했습니다.',
-      };
+export async function requestUploadImage(imageFile: File) {
+  const formData = new FormData();
+  formData.append('file', imageFile);
+  const { data } = await instance.post<string>('/posts/files', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return data;
+}
+
+const createPostFormData = ({
+  startDate,
+  endDate,
+  totalHeadCount,
+  ...postEditorSchema
+}: PostEditorSchema) => {
+  const formData = new FormData();
+  Object.entries(postEditorSchema).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((v) => {
+        formData.append(key, v);
+      });
     } else {
-      return {
-        isError: true,
-        error: '알 수 없는 오류가 발생하였습니다.',
-      };
+      formData.append(key, value);
     }
+  });
+
+  if (postEditorSchema.category === 'gathering') {
+    formData.append('startDate', format(startDate ?? new Date(), 'yyyy-MM-dd'));
+    formData.append('endDate', format(endDate ?? new Date(), 'yyyy-MM-dd'));
+    formData.append('totalHeadCount', totalHeadCount?.toString() ?? '');
   }
+
+  return formData;
 };
+
+export async function requestCreatePost(postEditorSchema: PostEditorSchema) {
+  const formData = createPostFormData(postEditorSchema);
+  const { data } = await instance.post<string>(
+    `/posts/${postEditorSchema.category}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+  return data;
+}
