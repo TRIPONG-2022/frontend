@@ -6,7 +6,7 @@ export const PostItemContainer = styled.article`
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 0.25rem;
-  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.gray[200]};
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `;
 
 export const ThumbnailWrapper = styled.div`
@@ -14,6 +14,7 @@ export const ThumbnailWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `;
 
 export const ContentWrapper = styled.div`
@@ -23,7 +24,7 @@ export const ContentWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const DetailWrapper = styled.div`
+export const PostContentContainer = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -39,7 +40,7 @@ export const PostLink = styled.a`
   cursor: pointer;
 `;
 
-export const Title = styled.strong`
+export const Title = styled.h3`
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.75rem;
@@ -108,5 +109,34 @@ export const InfoWrapper = styled.div`
 
   div + div {
     margin-left: 0.25rem;
+  }
+`;
+
+export const GatheringContentContainer = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.75rem;
+`;
+
+export const GatheringInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+
+  font-size: 1.125rem;
+  background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.05);
+
+  strong {
+    margin-right: 0.5rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors.primary.hex};
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.gray[700]};
   }
 `;
