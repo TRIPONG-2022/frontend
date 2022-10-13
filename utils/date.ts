@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export const getCurrentYear = () => new Date().getFullYear();
 
 export const getCurrentMonth = () => new Date().getMonth() + 1;
@@ -34,4 +36,28 @@ export const getOptionDays = (year?: number, month = 1) => {
         label: i + 1 + '일',
       };
     });
+};
+
+export const getGatheringDate = (
+  startDateString?: string,
+  endDateString?: string,
+) => {
+  const currentDate = new Date();
+  const startDate = startDateString ? new Date(startDateString) : new Date();
+  const endDate = endDateString ? new Date(endDateString) : new Date();
+
+  const isCurrentYear = startDate.getFullYear() === currentDate.getFullYear();
+  const isSameYear = startDate.getFullYear() === endDate.getFullYear();
+  const isSameMonth = startDate.getMonth() === endDate.getMonth();
+
+  const startDateFormat = isCurrentYear ? 'MM월 dd일' : 'yyyy년 MM월 dd일';
+  const endDateFormat = !isSameYear
+    ? 'yyyy년 MM월 dd일'
+    : !isSameMonth
+    ? 'MM월 dd일'
+    : 'dd일';
+  return `${format(startDate, startDateFormat)} ~ ${format(
+    endDate,
+    endDateFormat,
+  )}`;
 };
