@@ -13,7 +13,7 @@ export const ProfileInfoTagsContainer = styled.div<ModifyProps>`
   ${({ isEdit }) =>
     isEdit &&
     css`
-      ${TagsDiv} {
+      ${TagsWrapper} {
         height: calc(100% - 3rem);
       }
     `}
@@ -32,7 +32,7 @@ export const MiniText = styled.span`
   animation: ${opacityIncrease} 0.5s ease-in-out;
 `;
 
-export const TagsDiv = styled.div`
+export const TagsWrapper = styled.div`
   width: 100%;
   min-height: 12rem;
   border-radius: 1rem;
@@ -45,7 +45,7 @@ export const TagsDiv = styled.div`
   box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
 `;
 
-export const TagDiv = styled.div`
+export const TagWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -75,7 +75,7 @@ export const Tag = styled.span`
   }
 `;
 
-export const TagsInputDiv = styled.div`
+export const TagsInputWrapper = styled.div`
   width: 100%;
   height: 3rem;
   background: ${({ theme }) => theme.colors.gray[400]};

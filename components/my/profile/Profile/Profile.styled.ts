@@ -29,7 +29,6 @@ export const ButtonWrapper = styled.div`
   width: 100%;
   height: 3rem;
   margin: 3rem 0 10rem 0;
-  /* background: lightblue; */
   text-align: center;
 
   button {

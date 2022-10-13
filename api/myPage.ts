@@ -1,54 +1,16 @@
+import {
+  BirthDateData,
+  MyPageBirthDate,
+  MyPagePictureType,
+  MyPageTags,
+  TagsData,
+  UserProfileData,
+  UserProfileSendData,
+} from '@/types/my-page';
 import { ProfilePatchSchema } from '@/constants/schema';
 import { getBirthDate } from '@/utils/date';
 import { base64ToFile } from '@/utils/image';
 import instance from './instance';
-
-interface TagsData {
-  tags: string[];
-}
-interface MyPageTags {
-  tags: {
-    tag: string | null;
-  }[];
-}
-
-interface BirthDateData {
-  birthDate: string | null;
-}
-
-export interface MyPageBirthDate {
-  year: number | undefined;
-  month: number | undefined;
-  day: number | undefined;
-}
-
-interface MyPagePictureType {
-  picture: File | string | null;
-}
-
-interface CommonProfileData {
-  nickName: string | undefined;
-  gender: string | undefined;
-  city: string | undefined;
-  district: string | undefined;
-  introduction: string | null | undefined;
-  phoneNumber: string | null | undefined;
-}
-
-export interface UserProfileData extends CommonProfileData {
-  loginId: string | undefined;
-  email: string;
-  authentication: number;
-  picture: string | null;
-  latitude: number | undefined;
-  longitude: number | undefined;
-}
-
-export interface UserProfileSendData extends CommonProfileData {
-  latitude: string | null | undefined;
-  longitude: string | null | undefined;
-  [key: string]: File | string | undefined | null;
-}
 
 export const getProfileInfomation = async () => {
   try {

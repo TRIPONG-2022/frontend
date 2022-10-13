@@ -4,15 +4,11 @@ import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import {
-  getProfileInfomation,
-  MyPageBirthDate,
-  UserProfileData,
-  patchProfileInformation,
-} from '@/api/myPage';
-import { ProfilePatchSchema, PROFILE_PATCH_SCHEMA } from '@/constants/schema';
 import Button from '@/components/shared/Button';
 import theme from '@/styles/theme';
+import { MyPageBirthDate, UserProfileData } from '@/types/my-page';
+import { getProfileInfomation, patchProfileInformation } from '@/api/myPage';
+import { ProfilePatchSchema, PROFILE_PATCH_SCHEMA } from '@/constants/schema';
 import ProfileImage from '../ProfileImage';
 import ProfileInfo from '../ProfileInfo';
 

@@ -24,9 +24,7 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
     const tagValue = tagRef.current!.value;
 
     if (tagValue && isEdit) {
-      const duplicate = fields.filter((field) => {
-        if (field.tag === tagValue) return field;
-      });
+      const duplicate = fields.filter((field) => field.tag === tagValue);
 
       if (fields.length >= 10) {
         alert('태그는 10개까지 등록할 수 있습니다.');
@@ -65,8 +63,8 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
           <Styled.MiniText>{`( ${fields.length} / 10 )`}</Styled.MiniText>
         )}
       </Styled.InfoLabel>
-      <Styled.TagsDiv>
-        <Styled.TagDiv>
+      <Styled.TagsWrapper>
+        <Styled.TagWrapper>
           {fields.length > 0 &&
             fields.map((field, idx) => (
               <Styled.Tag
@@ -77,9 +75,9 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
                 {`#${field.tag}`}
               </Styled.Tag>
             ))}
-        </Styled.TagDiv>
+        </Styled.TagWrapper>
         {isEdit && (
-          <Styled.TagsInputDiv>
+          <Styled.TagsInputWrapper>
             <Styled.TagsInput
               ref={tagRef}
               disabled={tagsLengthCheckBoolean}
@@ -94,9 +92,9 @@ const ProfileInfoTags = ({ isEdit }: ProfileInfoTagsProps) => {
             <Styled.TagsButton onClick={addTag}>
               <SVGIcon icon="PlusIcon" />
             </Styled.TagsButton>
-          </Styled.TagsInputDiv>
+          </Styled.TagsInputWrapper>
         )}
-      </Styled.TagsDiv>
+      </Styled.TagsWrapper>
     </Styled.ProfileInfoTagsContainer>
   );
 };

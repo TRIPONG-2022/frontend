@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { fileToObjectURL } from '@/utils/image';
