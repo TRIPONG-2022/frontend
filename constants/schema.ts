@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import { SCHEMA_MESSAGES } from './message';
-import { POST_CATEGORY_KEYS } from './post-category';
+import { PostCategory } from '@/types/post';
 
 export const NICKNAME_SCHEMA = yup
   .string()
@@ -134,8 +134,8 @@ const requiredWhenCategoryIsGathering =
 export const POST_EDITOR_SCHEMA = yup.object({
   title: yup.string().required('제목을 입력해주세요.'),
   category: yup
-    .string()
-    .oneOf(POST_CATEGORY_KEYS, '잘못된 카테고리입니다.')
+    .mixed<PostCategory>()
+    .oneOf(Object.values(PostCategory))
     .required('카테고리를 입력해주세요.'),
   tags: yup.array().of(yup.string().required()).required(),
   content: yup.string().required('내용을 입력해주세요.'),
@@ -164,9 +164,24 @@ export const POST_EDITOR_SCHEMA = yup.object({
   thumbnail: yup.mixed().optional(),
 });
 
+export const REPLY_SCHEMA = yup.object({
+  content: yup
+    .string()
+    .max(500, '500자 이하로 입력해주세요.')
+    .required('내용을 입력해주세요.'),
+});
+
 export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
 export type ProfilePatchSchema = yup.InferType<typeof PROFILE_PATCH_SCHEMA>;
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
+
+export const ADDROLE_SCHEMA = yup.object({
+  roleName: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  description: yup.string().required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+});
+
+export type AddRoleSchema = yup.InferType<typeof ADDROLE_SCHEMA>;
 export type PostEditorSchema = yup.InferType<typeof POST_EDITOR_SCHEMA>;
+export type ReplySchema = yup.InferType<typeof REPLY_SCHEMA>;

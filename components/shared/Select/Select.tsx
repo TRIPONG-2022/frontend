@@ -49,8 +49,8 @@ export default function Select<T>({
   };
 
   return (
-    <Styled.Container type={type}>
-      <Styled.Label htmlFor={id}>{label}</Styled.Label>
+    <Styled.Container>
+      {label && <Styled.Label htmlFor={id}>{label}</Styled.Label>}
       {isOpen && (
         <Styled.Backdrop
           onClick={() => {
@@ -65,7 +65,7 @@ export default function Select<T>({
       >
         <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedValue)}>
           {selectedLabel}
-          {isEdit && <SVGIcon icon="ChevronDownIcon" size={16} />}
+          {!disabled && <SVGIcon icon="ChevronDownIcon" size={16} />}
         </Styled.OptionTitle>
         <Styled.OptionList isOpen={isOpen}>
           {options?.map((option) => (

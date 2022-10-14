@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import { Post } from '@/types/post';
-import { createPostLink, removeHTMLTag } from '@/utils/post';
+import { createPostLink, decodeHTML, removeHTMLTag } from '@/utils/post';
 import SVGIcon from '@/components/shared/SVGIcon';
 
 import * as Styled from './PostItem.styled';
@@ -16,7 +16,7 @@ function PostItem({ post }: PostItemProps) {
   return (
     <Styled.PostItemContainer>
       {post.thumbnail && (
-        <Styled.ThumbnailContainer>
+        <Styled.ThumbnailWrapper>
           <Link href={createPostLink(post.id, post.category)}>
             <Styled.PostLink>
               <Image
@@ -28,15 +28,15 @@ function PostItem({ post }: PostItemProps) {
               />
             </Styled.PostLink>
           </Link>
-        </Styled.ThumbnailContainer>
+        </Styled.ThumbnailWrapper>
       )}
-      <Styled.ContentContainer>
-        <Styled.DetailContainer>
+      <Styled.ContentWrapper>
+        <Styled.DetailWrapper>
           <Link href={createPostLink(post.id, post.category)}>
             <Styled.PostLink>
               <Styled.Title>{post.title}</Styled.Title>
               <Styled.Description>
-                {removeHTMLTag(post.content)}
+                {removeHTMLTag(decodeHTML(post.content))}
               </Styled.Description>
             </Styled.PostLink>
           </Link>
@@ -45,31 +45,31 @@ function PostItem({ post }: PostItemProps) {
               <Styled.TagItem key={index}>#{tag}</Styled.TagItem>
             ))}
           </Styled.TagList>
-        </Styled.DetailContainer>
-        <Styled.BottomContainer>
-          <Styled.ProfileContainer>
-            <Styled.ProfileImageContainer>
+        </Styled.DetailWrapper>
+        <Styled.BottomWrapper>
+          <Styled.ProfileWrapper>
+            <Styled.ProfileImageWrapper>
               <Image
                 src="/images/profile.png"
                 alt="프로필 이미지"
                 layout="fill"
                 objectFit="cover"
               />
-            </Styled.ProfileImageContainer>
+            </Styled.ProfileImageWrapper>
             <span>{post.author}</span>
-          </Styled.ProfileContainer>
-          <Styled.InfoContainer>
-            <Styled.InfoContainer>
+          </Styled.ProfileWrapper>
+          <Styled.InfoWrapper>
+            <Styled.InfoWrapper>
               <SVGIcon icon="HeartIcon" size={16} />
               <span>{post.likeCount}</span>
-            </Styled.InfoContainer>
-            <Styled.InfoContainer>
+            </Styled.InfoWrapper>
+            <Styled.InfoWrapper>
               <SVGIcon icon="EyeIcon" size={16} />
               <span>{post.viewCount}</span>
-            </Styled.InfoContainer>
-          </Styled.InfoContainer>
-        </Styled.BottomContainer>
-      </Styled.ContentContainer>
+            </Styled.InfoWrapper>
+          </Styled.InfoWrapper>
+        </Styled.BottomWrapper>
+      </Styled.ContentWrapper>
     </Styled.PostItemContainer>
   );
 }

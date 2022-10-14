@@ -35,6 +35,21 @@ const GlobalStyle = styled.createGlobalStyle`
     display: block;
     fill: currentColor;
   }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
 `;
 
 export default GlobalStyle;
