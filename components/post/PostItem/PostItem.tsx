@@ -1,8 +1,9 @@
-import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-import { Post } from '@/types/post';
+import { Post, PostCategory } from '@/types/post';
+import { getGatheringDate } from '@/utils/date';
 import { createPostLink, decodeHTML, removeHTMLTag } from '@/utils/post';
 import SVGIcon from '@/components/shared/SVGIcon';
 
@@ -31,21 +32,11 @@ function PostItem({ post }: PostItemProps) {
         </Styled.ThumbnailWrapper>
       )}
       <Styled.ContentWrapper>
-        <Styled.DetailWrapper>
-          <Link href={createPostLink(post.id, post.category)}>
-            <Styled.PostLink>
-              <Styled.Title>{post.title}</Styled.Title>
-              <Styled.Description>
-                {removeHTMLTag(decodeHTML(post.content))}
-              </Styled.Description>
-            </Styled.PostLink>
-          </Link>
-          <Styled.TagList>
-            {post.tags.map((tag, index) => (
-              <Styled.TagItem key={index}>#{tag}</Styled.TagItem>
-            ))}
-          </Styled.TagList>
-        </Styled.DetailWrapper>
+        {post.category === PostCategory.Gathering ? (
+          <GatheringContent post={post} />
+        ) : (
+          <PostContent post={post} />
+        )}
         <Styled.BottomWrapper>
           <Styled.ProfileWrapper>
             <Styled.ProfileImageWrapper>
@@ -71,6 +62,50 @@ function PostItem({ post }: PostItemProps) {
         </Styled.BottomWrapper>
       </Styled.ContentWrapper>
     </Styled.PostItemContainer>
+  );
+}
+
+function PostContent({ post }: PostItemProps) {
+  return (
+    <Styled.PostContentContainer>
+      <Link href={createPostLink(post.id, post.category)}>
+        <Styled.PostLink>
+          <Styled.Title>{post.title}</Styled.Title>
+          <Styled.Description>
+            {removeHTMLTag(decodeHTML(post.content))}
+          </Styled.Description>
+        </Styled.PostLink>
+      </Link>
+      <Styled.TagList>
+        {post.tags.map((tag, index) => (
+          <Styled.TagItem key={index}>#{tag}</Styled.TagItem>
+        ))}
+      </Styled.TagList>
+    </Styled.PostContentContainer>
+  );
+}
+
+function GatheringContent({ post }: PostItemProps) {
+  return (
+    <Styled.GatheringContentContainer>
+      <Link href={createPostLink(post.id, post.category)}>
+        <Styled.PostLink>
+          <Styled.Title>{post.title}</Styled.Title>
+          <Styled.GatheringInfoWrapper>
+            <p>
+              <strong>여행 기간</strong>
+              <span>{getGatheringDate(post.startDate, post.endDate)}</span>
+            </p>
+            <p>
+              <strong>여행 인원</strong>
+              <span>
+                {post.curHeadCount} / {post.totalHeadCount}명
+              </span>
+            </p>
+          </Styled.GatheringInfoWrapper>
+        </Styled.PostLink>
+      </Link>
+    </Styled.GatheringContentContainer>
   );
 }
 
