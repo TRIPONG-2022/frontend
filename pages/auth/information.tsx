@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
 import styled from 'styled-components';
 import {
   useForm,
@@ -8,8 +9,8 @@ import {
   useFormContext,
   FormProvider,
 } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import AuthLayout from '@/layouts/AuthLayout';
 import Select from '@/components/shared/Select';
 import Button from '@/components/shared/Button';
@@ -19,12 +20,13 @@ import {
   getCurrentYear,
   getOptionMonths,
   getOptionYears,
-} from 'utils/date';
+} from '@/utils/date';
 import { ADD_INFORMATION_SCHEMA, InformationSchema } from '@/constants/schema';
-
 import { useCityQuery } from '@/hooks/useCityQuery';
 import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { createErrorMessage } from '@/utils/validate';
+import { requestAdditionalInfo } from '@/api/auth';
+import { AdditionalInfo } from '@/types/auth';
 
 const InformationPage: NextPage = () => {
   const methods = useForm<InformationSchema>({
@@ -52,12 +54,40 @@ const InformationPage: NextPage = () => {
 
   const { data: districtData } = useDistrictQuery(selectedCity);
 
+  const { mutate } = useMutation(
+    (infoData: AdditionalInfo) => requestAdditionalInfo(infoData),
+    {
+      onError: () =>
+        setFormErrorMessage(
+          '추가 정보 등록이 실패하였습니다,  다시 시도해주세요',
+        ),
+    },
+  );
+
+  function leftPad(value: number) {
+    if (value >= 10) {
+      return value;
+    }
+
+    return `0${value}`;
+  }
+
   const onSubmit = (data: InformationSchema) => {
     setFormErrorMessage('');
     if (!cityData || !districtData) return;
     const cityName = cityData.regionMapData.get(data.city);
     const districtName = districtData.regionMapData.get(data.district);
-    console.log({ ...data, cityName, districtName });
+
+    const birthDateFormat = [
+      data.year,
+      leftPad(data.month),
+      leftPad(data.day),
+    ].join('-');
+
+    mutate({
+      ...data,
+      birthDate: birthDateFormat,
+    });
   };
 
   const onError = (errors: FieldErrors<InformationSchema>) => {
