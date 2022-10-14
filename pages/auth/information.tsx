@@ -27,12 +27,15 @@ import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { createErrorMessage } from '@/utils/validate';
 import { requestAdditionalInfo } from '@/api/auth';
 import { AdditionalInfo } from '@/types/auth';
+import { useRouter } from 'next/router';
 
 const InformationPage: NextPage = () => {
   const methods = useForm<InformationSchema>({
     mode: 'onSubmit',
     resolver: yupResolver(ADD_INFORMATION_SCHEMA),
   });
+
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -61,6 +64,7 @@ const InformationPage: NextPage = () => {
         setFormErrorMessage(
           '추가 정보 등록이 실패하였습니다,  다시 시도해주세요',
         ),
+      onSuccess: () => router.push('/'),
     },
   );
 
