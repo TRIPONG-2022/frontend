@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import {
   getCurrentYear,
@@ -36,11 +36,9 @@ const ProfileInfoBirthDateSelect = ({
   };
 
   return (
-    <Flex>
+    <Flex isEdit={isEdit}>
       <Select
         id="year"
-        type="profile"
-        isEdit={isEdit}
         disabled={!isEdit}
         label="생년월일"
         defaultLabel={'연도 입력'}
@@ -50,8 +48,6 @@ const ProfileInfoBirthDateSelect = ({
       />
       <Select
         id="month"
-        type="profile"
-        isEdit={isEdit}
         disabled={!isEdit}
         defaultLabel={'월 입력'}
         options={allMonths}
@@ -60,8 +56,6 @@ const ProfileInfoBirthDateSelect = ({
       />
       <Select
         id="day"
-        type="profile"
-        isEdit={isEdit}
         disabled={!isEdit}
         defaultLabel={'일 입력'}
         options={allDays}
@@ -72,10 +66,37 @@ const ProfileInfoBirthDateSelect = ({
   );
 };
 
-const Flex = styled.div`
+const Flex = styled.div<{ isEdit: boolean }>`
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 0.75rem;
+  ${({ theme, isEdit }) =>
+    !isEdit &&
+    css`
+      div div {
+        color: ${theme.colors.gray[400]};
+      }
+    `}
+
+  label {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  button {
+    width: 100%;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
+    border: none;
+    color: black;
+    font-size: 1rem;
+  }
 `;
 
 export default ProfileInfoBirthDateSelect;

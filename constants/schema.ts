@@ -84,7 +84,7 @@ export const JOIN_SCHEMA = yup.object({
 export const PROFILE_PATCH_SCHEMA = yup.object({
   email: EMAIL_SCHEMA,
   nickName: NICKNAME_SCHEMA,
-  username: yup.string().nullable(),
+  name: yup.string().nullable(),
   gender: yup
     .string()
     .matches(/^((?!default).)*$/)

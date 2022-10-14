@@ -9,8 +9,6 @@ export interface SelectOption<T> {
 
 interface SelectProps<T> {
   id: string;
-  type?: 'auth' | 'profile';
-  isEdit?: boolean;
   label?: string;
   disabled?: boolean;
   defaultLabel: string;
@@ -21,8 +19,6 @@ interface SelectProps<T> {
 
 export default function Select<T>({
   id,
-  type,
-  isEdit = true,
   label,
   disabled,
   options,
@@ -43,7 +39,7 @@ export default function Select<T>({
   };
 
   const openOptions = () => {
-    if (isEdit) {
+    if (!disabled) {
       setOpen((prev) => !prev);
     }
   };
