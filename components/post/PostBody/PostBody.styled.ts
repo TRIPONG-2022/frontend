@@ -54,3 +54,26 @@ export const ReplyWrapper = styled.div`
     font-weight: 700;
   }
 `;
+
+export const GatheringContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.75rem;
+  padding: 1.75rem;
+  font-size: 1.125rem;
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  background-color: ${({ theme }) => theme.colors.gray[50]};
+`;
+
+export const GatheringInfo = styled.p`
+  strong {
+    font-weight: 700;
+    margin-right: 0.5rem;
+    color: ${({ theme }) => theme.colors.gray[800]};
+  }
+  span {
+    color: ${({ theme }) => theme.colors.gray[600]};
+  }
+`;

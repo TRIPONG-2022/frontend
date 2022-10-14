@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Post } from '@/types/post';
+import { Post, PostCategory } from '@/types/post';
 import { decodeHTML } from '@/utils/post';
+import { getGatheringDate } from '@/utils/date';
 import ReplyList from '@/components/reply/ReplyList';
 import ReplyForm from '@/components/reply/ReplyForm';
 
@@ -14,6 +15,9 @@ interface PostBodyProps {
 export default function PostBody({ post }: PostBodyProps) {
   return (
     <Styled.PostBodyContainer>
+      {post.category === PostCategory.Gathering && (
+        <GatheringContent post={post} />
+      )}
       <Styled.PostContent
         dangerouslySetInnerHTML={{ __html: decodeHTML(post.content) }}
       />
@@ -30,5 +34,22 @@ export default function PostBody({ post }: PostBodyProps) {
         <ReplyList postId={post.id} />
       </Styled.ReplyWrapper>
     </Styled.PostBodyContainer>
+  );
+}
+
+function GatheringContent({ post }: PostBodyProps) {
+  return (
+    <Styled.GatheringContentContainer>
+      <Styled.GatheringInfo>
+        <strong>여행 기간</strong>
+        <span>{getGatheringDate(post.startDate, post.endDate)}</span>
+      </Styled.GatheringInfo>
+      <Styled.GatheringInfo>
+        <strong>여행 인원</strong>
+        <span>
+          {post.curHeadCount} / {post.totalHeadCount}명
+        </span>
+      </Styled.GatheringInfo>
+    </Styled.GatheringContentContainer>
   );
 }
