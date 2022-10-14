@@ -54,3 +54,18 @@ export const RoleContainer = styled.div`
     padding-left: 0;
   }
 `;
+
+export const Test = styled.div`
+  display: inline-block;
+  max-width: 1120px;
+  border: 2px solid black;
+  border-radius: 1rem;
+  padding: 1rem;
+
+  span {
+    display: block;
+    margin-bottom: 1rem;
+
+    font-weight: 600;
+  }
+`;
