@@ -77,16 +77,17 @@ const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
           errorMessage={errors['phoneNumber']?.message}
           {...register('phoneNumber')}
         />
-        <Select
-          id="gender"
-          type="profile"
-          isEdit={isEdit}
-          label="성별"
-          defaultLabel={'성별을 선택하세요'}
-          options={genderOptions}
-          selectedValue={selectedGender}
-          onChangeOption={onChangeOption('gender')}
-        />
+        <Styled.SelectWrapper isEdit={isEdit}>
+          <Select
+            id="gender"
+            label="성별"
+            disabled={!isEdit}
+            defaultLabel={'성별을 선택하세요'}
+            options={genderOptions}
+            selectedValue={selectedGender}
+            onChangeOption={onChangeOption('gender')}
+          />
+        </Styled.SelectWrapper>
 
         <ProfileInfoBirthDateSelect isEdit={isEdit} />
         <ProfileInfoRegionSelect isEdit={isEdit} />

@@ -9,8 +9,6 @@ export interface SelectOption<T> {
 
 interface SelectProps<T> {
   id: string;
-  type?: 'auth' | 'profile';
-  isEdit?: boolean;
   label?: string;
   disabled?: boolean;
   defaultLabel: string;
@@ -21,8 +19,6 @@ interface SelectProps<T> {
 
 export default function Select<T>({
   id,
-  type,
-  isEdit = true,
   label,
   disabled,
   options,
@@ -43,14 +39,14 @@ export default function Select<T>({
   };
 
   const openOptions = () => {
-    if (isEdit) {
+    if (!disabled) {
       setOpen((prev) => !prev);
     }
   };
 
   return (
-    <Styled.Container type={type}>
-      <Styled.Label htmlFor={id}>{label}</Styled.Label>
+    <Styled.Container>
+      {label && <Styled.Label htmlFor={id}>{label}</Styled.Label>}
       {isOpen && (
         <Styled.Backdrop
           onClick={() => {
@@ -65,7 +61,7 @@ export default function Select<T>({
       >
         <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedValue)}>
           {selectedLabel}
-          {isEdit && <SVGIcon icon="ChevronDownIcon" size={16} />}
+          {!disabled && <SVGIcon icon="ChevronDownIcon" size={16} />}
         </Styled.OptionTitle>
         <Styled.OptionList isOpen={isOpen}>
           {options?.map((option) => (

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormContext } from 'react-hook-form';
 import TipTap from '../TipTap';
@@ -9,6 +9,7 @@ import EditorHeader from '../EditorHeader';
 import HeadCountInput from '../HeadCountInput';
 import DateRangeInput from '../DateRangeInput';
 import PublishModal from '../PublishModal';
+import { PostCategory } from '@/types/post';
 import { PostEditorSchema } from '@/constants/schema';
 import * as Styled from './Editor.styled';
 
@@ -20,8 +21,7 @@ interface EditorProps {
 export default function Editor({ initialContent, onSubmit }: EditorProps) {
   const router = useRouter();
   const [isOpenPublishModal, setIsOpenPublishModal] = useState<boolean>(false);
-  const { register, handleSubmit, watch, setValue, formState } =
-    useFormContext<PostEditorSchema>();
+  const { register, handleSubmit, watch } = useFormContext<PostEditorSchema>();
 
   const onCancel = () => {
     router.back();
@@ -38,7 +38,7 @@ export default function Editor({ initialContent, onSubmit }: EditorProps) {
   return (
     <Styled.Container>
       <EditorHeader />
-      {watch('category') === 'gathering' && (
+      {watch('category') === PostCategory.Gathering && (
         <React.Fragment>
           <HeadCountInput />
           <DateRangeInput />

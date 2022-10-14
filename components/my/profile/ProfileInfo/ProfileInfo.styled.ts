@@ -26,6 +26,35 @@ export const InfoWrapper = styled.div`
   width: 100%;
 `;
 
+export const SelectWrapper = styled.div<ModifyProps>`
+  ${({ theme, isEdit }) =>
+    !isEdit &&
+    css`
+      div div {
+        color: ${theme.colors.gray[400]};
+      }
+    `}
+
+  label {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  button {
+    width: 100%;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
+    border: none;
+    color: black;
+    font-size: 1rem;
+  }
+`;
+
 export const InfoLabel = styled.label`
   display: inline-block;
   margin-bottom: 0.5rem;

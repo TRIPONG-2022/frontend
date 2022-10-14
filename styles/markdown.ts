@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 
 export const markdownStyles = css`
   font-size: 0.875rem;
-  line-height: 1.25;
+  line-height: 1.5;
 
   em {
     font-style: italic;
@@ -40,8 +40,8 @@ export const markdownStyles = css`
   h1 {
     font-size: 2em;
     font-weight: bold;
-    margin-block-start: 0.5em;
-    margin-block-end: 0.5em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
   }
@@ -58,6 +58,10 @@ export const markdownStyles = css`
   h3 {
     font-size: 1.25em;
     font-weight: bold;
+    margin-block-start: 0.75em;
+    margin-block-end: 0.75em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
   }
 
   hr {
@@ -73,14 +77,24 @@ export const markdownStyles = css`
 
   img {
     display: block;
+    width: 100%;
     max-width: 100%;
     height: auto;
-    border-radius: 0.5rem;
     margin: 0 auto;
+    margin-block-start: 1.5em;
+    margin-block-end: 1.5em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+  p {
+    margin-block-start: 0.75em;
+    margin-block-end: 0.75em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
   }
 
   @media (min-width: 768px) {
     font-size: 1rem;
-    line-height: 1.5;
   }
 `;

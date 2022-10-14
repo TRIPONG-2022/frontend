@@ -7,52 +7,9 @@ interface OptionProps {
   selected?: boolean;
 }
 
-interface SelectTypeProps {
-  type?: 'auth' | 'profile';
-}
-
-export const Container = styled.div<SelectTypeProps>`
-  margin-bottom: 1.5rem;
+export const Container = styled.div`
   flex-basis: 100%;
-
-  ${({ type }) =>
-    type === 'profile' &&
-    css`
-      margin-bottom: 0;
-      input::placeholder {
-        color: transparent;
-      }
-      ${Label} {
-        display: inline-block;
-        margin-top: 2rem;
-        margin-bottom: 0.5rem;
-        padding-left: 1rem;
-        font-size: 1rem;
-        font-weight: 500;
-      }
-      ${OptionContainer} {
-        background: white;
-        border-radius: 1rem;
-        box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
-        border: none;
-        color: black;
-        font-size: 1rem;
-      }
-      ${OptionTitle} {
-        background-color: #fff;
-        padding: 0.75rem;
-        font-size: 0.875rem;
-      }
-      ${OptionList} {
-        background-color: #fff;
-      }
-
-      ${SCREEN_TABLET} {
-        ${OptionTitle} {
-          padding: 1.25rem 0.75rem 1.25rem 1.25rem;
-        }
-      }
-    `}
+  width: 100%;
 `;
 
 export const Label = styled.label`

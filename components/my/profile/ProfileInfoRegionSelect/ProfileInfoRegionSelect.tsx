@@ -1,5 +1,5 @@
 import { useFormContext, useWatch } from 'react-hook-form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { useCityQuery } from '@/hooks/useCityQuery';
 import { useDistrictQuery } from '@/hooks/useDistrictQuery';
@@ -24,11 +24,9 @@ const ProfileInfoRegionSelect = ({ isEdit }: ProfileInfoRegionSelectProps) => {
   };
 
   return (
-    <Flex>
+    <Flex isEdit={isEdit}>
       <Select
         id="city"
-        type="profile"
-        isEdit={isEdit}
         label="지역"
         disabled={!isEdit}
         defaultLabel={'도시를 선택해주세요'}
@@ -38,8 +36,6 @@ const ProfileInfoRegionSelect = ({ isEdit }: ProfileInfoRegionSelectProps) => {
       />
       <Select
         id="district"
-        type="profile"
-        isEdit={isEdit}
         defaultLabel={'구를 선택해주세요'}
         options={districtData?.regionData}
         disabled={!selectedCity || !isEdit}
@@ -50,10 +46,37 @@ const ProfileInfoRegionSelect = ({ isEdit }: ProfileInfoRegionSelectProps) => {
   );
 };
 
-const Flex = styled.div`
+const Flex = styled.div<{ isEdit: boolean }>`
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
+  ${({ theme, isEdit }) =>
+    !isEdit &&
+    css`
+      div div {
+        color: ${theme.colors.gray[400]};
+      }
+    `}
+
+  label {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  button {
+    width: 100%;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0px 5px 10px 2.5px ${({ theme }) => theme.colors.gray[300]};
+    border: none;
+    color: black;
+    font-size: 1rem;
+  }
 `;
 
 export default ProfileInfoRegionSelect;

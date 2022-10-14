@@ -11,6 +11,7 @@ export interface ConfirmUserResponse {
   name: string;
   nickName: string;
   picture: string;
+  loginId: string;
 }
 
 export const login = async ({ loginId, password }: LoginType) => {
