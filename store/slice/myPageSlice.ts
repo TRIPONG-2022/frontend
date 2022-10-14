@@ -11,7 +11,7 @@ interface initialStateType {
 const initialState: initialStateType = {
   startDate: moment().format('YYYY-MM-DD'),
   endDate: moment().format('YYYY-MM-DD'),
-  category: 'all',
+  category: 'board',
   order: 'desc',
 };
 

@@ -66,7 +66,7 @@ const ProfileInfo = ({ isEdit }: ProfileInfoProps) => {
           label="이름"
           type="text"
           readOnly
-          {...register('username')}
+          {...register('name')}
         />
         <ModifyInfo
           id="phoneNumber"

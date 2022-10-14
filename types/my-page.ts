@@ -33,6 +33,7 @@ export interface CommonProfileData {
 export interface UserProfileData extends CommonProfileData {
   loginId: string | undefined;
   email: string;
+  name: string;
   authentication: number;
   picture: string | null;
   latitude: number | undefined;

@@ -1,22 +1,18 @@
-import moment from 'moment';
-import { getMyPagePosts } from '@/api/myPage';
+import { AppState } from 'store';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { AppState } from 'store';
+
+import { getMyPagePosts } from '@/api/myPage';
 
 export const useMyPageInfo = () => {
-  const { startDate, endDate, order } = useSelector(
+  const { startDate, endDate, category, order } = useSelector(
     ({ myPage }: AppState) => myPage,
   );
 
-  // useQuery(['useMyPageInfo', 'all', startDate, endDate, order], () =>
-  //   getMyPagePosts({ category: 'all', startDate, endDate }),
-  // );
+  const { data } = useQuery(
+    ['useMyPageInfo', category, startDate, endDate, order],
+    () => getMyPagePosts({ category, startDate, endDate }),
+  );
 
-  return {
-    startDate,
-    endDate,
-    // category,
-    order,
-  };
+  return data;
 };

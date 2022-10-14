@@ -119,6 +119,7 @@ export const getMyPagePosts = async ({
   startDate,
   endDate,
 }: getMyPagePostsProps) => {
+  console.log(category, startDate, endDate);
   try {
     const { data } = await instance.get(
       `/users/profile/posts?category=${category}&fromDate=${startDate}&endDate=${endDate}`,

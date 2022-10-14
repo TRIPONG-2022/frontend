@@ -7,11 +7,11 @@ import MyPagePostLayout from '@/layouts/MyPagePostLayout';
 import { useMyPageInfo } from '@/hooks/useMyPageInfo';
 
 const MyPagePostsPage: NextPage = () => {
-  const aaa = useMyPageInfo();
+  const data = useMyPageInfo();
 
-  // useEffect(() => {
-  //   console.log(aaa);
-  // }, [aaa]);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <MainLayout>

@@ -89,10 +89,6 @@ export const MY_PAGE_MENUS = [
 
 export const CATEGORY_MENUS = [
   {
-    name: '모두보기',
-    value: 'all',
-  },
-  {
     name: '자유게시판',
     value: 'board',
   },
