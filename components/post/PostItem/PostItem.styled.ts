@@ -9,21 +9,21 @@ export const PostItemContainer = styled.article`
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.gray[200]};
 `;
 
-export const ThumbnailContainer = styled.div`
+export const ThumbnailWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 `;
 
-export const ContentContainer = styled.div`
+export const ContentWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-export const DetailContainer = styled.div`
+export const DetailWrapper = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -72,7 +72,7 @@ export const TagItem = styled.li`
   color: ${({ theme }) => theme.colors.gray[500]};
 `;
 
-export const BottomContainer = styled.div`
+export const BottomWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -80,7 +80,7 @@ export const BottomContainer = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.gray[100]};
 `;
 
-export const ProfileContainer = styled.div`
+export const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
   span {
@@ -89,7 +89,7 @@ export const ProfileContainer = styled.div`
   }
 `;
 
-export const ProfileImageContainer = styled.div`
+export const ProfileImageWrapper = styled.div`
   position: relative;
   width: 2rem;
   height: 2rem;
@@ -98,7 +98,7 @@ export const ProfileImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const InfoContainer = styled.div`
+export const InfoWrapper = styled.div`
   display: flex;
   align-items: center;
   column-gap: 0.25rem;

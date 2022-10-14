@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
       })();
     }
-  }, []);
+  }, [dispatch, user.isLogIn]);
 
   return (
     <QueryClientProvider client={queryClient}>

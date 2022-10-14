@@ -1,24 +1,28 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
+import Select from '@/components/shared/Select';
 import { PostEditorSchema } from '@/constants/schema';
-import { POST_CATEGORIES } from '@/constants/post-category';
+import { POST_CATEGORY_OPTIONS } from '@/constants/post-category';
+import { PostCategory } from '@/types/post';
 import * as Styled from './EditorHeader.styled';
 
 export default function EditorHeader() {
-  const { register } = useFormContext<PostEditorSchema>();
+  const { control, setValue } = useFormContext<PostEditorSchema>();
+  const selectedCategory = useWatch({ control, name: 'category' });
+  const onChangeCategory = (category: PostCategory) =>
+    setValue('category', category);
 
   return (
     <Styled.Container>
-      <div>
-        <select {...register('category')}>
-          <option value="">카테고리</option>
-          {Object.entries(POST_CATEGORIES).map(([category, label]) => (
-            <option value={category} key={`category-option-${category}`}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <Styled.SelectContainer>
+        <Select
+          id="post-editor-category"
+          defaultLabel="카테고리"
+          options={POST_CATEGORY_OPTIONS}
+          selectedValue={selectedCategory}
+          onChangeOption={onChangeCategory}
+        />
+      </Styled.SelectContainer>
     </Styled.Container>
   );
 }

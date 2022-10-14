@@ -18,7 +18,9 @@ const ObserverBottom = ({ getNextPage }: ObserverBottomProps) => {
     },
     [getNextPage],
   );
-  const bottom = useIntersectionObserver(observerCallback, { threshold: 0.5 });
+  const bottom = useIntersectionObserver<HTMLDivElement>(observerCallback, {
+    threshold: 0.5,
+  });
 
   return <div ref={bottom}>로딩중 </div>;
 };

@@ -5,6 +5,7 @@ interface User {
   name: string;
   nickName: string;
   picture: string;
+  loginId: string;
 }
 
 export interface UserState {
