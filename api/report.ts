@@ -15,7 +15,7 @@ export function requestReportUser(userId: string | number) {
 
 export function requestReportPost(postId: string | number) {
   return async (kind: string) => {
-    const { data } = await instance.post(`/reports/users/${postId}`, { kind });
+    const { data } = await instance.post(`/reports/posts/${postId}`, { kind });
     return data;
   };
 }
