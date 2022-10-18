@@ -7,7 +7,11 @@ import useAddRole from '../hooks/useAddRole';
 
 import * as Styled from './AddRole.styled';
 
-const AddRole = () => {
+interface AddRoleProps {
+  setOff: () => void;
+}
+
+const AddRole = ({ setOff }: AddRoleProps) => {
   const {
     register,
     handleSubmit,
@@ -50,7 +54,19 @@ const AddRole = () => {
               />
             </Styled.InputWrapper>
           </Styled.AddRoleInPutWrapper>
-          <Styled.Button type="submit">등록</Styled.Button>
+
+          <Styled.Button type="submit" primary>
+            등록
+          </Styled.Button>
+          <Styled.Button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOff();
+            }}
+          >
+            취소
+          </Styled.Button>
         </Styled.AddRoleWrapper>
       </form>
     </Styled.AddRoleContainer>

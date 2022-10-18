@@ -64,7 +64,6 @@ export const Test = styled.div`
 
   span {
     display: block;
-    margin-bottom: 1rem;
 
     font-weight: 600;
   }

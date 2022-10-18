@@ -15,16 +15,9 @@ const Role = () => {
       <Styled.LayoutBody>
         <Styled.RoleContainer>
           <Styled.Test onClick={setOn}>
-            <span
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggle();
-              }}
-            >
-              {isAddRole ? '등록 취소' : '권한 생성하러 가기'}
-            </span>
+            {!isAddRole && <span>권한 생성하러 가기</span>}
 
-            {isAddRole && <AddRole />}
+            {isAddRole && <AddRole setOff={setOff} />}
           </Styled.Test>
 
           <RoleList />
