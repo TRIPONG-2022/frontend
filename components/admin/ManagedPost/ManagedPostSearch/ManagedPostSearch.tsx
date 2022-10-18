@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Select from '@/components/shared/Select';
 import { ManagedSearchParams } from '@/types/search-params';
+import SVGIcon from '@/components/shared/SVGIcon';
 import useManagedPostQuery from '../hooks/useManagedPostQuery';
 import useManagedReportPostQuery from '../hooks/useManagedReportPostQuery';
 
@@ -74,20 +75,28 @@ const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
           onChangeOption={setState(setSearchParams)}
         />
       </Styled.SelectWrapper>
-      <Styled.SearchInput
-        onChange={(e: any) => {
-          setsearchInput(e.target.value);
-        }}
-        value={searchInput}
-      />
-
-      <Styled.SearchButton
-        onClick={() =>
-          isePostSearch ? handlePostSearch() : handleReportPostSearch()
-        }
-      >
-        검색
-      </Styled.SearchButton>
+      <Styled.SearchInputWrapper>
+        <Styled.SearchInput
+          type="search"
+          placeholder="Search"
+          onChange={(e: any) => {
+            setsearchInput(e.target.value);
+          }}
+          value={searchInput}
+        />
+        <Styled.SearchIconWrapper>
+          <SVGIcon
+            width="1.25em"
+            height="1.25em"
+            icon="SearchIcon"
+            title="검색아이콘"
+            aria-label="검색아이콘"
+            onClick={() =>
+              isePostSearch ? handlePostSearch() : handleReportPostSearch()
+            }
+          />
+        </Styled.SearchIconWrapper>
+      </Styled.SearchInputWrapper>
     </Styled.ManagedPostSearchContainer>
   );
 };
