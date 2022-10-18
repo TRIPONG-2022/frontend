@@ -1,4 +1,3 @@
-import { NickName } from '@/components/admin/ManagedPost/ManagedPostCard/ManagedPostCard.styled';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,11 +7,17 @@ interface PortalProps {
 }
 
 const Portal = ({ children, selector }: PortalProps) => {
-  const el = document.querySelector(selector);
+  const [element, setElement] = useState<Element | null>(null);
 
-  return el && ReactDOM.createPortal(children, el);
+  useEffect(() => {
+    if (document) {
+      setElement(document.querySelector(selector));
+    }
+  }, [selector]);
+
+  if (!element) return <></>;
+
+  return ReactDOM.createPortal(children, element);
 };
-
-// const el = typeof window !== 'undefined' && document.querySelector(selector);
 
 export default Portal;
