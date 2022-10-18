@@ -21,7 +21,7 @@ export const SearchInput = styled.input`
   border: 2px solid white;
   border-radius: 1.5rem;
   padding: 1.25rem;
-  padding-inline-start: 3rem;
+  padding-inline-end: 3rem;
 
   font-size: 1rem;
   background: ${({ theme }) => theme.colors.gray[100]};
@@ -50,7 +50,7 @@ export const SearchInput = styled.input`
 
 export const SearchIconWrapper = styled.div`
   position: absolute;
-  left: 1rem;
+  right: 1rem;
   top: 50%;
   transform: translate(0, -55%);
 `;
