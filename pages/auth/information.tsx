@@ -68,14 +68,6 @@ const InformationPage: NextPage = () => {
     },
   );
 
-  function leftPad(value: number) {
-    if (value >= 10) {
-      return value;
-    }
-
-    return `0${value}`;
-  }
-
   const onSubmit = (data: InformationSchema) => {
     setFormErrorMessage('');
     if (!cityData || !districtData) return;
@@ -84,8 +76,8 @@ const InformationPage: NextPage = () => {
 
     const birthDateFormat = [
       data.year,
-      leftPad(data.month),
-      leftPad(data.day),
+      String(data.month).padStart(2, '0'),
+      String(data.day).padStart(2, '0'),
     ].join('-');
 
     mutate({
