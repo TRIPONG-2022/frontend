@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { format } from 'date-fns';
+
+import Modal from '@/components/shared/Modal';
+import Select from '@/components/shared/Select';
+import Button from '@/components/shared/Button';
+import SVGIcon from '@/components/shared/SVGIcon';
+import useModal from '@/hooks/useModal';
+import useReportTypeQuery from '@/hooks/useReportTypeQuery';
+import useReportPostMutation from '@/hooks/useReportPostMutation';
 import { Post } from '@/types/post';
 import { POST_CATEGORIES } from '@/constants/post-category';
 
 import * as Styled from './PostHeader.styled';
-import SVGIcon from '@/components/shared/SVGIcon';
 
 interface PostHeaderProps {
   post: Post;
@@ -36,16 +43,72 @@ export default function PostHeader({ post }: PostHeaderProps) {
           </Styled.PostAuthorAndDateWrapper>
         </Styled.PostDetailLeftWrapper>
         <Styled.PostDetailRightWrapper>
-          <Styled.PostInfo>
-            <SVGIcon icon="HeartIcon" size={16} />
-            <span>{post.likeCount}</span>
-          </Styled.PostInfo>
-          <Styled.PostInfo>
-            <SVGIcon icon="EyeIcon" size={16} />
-            <span>{post.viewCount}</span>
-          </Styled.PostInfo>
+          <PostReportModal post={post} />
         </Styled.PostDetailRightWrapper>
       </Styled.PostDetailWrapper>
     </Styled.PostHeaderContainer>
+  );
+}
+
+function PostReportModal({ post }: PostHeaderProps) {
+  const { data } = useReportTypeQuery();
+  const [reportType, setReportType] = useState<string>('');
+  const { mutate } = useReportPostMutation(post.id);
+  const [isModal, open, close] = useModal();
+
+  const reportPost = () => {
+    mutate(reportType, {
+      onSuccess: () => {
+        setReportType('');
+        close();
+      },
+    });
+  };
+
+  const onClose = () => {
+    setReportType('');
+    close();
+  };
+
+  const reportOptions = useMemo(
+    () => data?.map(({ kr, en }) => ({ value: en, label: kr })),
+    [data],
+  );
+
+  return (
+    <>
+      <button onClick={open}>
+        <SVGIcon icon="MoreVerticalIcon" size={20} />
+      </button>
+      <Modal isModal={isModal} close={onClose} size="sm">
+        <Modal.Title>신고하기</Modal.Title>
+        <div>
+          <Select
+            id="report-post"
+            defaultLabel="신고 유형을 선택하세요."
+            selectedValue={reportType}
+            onChangeOption={setReportType}
+            options={reportOptions}
+          />
+        </div>
+        <Modal.TwoBtnContainer
+          leftBtn={
+            <Button
+              size="md"
+              onClick={reportPost}
+              fullWidth
+              disabled={!Boolean(reportType)}
+            >
+              신고하기
+            </Button>
+          }
+          rightBtn={
+            <Button size="md" variant="default" onClick={onClose} fullWidth>
+              취소
+            </Button>
+          }
+        />
+      </Modal>
+    </>
   );
 }
