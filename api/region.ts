@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   convertCityCodeToDistrictCode,
   convertToRegionData,
@@ -21,7 +22,7 @@ export const requestGetCities = async () => {
 };
 
 export const requestGetDistrict = async (cityCode?: string) => {
-  if (cityCode === undefined) {
+  if (!cityCode) {
     return;
   }
 

@@ -35,7 +35,7 @@ export const LOGIN_MENUS = [
   },
   {
     name: '마이페이지',
-    link: '/',
+    link: '/my/profile',
     isLoggedIn: true,
     excuteFn: function ({ router, dispatch, link }: LoginJoinListParamType) {
       router.push(link);
@@ -59,3 +59,30 @@ export const GNB_MENUS = [
 ];
 
 export const HEADER_HEIGHT = '5rem';
+
+export const MY_PAGE_MENUS = [
+  {
+    name: '내 정보',
+    link: '/my/profile',
+  },
+  {
+    name: '내가 쓴 글',
+    link: '/my/posts',
+  },
+  {
+    name: '내가 단 댓글',
+    link: '/my/replies',
+  },
+  {
+    name: '좋아요한 글',
+    link: '/my/likes',
+  },
+  {
+    name: '비밀번호 재설정',
+    link: '/auth/reset-password',
+  },
+  {
+    name: '회원탈퇴',
+    link: '/hhh',
+  },
+];

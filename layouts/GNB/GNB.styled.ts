@@ -1,13 +1,15 @@
+import styled from 'styled-components';
+
 import { HEADER_HEIGHT } from '@/constants/menus';
 import { SCREEN_DESKTOP } from '@/styles/screen';
-import styled from 'styled-components';
+import { Z_INDEX } from '@/styles/z-index';
 
 export const GNBHeader = styled.header`
   width: 100%;
   height: ${HEADER_HEIGHT};
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: ${Z_INDEX.HEADER};
 `;
 
 export const GNBNav = styled.nav`
