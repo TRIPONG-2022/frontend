@@ -14,8 +14,8 @@ export interface Post {
   tags: string[];
   latitude?: number;
   longitude?: number;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
   curHeadCount: number;
   totalHeadCount: number;
   thumbnail: string;
