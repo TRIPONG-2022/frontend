@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { useQuery } from 'react-query';
 import type { GetServerSideProps, NextPage } from 'next';
 
 import MainLayout from '@/layouts/MainLayout';
@@ -8,20 +7,17 @@ import PostBody from '@/components/post/PostBody';
 import PostHeader from '@/components/post/PostHeader';
 import PostNotFound from '@/components/post/PostNotFound';
 
-import { Post } from '@/types/post';
-import { requestGetPost } from '@/api/post';
+import { PostCategory } from '@/types/post';
 import { checkIsValidPostPageParam, handlePostPageParam } from '@/utils/post';
+import usePostQuery from '@/hooks/usePostQuery';
 
 interface PostPageProps {
-  category: string;
+  category: PostCategory;
   postId: string;
 }
 
 const PostPage: NextPage<PostPageProps> = ({ category, postId }) => {
-  const { data: post, isLoading } = useQuery<Post>(
-    ['post', category, postId],
-    () => requestGetPost(category, postId),
-  );
+  const { data: post, isLoading } = usePostQuery(category, postId);
 
   return (
     <>

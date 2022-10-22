@@ -5,7 +5,10 @@ import { PostEditorSchema } from '@/constants/schema';
 
 import instance from './instance';
 
-export async function requestGetPost(category: string, postId: string) {
+export async function requestGetPost(
+  category: string,
+  postId: string | number,
+) {
   const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
   return data;
 }
