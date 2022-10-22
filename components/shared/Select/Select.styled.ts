@@ -1,3 +1,4 @@
+import { SCREEN_TABLET } from '@/styles/screen';
 import { Z_INDEX } from '@/styles/z-index';
 import styled, { css } from 'styled-components';
 

@@ -81,6 +81,39 @@ export const JOIN_SCHEMA = yup.object({
     .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
 });
 
+export const PROFILE_PATCH_SCHEMA = yup.object({
+  email: EMAIL_SCHEMA,
+  nickName: NICKNAME_SCHEMA,
+  name: yup.string().nullable(),
+  gender: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  authentication: yup.number(),
+  year: yup.number(),
+  month: yup.number(),
+  day: yup.number(),
+  city: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  district: yup
+    .string()
+    .matches(/^((?!default).)*$/)
+    .required(SCHEMA_MESSAGES.REQUIRED_FIELD),
+  introduction: yup.string().max(500).nullable(),
+  phoneNumber: yup
+    .string()
+    .nullable()
+    .matches(/^[0-9]*$/g, {
+      message: SCHEMA_MESSAGES.WRONG_PHONE_NUMBER_FORMAT,
+    }),
+  picture: yup.mixed(),
+  tags: yup.array().nullable(),
+  latitude: yup.number().nullable(),
+  longitude: yup.number().nullable(),
+});
+
 export const RESET_PASSWORD_SCHEMA = yup.object({
   password: PASSWORD_CHEMA,
   passwordCheck: yup
@@ -139,6 +172,7 @@ export const REPLY_SCHEMA = yup.object({
 });
 
 export type JoinSchema = yup.InferType<typeof JOIN_SCHEMA>;
+export type ProfilePatchSchema = yup.InferType<typeof PROFILE_PATCH_SCHEMA>;
 export type LoginSchema = yup.InferType<typeof LOGIN_SCHEMA>;
 export type SendEmailSchema = yup.InferType<typeof SEND_EMAIL_SCHEMA>;
 export type ResetPasswordSchema = yup.InferType<typeof RESET_PASSWORD_SCHEMA>;
