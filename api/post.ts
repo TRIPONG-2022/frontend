@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import { Post } from '@/types/post';
+import { Post, PostCategory } from '@/types/post';
 import { PostEditorSchema } from '@/constants/schema';
 
 import instance from './instance';
@@ -58,5 +58,30 @@ export async function requestCreatePost(postEditorSchema: PostEditorSchema) {
       },
     },
   );
+  return data;
+}
+
+export function requestUpdatePost(
+  postId: string | number,
+  postCategory: PostCategory,
+) {
+  return async (postEditorSchema: PostEditorSchema) => {
+    const formData = createPostFormData(postEditorSchema);
+    formData.append('postId', postId.toString());
+    const { data } = await instance.patch(
+      `/posts/${postCategory}/${postId}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    return data;
+  };
+}
+
+export async function requestDeletePost(post: Post) {
+  const { data } = await instance.delete(`/posts/${post.category}/${post.id}`);
   return data;
 }
