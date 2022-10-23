@@ -7,11 +7,13 @@ import { useSelector } from 'react-redux';
 
 import { AppState } from '@/store/index';
 import { Reply } from '@/types/reply';
+import { elapsedTime } from '@/utils/date';
 import { ReplySchema, REPLY_SCHEMA } from '@/constants/schema';
 import useToggle from '@/hooks/useToggle';
 import Button from '@/components/shared/Button';
 import SVGIcon from '@/components/shared/SVGIcon';
 import Dropdown from '@/components/shared/Dropdown';
+
 import ReplyForm from '../ReplyForm';
 import ReplyList from '../ReplyList';
 import useUpdateReplyMutation from '../hooks/useUpdateReplyMutation';
@@ -97,6 +99,10 @@ export default function ReplyItem({ reply }: ReplyItemProps) {
 function ReplyContent({ reply }: ReplyItemProps) {
   const { openReplyForm } = useReplyListContext('ReplyContent');
   const { isLogIn } = useSelector((state: AppState) => state.user);
+  const isEdited = useMemo(
+    () => reply.createdDate !== reply.modifiedDate,
+    [reply],
+  );
 
   return (
     <Styled.ReplyContentContainer>
@@ -104,6 +110,8 @@ function ReplyContent({ reply }: ReplyItemProps) {
       <Styled.DetailWrapper>
         <span>
           {format(new Date(`${reply.modifiedDate} UTC`), 'yyyy.MM.dd hh:mm')}
+          {elapsedTime(`${reply.modifiedDate} UTC`)}
+          {isEdited && ' • 수정됨'}
         </span>
         {isLogIn && !reply.parentReply && (
           <button type="button" onClick={() => openReplyForm(reply.id)}>

@@ -3,7 +3,7 @@ export interface Reply {
   postId: number;
   userId: string;
   content: string;
-  createDate: string;
+  createdDate: string;
   modifiedDate: string;
   parentReply: number | null;
 }

@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import instance from './instance';
+import { AdditionalInfo } from '@/types/auth';
 
 interface LoginType {
   loginId: string;
@@ -190,4 +191,12 @@ export const requestResetPassword = async (
       };
     }
   }
+};
+
+export const requestAdditionalInfo = async (info: AdditionalInfo) => {
+  const data = await instance.patch('/users/additional-info', {
+    ...info,
+  });
+
+  return data;
 };
