@@ -73,7 +73,11 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
                 icon="SearchIcon"
                 title="검색아이콘"
                 aria-label="검색아이콘"
-                onClick={() => router.push(`/search?keyword=${searchInput}`)}
+                onClick={() =>
+                  router.push(
+                    `/posts?searchType=${searchType}&keyword=${searchInput}`,
+                  )
+                }
                 // onClick={} 어떤 것에 대한 검색을 주로 이룰지....
               />
             </Styled.SearchIconWrapper>
