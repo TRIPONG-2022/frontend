@@ -6,9 +6,12 @@ import { PostEditorSchema } from '@/constants/schema';
 import instance from './instance';
 
 export async function requestGetPost(
-  category: string,
-  postId: string | number,
+  category: PostCategory | null,
+  postId: string | number | null,
 ) {
+  if (!category || !postId) {
+    return null;
+  }
   const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
   return data;
 }
@@ -64,15 +67,18 @@ export async function requestCreatePost(postEditorSchema: PostEditorSchema) {
   return data;
 }
 
-export function requestUpdatePost(
-  postId: string | number,
-  postCategory: PostCategory,
+export function requestCreateOrUpdatePost(
+  category: PostCategory | null,
+  postId: string | number | null,
 ) {
+  if (!category || !postId) {
+    return requestCreatePost;
+  }
   return async (postEditorSchema: PostEditorSchema) => {
     const formData = createPostFormData(postEditorSchema);
     formData.append('postId', postId.toString());
     const { data } = await instance.patch(
-      `/posts/${postCategory}/${postId}`,
+      `/posts/${category}/${postId}`,
       formData,
       {
         headers: {

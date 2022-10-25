@@ -1,14 +1,17 @@
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 
-import { PostCategory } from '@/types/post';
+import { Post, PostCategory } from '@/types/post';
 import { requestGetPost } from '@/api/post';
 
 export default function usePostQuery(
-  category: PostCategory,
-  postId: string | number,
+  category: PostCategory | null,
+  postId: string | number | null,
+  options?: Omit<UseQueryOptions<Post | null>, 'queryKey' | 'queryFn'>,
 ) {
-  const queries = useQuery(['post', category, postId], () =>
-    requestGetPost(category, postId),
+  const queries = useQuery(
+    ['post', category, postId],
+    () => requestGetPost(category, postId),
+    options,
   );
   return queries;
 }
