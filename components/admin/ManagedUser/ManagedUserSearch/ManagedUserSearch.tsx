@@ -73,7 +73,7 @@ const ManagedUserSearch = ({ isUserSearch }: ManagedUserSearchProps) => {
         <Styled.SearchInput
           type="search"
           placeholder="Search"
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setsearchInput(e.target.value);
           }}
           value={searchInput}

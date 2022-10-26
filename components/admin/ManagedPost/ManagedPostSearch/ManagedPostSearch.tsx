@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Select from '@/components/shared/Select';
 import { ManagedSearchParams } from '@/types/search-params';
@@ -79,7 +79,7 @@ const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
         <Styled.SearchInput
           type="search"
           placeholder="Search"
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setsearchInput(e.target.value);
           }}
           value={searchInput}
