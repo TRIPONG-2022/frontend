@@ -6,7 +6,7 @@ import PostItem from '../PostItem';
 import * as Styled from './PostList.styled';
 
 interface PostListProps {
-  posts: Post[];
+  posts: { pages: Post[][] } | undefined;
   size?: Styled.PostListSize;
 }
 
@@ -18,13 +18,16 @@ interface PostListProps {
  * - lg: Mobile 1, Tablet 2, Desktop 3
  */
 export default function PostList({ posts, size = 'md' }: PostListProps) {
+  console.log(posts);
   return (
     <Styled.PostListContainer size={size}>
-      {posts?.map((post, index) => (
-        <li key={`${post.id}${index}`}>
-          <PostItem post={post} />
-        </li>
-      ))}
+      {posts?.pages.map((list) =>
+        list.map((post, index) => (
+          <li key={`${post.id}${index}`}>
+            <PostItem post={post} />
+          </li>
+        )),
+      )}
     </Styled.PostListContainer>
   );
 }

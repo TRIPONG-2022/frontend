@@ -1,33 +1,50 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { dehydrate, QueryClient, useQuery } from 'react-query';
+import {
+  dehydrate,
+  QueryClient,
+  useInfiniteQuery,
+  useQuery,
+} from 'react-query';
 import { useState } from 'react';
 
 import PostList from '@/components/post/PostList';
 import { getPostList } from '@/api/search';
 import MainLayout from '@/layouts/MainLayout';
 import CategoryButton from '@/components/category/CategoryButton';
+import { Post } from '@/types/post';
 
-const PostsPage: NextPage = () => {
-  const router = useRouter();
+interface PostsPageProps {
+  queryParam: {
+    searchType: any;
+    keyword: any;
+  };
+}
 
-  const { searchType, keyword } = router.query;
-
+const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
   const [categoryValue, setCategory] = useState('');
 
-  const { data } = useQuery(
+  const { data, fetchNextPage } = useInfiniteQuery<Post[]>(
     'posts',
-    () => getPostList({ searchType, keyword }),
+    ({ pageParam = 0 }) => getPostList(queryParam, pageParam),
 
     {
-      select: (data) =>
-        categoryValue
-          ? data.filter(
-              ({ category }: { category: string }) =>
-                category === categoryValue,
-            )
-          : data,
+      getNextPageParam: (lastPage, pages) => {
+        return lastPage.length === 0 ? undefined : pages.length;
+      },
+
+      select: (data) => ({
+        pages: [...data.pages].map((list) =>
+          categoryValue
+            ? list.filter(
+                ({ category }: { category: string }) =>
+                  category === categoryValue,
+              )
+            : list,
+        ),
+        pageParams: [...data.pageParams],
+      }),
     },
   );
 
@@ -35,13 +52,16 @@ const PostsPage: NextPage = () => {
 
   return (
     <MainLayout>
-      <CategoryButton />
-      {keyword && (
+      <CategoryButton category={categoryValue} setCategory={setCategory} />
+      {queryParam.keyword && (
         <SearchTitle>
-          <span>{`'${keyword}'`}</span>으로 검색한 결과
+          <span>{`'${queryParam.keyword}'`}</span>으로 검색한 결과
         </SearchTitle>
       )}
       <PostList posts={data} size="lg" />
+      <button type="button" onClick={() => fetchNextPage()}>
+        다음페이지
+      </button>
     </MainLayout>
   );
 };
@@ -53,13 +73,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { searchType, keyword } = context.query;
 
-  await queryClient.prefetchQuery('posts', () =>
+  await queryClient.prefetchInfiniteQuery('posts', () =>
     getPostList({ searchType, keyword }),
   );
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+      queryParam: JSON.parse(JSON.stringify({ searchType, keyword })),
     },
   };
 };
