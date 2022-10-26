@@ -86,8 +86,8 @@ const ManagedPostSearch = ({ isePostSearch }: ManagedPostSearchProps) => {
         />
         <Styled.SearchIconWrapper>
           <SVGIcon
-            width="1.25em"
-            height="1.25em"
+            width="1.25rem"
+            height="1.25rem"
             icon="SearchIcon"
             title="검색아이콘"
             aria-label="검색아이콘"
