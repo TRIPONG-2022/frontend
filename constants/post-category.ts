@@ -1,4 +1,6 @@
-export const POST_CATEGORIES = {
+export const POST_CATEGORIES: {
+  [index: string]: string;
+} = {
   review: '후기, 리뷰',
   community: '자유게시판',
   qna: 'Q&A',
