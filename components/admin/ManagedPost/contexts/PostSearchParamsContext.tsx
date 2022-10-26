@@ -39,7 +39,7 @@ const PostSearchParamsContextProvider = ({
   const [searchParams, setSearchParams] = useState<ManagedSearchParams>({
     searchType: 'loginId',
     keyword: '',
-    size: 3,
+    // size: 3,
   });
 
   return (
