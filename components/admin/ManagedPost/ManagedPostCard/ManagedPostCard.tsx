@@ -21,6 +21,7 @@ const AdminPostCard = ({ postData }: ManagedPostCardProps) => {
   return (
     <Styled.ManagedPostCardContainer>
       <Styled.Title>{postData.title}</Styled.Title>
+      <Styled.Category>{postData.category}</Styled.Category>
       <Styled.DropdownContainer onClick={() => onToggle()}>
         <SVGIcon icon="DotThree" />
         <Styled.DropdownList toggle={toggle}>
