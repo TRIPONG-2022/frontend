@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { SCREEN_TABLET } from '@/styles/screen';
+
 export const ManagedUserSearchContainer = styled.div`
   display: flex;
   gap: 1rem;
@@ -18,6 +20,8 @@ export const SearchInputWrapper = styled.div`
 `;
 
 export const SearchInput = styled.input`
+  width: 6rem;
+
   border: 2px solid white;
   border-radius: 1.5rem;
   padding: 1.25rem;
@@ -35,15 +39,17 @@ export const SearchInput = styled.input`
   }
 
   :focus {
+    width: 8rem;
+
     background-color: #fff;
     border-color: ${({ theme }) => theme.colors.primary.hex};
     box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
   }
 
-  @media (max-width: 500px) {
-    width: 6rem;
+  ${SCREEN_TABLET} {
+    width: initial;
     :focus {
-      width: 8rem;
+      width: initial;
     }
   }
 `;
