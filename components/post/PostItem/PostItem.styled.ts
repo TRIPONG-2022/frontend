@@ -6,24 +6,25 @@ export const PostItemContainer = styled.article`
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 0.25rem;
-  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.gray[200]};
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `;
 
-export const ThumbnailContainer = styled.div`
+export const ThumbnailWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `;
 
-export const ContentContainer = styled.div`
+export const ContentWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-export const DetailContainer = styled.div`
+export const PostContentContainer = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -39,7 +40,7 @@ export const PostLink = styled.a`
   cursor: pointer;
 `;
 
-export const Title = styled.strong`
+export const Title = styled.h3`
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.75rem;
@@ -72,7 +73,7 @@ export const TagItem = styled.li`
   color: ${({ theme }) => theme.colors.gray[500]};
 `;
 
-export const BottomContainer = styled.div`
+export const BottomWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -80,7 +81,7 @@ export const BottomContainer = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.gray[100]};
 `;
 
-export const ProfileContainer = styled.div`
+export const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
   span {
@@ -89,7 +90,7 @@ export const ProfileContainer = styled.div`
   }
 `;
 
-export const ProfileImageContainer = styled.div`
+export const ProfileImageWrapper = styled.div`
   position: relative;
   width: 2rem;
   height: 2rem;
@@ -98,7 +99,7 @@ export const ProfileImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const InfoContainer = styled.div`
+export const InfoWrapper = styled.div`
   display: flex;
   align-items: center;
   column-gap: 0.25rem;
@@ -108,5 +109,31 @@ export const InfoContainer = styled.div`
 
   div + div {
     margin-left: 0.25rem;
+  }
+`;
+
+export const GatheringContentContainer = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.75rem;
+`;
+
+export const GatheringInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+  background-color: rgba(${({ theme }) => theme.colors.primary.rgb}, 0.05);
+  strong {
+    margin-right: 0.5rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors.primary.hex};
+  }
+  span {
+    color: ${({ theme }) => theme.colors.gray[700]};
   }
 `;

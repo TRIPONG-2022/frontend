@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
 import styled from 'styled-components';
 import {
   useForm,
@@ -8,8 +9,8 @@ import {
   useFormContext,
   FormProvider,
 } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import AuthLayout from '@/layouts/AuthLayout';
 import Select from '@/components/shared/Select';
 import Button from '@/components/shared/Button';
@@ -19,18 +20,22 @@ import {
   getCurrentYear,
   getOptionMonths,
   getOptionYears,
-} from 'utils/date';
+} from '@/utils/date';
 import { ADD_INFORMATION_SCHEMA, InformationSchema } from '@/constants/schema';
-
 import { useCityQuery } from '@/hooks/useCityQuery';
 import { useDistrictQuery } from '@/hooks/useDistrictQuery';
 import { createErrorMessage } from '@/utils/validate';
+import { requestAdditionalInfo } from '@/api/auth';
+import { AdditionalInfo } from '@/types/auth';
+import { useRouter } from 'next/router';
 
 const InformationPage: NextPage = () => {
   const methods = useForm<InformationSchema>({
     mode: 'onSubmit',
     resolver: yupResolver(ADD_INFORMATION_SCHEMA),
   });
+
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -52,12 +57,33 @@ const InformationPage: NextPage = () => {
 
   const { data: districtData } = useDistrictQuery(selectedCity);
 
+  const { mutate } = useMutation(
+    (infoData: AdditionalInfo) => requestAdditionalInfo(infoData),
+    {
+      onError: () =>
+        setFormErrorMessage(
+          '추가 정보 등록이 실패하였습니다,  다시 시도해주세요',
+        ),
+      onSuccess: () => router.push('/'),
+    },
+  );
+
   const onSubmit = (data: InformationSchema) => {
     setFormErrorMessage('');
     if (!cityData || !districtData) return;
     const cityName = cityData.regionMapData.get(data.city);
     const districtName = districtData.regionMapData.get(data.district);
-    console.log({ ...data, cityName, districtName });
+
+    const birthDateFormat = [
+      data.year,
+      String(data.month).padStart(2, '0'),
+      String(data.day).padStart(2, '0'),
+    ].join('-');
+
+    mutate({
+      ...data,
+      birthDate: birthDateFormat,
+    });
   };
 
   const onError = (errors: FieldErrors<InformationSchema>) => {
@@ -116,19 +142,18 @@ const InformationPage: NextPage = () => {
             errorMessage={errors.name?.message}
             {...register('name')}
           />
-          <Select
-            id="gender"
-            label="성별"
-            defaultLabel="성별을 선택하세요."
-            options={genderOptions}
-            selectedValue={selectedGender}
-            onChangeOption={onChangeOption('gender')}
-          />
-
-          <BirthDaySelect />
-
-          <RegionSelect />
-
+          <SelectForm>
+            <Select
+              id="gender"
+              label="성별"
+              defaultLabel="성별을 선택하세요."
+              options={genderOptions}
+              selectedValue={selectedGender}
+              onChangeOption={onChangeOption('gender')}
+            />
+            <BirthDaySelect />
+            <RegionSelect />
+          </SelectForm>
           <Button
             size="lg"
             type="submit"
@@ -230,8 +255,16 @@ const RegionSelect = () => {
   );
 };
 
+const SelectForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  margin-bottom: 2rem;
+`;
+
 const Flex = styled.div`
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
 `;

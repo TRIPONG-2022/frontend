@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import SVGIcon from '../SVGIcon';
 import * as Styled from './Select.styled';
 
@@ -18,8 +18,8 @@ interface SelectProps<T> {
 }
 
 export default function Select<T>({
-  label,
   id,
+  label,
   disabled,
   options,
   defaultLabel,
@@ -38,9 +38,15 @@ export default function Select<T>({
     onChangeOption(option.value);
   };
 
+  const openOptions = () => {
+    if (!disabled) {
+      setOpen((prev) => !prev);
+    }
+  };
+
   return (
     <Styled.Container>
-      <Styled.Label htmlFor={id}>{label}</Styled.Label>
+      {label && <Styled.Label htmlFor={id}>{label}</Styled.Label>}
       {isOpen && (
         <Styled.Backdrop
           onClick={() => {
@@ -51,13 +57,11 @@ export default function Select<T>({
       <Styled.OptionContainer
         type="button"
         disabled={disabled}
-        onClick={() => {
-          setOpen((prev) => !prev);
-        }}
+        onClick={openOptions}
       >
         <Styled.OptionTitle isOpen={isOpen} selected={Boolean(selectedValue)}>
           {selectedLabel}
-          <SVGIcon icon="ChevronDownIcon" size={16} />
+          {!disabled && <SVGIcon icon="ChevronDownIcon" size={16} />}
         </Styled.OptionTitle>
         <Styled.OptionList isOpen={isOpen}>
           {options?.map((option) => (

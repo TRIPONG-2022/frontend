@@ -10,8 +10,11 @@ export const SCHEMA_MESSAGES = {
   WRONG_LOGIN_ID_LENGTH: '5자이상, 11자 이하로 설정해주세요.',
   WRONG_PASSWORD_LENGTH: '4자이상, 15자 이하로 설정해주세요.',
   WRONG_EMAIL_FORMAT: '잘못된 이메일 형식입니다.',
-  WRONG_NICKNAME_FORMAT: '닉네임에 특수문자가 포함되면 안됩니다.',
-  WRONG_LOGINID_FORMAT: '아이디에 특수문자 또는 한글이 포함되면 안됩니다.',
+  WRONG_NICKNAME_FORMAT: '닉네임에 특수문자가 포함되면 안됩니다!',
+  WRONG_LOGINID_FORMAT: '아이디에 특수문자 또는 한글이 포함되면 안됩니다!',
+  WRONG_PHONE_NUMBER_MIN_LENGTH: '휴대폰 번호를 입력해주세요.',
+  WRONG_PHONE_NUMBER_FORMAT: '휴대폰 번호에 문자는 포함될 수 없습니다.',
+  INTRODUCTION_MAX_LENGTH_EXCEEDED: '최대 500자까지 작성 가능합니다.',
 } as const;
 
 type DuplicateMessageType = {

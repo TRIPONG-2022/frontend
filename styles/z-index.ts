@@ -1,4 +1,5 @@
 export const Z_INDEX = {
+  HEADER: 1035,
   DROPDOWN: 1000,
   STICKY: 1020,
   FIXED: 1030,

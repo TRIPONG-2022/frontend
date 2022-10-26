@@ -1,5 +1,6 @@
-import GNB from '@/layouts/GNB';
 import React, { ReactNode } from 'react';
+
+import GNB from '@/layouts/GNB';
 import * as Styled from './MainLayout.styled';
 
 interface MainLayoutProps {
@@ -10,7 +11,7 @@ interface MainLayoutProps {
 function MainLayout({ children, fullWidth }: MainLayoutProps) {
   return (
     <Styled.Container>
-      <GNB isLogin={false} />
+      <GNB />
       <Styled.Body fullWidth={fullWidth}>{children}</Styled.Body>
       <Styled.Footer />
     </Styled.Container>

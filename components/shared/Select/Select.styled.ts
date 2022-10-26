@@ -1,3 +1,4 @@
+import { SCREEN_TABLET } from '@/styles/screen';
 import { Z_INDEX } from '@/styles/z-index';
 import styled, { css } from 'styled-components';
 
@@ -7,8 +8,8 @@ interface OptionProps {
 }
 
 export const Container = styled.div`
-  margin-bottom: 1.5rem;
   flex-basis: 100%;
+  width: 100%;
 `;
 
 export const Label = styled.label`
