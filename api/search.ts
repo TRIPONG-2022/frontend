@@ -24,7 +24,6 @@ export const postList = async () => {
   return data;
 };
 
-// 해당 타입이 router.query 로 넘겨줄 때 타입을 찾지 못해주어서... 이렇게 넘겨주고 있다.
 export const getPostList = async (
   params: {
     searchType: string | string[] | undefined;
@@ -36,7 +35,12 @@ export const getPostList = async (
     const { data } = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/search`,
       {
-        params: { ...params, page: pageParam, size: 2 },
+        params: {
+          ...params,
+          page: pageParam,
+          size: 6,
+          sort: ['id', 'desc'].join(','),
+        },
       },
     );
 
@@ -46,7 +50,12 @@ export const getPostList = async (
   const { data } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/posts`,
     {
-      params: { ...params, page: pageParam, size: 2 },
+      params: {
+        ...params,
+        page: pageParam,
+        size: 6,
+        sort: ['id', 'desc'].join(','),
+      },
     },
   );
 
