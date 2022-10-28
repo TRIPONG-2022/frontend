@@ -1,47 +1,29 @@
 import { GetServerSideProps, NextPage } from 'next';
 import styled from 'styled-components';
-import { dehydrate, QueryClient, useInfiniteQuery } from 'react-query';
+import { dehydrate, QueryClient } from 'react-query';
 import { useMemo, useState } from 'react';
 
 import PostList from '@/components/post/PostList';
 import { getPostList } from '@/api/search';
 import MainLayout from '@/layouts/MainLayout';
 import PostCategoryButton from '@/components/PostCategory/PostCategoryButton';
-import { Post } from '@/types/post';
 import InView from '@/components/shared/InView';
 import PostListNotFound from '@/components/post/PostListNotFound';
+import usePostListQuery from '@/hooks/usePostListQuery';
 
 interface PostsPageProps {
   queryParam: {
-    searchType: any;
-    keyword: any;
+    searchType: string;
+    keyword: string;
   };
 }
 
 const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
   const [postCategory, setPostCategory] = useState('');
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<Post[]>(
-    'posts',
-    ({ pageParam = 0 }) => getPostList(queryParam, pageParam),
-
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return lastPage.length === 0 ? undefined : pages.length;
-      },
-
-      select: (data) => ({
-        pages: [...data.pages].map((list) =>
-          postCategory
-            ? list.filter(
-                ({ category }: { category: string }) =>
-                  category === postCategory,
-              )
-            : list,
-        ),
-        pageParams: [...data.pageParams],
-      }),
-    },
+  const { data, fetchNextPage, hasNextPage } = usePostListQuery(
+    queryParam,
+    postCategory,
   );
 
   const onChange = (isInView: boolean, entry: IntersectionObserverEntry) => {
