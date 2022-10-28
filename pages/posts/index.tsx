@@ -1,14 +1,15 @@
 import { GetServerSideProps, NextPage } from 'next';
 import styled from 'styled-components';
 import { dehydrate, QueryClient, useInfiniteQuery } from 'react-query';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import PostList from '@/components/post/PostList';
 import { getPostList } from '@/api/search';
 import MainLayout from '@/layouts/MainLayout';
-import PostCategoryButton from '@/components/post-category/PostCategoryButton';
+import PostCategoryButton from '@/components/PostCategory/PostCategoryButton';
 import { Post } from '@/types/post';
 import InView from '@/components/shared/InView';
+import PostListNotFound from '@/components/post/PostListNotFound';
 
 interface PostsPageProps {
   queryParam: {
@@ -49,6 +50,14 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
     }
   };
 
+  const hasList = useMemo(
+    () =>
+      data?.pages
+        .map((List) => List.length !== 0)
+        .find((hasData) => hasData === true),
+    [data?.pages],
+  );
+
   return (
     <MainLayout>
       <PostsPageContainer>
@@ -57,14 +66,18 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
             <span>{queryParam.keyword}</span>으로 검색한 결과
           </SearchTitle>
         )}
+
         <PostCategoryButton
           postCategory={postCategory}
           setPostCategory={setPostCategory}
         />
-
-        <InView onChange={onChange} threshold={0.5}>
-          <PostList posts={data} size="lg" />
-        </InView>
+        {hasList ? (
+          <InView onChange={onChange} threshold={0.5}>
+            <PostList posts={data} size="lg" />
+          </InView>
+        ) : (
+          <PostListNotFound />
+        )}
       </PostsPageContainer>
     </MainLayout>
   );
