@@ -1,19 +1,14 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import {
-  dehydrate,
-  QueryClient,
-  useInfiniteQuery,
-  useQuery,
-} from 'react-query';
+import { dehydrate, QueryClient, useInfiniteQuery } from 'react-query';
 import { useState } from 'react';
 
 import PostList from '@/components/post/PostList';
 import { getPostList } from '@/api/search';
 import MainLayout from '@/layouts/MainLayout';
-import CategoryButton from '@/components/category/CategoryButton';
+import PostCategoryButton from '@/components/post-category/PostCategoryButton';
 import { Post } from '@/types/post';
+import InView from '@/components/shared/InView';
 
 interface PostsPageProps {
   queryParam: {
@@ -23,9 +18,9 @@ interface PostsPageProps {
 }
 
 const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
-  const [categoryValue, setCategory] = useState('');
+  const [postCategory, setPostCategory] = useState('');
 
-  const { data, fetchNextPage } = useInfiniteQuery<Post[]>(
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<Post[]>(
     'posts',
     ({ pageParam = 0 }) => getPostList(queryParam, pageParam),
 
@@ -36,10 +31,10 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
 
       select: (data) => ({
         pages: [...data.pages].map((list) =>
-          categoryValue
+          postCategory
             ? list.filter(
                 ({ category }: { category: string }) =>
-                  category === categoryValue,
+                  category === postCategory,
               )
             : list,
         ),
@@ -48,20 +43,29 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
     },
   );
 
-  console.log(data);
+  const onChange = (isInView: boolean, entry: IntersectionObserverEntry) => {
+    if (isInView && hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   return (
     <MainLayout>
-      <CategoryButton category={categoryValue} setCategory={setCategory} />
-      {queryParam.keyword && (
-        <SearchTitle>
-          <span>{`'${queryParam.keyword}'`}</span>으로 검색한 결과
-        </SearchTitle>
-      )}
-      <PostList posts={data} size="lg" />
-      <button type="button" onClick={() => fetchNextPage()}>
-        다음페이지
-      </button>
+      <PostsPageContainer>
+        {queryParam.keyword && (
+          <SearchTitle>
+            <span>{queryParam.keyword}</span>으로 검색한 결과
+          </SearchTitle>
+        )}
+        <PostCategoryButton
+          postCategory={postCategory}
+          setPostCategory={setPostCategory}
+        />
+
+        <InView onChange={onChange} threshold={0.5}>
+          <PostList posts={data} size="lg" />
+        </InView>
+      </PostsPageContainer>
     </MainLayout>
   );
 };
@@ -85,16 +89,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const SearchTitle = styled.h3`
-  display: inline-block;
+const PostsPageContainer = styled.div`
+  padding-top: 5rem;
+`;
 
-  border-bottom: 5px solid;
-  border-color: ${({ theme }) => theme.colors.primary.hex};
-  margin-bottom: 5rem;
+const SearchTitle = styled.h3`
+  margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
 
   font-size: 1.5rem;
+  font-weight: 700;
+
   span {
-    font-weight: 600;
+    position: relative;
+
+    ::after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      height: 8px;
+
+      background-color: ${({ theme }) => theme.colors.primary.hex};
+      opacity: 0.5;
+    }
   }
 `;
