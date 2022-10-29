@@ -109,7 +109,6 @@ function ReplyContent({ reply }: ReplyItemProps) {
       <Styled.Content>{reply.content}</Styled.Content>
       <Styled.DetailWrapper>
         <span>
-          {format(new Date(`${reply.modifiedDate} UTC`), 'yyyy.MM.dd hh:mm')}
           {elapsedTime(`${reply.modifiedDate} UTC`)}
           {isEdited && ' • 수정됨'}
         </span>
