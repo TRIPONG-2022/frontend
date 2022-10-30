@@ -6,10 +6,12 @@ import { useMemo, useState } from 'react';
 import PostList from '@/components/post/PostList';
 import { getPostList } from '@/api/search';
 import MainLayout from '@/layouts/MainLayout';
-import PostCategoryButton from '@/components/PostCategory/PostCategoryButton';
+import PostCategoryTap from '@/components/PostCategoryTap/PostCategoryTap';
 import InView from '@/components/shared/InView';
 import PostListNotFound from '@/components/post/PostListNotFound';
 import usePostListQuery from '@/hooks/usePostListQuery';
+import Dropdown from '@/components/shared/Dropdown';
+import { PostCategory } from '@/types/post';
 
 interface PostsPageProps {
   queryParam: {
@@ -18,8 +20,18 @@ interface PostsPageProps {
   };
 }
 
+const testObj: {
+  [key: string]: string;
+} = {
+  desc: '최신순',
+  asc: '오래된순',
+};
+
 const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
-  const [postCategory, setPostCategory] = useState('');
+  console.log(queryParam);
+
+  const [postCategory, setPostCategory] = useState<PostCategory | ''>('');
+  const [sort, setSort] = useState('desc');
 
   const { data, fetchNextPage, hasNextPage } = usePostListQuery(
     queryParam,
@@ -33,10 +45,7 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
   };
 
   const hasList = useMemo(
-    () =>
-      data?.pages
-        .map((List) => List.length !== 0)
-        .find((hasData) => hasData === true),
+    () => data?.pages.find((page) => page.length !== 0),
     [data?.pages],
   );
 
@@ -48,14 +57,32 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
             <span>{queryParam.keyword}</span>으로 검색한 결과
           </SearchTitle>
         )}
-
-        <PostCategoryButton
+        <PostCategoryTap
           postCategory={postCategory}
           setPostCategory={setPostCategory}
         />
+
+        <ButtonWrap>
+          <Dropdown>
+            <Dropdown.Button>{testObj[sort]}</Dropdown.Button>
+            <Dropdown.Items width="8rem">
+              <Dropdown.Item>
+                {Object.entries(testObj).map(([key, value]) => (
+                  <Dropdown.Item key={key} onClick={() => setSort(key)}>
+                    {value}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Item>
+            </Dropdown.Items>
+          </Dropdown>
+        </ButtonWrap>
+
+        <SortButton
+          onClick={() => setSort((prev) => (prev === 'desc' ? 'asc' : 'desc'))}
+        ></SortButton>
         {hasList ? (
           <InView onChange={onChange} threshold={0.5}>
-            <PostList posts={data} size="lg" />
+            <PostList posts={data?.pages} size="lg" />
           </InView>
         ) : (
           <PostListNotFound />
@@ -85,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const PostsPageContainer = styled.div`
-  padding-top: 5rem;
+  padding-top: 2rem;
 `;
 
 const SearchTitle = styled.h3`
@@ -112,4 +139,14 @@ const SearchTitle = styled.h3`
       opacity: 0.5;
     }
   }
+`;
+
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+const SortButton = styled.button`
+  font-size: 1rem;
 `;
