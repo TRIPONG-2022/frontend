@@ -19,10 +19,7 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
   const [searchInput, setSearchInput] = useState('');
   const [searchType, setSearchType] = useState<SearchType>(SearchType.TITLE);
 
-  const setState =
-    (setSearchParams: React.Dispatch<React.SetStateAction<SearchType>>) =>
-    (value: SearchType) =>
-      setSearchParams(SearchType[value]);
+  const setState = (value: SearchType) => setSearchType(SearchType[value]);
 
   return (
     <>
@@ -58,7 +55,7 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
               ]}
               defaultLabel="검색 타입"
               selectedValue={searchType}
-              onChangeOption={setState(setSearchType)}
+              onChangeOption={setState}
             />
           </Styled.SelectWrapper>
           <Styled.SearchInputWrapper>
