@@ -76,7 +76,6 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
                 onClick={() =>
                   router.push(createSearchPostListLink(searchType, searchInput))
                 }
-                // onClick={} 어떤 것에 대한 검색을 주로 이룰지....
               />
             </Styled.SearchIconWrapper>
           </Styled.SearchInputWrapper>
