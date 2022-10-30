@@ -12,14 +12,11 @@ export const search = async ({
     params: { searchType, keyword },
   });
 
-  console.log(data);
   return data.data;
 };
 
 export const postList = async () => {
   const { data } = await instance.get('/posts');
-
-  console.log(data);
 
   return data;
 };

@@ -18,7 +18,6 @@ interface PostListProps {
  * - lg: Mobile 1, Tablet 2, Desktop 3
  */
 export default function PostList({ posts, size = 'md' }: PostListProps) {
-  console.log(posts);
   return (
     <Styled.PostListContainer size={size}>
       {posts?.pages.map((list) =>
