@@ -1,5 +1,5 @@
-import axios from 'axios';
 import instance from './instance';
+import publicInstance from './public-instance';
 
 export const search = async ({
   searchType,
@@ -29,32 +29,26 @@ export const getPostList = async (
   pageParam?: number,
 ) => {
   if (params.keyword) {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/search`,
-      {
-        params: {
-          ...params,
-          page: pageParam,
-          size: 6,
-          sort: ['id', 'desc'].join(','),
-        },
-      },
-    );
-
-    return data;
-  }
-
-  const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/posts`,
-    {
+    const { data } = await publicInstance.get('/search', {
       params: {
         ...params,
         page: pageParam,
         size: 6,
         sort: ['id', 'desc'].join(','),
       },
+    });
+
+    return data;
+  }
+
+  const { data } = await publicInstance.get('/posts', {
+    params: {
+      ...params,
+      page: pageParam,
+      size: 6,
+      sort: ['id', 'desc'].join(','),
     },
-  );
+  });
 
   return data;
 };
