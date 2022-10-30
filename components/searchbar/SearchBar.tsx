@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Portal from '@/components/shared/Portal/Portal';
 import SVGIcon from '@/components/shared/SVGIcon';
-import Select from '../shared/Select';
+import { createSearchPostListLink } from '@/utils/post';
+import Select from '@/components/shared/Select';
 
 import * as Styled from './SearchBar.styled';
+import { SearchType } from '@/types/search';
 
 interface PoratalPageProps {
   setOff: () => void;
@@ -15,12 +17,13 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
   const router = useRouter();
 
   const [searchInput, setSearchInput] = useState('');
-  const [searchType, setSearchType] = useState<string>('TITLE');
+  const [searchType, setSearchType] = useState<SearchType>(SearchType.TITLE);
 
   const setState =
-    (setSearchParams: React.Dispatch<React.SetStateAction<string>>) =>
-    (value: string) =>
-      setSearchParams((prev) => value);
+    (setSearchParams: React.Dispatch<React.SetStateAction<SearchType>>) =>
+    (value: SearchType) =>
+      setSearchParams(SearchType[value]);
+
   return (
     <>
       <Portal selector="#portal">
@@ -40,16 +43,16 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
               id="1"
               options={[
                 {
-                  value: 'TITLE',
+                  value: SearchType.TITLE,
                   label: '제목',
                 },
                 {
-                  value: 'CONTENT',
+                  value: SearchType.CONTENT,
                   label: '내용',
                 },
 
                 {
-                  value: 'USER',
+                  value: SearchType.USER,
                   label: '유저',
                 },
               ]}
@@ -60,7 +63,7 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
           </Styled.SelectWrapper>
           <Styled.SearchInputWrapper>
             <Styled.SearchInput
-              onChange={(e: any) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSearchInput(e.target.value);
               }}
               value={searchInput}
@@ -74,9 +77,7 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
                 title="검색아이콘"
                 aria-label="검색아이콘"
                 onClick={() =>
-                  router.push(
-                    `/posts?searchType=${searchType}&keyword=${searchInput}`,
-                  )
+                  router.push(createSearchPostListLink(searchType, searchInput))
                 }
                 // onClick={} 어떤 것에 대한 검색을 주로 이룰지....
               />
