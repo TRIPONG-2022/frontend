@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const PostCategoryButtonContiner = styled.div`
+export const PostCategoryTapContiner = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;

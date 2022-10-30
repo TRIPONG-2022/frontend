@@ -2,19 +2,20 @@ import React, { SetStateAction } from 'react';
 
 import { POST_CATEGORIES } from '@/constants/post-category';
 
-import * as Styled from './PostCategoryButton.styled';
+import * as Styled from './PostCategoryTap.styled';
+import { PostCategory } from '@/types/post';
 
-interface CategoryButtonProps {
+interface PostCategoryTapProps {
   postCategory: string;
-  setPostCategory: React.Dispatch<SetStateAction<string>>;
+  setPostCategory: React.Dispatch<SetStateAction<PostCategory | ''>>;
 }
 
-const CategoryButton = ({
+const PostCategoryTap = ({
   postCategory,
   setPostCategory,
-}: CategoryButtonProps) => {
+}: PostCategoryTapProps) => {
   return (
-    <Styled.PostCategoryButtonContiner>
+    <Styled.PostCategoryTapContiner>
       <Styled.Button
         active={postCategory === ''}
         onClick={() => setPostCategory('')}
@@ -25,13 +26,13 @@ const CategoryButton = ({
         <Styled.Button
           key={key}
           active={key === postCategory}
-          onClick={() => setPostCategory(key)}
+          onClick={() => setPostCategory(PostCategory.Community)}
         >
           {label}
         </Styled.Button>
       ))}
-    </Styled.PostCategoryButtonContiner>
+    </Styled.PostCategoryTapContiner>
   );
 };
 
-export default CategoryButton;
+export default PostCategoryTap;
