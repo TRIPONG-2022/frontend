@@ -15,7 +15,7 @@ const Portal = ({ children, selector }: PortalProps) => {
     }
   }, [selector]);
 
-  if (!element) return <></>;
+  if (!element) return null;
 
   return ReactDOM.createPortal(children, element);
 };
