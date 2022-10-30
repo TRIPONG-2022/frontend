@@ -26,15 +26,11 @@ const ManagedPostCardModal = ({
   return (
     <Modal isModal={isModal} close={close}>
       <Modal.Title>{ADMINPOST_DROPDOWN[menu]?.title}</Modal.Title>
-
-      <Modal.BtnContainers>
+      <Modal.BtnContainer>
         <Button
-          size="lg"
+          size="md"
           type="submit"
-          css={`
-            width: 100%;
-            margin-top: 2rem;
-          `}
+          fullWidth
           onClick={() => {
             ADMINPOST_DROPDOWN[menu]?.onClick(
               { userId, postId },
@@ -49,20 +45,15 @@ const ManagedPostCardModal = ({
           예
         </Button>
         <Button
-          size="lg"
+          size="md"
           type="button"
           variant="outline"
-          css={`
-            width: 100%;
-            margin-top: 2rem;
-          `}
-          onClick={() => {
-            close();
-          }}
+          fullWidth
+          onClick={close}
         >
           닫기
         </Button>
-      </Modal.BtnContainers>
+      </Modal.BtnContainer>
     </Modal>
   );
 };

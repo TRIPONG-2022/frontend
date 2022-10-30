@@ -1,62 +1,106 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Z_INDEX } from '@/styles/z-index';
+import { SCREEN_TABLET } from '@/styles/screen';
 
-export const Background = styled.div`
+const ModalSizeStyles = {
+  xs: css`
+    max-width: 20rem;
+  `,
+  sm: css`
+    max-width: 24rem;
+  `,
+  md: css`
+    max-width: 28rem;
+  `,
+  lg: css`
+    max-width: 32rem;
+  `,
+  xl: css`
+    max-width: 36rem;
+  `,
+};
+
+export type ModalSize = keyof typeof ModalSizeStyles;
+
+export const ModalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 5rem 2rem;
+  z-index: ${Z_INDEX.MODAL};
+`;
+
+export const ModalBackdrop = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 100;
-  background-color: #555;
-  opacity: 0.5;
+  z-index: ${Z_INDEX.MODAL_BACKDROP};
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
-export const ModalBox = styled.div`
-  /* position: fixed;
+export const ModalWrapper = styled.div<{ $size: ModalSize }>`
+  position: absolute;
   top: 50%;
-  left: 50%; */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  z-index: ${Z_INDEX.MODAL};
 
-  z-index: 200;
-  max-width: 32rem;
-  min-width: 18.75rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* transform: translate(-50%, -50%); */
-  padding: 2.5rem 1rem;
-  @media (min-width: 768px) {
-    padding: 2.5rem 3rem;
+  ${SCREEN_TABLET} {
+    top: initial;
+    transform: translateX(-50%);
   }
 
-  @media (min-width: 1280px) {
-    padding: 2.5rem 5rem;
-  }
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-  background-color: white;
-  border-radius: 1rem;
+  ${({ $size }) => ModalSizeStyles[$size]};
+`;
+
+export const ModalTitle = styled.h1`
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 `;
 
 export const ExitButton = styled.button`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-`;
-
-export const TitleText = styled.h1`
-  font-size: 2rem;
+  top: 1.5rem;
+  right: 1.5rem;
+  color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
 export const DescriptionText = styled.p`
-  margin-top: 1rem;
+  font-size: 1rem;
 `;
 
 export const BtnContainer = styled.div`
-  width: 40%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 0.5rem;
+
+  margin-top: 1.5rem;
 `;
 
 export const TwoBtnContainer = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 5rem;
+
+  column-gap: 1rem;
+  margin-top: 1.5rem;
+
+  & > div {
+    width: 100%;
+  }
 `;

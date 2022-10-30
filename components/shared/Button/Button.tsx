@@ -6,6 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   css?: CSSProp<DefaultTheme>;
   size?: Styled.ButtonSize;
   variant?: Styled.ButtonVariant;
+  fullWidth?: boolean;
 }
 
 export default function Button({
@@ -13,6 +14,7 @@ export default function Button({
   children,
   size = 'md',
   variant = 'primary',
+  fullWidth = false,
   ...buttonProps
 }: ButtonProps) {
   return (
@@ -20,6 +22,7 @@ export default function Button({
       $css={css}
       $size={size}
       $variant={variant}
+      $fullWidth={fullWidth}
       {...buttonProps}
     >
       <span>{children}</span>
