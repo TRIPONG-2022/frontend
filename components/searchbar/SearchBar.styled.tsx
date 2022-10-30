@@ -1,4 +1,5 @@
 import { HEADER_HEIGHT } from '@/constants/menus';
+import { Z_INDEX } from '@/styles/z-index';
 import styled from 'styled-components';
 
 export const SearchBarContainer = styled.div`
@@ -7,7 +8,7 @@ export const SearchBarContainer = styled.div`
   left: 0;
   right: 0;
   height: ${HEADER_HEIGHT};
-  z-index: 9999;
+  z-index: ${Z_INDEX.FIXED};
 
   display: flex;
   align-items: center;
