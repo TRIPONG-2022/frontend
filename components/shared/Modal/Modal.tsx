@@ -1,8 +1,8 @@
 import React from 'react';
-import * as Styled from './Modal.styled';
-import styled from 'styled-components';
 import SVGIcon from '../SVGIcon';
 
+import type { ModalSize } from './Modal.styled';
+import * as Styled from './Modal.styled';
 interface ChildrenProps {
   children: React.ReactNode;
 }
@@ -10,7 +10,7 @@ interface ChildrenProps {
 const Title = ({ children }: ChildrenProps) => {
   return (
     <>
-      <Styled.TitleText>{children}</Styled.TitleText>
+      <Styled.ModalTitle>{children}</Styled.ModalTitle>
     </>
   );
 };
@@ -27,50 +27,48 @@ const BtnContainer = ({ children }: ChildrenProps) => {
   return <Styled.BtnContainer>{children}</Styled.BtnContainer>;
 };
 
-const TwoBtnContainer = ({ children }: ChildrenProps) => {
-  return <Styled.TwoBtnContainer>{children}</Styled.TwoBtnContainer>;
+interface TwoBtnContainerProps {
+  leftBtn: React.ReactNode;
+  rightBtn: React.ReactNode;
+}
+
+const TwoBtnContainer = ({ leftBtn, rightBtn }: TwoBtnContainerProps) => {
+  return (
+    <Styled.TwoBtnContainer>
+      <div>{leftBtn}</div>
+      <div>{rightBtn}</div>
+    </Styled.TwoBtnContainer>
+  );
 };
 
 interface ModalProps {
   isModal: boolean;
-  close: any;
-  children: React.ReactNode;
+  close: () => void;
+  size?: ModalSize;
+  children?: React.ReactNode;
 }
 
-const Modal = ({ isModal, close, children }: ModalProps) => {
+const Modal = ({ isModal, close, children, size = 'md' }: ModalProps) => {
   return (
     <>
       {isModal && (
-        <Container>
-          <Styled.Background onClick={() => close()} />
-          <Styled.ModalBox>
-            <Styled.ExitButton onClick={() => close()}>
-              <SVGIcon icon="DeleteIcon" />
+        <Styled.ModalContainer>
+          <Styled.ModalBackdrop onClick={close} />
+          <Styled.ModalWrapper $size={size}>
+            <Styled.ExitButton onClick={close}>
+              <SVGIcon icon="CloseIcon" size={20} />
             </Styled.ExitButton>
             {children}
-          </Styled.ModalBox>
-        </Container>
+          </Styled.ModalWrapper>
+        </Styled.ModalContainer>
       )}
     </>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  z-index: 100;
-`;
-
 Modal.Title = Title;
 Modal.Description = Description;
 Modal.BtnContainer = BtnContainer;
-Modal.BtnContainers = TwoBtnContainer;
+Modal.TwoBtnContainer = TwoBtnContainer;
 
 export default Modal;

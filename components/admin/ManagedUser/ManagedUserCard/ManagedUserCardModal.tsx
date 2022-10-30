@@ -37,14 +37,11 @@ const ManagedUserCardModal = ({
           setSelectRoles={setSelectRoles}
         />
       )}
-      <Modal.BtnContainers>
+      <Modal.BtnContainer>
         <Button
-          size="lg"
+          size="md"
           type="submit"
-          css={`
-            width: 100%;
-            margin-top: 2rem;
-          `}
+          fullWidth
           onClick={() => {
             ADMINUSER_DROPDOWN[menu]?.onClick(id, {
               black,
@@ -56,13 +53,10 @@ const ManagedUserCardModal = ({
           예
         </Button>
         <Button
-          size="lg"
+          size="md"
           type="button"
           variant="outline"
-          css={`
-            width: 100%;
-            margin-top: 2rem;
-          `}
+          fullWidth
           onClick={() => {
             setSelectRoles([]);
             close();
@@ -70,7 +64,7 @@ const ManagedUserCardModal = ({
         >
           닫기
         </Button>
-      </Modal.BtnContainers>
+      </Modal.BtnContainer>
     </Modal>
   );
 };
