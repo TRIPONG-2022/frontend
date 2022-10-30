@@ -8,7 +8,7 @@ export const SearchBarContainer = styled.div`
   left: 0;
   right: 0;
   height: ${HEADER_HEIGHT};
-  z-index: ${Z_INDEX.FIXED};
+  z-index: ${Z_INDEX.OFF_CANVAS};
 
   display: flex;
   align-items: center;
