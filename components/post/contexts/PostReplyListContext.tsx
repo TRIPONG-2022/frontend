@@ -1,29 +1,31 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 
-interface ReplyListContextState {
+interface PostReplyListContextState {
   isOpenReplyForm: string | number | null;
   openReplyForm: (replyId: string | number | null) => void;
 }
 
-const ReplyListContext = createContext<ReplyListContextState | null>(null);
+const PostReplyListContext = createContext<PostReplyListContextState | null>(
+  null,
+);
 
-export function useReplyListContext(componentName: string) {
-  const context = useContext(ReplyListContext);
+export function usePostReplyListContext(componentName: string) {
+  const context = useContext(PostReplyListContext);
   if (!context) {
     throw new Error(
-      `<${componentName} /> is missing a parent <ReplyListContextProvider /> component.`,
+      `<${componentName} /> is missing a parent <PostReplyListContextProvider /> component.`,
     );
   }
   return context;
 }
 
-interface ReplyListContextProviderProps {
+interface PostReplyListContextProviderProps {
   children?: React.ReactNode;
 }
 
 export default function ReplyListContextProvider({
   children,
-}: ReplyListContextProviderProps) {
+}: PostReplyListContextProviderProps) {
   const [isOpenReplyForm, setIsOpenReplyForm] = useState<
     string | number | null
   >(null);
@@ -33,8 +35,8 @@ export default function ReplyListContextProvider({
   }, []);
 
   return (
-    <ReplyListContext.Provider value={{ openReplyForm, isOpenReplyForm }}>
+    <PostReplyListContext.Provider value={{ openReplyForm, isOpenReplyForm }}>
       {children}
-    </ReplyListContext.Provider>
+    </PostReplyListContext.Provider>
   );
 }
