@@ -1,24 +1,20 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
 
-import Modal from '@/components/shared/Modal';
-import Select from '@/components/shared/Select';
-import Button from '@/components/shared/Button';
-import SVGIcon from '@/components/shared/SVGIcon';
-import useModal from '@/hooks/useModal';
-import useReportTypeQuery from '@/hooks/useReportTypeQuery';
-import useReportPostMutation from '@/hooks/useReportPostMutation';
+import { AppState } from '@/store/index';
 import { Post } from '@/types/post';
 import { POST_CATEGORIES } from '@/constants/post-category';
+import useModal from '@/hooks/useModal';
+import SVGIcon from '@/components/shared/SVGIcon';
+import Dropdown from '@/components/shared/Dropdown';
+
+import PostReportModal from '../PostReportModal';
+import useDeletePostMutation from '../hooks/useDeletePostMutation';
 
 import * as Styled from './PostHeader.styled';
-import Dropdown from '@/components/shared/Dropdown';
-import { useSelector } from 'react-redux';
-import { AppState } from '@/store/index';
-import PostReportModal from '../PostReportModal';
-import { useRouter } from 'next/router';
-import useDeletePostMutation from '../hooks/useDeletePostMutation';
 
 interface PostHeaderProps {
   post: Post;
@@ -71,9 +67,13 @@ function PostDropdown({ post }: PostHeaderProps) {
   const onDelete = useCallback(() => {
     const isConfirm = window.confirm('정말로 삭제하시겠습니까?');
     if (isConfirm) {
-      mutate(post);
+      mutate(post, {
+        onSuccess: () => {
+          router.replace('/posts');
+        },
+      });
     }
-  }, [post, mutate]);
+  }, [router, post, mutate]);
 
   return (
     <>
