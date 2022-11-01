@@ -26,7 +26,7 @@ const PostCategoryTap = ({
         <Styled.Button
           key={key}
           active={key === postCategory}
-          onClick={() => setPostCategory(PostCategory.Community)}
+          onClick={() => setPostCategory(key as PostCategory)}
         >
           {label}
         </Styled.Button>
