@@ -28,8 +28,6 @@ const testObj: {
 };
 
 const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
-  console.log(queryParam);
-
   const [postCategory, setPostCategory] = useState<PostCategory | ''>('');
   const [sort, setSort] = useState('desc');
 
