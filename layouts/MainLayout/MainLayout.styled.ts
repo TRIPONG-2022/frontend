@@ -13,12 +13,15 @@ export const Container = styled.div`
 
 interface BodyProps {
   fullWidth?: boolean;
+  isSearch: boolean;
 }
 
 export const Body = styled.main<BodyProps>`
   width: 100%;
   min-height: 80vh;
   word-break: break-all;
+
+  transition: all 0.2s ease;
   ${({ fullWidth }) =>
     !fullWidth &&
     css`
@@ -32,6 +35,12 @@ export const Body = styled.main<BodyProps>`
         max-width: 1280px;
         padding: 0 40px;
       }
+    `}
+
+  ${({ isSearch }) =>
+    isSearch &&
+    css`
+      transform: translateY(10rem);
     `}
 `;
 
