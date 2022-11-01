@@ -20,7 +20,9 @@ interface PostsPageProps {
   };
 }
 
-const testObj: {
+type Sort = 'desc' | 'asc';
+
+const sortObj: {
   [key: string]: string;
 } = {
   desc: '최신순',
@@ -29,7 +31,7 @@ const testObj: {
 
 const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
   const [postCategory, setPostCategory] = useState<PostCategory | ''>('');
-  const [sort, setSort] = useState('desc');
+  const [sort, setSort] = useState<Sort>('desc');
 
   const { data, fetchNextPage, hasNextPage } = usePostListQuery(
     queryParam,
@@ -44,6 +46,11 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
 
   const hasList = useMemo(
     () => data?.pages.find((page) => page.length !== 0),
+    [data?.pages],
+  );
+
+  const postData = useMemo(
+    () => data?.pages.reduce((acc, cur) => [...acc, ...cur]),
     [data?.pages],
   );
 
@@ -62,22 +69,20 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
 
         <ButtonWrap>
           <Dropdown>
-            <Dropdown.Button>{testObj[sort]}</Dropdown.Button>
+            <Dropdown.Button>{sortObj[sort]}</Dropdown.Button>
             <Dropdown.Items width="8rem">
-              <Dropdown.Item>
-                {Object.entries(testObj).map(([key, value]) => (
-                  <Dropdown.Item key={key} onClick={() => setSort(key)}>
-                    {value}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Item>
+              {Object.entries(sortObj).map(([key, value]) => (
+                <Dropdown.Item key={key} onClick={() => setSort(key as Sort)}>
+                  {value}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Items>
           </Dropdown>
         </ButtonWrap>
 
         {hasList ? (
           <InView onChange={onChange} threshold={0.5}>
-            <PostList posts={data?.pages} size="lg" />
+            <PostList posts={postData} size="lg" />
           </InView>
         ) : (
           <PostListNotFound />
@@ -139,11 +144,8 @@ const SearchTitle = styled.h3`
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: flex-end;
-  align-items: flex-start;
 
   margin-bottom: 1rem;
-`;
 
-const SortButton = styled.button`
-  font-size: 1rem;
+  font-weight: 700;
 `;

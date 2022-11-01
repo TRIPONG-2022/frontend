@@ -6,7 +6,7 @@ import PostItem from '../PostItem';
 import * as Styled from './PostList.styled';
 
 interface PostListProps {
-  posts?: Post[][];
+  posts?: Post[];
   size?: Styled.PostListSize;
 }
 
@@ -20,13 +20,11 @@ interface PostListProps {
 export default function PostList({ posts, size = 'md' }: PostListProps) {
   return (
     <Styled.PostListContainer size={size}>
-      {posts?.map((list) =>
-        list.map((post, index) => (
-          <li key={`${post.id}${index}`}>
-            <PostItem post={post} />
-          </li>
-        )),
-      )}
+      {posts?.map((post, index) => (
+        <li key={`${post.id}${index}`}>
+          <PostItem post={post} />
+        </li>
+      ))}
     </Styled.PostListContainer>
   );
 }
