@@ -1,9 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
+import searchReducer from './slice/searchSlice';
 import userReducer from './slice/userSlice';
 const makeStore = () =>
   configureStore({
-    reducer: { user: userReducer },
+    reducer: { user: userReducer, search: searchReducer },
     devTools: process.env.NODE_ENV !== 'production',
   });
 
