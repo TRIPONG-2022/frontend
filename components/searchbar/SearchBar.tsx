@@ -8,13 +8,12 @@ import Select from '@/components/shared/Select';
 
 import * as Styled from './SearchBar.styled';
 import { SearchType } from '@/types/search';
+import { useDispatch } from 'react-redux';
+import { offSearch } from '@/store/slice/searchSlice';
 
-interface PoratalPageProps {
-  setOff: () => void;
-}
-
-const SearchBar = ({ setOff }: PoratalPageProps) => {
+const SearchBar = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [searchInput, setSearchInput] = useState('');
   const [searchType, setSearchType] = useState<SearchType>(SearchType.TITLE);
@@ -33,7 +32,7 @@ const SearchBar = ({ setOff }: PoratalPageProps) => {
                 icon="ChevronLeftIcon"
                 title="취소아이콘"
                 aria-label="취소아이콘"
-                onClick={() => setOff()}
+                onClick={() => dispatch(offSearch())}
               />
             </Styled.DeleteIconWrapper>
             <Select

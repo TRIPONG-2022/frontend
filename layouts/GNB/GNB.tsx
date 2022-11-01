@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppState } from '@/store/index';
 import useWindowSize from '@/hooks/useWindowSize';
@@ -12,17 +12,17 @@ import LoginJoinList from '@/components/shared/LoginJoinList';
 import { GNB_MENUS } from '@/constants/menus';
 import * as Styled from './GNB.styled';
 import SearchBar from '@/components/searchbar/SearchBar';
+import { onSearch } from '@/store/slice/searchSlice';
 
 const GNB = () => {
   const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
+  const isSearch = useSelector(({ search }: AppState) => search.isSearch);
+
+  console.log(isSearch);
+  const dispatch = useDispatch();
+
   const { toggle, onToggle, setOff } = useToggle(false);
   const { windowWidth, windowHeight } = useWindowSize(0);
-
-  const {
-    toggle: isShowSearchBar,
-    setOn: showSearchBar,
-    setOff: hideSearchBar,
-  } = useToggle(false);
 
   useEffect(() => {
     if (window.innerWidth > 1280) setOff();
@@ -50,7 +50,7 @@ const GNB = () => {
         </Styled.MenuUl>
 
         {/* 검색, 로그인, 회원가입 구간 */}
-        {isShowSearchBar && <SearchBar setOff={hideSearchBar} />}
+        {isSearch && <SearchBar />}
 
         <Styled.RightDiv>
           <Styled.SearchBtn>
@@ -58,7 +58,7 @@ const GNB = () => {
               icon={'SearchIcon'}
               width={25}
               height={25}
-              onClick={() => showSearchBar()}
+              onClick={() => dispatch(onSearch())}
             />
           </Styled.SearchBtn>
           <Styled.LoginJoinDiv>
