@@ -26,7 +26,7 @@ const SearchBar = () => {
       <Portal selector="#portal">
         <Styled.SearchBarContainer>
           <Styled.Header>
-            <Styled.LogoDiv>
+            <Styled.LogoDiv onClick={() => dispatch(offSearch())}>
               <Link href="/">
                 <a>
                   <SVGIcon icon={'LogoIcon'} width={120} height={50} />
@@ -84,11 +84,12 @@ const SearchBar = () => {
                   icon="SearchIcon"
                   title="검색아이콘"
                   aria-label="검색아이콘"
-                  onClick={() =>
+                  onClick={() => {
+                    dispatch(offSearch());
                     router.push(
                       createSearchPostListLink(searchType, searchInput),
-                    )
-                  }
+                    );
+                  }}
                 />
               </Styled.SearchIconWrapper>
             </Styled.SearchInputWrapper>
