@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from 'react-query';
 
-import { Post } from '@/types/post';
+import { Post, PostCategory } from '@/types/post';
 import { getPostList } from '@/api/search';
 
 export default function usePostListQuery(
@@ -8,7 +8,7 @@ export default function usePostListQuery(
     searchType: string;
     keyword: string;
   },
-  postCategory: string,
+  postCategory: PostCategory | '',
 ) {
   const query = useInfiniteQuery<Post[]>(
     'posts',
@@ -22,10 +22,7 @@ export default function usePostListQuery(
       select: (data) => ({
         pages: [...data.pages].map((list) =>
           postCategory
-            ? list.filter(
-                ({ category }: { category: string }) =>
-                  category === postCategory,
-              )
+            ? list.filter(({ category }) => category === postCategory)
             : list,
         ),
         pageParams: [...data.pageParams],
