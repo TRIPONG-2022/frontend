@@ -6,7 +6,7 @@ import PostItem from '../PostItem';
 import * as Styled from './PostList.styled';
 
 interface PostListProps {
-  posts: Post[][] | undefined;
+  posts?: Post[][];
   size?: Styled.PostListSize;
 }
 
