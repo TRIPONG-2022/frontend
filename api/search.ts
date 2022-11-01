@@ -33,7 +33,8 @@ export const getPostList = async (
       params: {
         ...params,
         page: pageParam,
-        size: 6,
+        size: 2,
+        // 6으로 했을 떄...
         sort: ['id', 'desc'].join(','),
       },
     });
@@ -45,7 +46,7 @@ export const getPostList = async (
     params: {
       ...params,
       page: pageParam,
-      size: 6,
+      size: 2,
       sort: ['id', 'desc'].join(','),
     },
   });
