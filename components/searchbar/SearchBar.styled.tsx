@@ -4,18 +4,18 @@ import styled from 'styled-components';
 
 export const SearchBarContainer = styled.div`
   position: fixed;
-  top: 0;
+  top: 5rem;
   left: 0;
   right: 0;
   height: ${HEADER_HEIGHT};
-  z-index: ${Z_INDEX.OFF_CANVAS};
+  z-index: ${Z_INDEX.PORTAL_FIXED};
 
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 
-  border-bottom: solid 1px black;
+  /* border-bottom: solid 1px black; */
   background-color: white;
 `;
 
