@@ -75,9 +75,6 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
           </Dropdown>
         </ButtonWrap>
 
-        <SortButton
-          onClick={() => setSort((prev) => (prev === 'desc' ? 'asc' : 'desc'))}
-        ></SortButton>
         {hasList ? (
           <InView onChange={onChange} threshold={0.5}>
             <PostList posts={data?.pages} size="lg" />
@@ -141,8 +138,10 @@ const SearchTitle = styled.h3`
 
 const ButtonWrap = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-start;
+
+  margin-bottom: 1rem;
 `;
 
 const SortButton = styled.button`
