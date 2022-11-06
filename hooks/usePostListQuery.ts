@@ -27,6 +27,8 @@ export default function usePostListQuery(
         ),
         pageParams: [...data.pageParams],
       }),
+
+      retry: false,
     },
   );
 
