@@ -39,7 +39,7 @@ const PostLayout = ({
       )}
       <Styled.PostWrapper>
         <Styled.Title>{contentTitle}</Styled.Title>
-        <OrderButton />
+        {/* <OrderButton /> */}
       </Styled.PostWrapper>
       <Styled.ContentBox>{children}</Styled.ContentBox>
     </Styled.Container>

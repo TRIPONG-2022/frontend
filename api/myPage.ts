@@ -11,6 +11,8 @@ import { ProfilePatchSchema } from '@/constants/schema';
 import instance from './instance';
 import { getBirthDate } from '@/utils/date';
 import { base64ToFile } from '@/utils/image';
+import { Post } from '@/types/post';
+import { number } from 'yup';
 
 export const getProfileInfomation = async () => {
   try {
@@ -112,17 +114,58 @@ interface getMyPagePostsProps {
   category: string;
   startDate: string;
   endDate: string;
+  page: number;
+  size: number;
 }
 
 export const getMyPagePosts = async ({
   category,
+  startDate: fromDate,
+  endDate,
+  page = 0,
+  size,
+}: getMyPagePostsProps): Promise<{ total: number; data: Post[] }> => {
+  try {
+    const { data: total } = await instance.get(`/users/profile/posts`, {
+      params: {
+        category,
+        fromDate,
+        endDate,
+      },
+    });
+
+    const { data: posts } = await instance.get(`/users/profile/posts`, {
+      params: {
+        page,
+        size,
+        category,
+        fromDate,
+        endDate,
+        sorted: false,
+      },
+    });
+    return { total: total.length, data: posts };
+  } catch (err) {
+    console.log(err);
+    return { total: 0, data: [] };
+  }
+};
+
+interface getMyPageProps {
+  userId?: string;
+  category: string;
+  startDate: string;
+  endDate: string;
+}
+
+export const getMyPageReplies = async ({
+  userId,
   startDate,
   endDate,
-}: getMyPagePostsProps) => {
-  console.log(category, startDate, endDate);
+}: Omit<getMyPageProps, 'category'>) => {
   try {
     const { data } = await instance.get(
-      `/users/profile/posts?category=${category}&fromDate=${startDate}&endDate=${endDate}`,
+      `/users/profile/replies/${userId}?fromDate=${startDate}&endDate=${endDate}`,
     );
     console.log(data);
     return data;

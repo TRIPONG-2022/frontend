@@ -45,7 +45,7 @@ export default function DateRangeInput() {
         onChange={handleChangeEndDate}
         selectsEnd
         startDate={moment(startDate).toDate()}
-        endDate={moment(endDate).toDate()}
+        endDate={moment(endDate).endOf('d').toDate()}
         minDate={moment(startDate).toDate()}
       />
     </Styled.Container>

@@ -21,6 +21,7 @@ const Profile = () => {
   const [userData, setUserData] = useState<UserProfileData & MyPageBirthDate>();
 
   const { isFetching } = useQuery('userProfile', getProfileInfomation, {
+    refetchOnWindowFocus: false,
     onSuccess: (userData) => {
       setUserData(userData);
     },
