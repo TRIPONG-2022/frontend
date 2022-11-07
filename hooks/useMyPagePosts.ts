@@ -1,10 +1,10 @@
 import { AppState } from 'store';
-import { useQuery, UseQueryResult } from 'react-query';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useQuery, UseQueryResult } from 'react-query';
 
-import { getMyPagePosts } from '@/api/myPage';
 import { Post } from '@/types/post';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { getMyPagePosts } from '@/api/myPage';
 
 interface useMyPagePostsOptions {
   size: number;
@@ -21,7 +21,7 @@ const useMyPagePosts = ({
     unknown
   >,
   number,
-  Dispatch<SetStateAction<number>>,
+  (n: number) => void,
 ] => {
   const { startDate, endDate, category, order } = useSelector(
     ({ myPage }: AppState) => myPage,
@@ -34,11 +34,13 @@ const useMyPagePosts = ({
   }, [category]);
 
   const queries = useQuery<{ total: number; data: Post[] }>(
-    ['useMyPageInfo', category, startDate, endDate, order, page],
+    ['useMyPagePosts', category, startDate, endDate, order, page],
     () => getMyPagePosts({ category, startDate, endDate, page, size }),
   );
 
-  return [queries, page, setPage];
+  const movePage = (n: number) => setPage(n);
+
+  return [queries, page, movePage];
 };
 
 export default useMyPagePosts;

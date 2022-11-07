@@ -1,4 +1,4 @@
-import { useMyPageInfo } from '@/hooks/useMyPageInfo';
+import { useMyPageInfo } from '@/hooks/useMyPageReply';
 import MainLayout from '@/layouts/MainLayout';
 import MyPageLayout from '@/layouts/MyPageLayout';
 import PostLayout from '@/layouts/MyPagePostLayout';

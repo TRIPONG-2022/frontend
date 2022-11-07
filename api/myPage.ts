@@ -151,25 +151,47 @@ export const getMyPagePosts = async ({
   }
 };
 
-interface getMyPageProps {
+interface getMyPageRepliesProps {
   userId?: string;
-  category: string;
   startDate: string;
   endDate: string;
+  page: number;
+  size: number;
 }
 
 export const getMyPageReplies = async ({
   userId,
-  startDate,
+  startDate: fromDate,
   endDate,
-}: Omit<getMyPageProps, 'category'>) => {
+  page = 0,
+  size,
+}: getMyPageRepliesProps) => {
   try {
-    const { data } = await instance.get(
-      `/users/profile/replies/${userId}?fromDate=${startDate}&endDate=${endDate}`,
+    const { data: total } = await instance.get(
+      `/users/profile/replies/${userId}`,
+      {
+        params: {
+          fromDate,
+          endDate,
+        },
+      },
     );
-    console.log(data);
-    return data;
+
+    const { data: replies } = await instance.get(
+      `/users/profile/replies/${userId}`,
+      {
+        params: {
+          page,
+          size,
+          fromDate,
+          endDate,
+        },
+      },
+    );
+
+    return { total: total.length, data: replies };
   } catch (err) {
     console.log(err);
+    return { total: 0, data: [] };
   }
 };

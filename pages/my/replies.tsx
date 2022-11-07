@@ -1,32 +1,36 @@
+import React from 'react';
 import { NextPage } from 'next';
-import React, { useEffect } from 'react';
 
+import { Reply } from '@/types/reply';
+import useMyPageReplies from '@/hooks/useMyPageReply';
 import MainLayout from '@/layouts/MainLayout';
-import MyPageLayout from '@/layouts/MyPageLayout';
 import PostLayout from '@/layouts/MyPagePostLayout';
-import { useMyPageInfo } from '@/hooks/useMyPageInfo';
-import ReplyList from '@/components/reply/ReplyList';
+import MyPageLayout from '@/layouts/MyPageLayout';
 import ReplyItem from '@/components/reply/ReplyItem';
+import Pagination from '@/components/shared/Pagination';
 
 const MyPageRepliesPage: NextPage = () => {
-  const repliesData = useMyPageInfo({ type: 'replies' });
+  const [{ data }, page, movePage] = useMyPageReplies({ size: 10 });
 
-  useEffect(() => {
-    console.log(repliesData);
-  }, [repliesData]);
-
-  if (!repliesData) return null;
+  if (!data) return null;
 
   return (
     <MainLayout>
       <MyPageLayout>
-        <PostLayout
-          contentTitle={`총 ${repliesData.length}개의 댓글`}
-          existCalendar
-        >
-          {repliesData.map(({ postId, id }: any) => (
-            <ReplyList key={id} postId={postId} />
+        <PostLayout contentTitle={`총 ${data.total}개의 댓글`} existCalendar>
+          {data.data.map((reply: Reply) => (
+            <>
+              <ReplyItem key={reply.id} reply={reply}>
+                <ReplyItem.Content />
+              </ReplyItem>
+            </>
           ))}
+          <Pagination
+            movePage={movePage}
+            page={page}
+            total={data.total}
+            size={10}
+          />
         </PostLayout>
       </MyPageLayout>
     </MainLayout>

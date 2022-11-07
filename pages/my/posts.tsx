@@ -9,7 +9,7 @@ import useMyPagePosts from '@/hooks/useMyPagePosts';
 import Pagination from '@/components/shared/Pagination';
 
 const MyPagePostsPage: NextPage = () => {
-  const [{ data }, page, setPage] = useMyPagePosts({ size: 5 });
+  const [{ data }, page, movePage] = useMyPagePosts({ size: 5 });
 
   if (!data) {
     return (
@@ -26,10 +26,6 @@ const MyPagePostsPage: NextPage = () => {
       </MainLayout>
     );
   }
-
-  const movePage = (num: number) => {
-    setPage(num);
-  };
 
   return (
     <MainLayout>
