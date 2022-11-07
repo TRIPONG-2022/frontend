@@ -11,13 +11,10 @@ export const fileToObjectURL = (file: File): Promise<string> => {
 };
 
 export const base64ToFile = (base64: string, fileName: string): File => {
-  var bstr = atob(base64);
-  var n = bstr.length;
-  var u8arr = new Uint8Array(n);
+  const decodedData = window.atob(base64);
+  const uint8 = new Uint8Array(
+    Array.from(decodedData).map((char) => char.charCodeAt(0)),
+  );
 
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-
-  return new File([u8arr], fileName);
+  return new File([uint8], fileName);
 };
