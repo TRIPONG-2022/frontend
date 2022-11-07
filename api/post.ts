@@ -94,3 +94,21 @@ export async function requestDeletePost(post: Post) {
   const { data } = await instance.delete(`/posts/${post.category}/${post.id}`);
   return data;
 }
+
+export async function requestLikePost(postId: string | number) {
+  await instance.post(`/posts/like/${postId}`);
+}
+
+export async function requestDislikePost(postId: string | number) {
+  await instance.delete(`/posts/like/${postId}`);
+}
+
+export function requestLikeOrDislikePost(postId: string | number) {
+  return async (userLikePost: boolean) => {
+    if (userLikePost) {
+      await requestDislikePost(postId);
+    } else {
+      await requestLikePost(postId);
+    }
+  };
+}
