@@ -106,7 +106,9 @@ export default function PublishModal({
           <Button variant="outline" onClick={onClose}>
             돌아가기
           </Button>
-          <Button onClick={onPublish}>출간하기</Button>
+          <Button disabled={!Boolean(thumbnail)} onClick={onPublish}>
+            출간하기
+          </Button>
         </Styled.ButtonContainer>
       </Styled.InnerContainer>
     </Styled.OuterContainer>

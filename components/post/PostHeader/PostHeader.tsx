@@ -1,16 +1,18 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
 
-import Modal from '@/components/shared/Modal';
-import Select from '@/components/shared/Select';
-import Button from '@/components/shared/Button';
-import SVGIcon from '@/components/shared/SVGIcon';
-import useModal from '@/hooks/useModal';
-import useReportTypeQuery from '@/hooks/useReportTypeQuery';
-import useReportPostMutation from '@/hooks/useReportPostMutation';
+import { AppState } from '@/store/index';
 import { Post } from '@/types/post';
 import { POST_CATEGORIES } from '@/constants/post-category';
+import useModal from '@/hooks/useModal';
+import SVGIcon from '@/components/shared/SVGIcon';
+import Dropdown from '@/components/shared/Dropdown';
+
+import PostReportModal from '../PostReportModal';
+import useDeletePostMutation from '../hooks/useDeletePostMutation';
 
 import * as Styled from './PostHeader.styled';
 
@@ -43,72 +45,60 @@ export default function PostHeader({ post }: PostHeaderProps) {
           </Styled.PostAuthorAndDateWrapper>
         </Styled.PostDetailLeftWrapper>
         <Styled.PostDetailRightWrapper>
-          <PostReportModal post={post} />
+          <PostDropdown post={post} />
         </Styled.PostDetailRightWrapper>
       </Styled.PostDetailWrapper>
     </Styled.PostHeaderContainer>
   );
 }
 
-function PostReportModal({ post }: PostHeaderProps) {
-  const { data } = useReportTypeQuery();
-  const [reportType, setReportType] = useState<string>('');
-  const { mutate } = useReportPostMutation(post.id);
-  const [isModal, open, close] = useModal();
+function PostDropdown({ post }: PostHeaderProps) {
+  const router = useRouter();
+  const { user } = useSelector((state: AppState) => state.user);
+  const isAuthor = useMemo(() => post.author === user?.name, [post, user]);
+  const [isPostReportModalOpen, openPostReportModal, closePostReportModal] =
+    useModal();
+  const { mutate } = useDeletePostMutation();
 
-  const reportPost = () => {
-    mutate(reportType, {
-      onSuccess: () => {
-        setReportType('');
-        close();
-      },
-    });
+  const onEdit = () => {
+    router.push(`/posts/write?postId=${post.id}&category=${post.category}`);
   };
 
-  const onClose = () => {
-    setReportType('');
-    close();
-  };
-
-  const reportOptions = useMemo(
-    () => data?.map(({ kr, en }) => ({ value: en, label: kr })),
-    [data],
-  );
+  const onDelete = useCallback(() => {
+    const isConfirm = window.confirm('정말로 삭제하시겠습니까?');
+    if (isConfirm) {
+      mutate(post, {
+        onSuccess: () => {
+          router.replace('/posts');
+        },
+      });
+    }
+  }, [router, post, mutate]);
 
   return (
     <>
-      <button onClick={open}>
-        <SVGIcon icon="MoreVerticalIcon" size={20} />
-      </button>
-      <Modal isModal={isModal} close={onClose} size="sm">
-        <Modal.Title>신고하기</Modal.Title>
-        <div>
-          <Select
-            id="report-post"
-            defaultLabel="신고 유형을 선택하세요."
-            selectedValue={reportType}
-            onChangeOption={setReportType}
-            options={reportOptions}
-          />
-        </div>
-        <Modal.TwoBtnContainer
-          leftBtn={
-            <Button
-              size="md"
-              onClick={reportPost}
-              fullWidth
-              disabled={!Boolean(reportType)}
-            >
+      <Dropdown>
+        <Dropdown.Button>
+          <SVGIcon icon="MoreVerticalIcon" size={20} />
+        </Dropdown.Button>
+        {isAuthor ? (
+          <Dropdown.Items width="8rem">
+            <Dropdown.Item onClick={onEdit}>수정하기</Dropdown.Item>
+            <Dropdown.Item onClick={onDelete}>삭제하기</Dropdown.Item>
+          </Dropdown.Items>
+        ) : (
+          <Dropdown.Items width="8rem">
+            <Dropdown.Item onClick={openPostReportModal}>
               신고하기
-            </Button>
-          }
-          rightBtn={
-            <Button size="md" variant="default" onClick={onClose} fullWidth>
-              취소
-            </Button>
-          }
-        />
-      </Modal>
+            </Dropdown.Item>
+          </Dropdown.Items>
+        )}
+      </Dropdown>
+      <PostReportModal
+        postId={post.id}
+        isOpen={isPostReportModalOpen}
+        onClose={closePostReportModal}
+      />
     </>
   );
 }

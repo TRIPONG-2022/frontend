@@ -36,3 +36,4 @@ export { default as HeartIcon } from './heart.svg';
 export { default as EyeIcon } from './eye.svg';
 export { default as MoreVerticalIcon } from './more-vertical.svg';
 export { default as DotThree } from './dot-three.svg';
+export { default as DeleteIcon } from './delete.svg';

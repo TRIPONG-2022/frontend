@@ -1,6 +1,6 @@
 export enum PostCategory {
   Review = 'review',
-  Community = 'community',
+  Board = 'board',
   QNA = 'qna',
   Gathering = 'gathering',
 }
