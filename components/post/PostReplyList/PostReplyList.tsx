@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react';
 
 import InView from '@/components/shared/InView';
+import PostReplyItem from '@/components/post/PostReplyItem';
 import useGetRepliesQuery from '@/components/reply/hooks/useGetRepliesQuery';
-import ReplyItem from '../ReplyItem';
-import ReplyListContextProvider from '../contexts/ReplyListContext';
+import PostReplyListContext from '../contexts/PostReplyListContext';
 
-interface ReplyListProps {
+interface PostReplyListProps {
   postId: number | string;
   replyId?: number | string;
 }
 
-export default function ReplyList({ postId, replyId }: ReplyListProps) {
+export default function PostReplyList({ postId, replyId }: PostReplyListProps) {
   const { data, fetchNextPage, hasNextPage, isFetching } = useGetRepliesQuery({
     postId,
     replyId,
@@ -26,18 +26,18 @@ export default function ReplyList({ postId, replyId }: ReplyListProps) {
   );
 
   return (
-    <ReplyListContextProvider>
+    <PostReplyListContext>
       <InView onChange={onChange} threshold={0.5}>
         <ul>
           {data?.pages.map((page) =>
             page.map((reply) => (
               <li key={reply.id}>
-                <ReplyItem reply={reply} />
+                <PostReplyItem reply={reply} />
               </li>
             )),
           )}
         </ul>
       </InView>
-    </ReplyListContextProvider>
+    </PostReplyListContext>
   );
 }

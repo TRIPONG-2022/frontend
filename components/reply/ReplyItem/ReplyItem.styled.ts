@@ -21,6 +21,7 @@ export const ProfileImageWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -72,6 +73,8 @@ export const UtilWrapper = styled.div`
   color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
+export const ReplyContentEditorContainer = styled.div``;
+
 export const ContentTextArea = styled(ResizableTextArea)`
   width: 100%;
   border: 0;
@@ -88,8 +91,4 @@ export const EditUtilWrapper = styled.div`
   justify-content: flex-end;
   column-gap: 0.5rem;
   margin-bottom: 1rem;
-`;
-
-export const ReplyOfReplyWrapper = styled.div`
-  padding-left: 3rem;
 `;
