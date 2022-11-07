@@ -18,7 +18,6 @@ const GNB = () => {
   const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
   const isSearch = useSelector(({ search }: AppState) => search.isSearch);
 
-  console.log(isSearch);
   const dispatch = useDispatch();
 
   const { toggle, onToggle, setOff } = useToggle(false);
