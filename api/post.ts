@@ -5,15 +5,41 @@ import { PostEditorSchema } from '@/constants/schema';
 
 import instance from './instance';
 
+export async function requestGetPostData(
+  category: PostCategory,
+  postId: string | number,
+): Promise<Post> {
+  const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
+  return data;
+}
+
+export async function requestGetUserLikePost(
+  category: PostCategory,
+  postId: string | number,
+): Promise<boolean> {
+  const { data } = await instance.get<Post[]>('/users/profile/likes', {
+    params: { category },
+  });
+  const isLike =
+    data.findIndex((post) => post.id.toString() === postId.toString()) !== -1;
+  return isLike;
+}
+
 export async function requestGetPost(
   category: PostCategory | null,
   postId: string | number | null,
-) {
+): Promise<Post | null> {
   if (!category || !postId) {
     return null;
   }
-  const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
-  return data;
+  const [post, isLike] = await Promise.all([
+    requestGetPostData(category, postId),
+    requestGetUserLikePost(category, postId),
+  ]);
+  return {
+    ...post,
+    isLike,
+  };
 }
 
 export async function requestUploadImage(imageFile: File) {
