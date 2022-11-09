@@ -9,10 +9,11 @@ export default function usePostListQuery(
     keyword: string;
   },
   postCategory: PostCategory | '',
+  sort: string,
 ) {
   const query = useInfiniteQuery<Post[]>(
-    'posts',
-    ({ pageParam = 0 }) => getPostList(queryParam, pageParam),
+    ['posts', sort],
+    ({ pageParam = 0 }) => getPostList(queryParam, pageParam, sort),
 
     {
       getNextPageParam: (lastPage, pages) => {
@@ -27,8 +28,6 @@ export default function usePostListQuery(
         ),
         pageParams: [...data.pageParams],
       }),
-
-      retry: false,
     },
   );
 

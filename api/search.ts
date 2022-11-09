@@ -28,6 +28,7 @@ export const getPostList = async (
     keyword: string | string[] | undefined;
   },
   pageParam?: number,
+  sort = 'desc',
 ) => {
   if (params.keyword) {
     try {
@@ -35,9 +36,9 @@ export const getPostList = async (
         params: {
           ...params,
           page: pageParam,
-          size: 2,
+          size: 6,
           // 6으로 했을 떄...
-          sort: ['id', 'desc'].join(','),
+          sort: ['id', sort].join(','),
         },
       });
 
@@ -55,8 +56,8 @@ export const getPostList = async (
       params: {
         ...params,
         page: pageParam,
-        size: 2,
-        sort: ['id', 'desc'].join(','),
+        size: 6,
+        sort: ['id', sort].join(','),
       },
     });
 
