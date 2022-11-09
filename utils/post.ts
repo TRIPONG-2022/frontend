@@ -20,7 +20,7 @@ export function handlePostPageParam(param: string | string[] | undefined) {
 }
 
 export function checkIsValidPostPageParam(category: string, postId: string) {
-  return category && postId && POST_CATEGORY_KEYS.includes(category);
+  return category && parseInt(postId) && POST_CATEGORY_KEYS.includes(category);
 }
 
 export function decodeHTML(html: string) {

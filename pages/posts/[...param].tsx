@@ -13,7 +13,7 @@ import usePostQuery from '@/hooks/usePostQuery';
 
 interface PostPageProps {
   category: PostCategory;
-  postId: string;
+  postId: number;
 }
 
 const PostPage: NextPage<PostPageProps> = ({ category, postId }) => {
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: {
         category,
-        postId,
+        postId: parseInt(postId),
       },
     };
   } catch (error) {
