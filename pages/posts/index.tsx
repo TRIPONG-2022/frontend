@@ -36,6 +36,7 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
   const { data, fetchNextPage, hasNextPage } = usePostListQuery(
     queryParam,
     postCategory,
+    sort,
   );
 
   const onChange = (isInView: boolean, entry: IntersectionObserverEntry) => {
@@ -99,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { searchType, keyword } = context.query;
 
-  await queryClient.prefetchInfiniteQuery('posts', () =>
+  await queryClient.prefetchInfiniteQuery(['posts', 'desc'], () =>
     getPostList({ searchType, keyword }),
   );
 
