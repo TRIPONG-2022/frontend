@@ -18,13 +18,14 @@ const MyPageRepliesPage: NextPage = () => {
     <MainLayout>
       <MyPageLayout>
         <PostLayout contentTitle={`총 ${data.total}개의 댓글`} existCalendar>
-          {data.data.map((reply: Reply) => (
-            <>
-              <ReplyItem key={reply.id} reply={reply}>
-                <ReplyItem.Content />
-              </ReplyItem>
-            </>
-          ))}
+          {data &&
+            data.data.map((reply: Reply, idx) => (
+              <>
+                <ReplyItem key={idx} reply={reply}>
+                  <ReplyItem.Content />
+                </ReplyItem>
+              </>
+            ))}
           <Pagination
             movePage={movePage}
             page={page}

@@ -1,4 +1,5 @@
 import SVGIcon from '@/components/shared/SVGIcon';
+import useScreenType from '@/hooks/useScreenType';
 import React from 'react';
 
 import * as S from './Pagination.styled';
@@ -11,13 +12,16 @@ interface PaginationProps {
 }
 
 const Pagination = ({ movePage, page, size, total }: PaginationProps) => {
+  const { isDesktop, isMobile } = useScreenType();
+  const buttonGroupSize = isDesktop ? 5 : isMobile ? 3 : 3;
+
   const totalPage = Math.ceil(total / size);
   const isFirst = page === 0;
   const isLast = page >= totalPage - 1;
-  const pageCount = 3 > totalPage ? totalPage : 3;
+  const buttonGroup = buttonGroupSize > totalPage ? totalPage : buttonGroupSize;
 
-  const startNumber = Math.floor(page / pageCount);
-  let lastNumber = Math.floor(page / pageCount + 1) * pageCount;
+  const startNumber = Math.floor(page / buttonGroup) * buttonGroup;
+  let lastNumber = Math.floor(page / buttonGroup + 1) * buttonGroup;
   if (lastNumber > totalPage) lastNumber = totalPage;
 
   const next = page + 1;
@@ -49,17 +53,18 @@ const Pagination = ({ movePage, page, size, total }: PaginationProps) => {
       <S.Page onClick={prevPage} disabled={isFirst}>
         <SVGIcon icon="ChevronLeftIcon" />
       </S.Page>
-      {Array.from({ length: pageCount }, (_, idx) => startNumber + idx + 1).map(
-        (n, index) => (
-          <S.Page
-            key={n}
-            page={n - 1 === page}
-            onClick={() => changePage(startNumber + index)}
-          >
-            {n}
-          </S.Page>
-        ),
-      )}
+      {Array.from(
+        { length: lastNumber - startNumber },
+        (_, idx) => startNumber + idx + 1,
+      ).map((n, index) => (
+        <S.Page
+          key={n}
+          page={n - 1 === page}
+          onClick={() => changePage(startNumber + index)}
+        >
+          {n}
+        </S.Page>
+      ))}
       <S.Page onClick={nextPage} disabled={isLast}>
         <SVGIcon icon="ChevronRightIcon" />
       </S.Page>
@@ -67,4 +72,4 @@ const Pagination = ({ movePage, page, size, total }: PaginationProps) => {
   );
 };
 
-export default Pagination;
+export default React.memo(Pagination);
