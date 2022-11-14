@@ -1,28 +1,41 @@
-import { SCREEN_DESKTOP } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
-export const PostCategoryTapContiner = styled.div`
+import { SCREEN_DESKTOP } from '@/styles/screen';
+import { Z_INDEX } from '@/styles/z-index';
+
+export const PostCategoryTapContiner = styled.div<{ scroll: boolean }>`
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: scroll;
-
   gap: 1rem;
-  margin-bottom: 1.5rem;
 
+  margin-bottom: 1.5rem;
+  padding: 1rem 0;
+
+  position: sticky;
+  top: 0rem;
+
+  overflow-x: auto;
   justify-content: start;
 
   ${SCREEN_DESKTOP} {
-    overflow-x: auto;
+    overflow-x: visible;
   }
 
+  background-color: white;
+
+  ${({ scroll }) =>
+    scroll &&
+    css`
+      transform: translateY(5rem);
+
+      z-index: ${Z_INDEX.STICKY};
+    `}
+
+  transition: all 0.5s ease;
+  white-space: nowrap;
+
   ::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-    background: gray;
-  }
-  ::-webkit-scrollbar-thumb:horizontal {
-    background-color: red;
-    border-radius: 10px;
+    display: none;
   }
 `;
 
