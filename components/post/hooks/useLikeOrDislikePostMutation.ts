@@ -3,14 +3,13 @@ import { requestLikeOrDislikePost } from '@/api/post';
 import { Post, PostCategory } from '@/types/post';
 
 export default function useLikeOrDislikePostMutation(
-  postId: string | number,
+  postId: number,
   postCategory: PostCategory,
 ) {
   const queryClient = useQueryClient();
   const postQueryKey = ['post', postCategory, postId];
-
   const mutations = useMutation(requestLikeOrDislikePost(postId), {
-    async onMutate(userLikePost: boolean) {
+    async onMutate(isLike: boolean) {
       await queryClient.cancelQueries(postQueryKey);
       const previousData = queryClient.getQueryData<Post>(postQueryKey);
 
@@ -18,16 +17,14 @@ export default function useLikeOrDislikePostMutation(
         if (!post) return undefined;
         return {
           ...post,
-          likeCount: userLikePost ? post.likeCount - 1 : post.likeCount + 1,
+          likeCount: isLike ? post.likeCount - 1 : post.likeCount + 1,
+          isLike: !isLike,
         };
       });
       return { previousData };
     },
-    onError(_, __, context) {
-      queryClient.setQueryData(postQueryKey, context?.previousData);
-    },
-    onSettled() {
-      queryClient.invalidateQueries(postQueryKey);
+    async onError(_, __, context) {
+      await queryClient.setQueryData(postQueryKey, context?.previousData);
     },
   });
 

@@ -7,7 +7,7 @@ import instance from './instance';
 
 export async function requestGetPostData(
   category: PostCategory,
-  postId: string | number,
+  postId: number,
 ): Promise<Post> {
   const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
   return data;
@@ -15,7 +15,7 @@ export async function requestGetPostData(
 
 export async function requestGetUserLikePost(
   category: PostCategory,
-  postId: string | number,
+  postId: number,
 ): Promise<boolean> {
   const { data } = await instance.get<Post[]>('/users/profile/likes', {
     params: { category },
@@ -27,7 +27,7 @@ export async function requestGetUserLikePost(
 
 export async function requestGetPost(
   category: PostCategory | null,
-  postId: string | number | null,
+  postId: number | null,
 ): Promise<Post | null> {
   if (!category || !postId) {
     return null;
@@ -95,7 +95,7 @@ export async function requestCreatePost(postEditorSchema: PostEditorSchema) {
 
 export function requestCreateOrUpdatePost(
   category: PostCategory | null,
-  postId: string | number | null,
+  postId: number | null,
 ) {
   if (!category || !postId) {
     return requestCreatePost;
@@ -121,15 +121,15 @@ export async function requestDeletePost(post: Post) {
   return data;
 }
 
-export async function requestLikePost(postId: string | number) {
+export async function requestLikePost(postId: number) {
   await instance.post(`/posts/like/${postId}`);
 }
 
-export async function requestDislikePost(postId: string | number) {
+export async function requestDislikePost(postId: number) {
   await instance.delete(`/posts/like/${postId}`);
 }
 
-export function requestLikeOrDislikePost(postId: string | number) {
+export function requestLikeOrDislikePost(postId: number) {
   return async (userLikePost: boolean) => {
     if (userLikePost) {
       await requestDislikePost(postId);

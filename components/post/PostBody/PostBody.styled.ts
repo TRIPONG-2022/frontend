@@ -44,17 +44,6 @@ export const PostTagItem = styled.li`
   }
 `;
 
-export const ReplyWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-
-  h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-`;
-
 export const GatheringContentContainer = styled.div`
   display: flex;
   flex-direction: column;

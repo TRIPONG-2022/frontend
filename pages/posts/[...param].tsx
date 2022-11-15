@@ -8,8 +8,12 @@ import PostHeader from '@/components/post/PostHeader';
 import PostNotFound from '@/components/post/PostNotFound';
 
 import { PostCategory } from '@/types/post';
-import { checkIsValidPostPageParam, handlePostPageParam } from '@/utils/post';
 import usePostQuery from '@/hooks/usePostQuery';
+import {
+  checkIsValidPostCategoryAndPostId,
+  handlePostPageParam,
+} from '@/utils/post';
+import PostFooter from '@/components/post/PostFooter';
 
 interface PostPageProps {
   category: PostCategory;
@@ -17,7 +21,7 @@ interface PostPageProps {
 }
 
 const PostPage: NextPage<PostPageProps> = ({ category, postId }) => {
-  const { data: post, isLoading } = usePostQuery(category, postId);
+  const { data: post } = usePostQuery(category, postId);
 
   return (
     <>
@@ -29,6 +33,7 @@ const PostPage: NextPage<PostPageProps> = ({ category, postId }) => {
           <>
             <PostHeader post={post} />
             <PostBody post={post} />
+            <PostFooter post={post} />
           </>
         ) : (
           <PostNotFound />
@@ -43,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { param } = context.query;
     const [category, postId] = handlePostPageParam(param);
 
-    if (!checkIsValidPostPageParam(category, postId)) {
+    if (!checkIsValidPostCategoryAndPostId(category, postId)) {
       return {
         notFound: true,
       };
