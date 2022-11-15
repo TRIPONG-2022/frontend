@@ -4,12 +4,13 @@ export const PostFooterContainer = styled.div`
   width: 100%;
   max-width: 768px;
   margin: 0 auto;
+  padding-bottom: 5rem;
 `;
 
 export const PostUtilWrapper = styled.div`
   display: flex;
   column-gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 `;
 
 export const PostUtilButton = styled.button`
