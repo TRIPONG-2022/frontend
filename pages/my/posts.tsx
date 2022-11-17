@@ -9,7 +9,7 @@ import PostList from '@/components/post/PostList';
 import Pagination from '@/components/shared/Pagination';
 
 const MyPagePostsPage: NextPage = () => {
-  const [{ data }, page, movePage] = useMyPagePosts({ size: 5 });
+  const [{ data }, page, movePage] = useMyPagePosts({ size: 10 });
 
   return (
     <MainLayout>
@@ -19,15 +19,13 @@ const MyPagePostsPage: NextPage = () => {
           existCalendar
           existCategory
         >
-          <>
-            {data ? <PostList posts={data.data} /> : <p>로딩 중....</p>}
-            <Pagination
-              movePage={movePage}
-              page={page}
-              total={(data && data.total) || 0}
-              size={5}
-            />
-          </>
+          {data ? <PostList posts={data.data} /> : <p>로딩 중....</p>}
+          <Pagination
+            movePage={movePage}
+            page={page}
+            total={(data && data.total) || 0}
+            size={10}
+          />
         </MyPagePostLayout>
       </MyPageLayout>
     </MainLayout>

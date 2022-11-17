@@ -28,25 +28,20 @@ const Pagination = ({ movePage, page, size, total }: PaginationProps) => {
   const prev = page - 1;
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  const nextPage = () => {
-    if (page < totalPage - 1) {
-      movePage(next);
-      scrollTop();
-    }
-  };
-
-  const prevPage = () => {
-    if (!isFirst) {
-      movePage(prev);
-      scrollTop();
-    }
-  };
-
-  const changePage = (n: number) => {
+  const move = (n: number) => {
     movePage(n);
     scrollTop();
   };
+
+  const nextPage = () => {
+    if (page < totalPage - 1) move(next);
+  };
+
+  const prevPage = () => {
+    if (!isFirst) move(prev);
+  };
+
+  const changePage = (n: number) => move(n);
 
   return (
     <S.PaginationContainer>
