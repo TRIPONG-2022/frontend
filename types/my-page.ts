@@ -12,9 +12,9 @@ export interface BirthDateData {
 }
 
 export interface MyPageBirthDate {
-  year: number | undefined;
-  month: number | undefined;
-  day: number | undefined;
+  year?: number;
+  month?: number;
+  day?: number;
 }
 
 export interface MyPagePictureType {
@@ -22,26 +22,26 @@ export interface MyPagePictureType {
 }
 
 export interface CommonProfileData {
-  nickName: string | undefined;
-  gender: string | undefined;
-  city: string | undefined;
-  district: string | undefined;
-  introduction: string | null | undefined;
-  phoneNumber: string | null | undefined;
+  nickName?: string;
+  gender?: string;
+  city?: string;
+  district?: string;
+  introduction?: string | null;
+  phoneNumber?: string | null;
 }
 
 export interface UserProfileData extends CommonProfileData {
-  loginId: string | undefined;
+  loginId?: string;
   email: string;
   name: string;
   authentication: number;
   picture: string | null;
-  latitude: number | undefined;
-  longitude: number | undefined;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface UserProfileSendData extends CommonProfileData {
-  latitude: string | null | undefined;
-  longitude: string | null | undefined;
+  latitude?: string | null;
+  longitude?: string | null;
   [key: string]: File | string | undefined | null;
 }

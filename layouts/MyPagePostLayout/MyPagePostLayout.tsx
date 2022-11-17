@@ -6,19 +6,19 @@ import ProfileDateRangeInput from '@/components/shared/ProfileDateRangeInput';
 
 import * as Styled from './MyPagePostLayout.styled';
 
-interface PostLayoutProps {
+interface MyPagePostLayoutProps {
   children: ReactNode;
   existCategory?: boolean;
   existCalendar?: boolean;
   contentTitle: string;
 }
 
-const PostLayout = ({
+const MyPagePostLayout = ({
   children,
   existCalendar,
   existCategory,
   contentTitle,
-}: PostLayoutProps) => {
+}: MyPagePostLayoutProps) => {
   return (
     <Styled.Container>
       {existCalendar && (
@@ -46,4 +46,4 @@ const PostLayout = ({
   );
 };
 
-export default PostLayout;
+export default MyPagePostLayout;

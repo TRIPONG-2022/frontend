@@ -1,15 +1,15 @@
 import MainLayout from '@/layouts/MainLayout';
 import MyPageLayout from '@/layouts/MyPageLayout';
-import PostLayout from '@/layouts/MyPagePostLayout';
-import React, { useEffect } from 'react';
+import MyPagePostLayout from '@/layouts/MyPagePostLayout';
+import React from 'react';
 
 const MyPageLikesPage = () => {
   return (
     <MainLayout>
       <MyPageLayout>
-        <PostLayout contentTitle={`총 ${5}개의 글`} existCategory>
+        <MyPagePostLayout contentTitle={`총 ${5}개의 글`} existCategory>
           글이다
-        </PostLayout>
+        </MyPagePostLayout>
       </MyPageLayout>
     </MainLayout>
   );

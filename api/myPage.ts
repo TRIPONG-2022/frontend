@@ -7,12 +7,11 @@ import {
   UserProfileData,
   UserProfileSendData,
 } from '@/types/my-page';
-import { ProfilePatchSchema } from '@/constants/schema';
-import instance from './instance';
+import { Post } from '@/types/post';
 import { getBirthDate } from '@/utils/date';
 import { base64ToFile } from '@/utils/image';
-import { Post } from '@/types/post';
-import { number } from 'yup';
+import { ProfilePatchSchema } from '@/constants/schema';
+import instance from './instance';
 
 export const getProfileInfomation = async () => {
   try {
