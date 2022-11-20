@@ -194,3 +194,35 @@ export const getMyPageReplies = async ({
     return { total: 0, data: [] };
   }
 };
+
+interface getMyPageLikePostsProps {
+  category: string;
+  page: number;
+  size: number;
+}
+
+export const getMyPageLikePosts = async ({
+  category,
+  page = 0,
+  size,
+}: getMyPageLikePostsProps): Promise<{ total: number; data: Post[] }> => {
+  try {
+    const { data: total } = await instance.get(`/users/profile/likes`, {
+      params: {
+        category,
+      },
+    });
+
+    const { data: posts } = await instance.get(`/users/profile/likes`, {
+      params: {
+        page,
+        size,
+        category,
+      },
+    });
+    return { total: total.length, data: posts };
+  } catch (err) {
+    console.log(err);
+    return { total: 0, data: [] };
+  }
+};
