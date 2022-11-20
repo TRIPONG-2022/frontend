@@ -12,10 +12,18 @@ export const ManagedPostCardContainer = styled.li`
 `;
 
 export const Title = styled.p`
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.25rem;
 
   font-size: 1.25rem;
   font-weight: 700;
+`;
+
+export const Category = styled.p`
+  margin-bottom: 1rem;
+
+  font-size: 0.875rem;
+
+  color: ${({ theme }) => theme.colors.gray[500]};
 `;
 
 export const BottomContainer = styled.div`

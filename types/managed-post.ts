@@ -5,6 +5,7 @@ export interface ManagedPostData {
   loginId: string;
   nickName: string;
   postCreatedDate: string;
+  category: string;
 }
 
 export interface ManagedPostPageData {

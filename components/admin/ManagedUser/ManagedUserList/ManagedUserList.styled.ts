@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { SCREEN_DESKTOP } from '@/styles/screen';
 
-export const ManagedPostListContainer = styled.ul`
+export const ManagedUserListContainer = styled.div`
   display: grid;
-  gap: 0.5rem;
-
+  gap: 1rem;
   grid-template-columns: repeat(1, minmax(0, 1fr));
 
   ${SCREEN_DESKTOP} {
