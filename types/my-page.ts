@@ -45,3 +45,17 @@ export interface UserProfileSendData extends CommonProfileData {
   longitude?: string | null;
   [key: string]: File | string | undefined | null;
 }
+
+export interface GetMyPageDataOptions {
+  userId?: string;
+  category?: string;
+  startDate?: string;
+  endDate?: string;
+  page: number;
+  size: number;
+}
+
+export interface GetMyPageReturnData<DataType> {
+  total: number;
+  data: DataType[];
+}

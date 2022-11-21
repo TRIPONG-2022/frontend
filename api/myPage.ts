@@ -1,17 +1,18 @@
 import {
+  TagsData,
+  MyPageTags,
   BirthDateData,
   MyPageBirthDate,
-  MyPagePictureType,
-  MyPageTags,
-  TagsData,
   UserProfileData,
+  MyPagePictureType,
+  GetMyPageReturnData,
   UserProfileSendData,
+  GetMyPageDataOptions,
 } from '@/types/my-page';
-import { Post } from '@/types/post';
+import instance from './instance';
 import { getBirthDate } from '@/utils/date';
 import { base64ToFile } from '@/utils/image';
 import { ProfilePatchSchema } from '@/constants/schema';
-import instance from './instance';
 
 export const getProfileInfomation = async () => {
   try {
@@ -109,21 +110,13 @@ export const patchProfileInformation = async (
   }
 };
 
-interface getMyPagePostsProps {
-  category: string;
-  startDate: string;
-  endDate: string;
-  page: number;
-  size: number;
-}
-
-export const getMyPagePosts = async ({
+export const getMyPagePosts = async <T>({
   category,
   startDate: fromDate,
   endDate,
   page = 0,
   size,
-}: getMyPagePostsProps): Promise<{ total: number; data: Post[] }> => {
+}: GetMyPageDataOptions): Promise<GetMyPageReturnData<T>> => {
   try {
     const { data: total } = await instance.get(`/users/profile/posts`, {
       params: {
@@ -140,7 +133,6 @@ export const getMyPagePosts = async ({
         category,
         fromDate,
         endDate,
-        sorted: false,
       },
     });
     return { total: total.length, data: posts };
@@ -150,21 +142,13 @@ export const getMyPagePosts = async ({
   }
 };
 
-interface getMyPageRepliesProps {
-  userId?: string;
-  startDate: string;
-  endDate: string;
-  page: number;
-  size: number;
-}
-
-export const getMyPageReplies = async ({
+export const getMyPageReplies = async <T>({
   userId,
   startDate: fromDate,
   endDate,
   page = 0,
   size,
-}: getMyPageRepliesProps) => {
+}: GetMyPageDataOptions): Promise<GetMyPageReturnData<T>> => {
   try {
     const { data: total } = await instance.get(
       `/users/profile/replies/${userId}`,
@@ -195,17 +179,11 @@ export const getMyPageReplies = async ({
   }
 };
 
-interface getMyPageLikePostsProps {
-  category: string;
-  page: number;
-  size: number;
-}
-
-export const getMyPageLikePosts = async ({
+export const getMyPageLikePosts = async <T>({
   category,
   page = 0,
   size,
-}: getMyPageLikePostsProps): Promise<{ total: number; data: Post[] }> => {
+}: GetMyPageDataOptions): Promise<GetMyPageReturnData<T>> => {
   try {
     const { data: total } = await instance.get(`/users/profile/likes`, {
       params: {

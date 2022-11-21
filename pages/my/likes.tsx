@@ -1,14 +1,17 @@
-import { getMyPageLikePosts } from '@/api/myPage';
+import React from 'react';
+
 import PostList from '@/components/post/PostList';
 import Pagination from '@/components/shared/Pagination';
-import useMyPageLikePosts from '@/hooks/useMyPageLikePosts';
+import useMyPageFetchData from '@/hooks/useMyPageFetchData';
 import MainLayout from '@/layouts/MainLayout';
 import MyPageLayout from '@/layouts/MyPageLayout';
 import MyPagePostLayout from '@/layouts/MyPagePostLayout';
-import React, { useEffect } from 'react';
 
 const MyPageLikesPage = () => {
-  const [{ data }, page, movePage] = useMyPageLikePosts({ size: 5 });
+  const [{ data }, page, movePage] = useMyPageFetchData<'post'>({
+    type: 'like',
+    size: 10,
+  });
 
   return (
     <MainLayout>

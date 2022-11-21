@@ -1,15 +1,18 @@
-import { NextPage } from 'next';
 import React from 'react';
+import { NextPage } from 'next';
 
-import useMyPagePosts from '@/hooks/useMyPagePosts';
 import MainLayout from '@/layouts/MainLayout';
 import MyPageLayout from '@/layouts/MyPageLayout';
 import MyPagePostLayout from '@/layouts/MyPagePostLayout';
 import PostList from '@/components/post/PostList';
 import Pagination from '@/components/shared/Pagination';
+import useMyPageFetchData from '@/hooks/useMyPageFetchData';
 
 const MyPagePostsPage: NextPage = () => {
-  const [{ data }, page, movePage] = useMyPagePosts({ size: 10 });
+  const [{ data }, page, movePage] = useMyPageFetchData<'post'>({
+    type: 'post',
+    size: 10,
+  });
 
   return (
     <MainLayout>
