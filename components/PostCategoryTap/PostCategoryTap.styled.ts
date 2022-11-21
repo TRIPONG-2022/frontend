@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { SCREEN_DESKTOP } from '@/styles/screen';
 import { Z_INDEX } from '@/styles/z-index';
 
-export const PostCategoryTapContiner = styled.div<{ scroll: boolean }>`
+export const PostCategoryTapContiner = styled.div<{ visibleOnScroll: boolean }>`
   display: flex;
   flex-wrap: nowrap;
   gap: 1rem;
@@ -23,8 +23,8 @@ export const PostCategoryTapContiner = styled.div<{ scroll: boolean }>`
 
   background-color: white;
 
-  ${({ scroll }) =>
-    scroll &&
+  ${({ visibleOnScroll }) =>
+    visibleOnScroll &&
     css`
       transform: translateY(5rem);
 

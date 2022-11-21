@@ -9,7 +9,7 @@ interface PostCategoryContentProps {
   label: string;
   keyValue: string;
   containerRef: MutableRefObject<HTMLDivElement | null>;
-  scrollX: MutableRefObject<number | undefined>;
+  tapScrollX: MutableRefObject<number | undefined>;
   setPostCategory: React.Dispatch<SetStateAction<PostCategory | ''>>;
 }
 
@@ -18,7 +18,7 @@ const PostCategoryContent = ({
   label,
   keyValue,
   containerRef,
-  scrollX,
+  tapScrollX,
   setPostCategory,
 }: PostCategoryContentProps) => {
   const ref = useRef<HTMLButtonElement | null>(null);
@@ -30,10 +30,10 @@ const PostCategoryContent = ({
       onClick={() => {
         setPostCategory(keyValue as PostCategory);
 
-        scrollX.current = ref.current?.getBoundingClientRect().x;
+        tapScrollX.current = ref.current?.getBoundingClientRect().x;
         containerRef.current?.scrollTo({
           behavior: 'smooth',
-          left: containerRef.current?.scrollLeft + scrollX.current! - 20,
+          left: containerRef.current?.scrollLeft + tapScrollX.current! - 20,
         });
       }}
     >

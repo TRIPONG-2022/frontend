@@ -1,9 +1,9 @@
-import React, { SetStateAction, useRef } from 'react';
+import React, { SetStateAction, useEffect, useRef } from 'react';
 
 import { POST_CATEGORIES } from '@/constants/post-category';
 import { PostCategory } from '@/types/post';
 import PostCategoryContent from './PostCategoryContent';
-import useScrollUp from './useScrollUp';
+import useScrollUp from './useScroll';
 
 import * as Styled from './PostCategoryTap.styled';
 
@@ -16,25 +16,34 @@ const PostCategoryTap = ({
   postCategory,
   setPostCategory,
 }: PostCategoryTapProps) => {
-  const ref = useRef<HTMLButtonElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-  const scrollX = useRef<number | undefined>(0);
+  const tapScrollX = useRef<number | undefined>(0);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const scroll = useScrollUp();
+  const { scrollDirection, setScrollDirection, scrollY } = useScrollUp();
+
+  useEffect(() => {
+    if (scrollY < 160) {
+      setScrollDirection('DOWN');
+    }
+  }, [setScrollDirection, scrollY]);
 
   return (
-    <Styled.PostCategoryTapContiner ref={containerRef} scroll={scroll}>
+    <Styled.PostCategoryTapContiner
+      ref={containerRef}
+      visibleOnScroll={scrollDirection === 'UP'}
+    >
       <Styled.Button
-        ref={ref}
+        ref={buttonRef}
         active={postCategory === ''}
         onClick={() => {
           setPostCategory('');
-          scrollX.current = ref.current?.getBoundingClientRect().x;
+          tapScrollX.current = buttonRef.current?.getBoundingClientRect().x;
           containerRef.current?.scrollTo({
             behavior: 'smooth',
-            left: scrollX.current! - 20,
+            left: tapScrollX.current! - 20,
           });
         }}
       >
@@ -47,7 +56,7 @@ const PostCategoryTap = ({
           label={label}
           keyValue={key}
           containerRef={containerRef}
-          scrollX={scrollX}
+          tapScrollX={tapScrollX}
           setPostCategory={setPostCategory}
         />
       ))}
