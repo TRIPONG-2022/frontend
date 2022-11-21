@@ -7,7 +7,11 @@ import useAddRole from '../hooks/useAddRole';
 
 import * as Styled from './AddRole.styled';
 
-const AddRole = () => {
+interface AddRoleProps {
+  setOff: () => void;
+}
+
+const AddRole = ({ setOff }: AddRoleProps) => {
   const {
     register,
     handleSubmit,
@@ -29,24 +33,40 @@ const AddRole = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Styled.AddRoleWrapper>
           <Styled.AddRoleInPutWrapper>
-            <AuthInput
-              id="roleName"
-              type="roleName"
-              label="권한이름"
-              placeholder="권한을 만들어주세요"
-              errorMessage={errors.roleName?.message}
-              {...register('roleName')}
-            />
-            <AuthInput
-              id="description"
-              type="description"
-              label="권한설명"
-              placeholder="권한 추가설명을 작성해주세요"
-              errorMessage={errors.description?.message}
-              {...register('description')}
-            />
+            <Styled.InputWrapper>
+              <AuthInput
+                id="roleName"
+                type="roleName"
+                label="권한이름"
+                placeholder="권한을 만들어주세요"
+                errorMessage={errors.roleName?.message}
+                {...register('roleName')}
+              />
+            </Styled.InputWrapper>
+            <Styled.InputWrapper>
+              <AuthInput
+                id="description"
+                type="description"
+                label="권한설명"
+                placeholder="권한 추가설명을 작성해주세요"
+                errorMessage={errors.description?.message}
+                {...register('description')}
+              />
+            </Styled.InputWrapper>
           </Styled.AddRoleInPutWrapper>
-          <Styled.Button type="submit">등록</Styled.Button>
+
+          <Styled.Button type="submit" primary>
+            등록
+          </Styled.Button>
+          <Styled.Button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOff();
+            }}
+          >
+            취소
+          </Styled.Button>
         </Styled.AddRoleWrapper>
       </form>
     </Styled.AddRoleContainer>

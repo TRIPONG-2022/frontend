@@ -4,8 +4,6 @@ export const ManagedUserCardContainer = styled.div`
   position: relative;
   padding: 1rem;
 
-  height: 30rem;
-
   border: 2px solid;
   border-color: black;
   border-radius: 1rem;
