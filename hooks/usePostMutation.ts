@@ -5,7 +5,7 @@ import { requestCreateOrUpdatePost } from '@/api/post';
 
 export default function usePostMutation(
   category: PostCategory | null,
-  postId: string | number | null,
+  postId: number | null,
 ) {
   const queryClient = useQueryClient();
   const mutations = useMutation(

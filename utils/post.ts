@@ -19,19 +19,42 @@ export function handlePostPageParam(param: string | string[] | undefined) {
   return param;
 }
 
-export function checkIsValidPostPageParam(category: string, postId: string) {
-  return category && postId && POST_CATEGORY_KEYS.includes(category);
+export function checkIsValidPostCategoryAndPostId(
+  category: string,
+  postId: string,
+) {
+  return (
+    Boolean(category) &&
+    Boolean(parseInt(postId)) &&
+    POST_CATEGORY_KEYS.includes(category)
+  );
 }
 
 export function decodeHTML(html: string) {
   return decode(html, { level: 'html5', scope: 'strict' });
 }
 
-export function handleQuery(query: string | string[] | undefined) {
-  if (Array.isArray(query)) {
-    return undefined;
+export function handleWritePostPageQuery(
+  category: string | string[] | undefined,
+  postId: string | string[] | undefined,
+) {
+  const defaultQuery = {
+    category: null,
+    postId: null,
+  };
+  if (category === undefined || postId === undefined) {
+    return defaultQuery;
   }
-  return query;
+  if (Array.isArray(category) || Array.isArray(postId)) {
+    return defaultQuery;
+  }
+  if (!checkIsValidPostCategoryAndPostId(category, postId)) {
+    return defaultQuery;
+  }
+  return {
+    category,
+    postId: parseInt(postId),
+  };
 }
 
 export function convertPostToPostSchema(post: Post): Partial<PostEditorSchema> {

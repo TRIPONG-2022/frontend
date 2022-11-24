@@ -22,4 +22,5 @@ export interface Post {
   budget: number;
   likeCount: number;
   viewCount: number;
+  isLike?: boolean;
 }

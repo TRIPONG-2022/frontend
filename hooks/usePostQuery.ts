@@ -5,7 +5,7 @@ import { requestGetPost } from '@/api/post';
 
 export default function usePostQuery(
   category: PostCategory | null,
-  postId: string | number | null,
+  postId: number | null,
   options?: Omit<UseQueryOptions<Post | null>, 'queryKey' | 'queryFn'>,
 ) {
   const queries = useQuery(

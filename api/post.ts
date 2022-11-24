@@ -5,15 +5,41 @@ import { PostEditorSchema } from '@/constants/schema';
 
 import instance from './instance';
 
+export async function requestGetPostData(
+  category: PostCategory,
+  postId: number,
+): Promise<Post> {
+  const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
+  return data;
+}
+
+export async function requestGetUserLikePost(
+  category: PostCategory,
+  postId: number,
+): Promise<boolean> {
+  const { data } = await instance.get<Post[]>('/users/profile/likes', {
+    params: { category },
+  });
+  const isLike =
+    data.findIndex((post) => post.id.toString() === postId.toString()) !== -1;
+  return isLike;
+}
+
 export async function requestGetPost(
   category: PostCategory | null,
-  postId: string | number | null,
-) {
+  postId: number | null,
+): Promise<Post | null> {
   if (!category || !postId) {
     return null;
   }
-  const { data } = await instance.get<Post>(`/posts/${category}/${postId}`);
-  return data;
+  const [post, isLike] = await Promise.all([
+    requestGetPostData(category, postId),
+    requestGetUserLikePost(category, postId),
+  ]);
+  return {
+    ...post,
+    isLike,
+  };
 }
 
 export async function requestUploadImage(imageFile: File) {
@@ -69,7 +95,7 @@ export async function requestCreatePost(postEditorSchema: PostEditorSchema) {
 
 export function requestCreateOrUpdatePost(
   category: PostCategory | null,
-  postId: string | number | null,
+  postId: number | null,
 ) {
   if (!category || !postId) {
     return requestCreatePost;
@@ -93,4 +119,22 @@ export function requestCreateOrUpdatePost(
 export async function requestDeletePost(post: Post) {
   const { data } = await instance.delete(`/posts/${post.category}/${post.id}`);
   return data;
+}
+
+export async function requestLikePost(postId: number) {
+  await instance.post(`/posts/like/${postId}`);
+}
+
+export async function requestDislikePost(postId: number) {
+  await instance.delete(`/posts/like/${postId}`);
+}
+
+export function requestLikeOrDislikePost(postId: number) {
+  return async (userLikePost: boolean) => {
+    if (userLikePost) {
+      await requestDislikePost(postId);
+    } else {
+      await requestLikePost(postId);
+    }
+  };
 }
