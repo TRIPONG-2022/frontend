@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 
 import GNB from '@/layouts/GNB';
-import * as Styled from './MainLayout.styled';
+import Footer from '@/layouts/Footer';
+import ResponsiveContainer from '../../components/shared/ResponsiveContainer';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -10,11 +11,17 @@ interface MainLayoutProps {
 
 function MainLayout({ children, fullWidth }: MainLayoutProps) {
   return (
-    <Styled.Container>
+    <>
       <GNB />
-      <Styled.Body fullWidth={fullWidth}>{children}</Styled.Body>
-      <Styled.Footer />
-    </Styled.Container>
+      <main>
+        {fullWidth ? (
+          <>{children}</>
+        ) : (
+          <ResponsiveContainer>{children}</ResponsiveContainer>
+        )}
+      </main>
+      <Footer />
+    </>
   );
 }
 
