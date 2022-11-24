@@ -22,18 +22,12 @@ const PostCategoryTap = ({
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const { scrollDirection, setScrollDirection, scrollY } = useScrollUp();
-
-  useEffect(() => {
-    if (scrollY < 160) {
-      setScrollDirection('DOWN');
-    }
-  }, [setScrollDirection, scrollY]);
+  const [scrollDirection, scrollY] = useScrollUp();
 
   return (
     <Styled.PostCategoryTapContiner
       ref={containerRef}
-      visibleOnScroll={scrollDirection === 'UP'}
+      visibleOnScroll={scrollY > 160 && scrollDirection === 'UP'}
     >
       <Styled.Button
         ref={buttonRef}
