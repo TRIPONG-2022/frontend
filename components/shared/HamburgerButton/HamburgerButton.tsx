@@ -2,16 +2,17 @@
 import * as Styled from './HamburgerButton.styled';
 
 interface HamburgerButtonProps {
-  width: number;
+  size?: number;
   toggle: boolean;
 }
 
-function HamburgerButton({ width, toggle }: HamburgerButtonProps) {
+function HamburgerButton({ size = 100, toggle }: HamburgerButtonProps) {
   return (
     <Styled.HamburgerButtonSVG
       active={toggle}
-      viewBox="0 0 100 100"
-      width={width}
+      width={size}
+      height={size}
+      viewBox="20 20 60 60"
     >
       <Styled.LineTopPath
         active={toggle}
