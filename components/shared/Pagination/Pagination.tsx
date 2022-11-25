@@ -24,6 +24,11 @@ const Pagination = ({ movePage, page, size, total }: PaginationProps) => {
   let lastNumber = Math.floor(page / buttonGroup + 1) * buttonGroup;
   if (lastNumber > totalPage) lastNumber = totalPage;
 
+  const pages = Array.from(
+    { length: lastNumber - startNumber },
+    (_, idx) => startNumber + idx + 1,
+  );
+
   const next = page + 1;
   const prev = page - 1;
 
@@ -48,10 +53,7 @@ const Pagination = ({ movePage, page, size, total }: PaginationProps) => {
       <S.Page onClick={prevPage} disabled={isFirst}>
         <SVGIcon icon="ChevronLeftIcon" />
       </S.Page>
-      {Array.from(
-        { length: lastNumber - startNumber },
-        (_, idx) => startNumber + idx + 1,
-      ).map((n, index) => (
+      {pages.map((n, index) => (
         <S.Page
           key={n}
           page={n - 1 === page}
