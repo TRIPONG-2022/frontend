@@ -4,6 +4,7 @@ import { Post, PostCategory } from '@/types/post';
 import { PostEditorSchema } from '@/constants/schema';
 
 import instance from './instance';
+import publicInstance from './public-instance';
 
 export async function requestGetPostData(
   category: PostCategory,
@@ -136,5 +137,33 @@ export function requestLikeOrDislikePost(postId: number) {
     } else {
       await requestLikePost(postId);
     }
+  };
+}
+
+export async function requestGetPostList(category: string, size: number) {
+  const { data } = await publicInstance.get<Post[]>(
+    'https://tripong.tk/posts',
+    {
+      params: {
+        category,
+        size,
+      },
+    },
+  );
+  return data;
+}
+
+export async function requestGetRecentPostList() {
+  const [review, board, qna, gathering] = await Promise.all(
+    ['review', 'board', 'qna', 'gathering'].map((category) =>
+      requestGetPostList(category, 3),
+    ),
+  );
+
+  return {
+    review,
+    board,
+    qna,
+    gathering,
   };
 }
