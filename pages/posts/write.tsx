@@ -13,10 +13,14 @@ import MainLayout from '@/layouts/MainLayout';
 import usePostQuery from '@/hooks/usePostQuery';
 import usePostMutation from '@/hooks/usePostMutation';
 import { DEFAULT_POST_SCHEMA } from '@/constants/post';
-import { convertPostToPostSchema, decodeHTML, handleQuery } from '@/utils/post';
+import {
+  convertPostToPostSchema,
+  decodeHTML,
+  handleWritePostPageQuery,
+} from '@/utils/post';
 
 interface WritePageProps {
-  postId: string | null;
+  postId: number | null;
   category: PostCategory | null;
 }
 
@@ -81,8 +85,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      postId: handleQuery(postId) || null,
-      category: handleQuery(category) || null,
+      ...handleWritePostPageQuery(category, postId),
     },
   };
 };

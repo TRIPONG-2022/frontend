@@ -7,7 +7,6 @@ export const ReplyFormContainer = styled.form`
   padding: 1.5rem 1.25rem 1.25rem;
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-radius: 1rem;
-  margin-bottom: 1rem;
 `;
 
 export const ReplyTextArea = styled(ResizableTextArea)`

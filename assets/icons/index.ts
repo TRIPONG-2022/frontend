@@ -39,3 +39,4 @@ export { default as EyeIcon } from './eye.svg';
 export { default as MoreVerticalIcon } from './more-vertical.svg';
 export { default as DotThree } from './dot-three.svg';
 export { default as DeleteIcon } from './delete.svg';
+export { default as HeartFillIcon } from './heart-fill.svg';
