@@ -1,29 +1,43 @@
 import Link from 'next/link';
-import React from 'react';
 
-import LoginJoinButton from '@/components/shared/LoginJoinList';
+import useToggle from '@/hooks/useToggle';
+import useUserMenu from '@/hooks/useUserMenu';
+import SVGIcon from '@/components/shared/SVGIcon';
+import HamburgerIcon from '@/components/shared/HamburgerButton';
 import { GNB_MENUS } from '@/constants/menus';
+
 import * as Styled from './MobileNaviation.styled';
 
-interface MobileNavigationProps {
-  toggle: boolean;
-  isLogin: boolean;
-}
-
-function MobileNavigation({ toggle, isLogin }: MobileNavigationProps) {
+function MobileNavigation() {
+  const { toggle, onToggle } = useToggle(false);
+  const userMenu = useUserMenu();
   return (
-    <Styled.NavDiv toggle={toggle}>
-      <Styled.NavMenuUl>
-        {GNB_MENUS.map(({ name, link }) => (
-          <Styled.NavMenuLi key={name}>
-            <Link href={link}>{name}</Link>
-          </Styled.NavMenuLi>
-        ))}
-      </Styled.NavMenuUl>
-      <Styled.NavBottomUl>
-        <LoginJoinButton divide="Navi" isLogin={isLogin} />
-      </Styled.NavBottomUl>
-    </Styled.NavDiv>
+    <>
+      <Styled.MobileNavigationContainer>
+        <button>
+          <SVGIcon icon="SearchIcon" size={24} />
+        </button>
+        <button onClick={onToggle}>
+          <HamburgerIcon size={24} toggle={toggle} />
+        </button>
+      </Styled.MobileNavigationContainer>
+      <Styled.MobileMenuWrapper isOpen={toggle}>
+        <Styled.MenuList>
+          {GNB_MENUS.map(({ name, link }) => (
+            <Styled.MenuItem key={name}>
+              <Link href={link}>{name}</Link>
+            </Styled.MenuItem>
+          ))}
+        </Styled.MenuList>
+        <Styled.BottomWrapper>
+          {userMenu.map(({ name, link }) => (
+            <Link key={name} href={link}>
+              <a>{name}</a>
+            </Link>
+          ))}
+        </Styled.BottomWrapper>
+      </Styled.MobileMenuWrapper>
+    </>
   );
 }
 
