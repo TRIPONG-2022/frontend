@@ -11,6 +11,7 @@ const GlobalStyle = styled.createGlobalStyle`
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    word-break: break-all;
   }
 
   * {
