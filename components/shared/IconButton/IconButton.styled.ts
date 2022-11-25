@@ -6,8 +6,8 @@ export const IconButtonSizeStyles = {
     height: 1.5rem;
   `,
   md: css`
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
   `,
   lg: css`
     width: 3rem;
@@ -23,6 +23,10 @@ export const IconButtonColorSchemeStyles = {
   primary: css`
     color: #ffffff;
     background-color: #0dc5d6;
+  `,
+  default: css`
+    color: ${({ theme }) => theme.colors.gray[700]};
+    background-color: ${({ theme }) => theme.colors.gray[100]};
   `,
   naver: css`
     color: #ffffff;
@@ -56,7 +60,7 @@ export const BaseIconButton = styled.button<BaseIconButtonProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: ${({ $isRound }) => ($isRound ? '9999px' : '0.25rem')};
+  border-radius: ${({ $isRound }) => ($isRound ? '9999px' : '0.5rem')};
 
   &:hover {
     opacity: 0.75;
