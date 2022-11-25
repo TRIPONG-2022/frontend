@@ -1,10 +1,9 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { HEADER_HEIGHT } from '@/constants/menus';
-import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import { Z_INDEX } from '@/styles/z-index';
+import { HEADER_HEIGHT } from '@/constants/menus';
 
-export const HeaderContainer = styled.header`
+export const GNBContainer = styled.header`
   position: sticky;
   top: 0;
   left: 0;
