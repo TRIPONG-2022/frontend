@@ -13,7 +13,7 @@ const LogoutPage: NextPage = () => {
     dispatch(logoutUser());
     window.localStorage.setItem('Authorization', '');
     router.replace('/');
-  }, []);
+  }, [dispatch, router]);
 
   return <div></div>;
 };
