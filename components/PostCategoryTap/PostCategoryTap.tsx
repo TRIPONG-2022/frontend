@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useRef } from 'react';
+import React, { SetStateAction, useEffect, useMemo, useRef } from 'react';
 
 import { POST_CATEGORIES } from '@/constants/post-category';
 import { PostCategory } from '@/types/post';
@@ -24,21 +24,31 @@ const PostCategoryTap = ({
 
   const [scrollDirection, scrollY] = useScrollUp();
 
+  const visibleOnScroll = useMemo(
+    () => scrollY > 160 && scrollDirection === 'UP',
+    [scrollY, scrollDirection],
+  );
+
+  function handleTapScrollX(
+    targetButton: React.MutableRefObject<HTMLButtonElement | null>,
+  ) {
+    tapScrollX.current = targetButton.current?.getBoundingClientRect().x;
+    containerRef.current?.scrollTo({
+      behavior: 'smooth',
+      left: containerRef.current?.scrollLeft + tapScrollX.current! - 20,
+    });
+  }
   return (
     <Styled.PostCategoryTapContiner
       ref={containerRef}
-      visibleOnScroll={scrollY > 160 && scrollDirection === 'UP'}
+      visibleOnScroll={visibleOnScroll}
     >
       <Styled.Button
         ref={buttonRef}
         active={postCategory === ''}
         onClick={() => {
           setPostCategory('');
-          tapScrollX.current = buttonRef.current?.getBoundingClientRect().x;
-          containerRef.current?.scrollTo({
-            behavior: 'smooth',
-            left: tapScrollX.current! - 20,
-          });
+          handleTapScrollX(buttonRef);
         }}
       >
         전체 결과
@@ -49,8 +59,7 @@ const PostCategoryTap = ({
           active={key === postCategory}
           label={label}
           keyValue={key}
-          containerRef={containerRef}
-          tapScrollX={tapScrollX}
+          handleTapScrollX={handleTapScrollX}
           setPostCategory={setPostCategory}
         />
       ))}
