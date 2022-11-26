@@ -39,7 +39,7 @@ export const login = async ({ loginId, password }: LoginType) => {
 export const userConfirm = async () => {
   try {
     const data = await instance.get<ConfirmUserResponse>('/users/profile');
-    console.log(data);
+
     if (data) {
       const userInfo = {
         ...data.data,
@@ -56,7 +56,6 @@ export const userConfirm = async () => {
     };
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      console.log(err);
       return {
         isError: true,
         error: '해당 유저 정보를 가져오는데 실패하였습니다.',
@@ -107,7 +106,6 @@ export const requestJoin = async (userData: JoinType) => {
 export const logout = async () => {
   try {
     const data = await instance.post('/users/logout', {});
-    console.log(data);
   } catch (err) {
     console.log(err);
   }

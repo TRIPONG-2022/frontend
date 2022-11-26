@@ -37,14 +37,12 @@ export const getPostList = async (
           ...params,
           page: pageParam,
           size: 6,
-          // 6으로 했을 떄...
           sort: ['id', sort].join(','),
         },
       });
 
       return data;
     } catch (err) {
-      console.log(err);
       if (axios.isAxiosError(err)) {
         return [];
       }
@@ -63,7 +61,6 @@ export const getPostList = async (
 
     return data;
   } catch (err) {
-    console.log(err);
     if (axios.isAxiosError(err)) {
       return [];
     }
