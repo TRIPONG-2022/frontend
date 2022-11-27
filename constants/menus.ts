@@ -31,11 +31,7 @@ export const GNB_MENUS = [
   },
   {
     name: '여행메이트 찾기',
-    link: '/posts',
-  },
-  {
-    name: '소개',
-    link: '/posts',
+    link: '/posts?category=gathering',
   },
 ];
 

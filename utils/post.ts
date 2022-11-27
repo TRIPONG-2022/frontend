@@ -20,6 +20,18 @@ export function handlePostPageParam(param: string | string[] | undefined) {
   return param;
 }
 
+export function handlePostCategoryQuery(
+  category: string | string[] | undefined,
+): '' | PostCategory {
+  if (category === undefined || Array.isArray(category)) {
+    return '';
+  }
+
+  return POST_CATEGORY_KEYS.includes(category)
+    ? (category as PostCategory)
+    : '';
+}
+
 export function checkIsValidPostCategoryAndPostId(
   category: string,
   postId: string,

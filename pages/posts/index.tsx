@@ -12,12 +12,14 @@ import PostListNotFound from '@/components/post/PostListNotFound';
 import usePostListQuery from '@/hooks/usePostListQuery';
 import Dropdown from '@/components/shared/Dropdown';
 import { PostCategory } from '@/types/post';
+import { handlePostCategoryQuery } from '@/utils/post';
 
 interface PostsPageProps {
   queryParam: {
     searchType: string;
     keyword: string;
   };
+  category: PostCategory | '';
 }
 
 type Sort = 'desc' | 'asc';
@@ -29,8 +31,8 @@ const sortObj: {
   asc: '오래된순',
 };
 
-const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
-  const [postCategory, setPostCategory] = useState<PostCategory | ''>('');
+const PostsPage: NextPage<PostsPageProps> = ({ queryParam, category }) => {
+  const [postCategory, setPostCategory] = useState<PostCategory | ''>(category);
   const [sort, setSort] = useState<Sort>('desc');
 
   const { data, fetchNextPage, hasNextPage } = usePostListQuery(
@@ -98,8 +100,7 @@ export default PostsPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
-  const { searchType, keyword } = context.query;
-
+  const { searchType, keyword, category } = context.query;
   await queryClient.prefetchInfiniteQuery(['posts', 'desc'], () =>
     getPostList({ searchType, keyword }),
   );
@@ -108,6 +109,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
       queryParam: JSON.parse(JSON.stringify({ searchType, keyword })),
+      category: handlePostCategoryQuery(category),
     },
   };
 };
