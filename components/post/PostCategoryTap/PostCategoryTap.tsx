@@ -3,7 +3,7 @@ import React, { SetStateAction, useEffect, useMemo, useRef } from 'react';
 import { POST_CATEGORIES } from '@/constants/post-category';
 import { PostCategory } from '@/types/post';
 import PostCategoryContent from './PostCategoryContent';
-import useScrollUp from './useScroll';
+import useScrollUp from '@/hooks/useScroll';
 
 import * as Styled from './PostCategoryTap.styled';
 
@@ -38,6 +38,7 @@ const PostCategoryTap = ({
       left: containerRef.current?.scrollLeft + tapScrollX.current! - 20,
     });
   }
+
   return (
     <Styled.PostCategoryTapContiner
       ref={containerRef}

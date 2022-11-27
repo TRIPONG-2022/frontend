@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react';
 import PostList from '@/components/post/PostList';
 import { getPostList } from '@/api/search';
 import MainLayout from '@/layouts/MainLayout';
-import PostCategoryTap from '@/components/PostCategoryTap/PostCategoryTap';
+import PostCategoryTap from '@/components/post/PostCategoryTap/PostCategoryTap';
 import InView from '@/components/shared/InView';
 import PostListNotFound from '@/components/post/PostListNotFound';
 import usePostListQuery from '@/hooks/usePostListQuery';
