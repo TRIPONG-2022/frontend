@@ -13,6 +13,7 @@ import usePostListQuery from '@/hooks/usePostListQuery';
 import Dropdown from '@/components/shared/Dropdown';
 import { PostCategory } from '@/types/post';
 import { handlePostCategoryQuery } from '@/utils/post';
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
 interface PostsPageProps {
   queryParam: {
@@ -40,6 +41,10 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam, category }) => {
     postCategory,
     sort,
   );
+
+  useIsomorphicLayoutEffect(() => {
+    setPostCategory(category);
+  }, [category]);
 
   const onChange = (isInView: boolean, entry: IntersectionObserverEntry) => {
     if (isInView && hasNextPage) {
