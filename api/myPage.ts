@@ -1,16 +1,18 @@
 import {
+  TagsData,
+  MyPageTags,
   BirthDateData,
   MyPageBirthDate,
-  MyPagePictureType,
-  MyPageTags,
-  TagsData,
   UserProfileData,
+  MyPagePictureType,
+  GetMyPageReturnData,
   UserProfileSendData,
+  GetMyPageDataOptions,
 } from '@/types/my-page';
-import { ProfilePatchSchema } from '@/constants/schema';
+import instance from './instance';
 import { getBirthDate } from '@/utils/date';
 import { base64ToFile } from '@/utils/image';
-import instance from './instance';
+import { ProfilePatchSchema } from '@/constants/schema';
 
 export const getProfileInfomation = async () => {
   try {
@@ -105,5 +107,100 @@ export const patchProfileInformation = async (
   } catch (err) {
     console.log(err);
     alert('수정에 실패하였습니다!');
+  }
+};
+
+export const getMyPagePosts = async <T>({
+  category,
+  startDate: fromDate,
+  endDate,
+  page = 0,
+  size,
+}: GetMyPageDataOptions): Promise<GetMyPageReturnData<T>> => {
+  try {
+    const { data: total } = await instance.get(`/users/profile/posts`, {
+      params: {
+        category,
+        fromDate,
+        endDate,
+      },
+    });
+
+    const { data: posts } = await instance.get(`/users/profile/posts`, {
+      params: {
+        page,
+        size,
+        category,
+        fromDate,
+        endDate,
+      },
+    });
+    return { total: total.length, data: posts };
+  } catch (err) {
+    console.log(err);
+    return { total: 0, data: [] };
+  }
+};
+
+export const getMyPageReplies = async <T>({
+  userId,
+  startDate: fromDate,
+  endDate,
+  page = 0,
+  size,
+}: GetMyPageDataOptions): Promise<GetMyPageReturnData<T>> => {
+  try {
+    const { data: total } = await instance.get(
+      `/users/profile/replies/${userId}`,
+      {
+        params: {
+          fromDate,
+          endDate,
+        },
+      },
+    );
+
+    const { data: replies } = await instance.get(
+      `/users/profile/replies/${userId}`,
+      {
+        params: {
+          page,
+          size,
+          fromDate,
+          endDate,
+        },
+      },
+    );
+
+    return { total: total.length, data: replies };
+  } catch (err) {
+    console.log(err);
+    return { total: 0, data: [] };
+  }
+};
+
+export const getMyPageLikePosts = async <T>({
+  category,
+  page = 0,
+  size,
+}: GetMyPageDataOptions): Promise<GetMyPageReturnData<T>> => {
+  try {
+    const { data: total } = await instance.get(`/users/profile/likes`, {
+      params: {
+        category,
+      },
+    });
+
+    const { data: posts } = await instance.get(`/users/profile/likes`, {
+      params: {
+        page,
+        size,
+        category,
+      },
+    });
+    return { total: total.length, data: posts };
+  } catch (err) {
+    console.log(err);
+    return { total: 0, data: [] };
   }
 };
