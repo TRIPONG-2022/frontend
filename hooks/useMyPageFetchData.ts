@@ -6,6 +6,7 @@ import { Post } from '@/types/post';
 import { Reply } from '@/types/reply';
 import { AppState } from '@/store/index';
 import myPageApi from '@/utils/my-page';
+import { GetMyPageReturnData } from '@/types/my-page';
 
 interface UseMyPageFetchDataOptions {
   size: number;
@@ -15,15 +16,10 @@ interface UseMyPageFetchDataOptions {
 type SetDataType<T extends 'post' | 'reply'> = T extends 'post' ? Post : Reply;
 
 type UseMyPageFetchDataReturnType<T> = [
-  UseQueryResult<UseMyPageFetchData<T>, unknown>,
+  UseQueryResult<GetMyPageReturnData<T>, unknown>,
   number,
   (n: number) => void,
 ];
-
-interface UseMyPageFetchData<DataType> {
-  total: number;
-  data: DataType[];
-}
 
 const useMyPageFetchData = <T extends 'post' | 'reply'>({
   size,
