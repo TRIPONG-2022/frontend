@@ -9,6 +9,7 @@ interface CardListProps {
 
 export default function CardList({ cardList, columnNumber }: CardListProps) {
   console.log(columnNumber);
+
   return (
     <>
       {columnNumber ? (

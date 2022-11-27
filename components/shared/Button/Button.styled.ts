@@ -41,9 +41,15 @@ interface BaseButtonProps {
   $size: ButtonSize;
   $variant: ButtonVariant;
   $css?: CSSProp<DefaultTheme>;
+  $fullWidth: boolean;
 }
 
 export const BaseButton = styled.button<BaseButtonProps>`
+  ${({ $fullWidth }) =>
+    $fullWidth &&
+    css`
+      width: 100%;
+    `};
   display: inline-flex;
   align-items: center;
   justify-content: center;

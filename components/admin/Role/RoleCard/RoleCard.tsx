@@ -27,14 +27,11 @@ const RoleCard = ({ item }: RoleCardProps) => {
       </Styled.Menu>
       <Modal isModal={isModal} close={close}>
         <Modal.Title>해당 권한을 삭제하시겠습니까?</Modal.Title>
-        <Modal.BtnContainers>
+        <Modal.BtnContainer>
           <Button
-            size="lg"
+            size="md"
             type="submit"
-            css={`
-              width: 100%;
-              margin-top: 2rem;
-            `}
+            fullWidth
             onClick={() => {
               mutate(item.roleId);
               close();
@@ -43,18 +40,15 @@ const RoleCard = ({ item }: RoleCardProps) => {
             예
           </Button>
           <Button
-            size="lg"
+            size="md"
             type="button"
             variant="outline"
-            css={`
-              width: 100%;
-              margin-top: 2rem;
-            `}
-            onClick={() => close()}
+            fullWidth
+            onClick={close}
           >
             닫기
           </Button>
-        </Modal.BtnContainers>
+        </Modal.BtnContainer>
       </Modal>
     </Styled.RoleCardContainer>
   );

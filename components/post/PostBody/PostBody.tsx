@@ -3,8 +3,6 @@ import React from 'react';
 import { Post, PostCategory } from '@/types/post';
 import { decodeHTML } from '@/utils/post';
 import { getGatheringDate } from '@/utils/date';
-import ReplyList from '@/components/reply/ReplyList';
-import ReplyForm from '@/components/reply/ReplyForm';
 
 import * as Styled from './PostBody.styled';
 
@@ -28,11 +26,6 @@ export default function PostBody({ post }: PostBodyProps) {
           ))}
         </Styled.PostTagList>
       </Styled.PostTagListWrapper>
-      <Styled.ReplyWrapper>
-        <h2>댓글</h2>
-        <ReplyForm postId={post.id} />
-        <ReplyList postId={post.id} />
-      </Styled.ReplyWrapper>
     </Styled.PostBodyContainer>
   );
 }

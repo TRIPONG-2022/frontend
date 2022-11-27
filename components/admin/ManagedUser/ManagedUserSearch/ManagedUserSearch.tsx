@@ -4,6 +4,7 @@ import { ManagedSearchParams } from '@/types/search-params';
 import useManagedUserQuery from '@/components/admin/ManagedUser/hooks/useManagedUserQuery';
 import useManagedBlackUserQuery from '@/components/admin/ManagedUser/hooks/useManagedBlackUserQuery';
 import Select from '@/components/shared/Select';
+import SVGIcon from '@/components/shared/SVGIcon';
 import { useUserSearchParamsContext } from '../contexts/UserSearchParamsContext';
 
 import * as Styled from './ManagedUserSearch.styled';
@@ -67,20 +68,29 @@ const ManagedUserSearch = ({ isUserSearch }: ManagedUserSearchProps) => {
           onChangeOption={setState(setSearchParams)}
         />
       </Styled.SelectWrapper>
-      <Styled.SearchInput
-        onChange={(e: any) => {
-          setsearchInput(e.target.value);
-        }}
-        value={searchInput}
-      />
 
-      <Styled.SearchButton
-        onClick={() =>
-          isUserSearch ? handleUserSearch() : handleBlackUserSearch()
-        }
-      >
-        검색
-      </Styled.SearchButton>
+      <Styled.SearchInputWrapper>
+        <Styled.SearchInput
+          type="search"
+          placeholder="Search"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setsearchInput(e.target.value);
+          }}
+          value={searchInput}
+        />
+        <Styled.SearchIconWrapper>
+          <SVGIcon
+            width="1.25rem"
+            height="1.25rem"
+            icon="SearchIcon"
+            title="검색아이콘"
+            aria-label="검색아이콘"
+            onClick={() =>
+              isUserSearch ? handleUserSearch() : handleBlackUserSearch()
+            }
+          />
+        </Styled.SearchIconWrapper>
+      </Styled.SearchInputWrapper>
     </Styled.ManagedUserSearchContainer>
   );
 };

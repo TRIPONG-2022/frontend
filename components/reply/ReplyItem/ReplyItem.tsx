@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import Image from 'next/image';
-import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
@@ -9,96 +8,63 @@ import { AppState } from '@/store/index';
 import { Reply } from '@/types/reply';
 import { elapsedTime } from '@/utils/date';
 import { ReplySchema, REPLY_SCHEMA } from '@/constants/schema';
-import useToggle from '@/hooks/useToggle';
-import Button from '@/components/shared/Button';
 import SVGIcon from '@/components/shared/SVGIcon';
+import Button from '@/components/shared/Button';
 import Dropdown from '@/components/shared/Dropdown';
-
-import ReplyForm from '../ReplyForm';
-import ReplyList from '../ReplyList';
-import useUpdateReplyMutation from '../hooks/useUpdateReplyMutation';
-import useDeleteReplyMutation from '../hooks/useDeleteReplyMutation';
-import { useReplyListContext } from '../contexts/ReplyListContext';
 
 import * as Styled from './ReplyItem.styled';
 
-interface ReplyItemProps {
+interface ReplyItemContextState {
   reply: Reply;
 }
 
-export default function ReplyItem({ reply }: ReplyItemProps) {
-  const { user } = useSelector((state: AppState) => state.user);
-  const { isOpenReplyForm, openReplyForm } = useReplyListContext('ReplyItem');
-  const { toggle: isEditable, onToggle: onToggleIsEditable } = useToggle(false);
-  const { mutate: updateReply } = useUpdateReplyMutation(reply);
-  const { mutate: deleteReply } = useDeleteReplyMutation(reply);
+const ReplyItemContext = createContext<ReplyItemContextState | null>(null);
 
-  const isAuthor = useMemo(() => user?.loginId === reply.userId, [user, reply]);
-  const onUpdate = (data: ReplySchema) => {
-    updateReply(data.content, {
-      onSuccess: () => {
-        onToggleIsEditable();
-      },
-    });
-  };
+function useReplyItemContext(componentName: string) {
+  const context = useContext(ReplyItemContext);
+  if (!context) {
+    throw new Error(
+      `<${componentName} /> is missing a parent <ReplyItem /> component.`,
+    );
+  }
+  return context;
+}
 
-  const onDelete = () => {
-    deleteReply(reply);
-  };
+interface ReplyItemProps {
+  reply: Reply;
+  children?: React.ReactNode;
+}
 
+function ReplyItem({ reply, children }: ReplyItemProps) {
   return (
-    <Styled.ReplyItemContainer>
-      <Styled.ReplyItemWrapper>
-        <Styled.ProfileImageWrapper>
-          <Image src="/images/profile.png" alt="프로필 이미지" layout="fill" />
-        </Styled.ProfileImageWrapper>
-        <Styled.ContentWrapper>
-          <Styled.Author>
-            {isEditable && <Styled.EditIndicator>수정중</Styled.EditIndicator>}
-            {reply.userId}
-          </Styled.Author>
-          {!isEditable && <ReplyContent reply={reply} />}
-          {isEditable && (
-            <ReplyContentEditor
-              reply={reply}
-              onUpdate={onUpdate}
-              onCancel={onToggleIsEditable}
+    <ReplyItemContext.Provider value={{ reply }}>
+      <Styled.ReplyItemContainer>
+        <Styled.ReplyItemWrapper>
+          <Styled.ProfileImageWrapper>
+            <Image
+              src="/images/profile.png"
+              alt="프로필 이미지"
+              layout="fill"
             />
-          )}
-        </Styled.ContentWrapper>
-        <Styled.UtilWrapper>
-          {isAuthor && !isEditable && (
-            <Dropdown>
-              <Dropdown.Button>
-                <SVGIcon icon="MoreVerticalIcon" />
-              </Dropdown.Button>
-              <Dropdown.Items width="8rem">
-                <Dropdown.Item onClick={onToggleIsEditable}>
-                  수정하기
-                </Dropdown.Item>
-                <Dropdown.Item onClick={onDelete}>삭제하기</Dropdown.Item>
-              </Dropdown.Items>
-            </Dropdown>
-          )}
-        </Styled.UtilWrapper>
-      </Styled.ReplyItemWrapper>
-      <Styled.ReplyOfReplyWrapper>
-        {isOpenReplyForm === reply.id && (
-          <ReplyForm
-            postId={reply.postId}
-            replyId={reply.id}
-            onCancel={() => openReplyForm(null)}
-          />
-        )}
-        <ReplyList postId={reply.postId} replyId={reply.id} />
-      </Styled.ReplyOfReplyWrapper>
-    </Styled.ReplyItemContainer>
+          </Styled.ProfileImageWrapper>
+          <Styled.ContentWrapper>{children}</Styled.ContentWrapper>
+        </Styled.ReplyItemWrapper>
+      </Styled.ReplyItemContainer>
+    </ReplyItemContext.Provider>
   );
 }
 
-function ReplyContent({ reply }: ReplyItemProps) {
-  const { openReplyForm } = useReplyListContext('ReplyContent');
+interface ReplyContentProps {
+  onOpenReplyForm?: () => void;
+}
+
+function ReplyContent({ onOpenReplyForm }: ReplyContentProps) {
+  const { reply } = useReplyItemContext('ReplyContent');
   const { isLogIn } = useSelector((state: AppState) => state.user);
+  const isReplyButtonVisible = useMemo(
+    () => isLogIn && !reply.parentReply && onOpenReplyForm,
+    [isLogIn, reply, onOpenReplyForm],
+  );
   const isEdited = useMemo(
     () => reply.createdDate !== reply.modifiedDate,
     [reply],
@@ -106,15 +72,15 @@ function ReplyContent({ reply }: ReplyItemProps) {
 
   return (
     <Styled.ReplyContentContainer>
+      <Styled.Author>{reply.userId}</Styled.Author>
       <Styled.Content>{reply.content}</Styled.Content>
       <Styled.DetailWrapper>
         <span>
-          {format(new Date(`${reply.modifiedDate} UTC`), 'yyyy.MM.dd hh:mm')}
           {elapsedTime(`${reply.modifiedDate} UTC`)}
           {isEdited && ' • 수정됨'}
         </span>
-        {isLogIn && !reply.parentReply && (
-          <button type="button" onClick={() => openReplyForm(reply.id)}>
+        {isReplyButtonVisible && (
+          <button type="button" onClick={onOpenReplyForm}>
             답글쓰기
           </button>
         )}
@@ -123,16 +89,13 @@ function ReplyContent({ reply }: ReplyItemProps) {
   );
 }
 
-interface ReplyContentEditorProps extends ReplyItemProps {
+interface ReplyContentEditorProps {
   onUpdate: (data: ReplySchema) => void;
   onCancel: () => void;
 }
 
-function ReplyContentEditor({
-  reply,
-  onUpdate,
-  onCancel,
-}: ReplyContentEditorProps) {
+function ReplyContentEditor({ onUpdate, onCancel }: ReplyContentEditorProps) {
+  const { reply } = useReplyItemContext('ReplyContentEditor');
   const {
     register,
     handleSubmit,
@@ -146,19 +109,52 @@ function ReplyContentEditor({
   });
 
   return (
-    <form onSubmit={handleSubmit(onUpdate)}>
-      <Styled.ContentTextArea
-        placeholder="수정할 댓글을 입력해주세요."
-        {...register('content')}
-      />
-      <Styled.EditUtilWrapper>
-        <Button variant="default" size="sm" onClick={onCancel}>
-          취소
-        </Button>
-        <Button type="submit" size="sm" disabled={!isValid || !isDirty}>
-          수정
-        </Button>
-      </Styled.EditUtilWrapper>
-    </form>
+    <Styled.ReplyContentEditorContainer>
+      <Styled.Author>
+        <Styled.EditIndicator>수정중</Styled.EditIndicator>
+        {reply.userId}
+      </Styled.Author>
+      <form onSubmit={handleSubmit(onUpdate)}>
+        <Styled.ContentTextArea
+          placeholder="수정할 댓글을 입력해주세요."
+          {...register('content')}
+        />
+        <Styled.EditUtilWrapper>
+          <Button type="submit" size="sm" disabled={!isValid || !isDirty}>
+            수정
+          </Button>
+          <Button variant="default" size="sm" onClick={onCancel}>
+            취소
+          </Button>
+        </Styled.EditUtilWrapper>
+      </form>
+    </Styled.ReplyContentEditorContainer>
   );
 }
+
+interface ReplyDropdownProps {
+  onUpdate?: () => void;
+  onDelete?: () => void;
+}
+
+function ReplyDropdown({ onUpdate, onDelete }: ReplyDropdownProps) {
+  return (
+    <Styled.UtilWrapper>
+      <Dropdown>
+        <Dropdown.Button>
+          <SVGIcon icon="MoreVerticalIcon" />
+        </Dropdown.Button>
+        <Dropdown.Items width="8rem">
+          <Dropdown.Item onClick={onUpdate}>수정하기</Dropdown.Item>
+          <Dropdown.Item onClick={onDelete}>삭제하기</Dropdown.Item>
+        </Dropdown.Items>
+      </Dropdown>
+    </Styled.UtilWrapper>
+  );
+}
+
+export default Object.assign(ReplyItem, {
+  Content: ReplyContent,
+  ContentEditor: ReplyContentEditor,
+  Dropdown: ReplyDropdown,
+});

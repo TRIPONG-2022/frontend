@@ -7,6 +7,8 @@ import ManagedUserCard from '../ManagedUserCard/ManagedUserCard';
 import ObserverBottom from './ObserverBottom';
 import { useUserSearchParamsContext } from '../contexts/UserSearchParamsContext';
 
+import * as Styled from './ManagedUserList.styled';
+
 const ManagedUserList = () => {
   const { searchParams } = useUserSearchParamsContext('ManagedUserList');
 
@@ -24,7 +26,7 @@ const ManagedUserList = () => {
   if (isError) return <div>에러발생</div>;
 
   return (
-    <>
+    <Styled.ManagedUserListContainer>
       {data?.pages.map(({ content }) =>
         content?.map((data: ManagedUserData) => (
           <ManagedUserCard userData={data} key={data.id} />
@@ -45,7 +47,7 @@ const ManagedUserList = () => {
       >
         리페치
       </button>
-    </>
+    </Styled.ManagedUserListContainer>
   );
 };
 

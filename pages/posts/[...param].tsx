@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { useQuery } from 'react-query';
 import type { GetServerSideProps, NextPage } from 'next';
 
 import MainLayout from '@/layouts/MainLayout';
@@ -8,20 +7,21 @@ import PostBody from '@/components/post/PostBody';
 import PostHeader from '@/components/post/PostHeader';
 import PostNotFound from '@/components/post/PostNotFound';
 
-import { Post } from '@/types/post';
-import { requestGetPost } from '@/api/post';
-import { checkIsValidPostPageParam, handlePostPageParam } from '@/utils/post';
+import { PostCategory } from '@/types/post';
+import usePostQuery from '@/hooks/usePostQuery';
+import {
+  checkIsValidPostCategoryAndPostId,
+  handlePostPageParam,
+} from '@/utils/post';
+import PostFooter from '@/components/post/PostFooter';
 
 interface PostPageProps {
-  category: string;
-  postId: string;
+  category: PostCategory;
+  postId: number;
 }
 
 const PostPage: NextPage<PostPageProps> = ({ category, postId }) => {
-  const { data: post, isLoading } = useQuery<Post>(
-    ['post', category, postId],
-    () => requestGetPost(category, postId),
-  );
+  const { data: post } = usePostQuery(category, postId);
 
   return (
     <>
@@ -33,6 +33,7 @@ const PostPage: NextPage<PostPageProps> = ({ category, postId }) => {
           <>
             <PostHeader post={post} />
             <PostBody post={post} />
+            <PostFooter post={post} />
           </>
         ) : (
           <PostNotFound />
@@ -47,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { param } = context.query;
     const [category, postId] = handlePostPageParam(param);
 
-    if (!checkIsValidPostPageParam(category, postId)) {
+    if (!checkIsValidPostCategoryAndPostId(category, postId)) {
       return {
         notFound: true,
       };
@@ -56,7 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: {
         category,
-        postId,
+        postId: parseInt(postId),
       },
     };
   } catch (error) {

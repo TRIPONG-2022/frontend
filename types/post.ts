@@ -1,6 +1,6 @@
 export enum PostCategory {
   Review = 'review',
-  Community = 'community',
+  Board = 'board',
   QNA = 'qna',
   Gathering = 'gathering',
 }
@@ -22,4 +22,5 @@ export interface Post {
   budget: number;
   likeCount: number;
   viewCount: number;
+  isLike?: boolean;
 }

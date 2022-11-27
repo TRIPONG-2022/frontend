@@ -1,6 +1,6 @@
 import { MY_PAGE_MENUS } from '@/constants/menus';
 import { scaleZ } from '@/styles/keyframes';
-import { SCREEN_TABLET } from '@/styles/screen';
+import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
 
 interface ActiveProps {
@@ -25,6 +25,10 @@ export const SideMenuContainer = styled.div<ActiveProps>`
 
   ${SCREEN_TABLET} {
     width: 15rem;
+    margin-right: 5rem;
+  }
+
+  ${SCREEN_DESKTOP} {
     margin-right: 7.5rem;
   }
 `;
@@ -132,6 +136,7 @@ export const SideMenuLi = styled.li<ActiveProps>`
   justify-content: center;
   opacity: 0;
   color: ${({ theme }) => theme.colors.gray[400]};
+  cursor: pointer;
 
   // 함수형태로 반복문 사용
   // keyframes components 사용 불가

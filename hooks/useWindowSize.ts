@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import debounceFunction from './debounceFunction';
 
 export interface windowSizeType {
@@ -12,22 +12,27 @@ const useWindowSize = (delay: number): windowSizeType => {
     windowHeight: 0,
   });
 
-  const handleResize = useCallback(
-    debounceFunction(() => {
+  useEffect(() => {
+    setWindowSize({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+    });
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
       setWindowSize({
         windowWidth: window.innerWidth,
         windowHeight: window.innerHeight,
       });
-    }, delay),
-    [],
-  );
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
     };
-  }, [handleResize]);
+
+    const debounced = debounceFunction(handleResize, delay);
+    window.addEventListener('resize', debounced);
+    return () => {
+      window.removeEventListener('resize', debounced);
+    };
+  }, [delay]);
 
   return windowSize;
 };
