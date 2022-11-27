@@ -1,5 +1,6 @@
-import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 import styled, { css } from 'styled-components';
+
+import { SCREEN_DESKTOP, SCREEN_TABLET } from '@/styles/screen';
 
 export const Container = styled.div`
   width: 100%;
@@ -8,17 +9,21 @@ export const Container = styled.div`
   position: relative;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 interface BodyProps {
   fullWidth?: boolean;
+  isSearch: boolean;
 }
 
 export const Body = styled.main<BodyProps>`
   width: 100%;
-  min-height: 80vh;
+  max-width: 1280px;
   word-break: break-all;
+  transition: all 0.2s ease;
+
   ${({ fullWidth }) =>
     !fullWidth &&
     css`
@@ -29,16 +34,20 @@ export const Body = styled.main<BodyProps>`
       }
 
       ${SCREEN_DESKTOP} {
-        max-width: 1280px;
         padding: 0 40px;
       }
+    `}
+
+  ${({ isSearch }) =>
+    isSearch &&
+    css`
+      transform: translateY(10rem);
+      overflow: hidden;
+      height: calc(100vh - 15rem);
     `}
 `;
 
 export const Footer = styled.footer`
   width: 100%;
-  height: 5rem;
   border-top: 1px solid black;
-  position: absolute;
-  bottom: 0;
 `;

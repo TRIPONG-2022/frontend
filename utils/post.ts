@@ -1,8 +1,10 @@
 import { decode } from 'html-entities';
 import { Post, PostCategory } from '@/types/post';
 import { POST_CATEGORY_KEYS } from '@/constants/post-category';
+import { SearchType } from '@/types/search';
 import { PostEditorSchema } from '@/constants/schema';
 import { base64ToFile } from './image';
+
 
 export const removeHTMLTag = (html: string) => {
   return html.replace(/<[^>]*>?/g, '');
@@ -33,6 +35,13 @@ export function checkIsValidPostCategoryAndPostId(
 export function decodeHTML(html: string) {
   return decode(html, { level: 'html5', scope: 'strict' });
 }
+
+export const createSearchPostListLink = (
+  searchType: SearchType,
+  searchInput: string,
+) => {
+  return `posts?searchType=${searchType}&keyword=${searchInput}`;
+};
 
 export function handleWritePostPageQuery(
   category: string | string[] | undefined,
