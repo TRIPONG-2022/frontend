@@ -9,11 +9,19 @@ import { GNB_MENUS } from '@/constants/menus';
 import * as Styled from './MobileNaviation.styled';
 import { useDispatch } from 'react-redux';
 import { onSearch } from '@/store/slice/searchSlice';
+import { useRouter } from 'next/router';
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
 function MobileNavigation() {
+  const router = useRouter();
   const userMenu = useUserMenu();
   const dispatch = useDispatch();
   const { toggle, onToggle } = useToggle(false);
+
+  const movePage = (link: string) => () => {
+    onToggle();
+    router.push(link);
+  };
 
   return (
     <>
@@ -28,8 +36,8 @@ function MobileNavigation() {
       <Styled.MobileMenuWrapper isOpen={toggle}>
         <Styled.MenuList>
           {GNB_MENUS.map(({ name, link }) => (
-            <Styled.MenuItem key={name}>
-              <Link href={link}>{name}</Link>
+            <Styled.MenuItem key={name} onClick={movePage(link)}>
+              {name}
             </Styled.MenuItem>
           ))}
         </Styled.MenuList>
