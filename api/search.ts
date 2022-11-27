@@ -6,8 +6,8 @@ export const search = async ({
   searchType,
   keyword,
 }: {
-  searchType: string | string[] | undefined;
-  keyword: string | string[] | undefined;
+  searchType?: string | string[];
+  keyword?: string | string[];
 }) => {
   const data = await instance.get(`/search`, {
     params: { searchType, keyword },
