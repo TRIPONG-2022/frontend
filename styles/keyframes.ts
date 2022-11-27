@@ -36,3 +36,15 @@ export const FADE_IN = keyframes`
     opacity: 1;
   }
 `;
+
+export const slideDown = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;

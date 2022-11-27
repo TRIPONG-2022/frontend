@@ -1,16 +1,17 @@
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 import Portal from '@/components/shared/Portal/Portal';
 import SVGIcon from '@/components/shared/SVGIcon';
-import { createSearchPostListLink } from '@/utils/post';
 import Select from '@/components/shared/Select';
+import ResponsiveContainer from '../shared/ResponsiveContainer';
+import { SearchType } from '@/types/search';
+import { offSearch } from '@/store/slice/searchSlice';
+import { createSearchPostListLink } from '@/utils/post';
 
 import * as Styled from './SearchBar.styled';
-import { SearchType } from '@/types/search';
-import { useDispatch } from 'react-redux';
-import { offSearch } from '@/store/slice/searchSlice';
-import Link from 'next/link';
 
 const SearchBar = () => {
   const router = useRouter();
@@ -22,29 +23,30 @@ const SearchBar = () => {
   const setState = (value: SearchType) => setSearchType(SearchType[value]);
 
   return (
-    <>
-      <Portal selector="#portal">
-        <Styled.SearchBarContainer>
-          <Styled.Header>
-            <Styled.LogoDiv onClick={() => dispatch(offSearch())}>
-              <Link href="/">
-                <a>
-                  <SVGIcon icon={'LogoIcon'} width={120} height={50} />
-                </a>
-              </Link>
-            </Styled.LogoDiv>
-            <Styled.HeaderDelete>
+    <Portal selector="#portal">
+      <Styled.SearchBarContainer>
+        <ResponsiveContainer>
+          <Styled.SearchHeaderWrapper>
+            <Link href="/">
+              <Styled.LogoLink>
+                <SVGIcon
+                  icon="LogoIcon"
+                  width={110}
+                  height={32}
+                  color="#252525"
+                />
+              </Styled.LogoLink>
+            </Link>
+            <Styled.SearchHeaderCloseButton>
               <SVGIcon
-                width="2rem"
-                height="2rem"
                 icon="DeleteIcon"
-                title="취소아이콘"
-                aria-label="취소아이콘"
+                aria-label="검색창 닫기"
+                size={24}
                 onClick={() => dispatch(offSearch())}
               />
-            </Styled.HeaderDelete>
-          </Styled.Header>
-          <Styled.Content>
+            </Styled.SearchHeaderCloseButton>
+          </Styled.SearchHeaderWrapper>
+          <Styled.SearchContentWrapper>
             <Styled.SelectWrapper>
               <Select
                 id="1"
@@ -70,33 +72,30 @@ const SearchBar = () => {
             </Styled.SelectWrapper>
             <Styled.SearchInputWrapper>
               <Styled.SearchInput
+                placeholder="키워드를 입력해주세요."
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setSearchInput(e.target.value);
                 }}
                 value={searchInput}
-                placeholder="키워드를 넣어주세요"
               />
-
-              <Styled.SearchIconWrapper>
-                <SVGIcon
-                  width="1.5rem"
-                  height="1.55rem"
-                  icon="SearchIcon"
-                  title="검색아이콘"
-                  aria-label="검색아이콘"
-                  onClick={() => {
-                    dispatch(offSearch());
-                    router.push(
-                      createSearchPostListLink(searchType, searchInput),
-                    );
-                  }}
-                />
-              </Styled.SearchIconWrapper>
+              <SVGIcon
+                size={24}
+                icon="SearchIcon"
+                title="검색아이콘"
+                aria-label="검색아이콘"
+                color="#404040"
+                onClick={() => {
+                  dispatch(offSearch());
+                  router.push(
+                    createSearchPostListLink(searchType, searchInput),
+                  );
+                }}
+              />
             </Styled.SearchInputWrapper>
-          </Styled.Content>
-        </Styled.SearchBarContainer>
-      </Portal>
-    </>
+          </Styled.SearchContentWrapper>
+        </ResponsiveContainer>
+      </Styled.SearchBarContainer>
+    </Portal>
   );
 };
 

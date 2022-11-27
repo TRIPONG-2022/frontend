@@ -17,21 +17,20 @@ interface MainLayoutProps {
 function MainLayout({ children, fullWidth }: MainLayoutProps) {
   const isSearch = useSelector(({ search }: AppState) => search.isSearch);
 
-  useEffect(() => {
-    console.log(isSearch);
-  }, [isSearch]);
   return (
     <>
       {!isSearch && <GNB />}
       {isSearch && <SearchBar />}
       <Styled.MainContainer isSearch={isSearch}>
-        {fullWidth ? (
-          <>{children}</>
-        ) : (
-          <ResponsiveContainer>{children}</ResponsiveContainer>
-        )}
+        <main>
+          {fullWidth ? (
+            <>{children}</>
+          ) : (
+            <ResponsiveContainer>{children}</ResponsiveContainer>
+          )}
+        </main>
+        <Footer />
       </Styled.MainContainer>
-      <Footer />
     </>
   );
 }
