@@ -7,6 +7,8 @@ import SVGIcon from '@/components/shared/SVGIcon';
 import ResponsiveContainer from '@/components/shared/ResponsiveContainer';
 
 import * as Styled from './GNB.styled';
+import SearchBar from '@/components/searchbar/SearchBar';
+import { onSearch } from '@/store/slice/searchSlice';
 
 export default function GNB() {
   const { isDesktop } = useScreenType();

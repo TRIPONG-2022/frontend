@@ -9,7 +9,7 @@ export const ProfileImageContainer = styled.div`
   flex-direction: column;
 `;
 
-export const ProfileImageDiv = styled.div`
+export const ProfileImageWrapper = styled.div`
   width: 15rem;
   aspect-ratio: 1 / 1;
   margin-bottom: 1rem;
@@ -28,7 +28,7 @@ export const ProfileImageDiv = styled.div`
   }
 `;
 
-export const ProfileBlankDiv = styled.div`
+export const ProfileBlankWrapper = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
@@ -43,7 +43,7 @@ export const ProfileImage = styled.img`
   overflow: hidden;
 `;
 
-export const NicknameDiv = styled.div`
+export const NicknameWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;

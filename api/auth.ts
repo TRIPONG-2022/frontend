@@ -21,7 +21,6 @@ export const login = async ({ loginId, password }: LoginType) => {
       loginId,
       password,
     });
-
     const { userInfo, isError, error } = await userConfirm();
 
     return {
@@ -107,7 +106,6 @@ export const requestJoin = async (userData: JoinType) => {
 export const logout = async () => {
   try {
     const data = await instance.post('/users/logout', {});
-    console.log(data);
   } catch (err) {
     console.log(err);
   }

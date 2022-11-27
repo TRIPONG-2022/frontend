@@ -62,7 +62,7 @@ const ProfileImage = ({
 
   return (
     <Styled.ProfileImageContainer>
-      <Styled.ProfileImageDiv>
+      <Styled.ProfileImageWrapper>
         {isEdit && (
           <SVGIcon icon="DeleteIcon" size="20" onClick={removeImage} />
         )}
@@ -73,22 +73,22 @@ const ProfileImage = ({
           hidden
           {...rest}
         />
-        <Styled.ProfileBlankDiv onClick={onChangeImage}>
+        <Styled.ProfileBlankWrapper onClick={onChangeImage}>
           {image && <Styled.ProfileImage src={image} />}
-        </Styled.ProfileBlankDiv>
-      </Styled.ProfileImageDiv>
-      <Styled.NicknameDiv>
+        </Styled.ProfileBlankWrapper>
+      </Styled.ProfileImageWrapper>
+      <Styled.NicknameWrapper>
         {!isEdit && <Styled.Nickname>{watchedNickName}</Styled.Nickname>}
         {isEdit && (
           <Styled.NicknameInput maxLength={11} {...register('nickName')} />
         )}
         {!!authentication && !isEdit && <SVGIcon icon="AuthenticatedIcon" />}
-      </Styled.NicknameDiv>
-      <Styled.NicknameDiv>
+      </Styled.NicknameWrapper>
+      <Styled.NicknameWrapper>
         <Styled.NicknameErrorMessage>
           {errors.nickName?.message && `*${errors.nickName?.message}`}
         </Styled.NicknameErrorMessage>
-      </Styled.NicknameDiv>
+      </Styled.NicknameWrapper>
     </Styled.ProfileImageContainer>
   );
 };

@@ -7,14 +7,18 @@ import HamburgerIcon from '@/components/shared/HamburgerButton';
 import { GNB_MENUS } from '@/constants/menus';
 
 import * as Styled from './MobileNaviation.styled';
+import { useDispatch } from 'react-redux';
+import { onSearch } from '@/store/slice/searchSlice';
 
 function MobileNavigation() {
-  const { toggle, onToggle } = useToggle(false);
   const userMenu = useUserMenu();
+  const dispatch = useDispatch();
+  const { toggle, onToggle } = useToggle(false);
+
   return (
     <>
       <Styled.MobileNavigationContainer>
-        <button>
+        <button onClick={() => dispatch(onSearch())}>
           <SVGIcon icon="SearchIcon" size={24} />
         </button>
         <button onClick={onToggle}>

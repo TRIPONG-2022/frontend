@@ -1,8 +1,13 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import GNB from '@/layouts/GNB';
 import Footer from '@/layouts/Footer';
-import ResponsiveContainer from '../../components/shared/ResponsiveContainer';
+import ResponsiveContainer from '@/components/shared/ResponsiveContainer';
+import { AppState } from '@/store/index';
+
+import * as Styled from './MainLayout.styled';
+import SearchBar from '@/components/searchbar/SearchBar';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -10,16 +15,22 @@ interface MainLayoutProps {
 }
 
 function MainLayout({ children, fullWidth }: MainLayoutProps) {
+  const isSearch = useSelector(({ search }: AppState) => search.isSearch);
+
+  useEffect(() => {
+    console.log(isSearch);
+  }, [isSearch]);
   return (
     <>
-      <GNB />
-      <main>
+      {!isSearch && <GNB />}
+      {isSearch && <SearchBar />}
+      <Styled.MainContainer isSearch={isSearch}>
         {fullWidth ? (
           <>{children}</>
         ) : (
           <ResponsiveContainer>{children}</ResponsiveContainer>
         )}
-      </main>
+      </Styled.MainContainer>
       <Footer />
     </>
   );

@@ -1,13 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
-import { GNB_MENUS } from '@/constants/menus';
+import { useDispatch } from 'react-redux';
+
 import useUserMenu from '@/hooks/useUserMenu';
 import IconButton from '@/components/shared/IconButton';
+import { GNB_MENUS } from '@/constants/menus';
+import { onSearch } from '@/store/slice/searchSlice';
 
 import * as Styled from './DesktopNavigation.styled';
 
 const DesktopNavigation: React.FC = () => {
   const userMenu = useUserMenu();
+  const dispatch = useDispatch();
 
   return (
     <Styled.DesktopNavigationContainer>
@@ -26,6 +30,9 @@ const DesktopNavigation: React.FC = () => {
           colorScheme="default"
           aria-label="검색"
           iconSize={24}
+          onClick={() => {
+            dispatch(onSearch());
+          }}
         />
         {userMenu.map(({ name, link }, i) => (
           <Link key={name} href={link}>
