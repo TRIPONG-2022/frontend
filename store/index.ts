@@ -6,7 +6,11 @@ import userReducer from './slice/userSlice';
 
 const makeStore = () =>
   configureStore({
-    reducer: { user: userReducer, myPage: myPageReducer, search: searchReducer  },
+    reducer: {
+      user: userReducer,
+      myPage: myPageReducer,
+      search: searchReducer,
+    },
     devTools: process.env.NODE_ENV !== 'production',
   });
 

@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 interface ScreenType {
   isMobile: boolean;
@@ -6,36 +7,37 @@ interface ScreenType {
   isDesktop: boolean;
 }
 
+const getScreenType = (width: number): ScreenType => {
+  return {
+    isMobile: width < 768,
+    isTablet: 768 <= width && width < 1280,
+    isDesktop: 1280 <= width,
+  };
+};
+
 export default function useScreenType(): ScreenType {
-  const [width, setWidth] = useState<number>(0);
+  const width = useRef<number>();
   const [screenType, setScreenType] = useState<ScreenType>({
     isMobile: false,
     isTablet: false,
     isDesktop: false,
   });
 
-  useEffect(() => {
-    console.log(window.innerWidth);
-    setWidth(window.innerWidth);
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
+  const handleResize = useCallback(() => {
+    width.current = window.innerWidth;
+    setScreenType(getScreenType(width.current));
+  }, []);
 
+  useIsomorphicLayoutEffect(() => {
+    handleResize();
+  }, [handleResize]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
-
-  useEffect(() => {
-    if (width > 0) {
-      setScreenType({
-        isMobile: width < 768,
-        isTablet: 768 <= width && width < 1280,
-        isDesktop: 1280 <= width,
-      });
-    }
-  }, [width]);
+  }, [handleResize]);
 
   return screenType;
 }

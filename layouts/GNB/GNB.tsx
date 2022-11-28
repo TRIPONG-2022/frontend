@@ -1,78 +1,35 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { AppState } from '@/store/index';
-import useWindowSize from '@/hooks/useWindowSize';
-import useToggle from '@/hooks/useToggle';
-import NavigationDiv from '@/layouts/MobileNaviation';
-import HamburgerButton from '@/components/shared/HamburgerButton/HamburgerButton';
+import DesktopNavigation from '../DesktopNavigation';
+import useScreenType from '@/hooks/useScreenType';
+import MobileNavigation from '@/layouts/MobileNaviation';
 import SVGIcon from '@/components/shared/SVGIcon';
-import LoginJoinList from '@/components/shared/LoginJoinList';
-import { GNB_MENUS } from '@/constants/menus';
+import ResponsiveContainer from '@/components/shared/ResponsiveContainer';
+
 import * as Styled from './GNB.styled';
 import SearchBar from '@/components/searchbar/SearchBar';
 import { onSearch } from '@/store/slice/searchSlice';
 
-const GNB = () => {
-  const isLogin = useSelector(({ user }: AppState) => user.isLogIn);
-  const isSearch = useSelector(({ search }: AppState) => search.isSearch);
-
-  const dispatch = useDispatch();
-
-  const { toggle, onToggle, setOff } = useToggle(false);
-  const { windowWidth, windowHeight } = useWindowSize(0);
-
-  useEffect(() => {
-    if (window.innerWidth > 1280) setOff();
-  }, [windowWidth, setOff]);
+export default function GNB() {
+  const { isDesktop } = useScreenType();
 
   return (
-    <Styled.GNBHeader>
-      <Styled.GNBNav>
-        {/* 로고 구간 */}
-        <Styled.LogoDiv>
+    <Styled.GNBContainer>
+      <ResponsiveContainer>
+        <Styled.NavigationWrapper>
           <Link href="/">
-            <a>
-              <SVGIcon icon={'LogoIcon'} width={120} height={50} />
-            </a>
+            <Styled.LogoLink>
+              <SVGIcon
+                icon="LogoIcon"
+                width={110}
+                height={32}
+                color="#252525"
+              />
+            </Styled.LogoLink>
           </Link>
-        </Styled.LogoDiv>
-
-        {/* 가운데 메뉴 구간 */}
-        <Styled.MenuUl>
-          {GNB_MENUS.map(({ name, link }) => (
-            <Styled.MenuLi key={name}>
-              <Link href={link}>{name}</Link>
-            </Styled.MenuLi>
-          ))}
-        </Styled.MenuUl>
-
-        {/* 검색, 로그인, 회원가입 구간 */}
-        {isSearch && <SearchBar />}
-
-        <Styled.RightDiv>
-          <Styled.SearchBtn>
-            <SVGIcon
-              icon={'SearchIcon'}
-              width={25}
-              height={25}
-              onClick={() => dispatch(onSearch())}
-            />
-          </Styled.SearchBtn>
-          <Styled.LoginJoinDiv>
-            <LoginJoinList divide="GNB" isLogin={isLogin} />
-          </Styled.LoginJoinDiv>
-          <Styled.NavBtn onClick={onToggle}>
-            <HamburgerButton width={50} toggle={toggle} />
-          </Styled.NavBtn>
-        </Styled.RightDiv>
-
-        {/* 네비게이션 창 */}
-        <NavigationDiv isLogin={isLogin} toggle={toggle} />
-      </Styled.GNBNav>
-    </Styled.GNBHeader>
+          {isDesktop ? <DesktopNavigation /> : <MobileNavigation />}
+        </Styled.NavigationWrapper>
+      </ResponsiveContainer>
+    </Styled.GNBContainer>
   );
-};
-
-export default GNB;
+}

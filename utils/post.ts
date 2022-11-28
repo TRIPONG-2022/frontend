@@ -5,7 +5,6 @@ import { SearchType } from '@/types/search';
 import { PostEditorSchema } from '@/constants/schema';
 import { base64ToFile } from './image';
 
-
 export const removeHTMLTag = (html: string) => {
   return html.replace(/<[^>]*>?/g, '');
 };
@@ -19,6 +18,18 @@ export function handlePostPageParam(param: string | string[] | undefined) {
     return [];
   }
   return param;
+}
+
+export function handlePostCategoryQuery(
+  category: string | string[] | undefined,
+): '' | PostCategory {
+  if (category === undefined || Array.isArray(category)) {
+    return '';
+  }
+
+  return POST_CATEGORY_KEYS.includes(category)
+    ? (category as PostCategory)
+    : '';
 }
 
 export function checkIsValidPostCategoryAndPostId(

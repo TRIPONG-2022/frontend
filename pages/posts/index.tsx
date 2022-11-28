@@ -12,12 +12,15 @@ import PostListNotFound from '@/components/post/PostListNotFound';
 import usePostListQuery from '@/hooks/usePostListQuery';
 import Dropdown from '@/components/shared/Dropdown';
 import { PostCategory } from '@/types/post';
+import { handlePostCategoryQuery } from '@/utils/post';
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
 interface PostsPageProps {
   queryParam: {
     searchType: string;
     keyword: string;
   };
+  category: PostCategory | '';
 }
 
 type Sort = 'desc' | 'asc';
@@ -29,8 +32,8 @@ const sortObj: {
   asc: '오래된순',
 };
 
-const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
-  const [postCategory, setPostCategory] = useState<PostCategory | ''>('');
+const PostsPage: NextPage<PostsPageProps> = ({ queryParam, category }) => {
+  const [postCategory, setPostCategory] = useState<PostCategory | ''>(category);
   const [sort, setSort] = useState<Sort>('desc');
 
   const { data, fetchNextPage, hasNextPage } = usePostListQuery(
@@ -38,6 +41,10 @@ const PostsPage: NextPage<PostsPageProps> = ({ queryParam }) => {
     postCategory,
     sort,
   );
+
+  useIsomorphicLayoutEffect(() => {
+    setPostCategory(category);
+  }, [category]);
 
   const onChange = (isInView: boolean, entry: IntersectionObserverEntry) => {
     if (isInView && hasNextPage) {
@@ -98,8 +105,7 @@ export default PostsPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
-  const { searchType, keyword } = context.query;
-
+  const { searchType, keyword, category } = context.query;
   await queryClient.prefetchInfiniteQuery(['posts', 'desc'], () =>
     getPostList({ searchType, keyword }),
   );
@@ -108,6 +114,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
       queryParam: JSON.parse(JSON.stringify({ searchType, keyword })),
+      category: handlePostCategoryQuery(category),
     },
   };
 };
